@@ -10,5 +10,6 @@ import javax.inject.Named;
 public class MenuMB implements Serializable{
 	
 	
+	
 
 }
