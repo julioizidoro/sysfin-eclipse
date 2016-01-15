@@ -9,7 +9,14 @@ import javax.inject.Named;
 @SessionScoped
 public class MenuMB implements Serializable{
 	
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public String contasPagar(){
+		return "consContaPagar";
+	}
 	
 
 }

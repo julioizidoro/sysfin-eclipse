@@ -25,16 +25,16 @@
         	<p:menuitem class="submenu">
         		<img src="resources/img/logomenu.png" width="15%"   style="margin-left: 20%;" />
         	</p:menuitem>
-        	<p:menuitem value="Visão Geral" style="color:white; margin-left:-700%;" action="#"/>
-        	<p:submenu label="Vendas" style="color:white; margin-left:-42%;"></p:submenu>
+        	<p:menuitem class="" value="Visão Geral" style="color:white; margin-left:-750%;" action="#"/>
+        	<p:submenu label="Vendas" style="color:white; margin-left:-41%;"></p:submenu>
         	<p:submenu label="Estoque" class="" style="color:white; margin-left:-35%;">
         	
         	</p:submenu>
-        	<p:submenu label="Financeiro" style="color:white; margin-left:-28%;">
-        		<p:menuitem class="submenu" value="Contas a Pagar" action="#" />
+        	<p:submenu label="Financeiro" class="submenus" style="background:#3E7D62; margin-left:-29%;">
+        		<p:menuitem class="submenu" value="Contas a Pagar" actionListener="#{menuMB.contasPagar()}"/>
         		<p:menuitem class="submenu" value="Contas a Receber" action="#" />
         	</p:submenu>
-            <p:submenu label="Cadastro" id="submenu" style="color:white; margin-left:-20%;">
+            <p:submenu label="Cadastro" id="submenu" style="color:white; margin-left:-22%;">
                 <p:menuitem class="submenu" value="Cliente" action="#"/>
                 <p:menuitem class="submenu" value="Banco" action="#" />
                 <p:menuitem class="submenu" value="Tipo Plano de Contas" action="#" />
@@ -43,7 +43,7 @@
                 <p:menuitem class="submenu" value="TIpo de Usuário" action="#" />
             </p:submenu>
 
-            <p:submenu label="Relatórios" style="color:white; margin-left:-13%;" >
+            <p:submenu label="Relatórios" style="color:white; margin-left:-16%;" >
                 <p:menuitem class="submenu" value="Contas a Pagar" action="#" />
                 <p:menuitem class="submenu" value="Contas Receber" action="#" />
                 <p:menuitem class="submenu" value="Conciliação Bancária" action="#" />

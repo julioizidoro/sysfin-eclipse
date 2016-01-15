@@ -3,7 +3,10 @@ package br.com.financemate.util;
 
 	import javax.annotation.PostConstruct;
 	import java.io.Serializable;
-	import javax.faces.bean.ManagedBean;
+import java.util.Date;
+import java.util.Map;
+
+import javax.faces.bean.ManagedBean;
 	import org.primefaces.model.chart.Axis;
 	import org.primefaces.model.chart.AxisType;
 	import org.primefaces.model.chart.BarChartModel;
@@ -45,6 +48,7 @@ package br.com.financemate.util;
 	        
 	         
 	        animatedModel2 = initBarModel();
+	        
 	        animatedModel2.setTitle("Grafico de vendas");
 	        animatedModel2.setAnimate(true);
 	        animatedModel2.setLegendPosition("ne");
@@ -55,8 +59,6 @@ package br.com.financemate.util;
 	     
 	    private BarChartModel initBarModel() {
 	        BarChartModel model = new BarChartModel();
-	 
-	 
 	        ChartSeries mes = new ChartSeries();
 	        mes.setLabel("Mês, Quantidade");
 	        mes.set("Jan", 100);
@@ -79,10 +81,9 @@ package br.com.financemate.util;
 	     
 	    private LineChartModel initLinearModel() {
 	        LineChartModel model = new LineChartModel();
-	 
+	        
 	        LineChartSeries recebimentos = new LineChartSeries();
 	        recebimentos.setLabel("Recebimentos");
-	 
 	        recebimentos.set(1, 2);
 	        recebimentos.set(2, 1);
 	        recebimentos.set(3, 3);
@@ -91,7 +92,6 @@ package br.com.financemate.util;
 	 
 	        LineChartSeries pagamentos = new LineChartSeries();
 	        pagamentos.setLabel("Pagamentos");
-	 
 	        pagamentos.set(1, 6);
 	        pagamentos.set(2, 3);
 	        pagamentos.set(3, 2);
