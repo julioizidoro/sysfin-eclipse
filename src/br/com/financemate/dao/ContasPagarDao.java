@@ -39,7 +39,7 @@ public class ContasPagarDao {
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery(sql);
-        List<Contaspagar> listaContas = q.getResultList();
+		List<Contaspagar> listaContas = q.getResultList();
         manager.getTransaction().commit();
         return listaContas;
     }

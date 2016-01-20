@@ -6,6 +6,10 @@ body {
     
 }
 
+.tabelaContasPagar{
+	width: 50%;
+}
+
 h1 {
     margin: 10px 20px 10px 20px;
 }
@@ -16,22 +20,40 @@ h1 {
     width: 100%;
     left:9%;
     margin-top:-10px;
-    border: 0px solid #aaa;
     margin-left:-10%;
 }
 .menu {
-    font-family: tahoma;
     list-style:none; 
-    border:1px solid aliceblue; 
     width:101%!important;
     float:left !important;
     margin-top:-18px;
     background: #3E7D62  !important;
     font-size: 12px;
-    color:#30b344;
-    font-size: 13px;
+    color:white;
     position: fixed;
     display: block;
+    font-family: "Pacifico",cursive;
+}
+
+.menu2 a:hover{
+    background:black;
+    color:white;
+    
+}
+
+.menu2 a{
+    color:#fff; 
+    display:block;
+}
+
+.menu2{
+	position: fixed;
+	height: 50%;
+	width: 16%;
+}
+
+.menuLateral{
+	background-color: black;
 }
 
 .menu ul {  
@@ -50,29 +72,159 @@ h1 {
      margin: 0;   
      text-decoration: none;   
      color: white;
-     background-color: #3E7D62 !important;
+     background-color: black !important;
+ }
+ 
+ .submenu li a {
+     background-color: black !important;
  }  
  
  .submenu-title {   
  	color: white;
-	background-color: #3E7D62 !important;
+	background-color: black !important;
 	
  }  
  .submenu-content { 
  	color: white;
- 	background-color: #3E7D62 !important;
- }  
+ 	background-color: black !important;
+ }
+ 
+ .ui-panelmenu{
+ 	background: transparent !important;
+ 	 border-color: black !important;
+ 	border: transparent !important;
+ 	color:white !important;
+ }
+ 
+ .ui-panelmenu-header{
+ 	background: transparent !important;
+ 	 border-color: black !important;
+ 	border: transparent !important;
+ 	color:white !important;
+ }
+ 
+ .ui-panelmenu-content{
+ 	 background: transparent !important;
+ 	 border-color: black !important;
+ 	 border: transparent !important;
+ }
+ 
+ .ui-panelmenu .ui-menu-list{
+ 	 background: transparent !important;
+ 	 border-color: black !important;
+ 	 border: transparent !important;
+ 	 padding: 0px;
+ }
+ 
+ .ui-panelmenu .ui-menuitem{
+ 	 background: transparent !important;
+ 	 border: transparent !important;
+ }
+
+.ui-panelmenu .ui-menu-list li a:hover{
+ 	 background: black !important;
+ 	 border-color: black !important;
+ 	 border: transparent !important;
+ } 
+ 
  
  .menu li a:hover {  
      text-decoration: underline;
-     background-color:#3E7D62 !important;  
+     background-color:black !important;  
      color: white !important;
  }
 
-.submenu li a:houver{
-	color: white !important;
+.submenu li a:hover{
+	color: black !important;
 }
 
+.jqplot-target{
+}
+
+.jqplot-axis{
+}
+
+.jqplot-xaxis{
+}
+
+.jqplot-yaxis{
+}
+
+.jqplot-axis-tick{
+}
+
+.jqplot-xaxis-tick{
+}
+
+.jqplot-yaxis-tick{
+}
+
+table.jqplot-table-legend{
+}
+
+jqplot-title{
+}
+
+jqplot-curso-tooltip{
+}
+
+jqplot-highlighter-tooltip{
+}
+
+div.jqplot-table-legend-swatch{
+}
+
+
+.ui-splitbutton{
+	background: transparent;
+	border: none;
+} 
+
+
+.ui-button{
+	background: transparent;
+	border: none;
+}
+
+.ui-splitbutton-menubutton{
+	background: transparent;
+	border: none;
+}
+
+.ui-button.text-only{
+	background: transparent;
+	border: none;
+}
+
+.ui-button-text{
+	background: transparent;
+	border: none;
+}
+
+.ui-menu{
+	background: transparent;
+	border: none;
+}
+
+.ui-menulist{
+	background: transparent;
+	border: none;
+}
+
+.ui-menuitem{
+	background: transparent;
+	border: none;
+}
+
+.ui-menuitem-link{
+	background: transparent;
+	border: none;
+}
+
+.ui-menuitem-text{
+	background: transparent;
+	border: none;
+}
 
 .divmenu{
 	background: #3E7D62;
@@ -109,12 +261,15 @@ h1 {
 }
 .tabelacontas{
     font-size:10px;
-   
+    margin-left: 17%;
     position:relative;
     top:-1px;
-    width:100%;
-    
+    width:80%;
+    border: none;
 }
+
+
+
 .tabelatipo{
     font-size:11px;
 
@@ -654,12 +809,13 @@ button.cadastrarrelatorio {
     text-align: right;
 }
 
-.azul{
-   margin-left:50px;
-    font-size:12px;
-    background: #2AD6D0;
+.totallancamentos{
+   margin-left:14%;
+    font-size:28px;
     text-align: right; 
-    color: #F0FFFF;
+    color: #CFCFCF;
+    font-family: 'Pacifico',cursive;
+    font: bold;
 }
 .imagens{
     margin-left:410px;

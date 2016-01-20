@@ -3,10 +3,7 @@ package br.com.financemate.util;
 
 	import javax.annotation.PostConstruct;
 	import java.io.Serializable;
-import java.util.Date;
-import java.util.Map;
-
-import javax.faces.bean.ManagedBean;
+	import javax.faces.bean.ManagedBean;
 	import org.primefaces.model.chart.Axis;
 	import org.primefaces.model.chart.AxisType;
 	import org.primefaces.model.chart.BarChartModel;
@@ -73,7 +70,6 @@ import javax.faces.bean.ManagedBean;
 	        mes.set("Out", 125);
 	        mes.set("Nov", 126);
 	        mes.set("Dez", 127);
-	 
 	        model.addSeries(mes);
 	         
 	        return model;
@@ -89,7 +85,7 @@ import javax.faces.bean.ManagedBean;
 	        recebimentos.set(3, 3);
 	        recebimentos.set(4, 6);
 	        recebimentos.set(5, 10);
-	 
+	        
 	        LineChartSeries pagamentos = new LineChartSeries();
 	        pagamentos.setLabel("Pagamentos");
 	        pagamentos.set(1, 6);

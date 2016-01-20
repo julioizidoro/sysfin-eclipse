@@ -6,47 +6,45 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="/pages/templates/default.xhtml">
-	<ui:define name="corpo">
-	        <br/>  
-	        <br/>
+	<ui:define name="corpo"> 
 	        <h:form>
-	                <h:panelGrid  style="width:25%; margin-left: 14%; background-color:white; border-radius:5px;">
+	                <h:panelGrid  style="width:25%; margin-left: 18%; background-color:white; border-radius:5px;">
 	                	<br />
-			            <b style="margin-left:10%; font:bold; font-size:12px;">A receber hoje</b>
+			            <b style="margin-left:10%; font:bold; font-size:12px; color:black;">A receber hoje</b>
 			            <br /><br />
-			            <h:link style="margin-left:40%; font-size:11px;">Gerar venda</h:link>
+			            <h:link style="margin-left:40%; font-size:11px; color:black;">Gerar venda</h:link>
 			            
-			            <p style="margin-left:10%; font-size:12px;">Restante do mês</p>
+			            <p style="margin-left:10%; font-size:12px; color:black;">Restante do mês</p>
 	        		</h:panelGrid>
-	        		<h:panelGrid style="width:25%;  margin-left: 43%; margin-top: -10%; background-color:white; border-radius:5px;">
+	        		<h:panelGrid style="width:25%;  margin-left: 47%; margin-top: -10.1%; background-color:white; border-radius:5px;">
 	        			<br />
-			            <b style="margin-left:10%; font:bold; font-size:12px;">A pagar hoje</b>
+			            <b style="margin-left:10%; font:bold; font-size:12px; color:black;">A pagar hoje</b>
 			            <br/><br />
 			            
-			            <h:link style="margin-left:40%; font-size:11px;">Gerar compra</h:link>
-			            <p style="margin-left:10%; font-size:12px;">Restante do mês</p>
+			            <h:link style="margin-left:40%; font-size:11px; color:black;">Gerar compra</h:link>
+			            <p style="margin-left:10%; font-size:12px; color:black;">Restante do mês</p>
 			            
 	        		</h:panelGrid>
 	        		<br />
-	                <h:panelGrid columns="1" columnClasses="left,right" style="width:54%; margin-left: 14%; background-color:white; position:static; border-radius:5px;">
+	                <h:panelGrid columns="1" columnClasses="left,right" style="width:54%; margin-left: 18%; background-color:white; position:static; border-radius:5px;">
 	    				<br />
-	    				<p:chart type="line" model="#{grafico.animatedModel1}" style="width:99%; position:relative;" responsive="true" />
+	    				<p:chart class="grafico" type="line" model="#{grafico.animatedModel1}" style="width:99%; position:relative;" responsive="true"/>
 	    				<br />
 					</h:panelGrid>
 					<br />
-					<h:panelGrid columns="2" cellpadding="5" style="width:25%; margin-left: 14%; background-color:white; border-radius:5px;">
+					<h:panelGrid columns="2" cellpadding="5" style="width:25%; margin-left: 18%; background-color:white; border-radius:5px;">
 	                <br/>
-			            <b style="margin-left:10%; font-size:12px;">Todos os recebimentos em atraso</b>
+			            <b style="margin-left:10%; font-size:12px; color:black;">Todos os recebimentos em atraso</b>
 			            
 			            <p style="color:green; margin-left:10%; font-size:28px;">R$</p><h:outputText value="" style="color:green;"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid columns="2" cellpadding="5" style="width:25%; margin-left: 43%; margin-top:-10.8%; background-color:white; border-radius:5px;">
+	        		<h:panelGrid columns="2" cellpadding="5" style="width:25%; margin-left: 47%; margin-top:-10.8%; background-color:white; border-radius:5px;">
 	        		<br/>
-			            <b style="margin-left:10%; font-size:12px;">Todos os pagamentos em atraso</b>
+			            <b style="margin-left:10%; font-size:12px; color:black;">Todos os pagamentos em atraso</b>
 			            <p style="color:red; margin-left:10%; font-size:28px;">R$</p><h:outputText value="" style="color:red;"/>
 	        		</h:panelGrid> 
 					<br />
-					<h:panelGrid columns="1" columnClasses="left,right" style="width:54%; height: 200px; margin-left: 14%; background-color:white; border-radius:5px;">
+					<h:panelGrid columns="1" columnClasses="left,right" style="width:54%; height: 200px; margin-left: 18%; background-color:white; border-radius:5px;">
 						<br />
 						<p:chart type="bar" model="#{grafico.animatedModel2}" style="width:99%;" responsive="true"/>
 						<br />
