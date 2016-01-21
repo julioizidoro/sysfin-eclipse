@@ -8,49 +8,53 @@
 <ui:composition template="/pages/templates/default.xhtml">
 	<ui:define name="corpo">
 	<h:form>
-		<br></br>
-		
-			<p:commandLink   action="#{contasPagarMB.novaConta()}" style="margin-left:72%;text-decoration:none;" title="Novo Lançamento">
+		<br/> 
+			<p:commandLink   action="#{contasPagarMB.novaConta()}" style="margin-left:84.5%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplusS.ico" style="border:solid; border-width: 1px; border-color: black; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
+            </p:commandLink>   
+            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
+				<img src="../../resources/img/iconefiltros.ico" style="border:solid; border-width: 1px; border-color: black;"/>
             </p:commandLink>
-            <br /><br />
-             <f:facet name="{Exporters}">
-                 <h:commandLink>
-                       <img src="../../resources/img/excel.png" width="300" class="imagens"/>
-                       <p:dataExporter type="xls" target="contaPagar" fileName="contas" />
-                 </h:commandLink>
-             </f:facet>
-		
+            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Pesquisar">
+				<img src="../../resources/img/iconelupa.ico" style="border:solid; border-width: 1px; border-color: black;"/>
+            </p:commandLink>
+            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Pesquisar">
+				<img src="../../resources/img/iconeexport.ico" style="border:solid; border-width: 1px; border-color: black;"/>
+            </p:commandLink>
+            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Pesquisar">
+				<img src="../../resources/img/iconeImprimir.ico" style="border:solid; border-width: 1px; border-color: black; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
+            </p:commandLink>
+            <br /><br />   
                     <p:contextMenu for="idTabelaContaPagar">
-                        <p:menuitem value="Excluir"  icon=" ui-icon-pencil"  action="#" />
-                        <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#" actionListener="#{mensagem.autorizar()}" />
+                        <p:menuitem value="Excluir"  icon=" ui-icon-pencil"  action="#{contasPagarMB.excluir()}" />
+                        <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento()}"  />
                     </p:contextMenu>
-                    <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" class="tabelacontas" 
+                    <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="contasPagar.idcontasPagar">
                        
-                        <p:column headerText="Status"  style="width:30px; background:transparent; color:black;" styleClass="alinharCenter">
+                        <p:column headerText="Status"  style="width:30px; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
                             <p:commandLink>
                                 <img src="#{contasPagarMB.verStatus(contasPagar)}" />
                             </p:commandLink>
                         </p:column>
-                        <p:column headerText="Vencimento" style="width:17%; background:transparent; color:black;">
+                        <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; background:#E7EBEB; color:black; border:none;">
                             <h:outputText  value="#{contasPagar.dataVencimento}" >
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Unidade"  style="width:15%; background:transparent; color:black;">
+                        <p:column headerText="Unidade" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; background:#E7EBEB; color:black; border:#fff;">
                             <h:outputText value="#{contasPagar.cliente.nomeFantasia}"/>
                         </p:column> 
-                        <p:column headerText="Descrição" style="widht:55%; background:transparent; color:black;" >
+                        <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%; background:#E7EBEB; color:black; border:none;" >
                             <h:outputText value="#{contasPagar.descricao}"/>
                         </p:column>
-                        <p:column headerText="Autorizadas"  style="width:5%; background:transparent; color:black;" styleClass="alinharCenter" >
+                        <p:column headerText="Autorizadas"   style="width:5%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter" >
                             <img src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" />
                         </p:column>
-                        <p:column headerText="Fornecedor" style="width:15%; background:transparent; color:black;" >
+                        <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; background:#E7EBEB; color:black; border:none;" >
                             <h:outputText value="#{contasPagar.fornecedor}"/>
-                        </p:column>
-                        <p:column headerText="Valor Conta" style="width:5%; background:transparent; color:black;" styleClass="alinharCenter">
+                        </p:column> 
+                        <p:column headerText="Valor Conta" sortBy="#{contasPagar.valor}" style="width:5%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
                             <h:outputText value="#{contasPagar.valor}">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
@@ -76,7 +80,7 @@
 			            <h:outputText id="contasPagar" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasPagarMB.total}"  readonly="true"/>
 			            
 	        		</h:panelGrid>
-	        		
+	        		<br />
    </h:form>
 	</ui:define>
 </ui:composition>   

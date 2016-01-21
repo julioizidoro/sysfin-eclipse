@@ -18,6 +18,7 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -38,9 +39,10 @@ public class CadContasPagarMB implements Serializable{
     private List<Planocontas> listaPlanoContas;
     private List<Cliente> listaCliente;
     private Planocontas planoContas;
-    private Cliente cliente;
+    private Cliente cliente = new Cliente();
     private Banco banco;
     private List<Banco> listaBanco;
+    
 	
 	@PostConstruct
 	public void init(){
@@ -49,11 +51,15 @@ public class CadContasPagarMB implements Serializable{
         contaPagar = (Contaspagar) session.getAttribute("contapagar");
         session.removeAttribute("contapagar");
         gerarListaCliente();
-        gerarListaBanco();
         gerarListaPlanoContas();
-        if (contaPagar == null) {
+        if (contaPagar == null) { 
 			contaPagar = new Contaspagar();
-		}
+		}else{
+            cliente = contaPagar.getCliente();
+            planoContas = contaPagar.getPlanocontas();
+            banco = contaPagar.getBanco();
+            gerarListaBanco();
+        }
 	}
 
 	public Contaspagar getContaPagar() {
@@ -144,17 +150,17 @@ public class CadContasPagarMB implements Serializable{
         }
 
     }
-	
+
 	public void gerarListaBanco(){
-        if (cliente!=null){
-            BancoFacade bancoFacade = new BancoFacade();
-            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
-            listaBanco = bancoFacade.listar(sql);
-            if (listaBanco ==null){
-                listaBanco = new ArrayList<Banco>();
-            }
-        }else {
-            listaBanco = new ArrayList<Banco>();
+		if (cliente!=null) {
+	        BancoFacade bancoFacade = new BancoFacade();
+	        String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+	        listaBanco = bancoFacade.listar(sql);
+	        if (listaBanco ==null){
+	            listaBanco = new ArrayList<Banco>();
+	        }
+		}else {
+			listaBanco = new ArrayList<Banco>();
         }
     }
 	
@@ -171,4 +177,37 @@ public class CadContasPagarMB implements Serializable{
         }
         
     }
+	
+	public void salvar(){
+		String mensagem = validarDados();
+		if (mensagem==null) {
+			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+	        contaPagar.setBanco(banco);
+	        contaPagar.setPlanocontas(planoContas);
+	        contaPagar.setCliente(cliente);
+	        contaPagar = contasPagarFacade.salvar(contaPagar);
+	        RequestContext.getCurrentInstance().closeDialog(contaPagar);
+		}else{
+			FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(mensagem, ""));
+		}
+    }
+	
+	public String validarDados(){
+		String mensagem = "";
+		if (contaPagar.getFornecedor().equalsIgnoreCase("")) {
+			mensagem = mensagem + "Fornecedor não informado \r\n";
+		}
+		if (contaPagar.getValor().equals("")) {
+			mensagem = mensagem + "Valor não informado \r\n";
+		}
+		if (contaPagar.getDescricao().equalsIgnoreCase("")) {
+			mensagem = mensagem + "Descrição não informado \r\n";
+		}
+		if (contaPagar.getBanco().equals(null)) {
+			mensagem = mensagem + "Conta não selecionada \r\n";
+		}
+		
+		return mensagem;
+	}
 }

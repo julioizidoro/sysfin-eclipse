@@ -5,8 +5,83 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<ui:composition template="/pages/templates/default.xhtml">
-	<ui:define name="corpo"> 
+<h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>SysFIN</title>
+        <link href="resources/css/css.css" rel="stylesheet" media="screen" />
+        <link href="../../resources/css/css.css" rel="stylesheet" media="screen" />
+    </h:head>
+
+    <h:body style="color:#E7EBEB !important;">
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <img src="resources/img/ajax-carregando.gif" />
+        </p:dialog>
+            <h:form>
+         <div id="tudo" style="color:#E7EBEB !important;">
+        <p:growl id="growl" showDetail="true" sticky="true" />
+        <br></br>
+        
+        <div class="menu">
+        
+        	<img src="resources/img/usuariologado.png" style="width: 1.2%; margin-left:1%;"/>
+        	<h:outputText value="Bem Vindo" style="font-size:14px; margin-left:0.5%;" />,
+        	 <h:outputText style="font-size:14px;" value="#{usuarioLogadoMB.usuario.nome}" />
+        	<tt style="margin-left: 35%; font-size: 30px; font-family: 'Pacifico',cursive;">SysFin</tt>
+        	<p:commandLink   action="#" style="margin-left:32%;" title="Adicionar">
+                    <img src="resources/img/adicionarmenu.png" width="32" height="32" /> 
+                    <p:ajax event="dialogReturn" update="@all"/>
+            </p:commandLink>
+        
+        </div>
+        <br />
+        <h:panelGrid class="menu2" columns="2" style="background:#1A1A1A;font-family: 'Economica', sans-serif; margin-left:0.4%;margin-top:0.3%;" responsive="true">
+        
+        	 <p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;">
+           		<img src="resources/img/iconeHome.png" style="width: 10%;"/>
+        		<h:outputText value="Visão Geral" style="font-size:16px; margin-left:5%;"/>
+    		 </p:commandLink>
+    		 <br />
+    		 <p:commandLink id="aja"  actionListener="#" style="text-decoration:none;">
+           		<img src="resources/img/iconeclientes.png" style="width: 10%;"/>
+        		<h:outputText value="Área do cliente" style="font-size:16px; margin-left:5%;"/>
+    		 </p:commandLink>
+    		 <br />
+        	 <p:panelMenu styleClass="ui-panelmenu"> 
+        		<p:submenu  style="background:transparent; font-size:16px; color:white;  margin-top=-30%; font:normal;" label="Contas a Pagar"> 
+            		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" update="growl"/>
+            		<p:menuitem value="Relatório" actionListener="#"/>
+        		</p:submenu>
+        		<p:submenu label="Contas a Receber" style="font-size:16px;">
+           			<p:menuitem value="Lançamentos" actionListener="#"/>
+            		<p:menuitem value="Relatório" actionListener="#"/>
+        		</p:submenu>
+        		<p:separator />
+        		<p:submenu label="Vendas" style="font-size:16px;">
+        		</p:submenu>
+        		<p:submenu label="Cadastro" style="font-size:16px;">
+                    <p:menuitem value="Cliente"/>
+                    <p:menuitem value="Banco"/>
+                    <p:menuitem value="Tipo de plano de conta"/>
+                    <p:menuitem value="Plano de conta" />
+            	</p:submenu>
+            	<p:submenu label="Outros Lançamentos" style="font-size:16px;">
+                    
+            	</p:submenu>
+            	<p:submenu label="Relatórios" style="font-size:16px;">
+                    
+            	</p:submenu>
+    		</p:panelMenu>
+    		<br />
+    		<p:commandLink id="ajaxx" style="text-decoration:none;"  action="http://www.financemate.com.br/">
+           		<img src="resources/img/iconeinfo.png" style="width: 10%;"/>
+        		<h:outputText value="Sobre a Financemate" style="font-size:16px; margin-left:5%;"/>
+    		</p:commandLink>
+    		
+        </h:panelGrid>
+        </div>
+		</h:form>
+
+	<ui:insert name="corpo"> 
 	        <h:form>
 	                <h:panelGrid  style="width:25%; margin-left: 18%; background-color:white; border-radius:5px;">
 	                	<br />
@@ -52,7 +127,7 @@
 	            </h:form>
 	            <hr style="color:#DEE2E2;"/>
 	            <br/><br/>
-    </ui:define>
- </ui:composition>
+    </ui:insert>
+   </h:body>
 </html>
 

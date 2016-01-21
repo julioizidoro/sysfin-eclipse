@@ -446,4 +446,19 @@ public class ContasPagarMB implements Serializable{
         Contaspagar contaspagar = (Contaspagar) event.getObject();
         listaContasPagar.add(contaspagar);
     }
+	
+	public String excluir(){
+        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+        contasPagarFacade.excluir(contasPagar.getIdcontasPagar());
+        gerarListaContas();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Excluido com Sucesso", ""));
+        return "";
+     }
+	
+	public void autorizarPagamento(Contaspagar contaspagar){
+        contaspagar.setAutorizarPagamento("S");
+        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+        contaspagar = contasPagarFacade.salvar(contaspagar);
+    }
 }
