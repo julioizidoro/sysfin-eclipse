@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -27,7 +27,7 @@ import br.com.financemate.model.Contaspagar;
 import br.com.financemate.util.Formatacao;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class ContasPagarMB implements Serializable{
 
 	/**
@@ -57,12 +57,24 @@ public class ContasPagarMB implements Serializable{
 	
 	@PostConstruct
 	public void init(){
+		gerarListaCliente();
 		criarConsultaContasPagarInicial();
 		gerarListaContas();
-		gerarListaCliente();
 	}
 	
+
 	
+	public UsuarioLogadoMB getUsuarioLogadoMB() {
+		return usuarioLogadoMB;
+	}
+
+
+
+
+	public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
+		this.usuarioLogadoMB = usuarioLogadoMB;
+	}
+
 	
 	
 	public Date getDataInicio() {
@@ -297,21 +309,6 @@ public class ContasPagarMB implements Serializable{
 
 
 
-
-	public UsuarioLogadoMB getUsuarioLogadoMB() {
-		return usuarioLogadoMB;
-	}
-
-
-
-
-	public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
-		this.usuarioLogadoMB = usuarioLogadoMB;
-	}
-
-
-
-
 	public String verStatus(Contaspagar contaspagar) {
         Date data = new Date();
         String diaData = Formatacao.ConvercaoDataPadrao(data);
@@ -370,8 +367,8 @@ public class ContasPagarMB implements Serializable{
         setDataFinal(Formatacao.ConvercaoStringData(dataTermino));
         sql = " Select v from Contaspagar v where v.dataVencimento>='" + dataInicial + 
                 "' and v.dataVencimento<='" + dataTermino + "' and v.contaPaga='N' ";
-         if (cliente!=null){
-            sql = sql + " and v.cliente.idcliente=" + cliente.getIdcliente();
+         if (usuarioLogadoMB.getCliente()!=null){
+            sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
         }else {
              sql = sql + "  and v.cliente.visualizacao='Operacional' ";
          }
@@ -461,4 +458,13 @@ public class ContasPagarMB implements Serializable{
         ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
         contaspagar = contasPagarFacade.salvar(contaspagar);
     }
+	
+	public String novaPesquisa() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("pesquisarConsContaPagar");
+        return "";
+    }
+	
+	
 }

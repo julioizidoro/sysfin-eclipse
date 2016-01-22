@@ -9,24 +9,27 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.UploadedFile;
 
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Planocontas;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class CadContasPagarMB implements Serializable{
 
 	/**
@@ -39,11 +42,25 @@ public class CadContasPagarMB implements Serializable{
     private List<Planocontas> listaPlanoContas;
     private List<Cliente> listaCliente;
     private Planocontas planoContas;
-    private Cliente cliente = new Cliente();
+    private Cliente cliente;
     private Banco banco;
     private List<Banco> listaBanco;
-    
+    private UploadedFile file;
+    private Cptransferencia cptransferencia;
+    Boolean selecionada = false;
 	
+	public Boolean getSelecionada() {
+		return selecionada;
+	}
+
+
+
+	public void setSelecionada(Boolean selecionada) {
+		this.selecionada = selecionada;
+	}
+
+
+
 	@PostConstruct
 	public void init(){
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -54,6 +71,7 @@ public class CadContasPagarMB implements Serializable{
         gerarListaPlanoContas();
         if (contaPagar == null) { 
 			contaPagar = new Contaspagar();
+			cliente = new Cliente();
 		}else{
             cliente = contaPagar.getCliente();
             planoContas = contaPagar.getPlanocontas();
@@ -61,6 +79,20 @@ public class CadContasPagarMB implements Serializable{
             gerarListaBanco();
         }
 	}
+	
+	
+
+	public Cptransferencia getCptransferencia() {
+		return cptransferencia;
+	}
+
+
+
+	public void setCptransferencia(Cptransferencia cptransferencia) {
+		this.cptransferencia = cptransferencia;
+	}
+
+
 
 	public Contaspagar getContaPagar() {
 		return contaPagar;
@@ -126,6 +158,16 @@ public class CadContasPagarMB implements Serializable{
 		this.listaBanco = listaBanco;
 	}
 	
+	
+	
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+
 	public String cancelar(){
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
@@ -179,6 +221,18 @@ public class CadContasPagarMB implements Serializable{
     }
 	
 	public void salvar(){
+		ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+		contaPagar.setBanco(banco);
+		contaPagar.setPlanocontas(planoContas);
+		contaPagar.setCliente(cliente);
+		contaPagar = contasPagarFacade.salvar(contaPagar);
+		if (cptransferencia!=null){
+	    	salvarTransferencia();
+	    }
+		RequestContext.getCurrentInstance().closeDialog(contaPagar);
+    }
+	
+	public void salvarRepetir(){
 		String mensagem = validarDados();
 		if (mensagem==null) {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
@@ -186,12 +240,27 @@ public class CadContasPagarMB implements Serializable{
 	        contaPagar.setPlanocontas(planoContas);
 	        contaPagar.setCliente(cliente);
 	        contaPagar = contasPagarFacade.salvar(contaPagar);
-	        RequestContext.getCurrentInstance().closeDialog(contaPagar);
+	        Contaspagar copia = new Contaspagar();
+	        copia = contaPagar;
+	        contaPagar = new Contaspagar();
+	        contaPagar.setBanco(copia.getBanco());
+	        contaPagar.setCliente(copia.getCliente());
+	        contaPagar.setPlanocontas(copia.getPlanocontas());
+	       if (cptransferencia!=null){
+	    	   salvarTransferencia();
+	       }
 		}else{
 			FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(mensagem, ""));
 		}
     }
+	
+	public void salvarTransferencia(){
+		CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
+		cptransferencia.setContaspagar(contaPagar);
+		cpTransferenciaFacade.salvar(cptransferencia);
+ 	    cptransferencia = null;
+	}
 	
 	public String validarDados(){
 		String mensagem = "";
@@ -204,10 +273,37 @@ public class CadContasPagarMB implements Serializable{
 		if (contaPagar.getDescricao().equalsIgnoreCase("")) {
 			mensagem = mensagem + "Descrição não informado \r\n";
 		}
+		if (contaPagar.getDataVencimento().equals(null)) {
+			mensagem = mensagem + "Data de Vencimento não informada \r\n";
+		}
+		if (contaPagar.getFormaPagamento().equalsIgnoreCase("")) {
+			mensagem = mensagem + "Forma de Pagamento não selecionada \r\n";
+		}
 		if (contaPagar.getBanco().equals(null)) {
 			mensagem = mensagem + "Conta não selecionada \r\n";
 		}
 		
+		
+		
 		return mensagem;
+	}
+	
+	public void upload() {
+        if(file != null) {
+            FacesMessage message = new FacesMessage("Anexado com Sucesso", file.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+	
+	public void transferenciaBancaria(){
+		selecionada = false;
+		if (contaPagar.getFormaPagamento()!=null){
+			if (contaPagar.getFormaPagamento().equalsIgnoreCase("transferencia")){
+				selecionada=true;
+			    cptransferencia = new Cptransferencia();
+			}else {
+				cptransferencia = null;
+			}
+		}
 	}
 }

@@ -92,7 +92,7 @@ public class UsuarioLogadoMB implements Serializable{
                         nomeCliente = cliente.getNomeFantasia();
                     } else {
                         cliente = null;
-                        nomeCliente = "FINANCEMATE - Assessoria Cont√°bil & Financeira";
+                        nomeCliente = "FINANCEMATE - Assessoria Cont·bil & Financeira";
                     }
                     return "principal";
                 }

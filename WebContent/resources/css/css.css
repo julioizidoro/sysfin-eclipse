@@ -42,18 +42,20 @@ h1 {
 .menu2 a:hover{
     background:black;
     color:white;
-    
+    font-family: "Pacifico",cursive;
 }
 
 .menu2 a{
     color:#fff; 
     display:block;
+    font-family: "Pacifico",cursive;
 }
 
 .menu2{
 	position: fixed;
 	height: 50%;
 	width: 16%;
+	font-family: "Pacifico",cursive;
 }
 
 .menuLateral{

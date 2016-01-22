@@ -15,13 +15,14 @@
             <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
 				<img src="../../resources/img/iconefiltros.ico" style="border:solid; border-width: 1px; border-color: black;"/>
             </p:commandLink>
-            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Pesquisar">
+            <p:commandLink   action="#{contasPagarMB.novaPesquisa()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Pesquisar">
 				<img src="../../resources/img/iconelupa.ico" style="border:solid; border-width: 1px; border-color: black;"/>
             </p:commandLink>
-            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Pesquisar">
+            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel">
 				<img src="../../resources/img/iconeexport.ico" style="border:solid; border-width: 1px; border-color: black;"/>
+				<p:dataExporter type="xls" target="contasPagar" fileName="contas" />
             </p:commandLink>
-            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Pesquisar">
+            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 				<img src="../../resources/img/iconeImprimir.ico" style="border:solid; border-width: 1px; border-color: black; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
             </p:commandLink>
             <br /><br />   
