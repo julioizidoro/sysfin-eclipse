@@ -114,7 +114,8 @@
              	<p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
              </h:panelGrid>
              <h:panelGrid style="margin-left: 17%; margin-top:-4.5%;"> 
-	              <p:selectOneMenu id="idPlanoConta" class="left3" style="width:300px;"  value="#{cadContasPagarMB.planoContas}" converter="PlanoContasConverter">
+	              <p:selectOneMenu id="idPlanoConta" class="left3" style="width:300px;"  value="#{cadContasPagarMB.planoContas}" converter="PlanoContasConverter"
+	              					 filter="true" filterMatchMode="startsWith" panelStyle="width:180px">
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
 	                    <f:selectItems value="#{cadContasPagarMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
 	                    <f:attribute name="listaPlanoConta" value="#{cadContasPagarMB.listaPlanoContas}"/>
