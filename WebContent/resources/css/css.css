@@ -14,6 +14,10 @@ border{
 	width: 50%;
 }
 
+.semborda{
+	border: none;
+}
+
 h1 {
     margin: 10px 20px 10px 20px;
 }
@@ -43,18 +47,21 @@ h1 {
     background:black;
     color:white;
     font-family: "Pacifico",cursive;
+    transition: all 0.4s ease 0s;
 }
 
 .menu2 a{
     color:#fff; 
     display:block;
     font-family: "Pacifico",cursive;
+        transition: all 0.4s ease 0s;
 }
 
 .menu2{
 	position: fixed;
 	height: 50%;
 	width: 16%;
+	    transition: all 0.4s ease 0s;
 	font-family: "Pacifico",cursive;
 }
 
@@ -131,6 +138,7 @@ h1 {
  	 background: black !important;
  	 border-color: black !important;
  	 border: transparent !important;
+ 	 font: normal;
  } 
  
  
@@ -182,6 +190,11 @@ div.jqplot-table-legend-swatch{
 
 
 .ui-splitbutton{
+	background: transparent;
+	border: none;
+}
+
+.ui-splitbutton li a:hover{
 	background: transparent;
 	border: none;
 } 
@@ -819,7 +832,7 @@ button.cadastrarrelatorio {
    margin-left:14%;
     font-size:28px;
     text-align: right; 
-    color: #CFCFCF;
+    color: #B9B9B9;
     font-family: 'Pacifico',cursive;
     font: bold;
 }

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 
 import br.com.financemate.connection.ConectionFactory;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
 
 public class CpTransferenciaDao {
@@ -17,5 +18,13 @@ public class CpTransferenciaDao {
         //fechando uma transação
         manager.getTransaction().commit();
         return cptransferencia;
+    }
+	
+	public void excluir(int idcpTranferencia) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Contaspagar transferencia = manager.find(Contaspagar.class, idcpTranferencia);
+        manager.remove(transferencia);
+        manager.getTransaction().commit();
     }
 }

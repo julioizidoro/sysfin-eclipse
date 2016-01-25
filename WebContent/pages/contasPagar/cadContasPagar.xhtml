@@ -36,7 +36,7 @@
                     <p:ajax event="change" listener="#{cadContasPagarMB.gerarListaBanco()}" update="idconta"/>
                 </p:selectOneMenu> 
                 </h:panelGrid> 
-             <h:panelGrid columns="2" style="margin-left:70%; margin-top:-6.2%;"> 
+             <h:panelGrid columns="2" style="margin-left:68.5%; margin-top:-6.2%;"> 
 	            <p:outputLabel value="Data Envio" for="dataEnv" class="left3" /> 
 	            
 	            <p:inputMask id="dataEnv" mask="99/99/9999" size="13"  class="left3" value="#{cadContasPagarMB.contaPagar.dataEnvio}"   style="margin-left: 2%;">
@@ -69,21 +69,21 @@
             <h:panelGrid style="margin-left: 26%; margin-top:-5%;"> 
             	<p:outputLabel value="Descrição" for="descricao" class="left3" style="margin-left: 9%;"/> 
             </h:panelGrid>
-            <h:panelGrid style="margin-left:37.1%; margin-top:-4.5%;">   
-                <p:inputText rows="3" size="58" cols="68" id="descricao"  class="left3"  value="#{cadContasPagarMB.contaPagar.descricao}"/>
+            <h:panelGrid style="margin-left:36.7%; margin-top:-4.5%;">   
+                <p:inputText rows="3" size="57" cols="68" id="descricao"  class="left3"  value="#{cadContasPagarMB.contaPagar.descricao}"/>
             </h:panelGrid>
             <br />
             <h:panelGrid columns="2" style="margin-left:1%;">
                 <p:outputLabel value="Vencimento" for="dataVenc" class="left3"/>
                 
-                <p:inputMask id="dataVenc"   mask="99/99/9999" size="12"  class="left3"  value="#{cadContasPagarMB.contaPagar.dataVencimento}" style="margin-left: 2%;">
+                <p:inputMask id="dataVenc"   mask="99/99/9999" size="11"  class="left3"  value="#{cadContasPagarMB.contaPagar.dataVencimento}" style="margin-left: 2%;">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
             </h:panelGrid> 
-            <h:panelGrid style="margin-left:32%; margin-top:-5%;">
+            <h:panelGrid style="margin-left:31%; margin-top:-5%;">
              	<p:outputLabel value="Conta" for="idconta" class="left3"/>    
             </h:panelGrid>
-            <h:panelGrid style="margin-left:39%; margin-top:-4.8%;">  
+            <h:panelGrid style="margin-left:38%; margin-top:-4.8%;">  
 	              <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{cadContasPagarMB.banco}"  converter="BancoConverter"
 	                                 filter="true" filterMatchMode="startsWith" panelStyle="width:150px">
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
@@ -91,10 +91,10 @@
 	                    <f:attribute name="listaBanco" value="#{cadContasPagarMB.listaBanco}" />
 	                </p:selectOneMenu>  
              </h:panelGrid>    
-             <h:panelGrid style="margin-left:65.5%; margin-top:-5.5%;">   
+             <h:panelGrid style="margin-left:64.5%; margin-top:-5.5%;">   
                 <p:outputLabel value="Forma" for="formaPaga" class="left2"/>
              </h:panelGrid>   
-             <h:panelGrid style="margin-left:72.7%; margin-top:-4.8%;">   
+             <h:panelGrid style="margin-left:71.7%; margin-top:-4.8%;">   
                 <p:selectOneMenu id="formaPaga" class="left5" style="width:156px"  value="#{cadContasPagarMB.contaPagar.formaPagamento}">
                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                     <f:selectItem itemLabel="Cartão" itemValue="Cartão" />  
@@ -114,7 +114,7 @@
              	<p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
              </h:panelGrid>
              <h:panelGrid style="margin-left: 17%; margin-top:-4.5%;"> 
-	              <p:selectOneMenu id="idPlanoConta" class="left3" style="width:300px;"  value="#{cadContasPagarMB.planoContas}" converter="PlanoContasConverter"
+	              <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadContasPagarMB.planoContas}" converter="PlanoContasConverter"
 	              					 filter="true" filterMatchMode="startsWith" panelStyle="width:200px">
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
 	                    <f:selectItems value="#{cadContasPagarMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
@@ -122,9 +122,9 @@
 	                    
 	              </p:selectOneMenu> 
              </h:panelGrid>
-             <h:panelGrid columns="2" style="margin-left:68.1%; margin-top:-6%;">
+             <h:panelGrid columns="2" style="margin-left:71%; margin-top:-6%;">
              	<p:outputLabel value="Competência" for="competencia" class="left5"/> 
-             	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadContasPagarMB.contaPagar.competencia}" size="12" mask="99/9999"  class="left1"/>
+             	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadContasPagarMB.contaPagar.competencia}" size="8" mask="99/9999"  class="left1"/>
              </h:panelGrid>
              <br />
              <h:panelGrid columns="2" style="margin-left:1%;">
@@ -133,14 +133,15 @@
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
              </h:panelGrid>
-             <h:panelGrid columns="2" style="margin-left:67%; margin-top:-6%;">
+             <h:panelGrid columns="2" style="margin-left:65.9%; margin-top:-6%;">
                 <p:outputLabel value="Compensação" for="dataComp" class="left1" style="margin-left: 2.5%;"/>
                 <p:inputMask style="margin-left:2%;" id="dataComp"  mask="99/99/9999" size="12" maxlength="15" class="left1" value="#{cadContasPagarMB.contaPagar.dataCompensacao}">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
              </h:panelGrid>
+             <hr />
              <h:panelGrid id="idtransferencia" rendered="#{cadContasPagarMB.selecionada}">
-	             <hr />
+	             
 	             <br />
 	             <h:panelGrid style="margin-left:1%;">
 	             	<h:outputLabel value="Banco" class="left5"/>
@@ -157,30 +158,34 @@
 	             <h:panelGrid style="margin-left:78%; margin-top:-7%;">
 	             	<h:outputLabel value="Conta" />
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:84%; margin-top:-8.9%;">
-	             	<p:inputText id="conta" value="#{cadContasPagarMB.cptransferencia.conta}" size="10"/>
+	             <h:panelGrid style="margin-left:84.5%; margin-top:-8.9%;">
+	             	<p:inputText id="conta" value="#{cadContasPagarMB.cptransferencia.conta}" size="9"/>
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:1%;">
 	             	<h:outputLabel value="Beneficiário" />
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:11.5%; margin-top:-5.5%;">
-	             	<p:inputText id="beneficiario" value="#{cadContasPagarMB.cptransferencia.beneficiario}" size="38"/>
+	             	<p:inputText id="beneficiario" value="#{cadContasPagarMB.cptransferencia.beneficiario}" size="36"/>
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:58%; margin-top:-5.5%;">
+	             <h:panelGrid style="margin-left:57%; margin-top:-5.5%;">
 	             	<h:outputLabel value="CPF/CNPJ" />
 	             </h:panelGrid> 
-	             <h:panelGrid style="margin-left:67.5%; margin-top:-7.5%;">
+	             <h:panelGrid style="margin-left:66.5%; margin-top:-7.5%;">
 	             	<p:inputText id="cpfcnpj" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}" size="27"/>
 	             </h:panelGrid>
-	         </h:panelGrid>
-             <hr /> 
-                <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadContasPagarMB.salvar()}" >
+	             <hr /> 
+	         </h:panelGrid>  
+                <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none"   action="#{cadContasPagarMB.salvar()}" >
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                 </p:commandLink>
+                <p:splitButton value="" actionListener="#" style="background:transparent; border:none">
+        			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}"  icon="ui-icon-arrowrefresh-1-w" />
+        			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-close" />
+    			</p:splitButton>
                 <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
-                 
+                  
         </h:form>
     </h:body>
 </html>

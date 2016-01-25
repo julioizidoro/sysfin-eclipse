@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.CpTransferenciaDao;
 import br.com.financemate.model.Cptransferencia;
 
@@ -19,6 +20,15 @@ CpTransferenciaDao cpTransferenciaDao;
         } catch (SQLException ex) {
             Logger.getLogger(ContasPagarFacade.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+    
+    public void excluir(int idcpTranferencia) {
+        cpTransferenciaDao = new CpTransferenciaDao();
+        try {
+            cpTransferenciaDao.excluir(idcpTranferencia);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasReceberFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

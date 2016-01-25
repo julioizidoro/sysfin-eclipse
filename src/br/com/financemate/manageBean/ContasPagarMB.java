@@ -16,14 +16,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.util.Formatacao;
 
 @Named
@@ -54,6 +57,7 @@ public class ContasPagarMB implements Serializable{
 	    private Date dataLiberacao;
 	    @Inject
 	    private UsuarioLogadoMB usuarioLogadoMB;
+	    private Cptransferencia cpTransferencia;
 	
 	@PostConstruct
 	public void init(){
@@ -62,8 +66,20 @@ public class ContasPagarMB implements Serializable{
 		gerarListaContas();
 	}
 	
-
 	
+	
+	public Cptransferencia getCpTransferencia() {
+		return cpTransferencia;
+	}
+
+
+
+	public void setCpTransferencia(Cptransferencia cpTransferencia) {
+		this.cpTransferencia = cpTransferencia;
+	}
+
+
+
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
 		return usuarioLogadoMB;
 	}
@@ -434,7 +450,7 @@ public class ContasPagarMB implements Serializable{
 	
 	public String novaConta() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 500);
+        options.put("contentWidth", 600);
         RequestContext.getCurrentInstance().openDialog("cadContasPagar");
         return "";
     }
@@ -446,6 +462,10 @@ public class ContasPagarMB implements Serializable{
 	
 	public String excluir(){
         ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+        if (contasPagar.getFormaPagamento().equalsIgnoreCase("Transferencia")) {
+			CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
+			cpTransferenciaFacade.excluir(cpTransferencia.getIdcptransferencia());
+		}
         contasPagarFacade.excluir(contasPagar.getIdcontasPagar());
         gerarListaContas();
         FacesContext context = FacesContext.getCurrentInstance();
@@ -465,6 +485,16 @@ public class ContasPagarMB implements Serializable{
         RequestContext.getCurrentInstance().openDialog("pesquisarConsContaPagar");
         return "";
     }
+	
+	public String editar(Contaspagar contaspagar){
+        if (contaspagar!=null){
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("contapagar", contaspagar);     
+            RequestContext.getCurrentInstance().openDialog("cadContasPagar");
+        }
+        return "";
+    } 
 	
 	
 }

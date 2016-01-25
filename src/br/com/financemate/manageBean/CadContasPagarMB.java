@@ -49,17 +49,6 @@ public class CadContasPagarMB implements Serializable{
     private Cptransferencia cptransferencia;
     Boolean selecionada = false;
 	
-	public Boolean getSelecionada() {
-		return selecionada;
-	}
-
-
-
-	public void setSelecionada(Boolean selecionada) {
-		this.selecionada = selecionada;
-	}
-
-
 
 	@PostConstruct
 	public void init(){
@@ -80,6 +69,15 @@ public class CadContasPagarMB implements Serializable{
         }
 	}
 	
+	public Boolean getSelecionada() {
+		return selecionada;
+	}
+
+
+
+	public void setSelecionada(Boolean selecionada) {
+		this.selecionada = selecionada;
+	}
 	
 
 	public Cptransferencia getCptransferencia() {
@@ -221,34 +219,62 @@ public class CadContasPagarMB implements Serializable{
     }
 	
 	public void salvar(){
-		ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 		contaPagar.setBanco(banco);
 		contaPagar.setPlanocontas(planoContas);
 		contaPagar.setCliente(cliente);
-		contaPagar = contasPagarFacade.salvar(contaPagar);
-		if (cptransferencia!=null){
-	    	salvarTransferencia();
-	    }
-		RequestContext.getCurrentInstance().closeDialog(contaPagar);
+		contaPagar.setContaPaga("N");
+		String mensagem = validarDados();
+		if (mensagem!=null) {
+			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+			contaPagar = contasPagarFacade.salvar(contaPagar);
+			if (cptransferencia!=null){
+		    	salvarTransferencia();
+		    }
+			RequestContext.getCurrentInstance().closeDialog(contaPagar);
+		}else{
+			FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(mensagem, ""));
+		}
+		
     }
 	
 	public void salvarRepetir(){
+        contaPagar.setBanco(banco);
+        contaPagar.setPlanocontas(planoContas);
+        contaPagar.setCliente(cliente);
+        contaPagar.setContaPaga("N");
 		String mensagem = validarDados();
-		if (mensagem==null) {
+		if (mensagem!=null) {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-	        contaPagar.setBanco(banco);
-	        contaPagar.setPlanocontas(planoContas);
-	        contaPagar.setCliente(cliente);
 	        contaPagar = contasPagarFacade.salvar(contaPagar);
+	        if (cptransferencia!=null){
+	        	salvarTransferencia();
+	        	Cptransferencia copiaTranferencia = new Cptransferencia();
+	        	copiaTranferencia = cptransferencia;
+	        	cptransferencia = new Cptransferencia();
+	        	cptransferencia.setBanco(copiaTranferencia.getBanco());
+	        	cptransferencia.setAgencia(copiaTranferencia.getAgencia());
+	        	cptransferencia.setConta(copiaTranferencia.getConta());
+	        	cptransferencia.setBeneficiario(copiaTranferencia.getBeneficiario());
+	        	cptransferencia.setCpfcnpj(copiaTranferencia.getCpfcnpj());
+		    }
 	        Contaspagar copia = new Contaspagar();
 	        copia = contaPagar;
 	        contaPagar = new Contaspagar();
 	        contaPagar.setBanco(copia.getBanco());
 	        contaPagar.setCliente(copia.getCliente());
 	        contaPagar.setPlanocontas(copia.getPlanocontas());
-	       if (cptransferencia!=null){
-	    	   salvarTransferencia();
-	       }
+	        contaPagar.setDataEnvio(copia.getDataEnvio());
+	        contaPagar.setFormaPagamento(copia.getFormaPagamento());
+	        contaPagar.setFornecedor(copia.getFornecedor());
+	        contaPagar.setValor(copia.getValor());
+	        contaPagar.setDescricao(copia.getDescricao());
+	        contaPagar.setDataAgendamento(copia.getDataAgendamento());
+	        contaPagar.setDataCompensacao(copia.getDataCompensacao());
+	        contaPagar.setCompetencia(copia.getCompetencia());
+	        contaPagar.setNumeroDocumento(copia.getNumeroDocumento());
+	        contaPagar.setDataVencimento(copia.getDataVencimento());
+	        
 		}else{
 			FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(mensagem, ""));
@@ -273,15 +299,16 @@ public class CadContasPagarMB implements Serializable{
 		if (contaPagar.getDescricao().equalsIgnoreCase("")) {
 			mensagem = mensagem + "Descrição não informado \r\n";
 		}
+		if (contaPagar.getBanco().equals(null)) {
+			mensagem = mensagem + "Conta não selecionada \r\n";
+		}
 		if (contaPagar.getDataVencimento().equals(null)) {
 			mensagem = mensagem + "Data de Vencimento não informada \r\n";
 		}
 		if (contaPagar.getFormaPagamento().equalsIgnoreCase("")) {
 			mensagem = mensagem + "Forma de Pagamento não selecionada \r\n";
 		}
-		if (contaPagar.getBanco().equals(null)) {
-			mensagem = mensagem + "Conta não selecionada \r\n";
-		}
+		
 		
 		
 		
@@ -306,4 +333,5 @@ public class CadContasPagarMB implements Serializable{
 			}
 		}
 	}
+	
 }
