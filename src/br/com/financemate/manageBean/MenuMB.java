@@ -28,5 +28,9 @@ public class MenuMB implements Serializable{
 		return "principal";
 	}
 	
+	public String FinanceMate(){
+		return "http://www.financemate.com.br/";
+	}
+	
 
 }

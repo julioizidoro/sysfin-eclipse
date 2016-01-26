@@ -464,6 +464,12 @@ public class ContasPagarMB implements Serializable{
         ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
         if (contasPagar.getFormaPagamento().equalsIgnoreCase("Transferencia")) {
 			CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
+			try {
+				cpTransferenciaFacade.consultar(cpTransferencia.getIdcptransferencia());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			cpTransferenciaFacade.excluir(cpTransferencia.getIdcptransferencia());
 		}
         contasPagarFacade.excluir(contasPagar.getIdcontasPagar());
@@ -496,5 +502,10 @@ public class ContasPagarMB implements Serializable{
         return "";
     } 
 	
-	
+	public String novaImpressao() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("imprimir"); 
+        return "";
+    }
 }

@@ -27,4 +27,12 @@ public class CpTransferenciaDao {
         manager.remove(transferencia);
         manager.getTransaction().commit();
     }
+	
+	public Cptransferencia consultar(int idTransferencia) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Cptransferencia transferencia = manager.find(Cptransferencia.class, idTransferencia);
+        manager.getTransaction().commit();
+        return transferencia;
+    }
 }

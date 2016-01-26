@@ -41,6 +41,24 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>Imprimir</from-outcome>
+			<to-view-id>/pages/contasPagar/imprimir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>FinanceMate</from-outcome>
+			<to-view-id>http://www.financemate.com.br/</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
 	<application>
         <action-listener>
             org.primefaces.application.DialogActionListener

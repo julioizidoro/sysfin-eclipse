@@ -10,7 +10,7 @@
 	<h:form id="frmConsultaPagar">
 		<br/> 
 			<p:commandLink   action="#{contasPagarMB.novaConta()}" style="margin-left:84.5%;text-decoration:none;" title="Novo Lançamento">
-				<img src="../../resources/img/iconeplusS.ico" style="border:solid; border-width: 1px; border-color: black; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
+				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
             </p:commandLink>   
             <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
 				<img src="../../resources/img/iconefiltrosSS.ico" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
@@ -18,11 +18,11 @@
             <p:commandLink   action="#{contasPagarMB.novaPesquisa()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Pesquisar">
 				<img src="../../resources/img/iconelupaS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
             </p:commandLink> 
-            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel">
+            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
 				<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 				<p:dataExporter type="xls" target="idTabelaContaPagar" fileName="contasPagar" />
             </p:commandLink>
-            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
+            <p:commandLink   action="#{contasPagarMB.novaImpressao()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 				<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
             </p:commandLink>   
             <br /><br />
@@ -70,18 +70,18 @@
 			            <br />
 			              <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasPagarMB.totalVencidas}"  readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -6.8%; background-color:white; border-radius:5px; border-left:solid; border-left-color:green;">
+	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:green;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Vencer</tt>
 			            <br/>
 			            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasPagarMB.totalVencer}"  readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid style="width:20%;  margin-left:77%; margin-top: -6.7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:blue;">
+	        		<h:panelGrid style="width:20%;  margin-left:77%; margin-top: -7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:blue;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Pagar</tt>
 			            <br/>
 			            <h:outputText id="contasPagar" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasPagarMB.total}"  readonly="true"/>
-			            
+			             
 	        		</h:panelGrid>
 	        		<br />
    </h:form>
