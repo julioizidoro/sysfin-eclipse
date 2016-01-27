@@ -133,11 +133,11 @@ public class ImprimirRelatorioMB implements Serializable{
 		String caminhoRelatorio = "";
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		if (relatorio.equalsIgnoreCase("Fluxo de Caixa")) {
-			caminhoRelatorio = "reports/Relatórios/reportFluxoCaixa.jasper";
+			caminhoRelatorio = "reports/Relatorios/reportFluxoCaixa.jasper";
 		}else if(relatorio.equalsIgnoreCase("Pagamentos")){
-			caminhoRelatorio = "reports/Relatórios/reportPagamento01.jasper";
+			caminhoRelatorio = "reports/Relatorios/reportPagamentos01.jasper";
 		}else{
-			caminhoRelatorio = "reports/Relatórios/reportPagamentoVencidas.jasper";
+			caminhoRelatorio = "reports/Relatorios/reportPagamentoVencidas.jasper";
 		}
         parameters.put("sql",gerarSql());
 		File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));

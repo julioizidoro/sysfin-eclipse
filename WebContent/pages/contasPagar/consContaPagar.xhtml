@@ -8,16 +8,15 @@
 <ui:composition template="/pages/templates/default.xhtml">
 	<ui:define name="corpo">
 	<h:form id="frmConsultaPagar">
-		<br/> 
-			<p:commandLink   action="#{contasPagarMB.novaConta()}" style="margin-left:84.5%;text-decoration:none;" title="Novo Lançamento">
+		<br/>  
+			<p:commandLink   action="#{contasPagarMB.novaConta()}" style="margin-left:87.3%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
-            </p:commandLink>   
-            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
-				<img src="../../resources/img/iconefiltrosSS.ico" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-            </p:commandLink> 
-            <p:commandLink   action="#{contasPagarMB.novaPesquisa()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Pesquisar">
-				<img src="../../resources/img/iconelupaS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-            </p:commandLink> 
+				<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="idTabelaContaPagar"/>
+            </p:commandLink>
+            <p:commandLink id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="idImagemFiltro" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
+				<img  src="#{contasPagarMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+           		<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogFiltrar}" update="idTabelaContaPagar"/>
+            </p:commandLink>
             <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
 				<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 				<p:dataExporter type="xls" target="idTabelaContaPagar" fileName="contasPagar" />
@@ -29,8 +28,8 @@
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="idTabelaContaPagar"/>
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{mensagem.autorizar()}" />
-                        <p:menuitem value="Liberar"  icon=" ui-icon-check"  action="#"  />
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}"  />
+                        <p:menuitem value="Liberar"  icon=" ui-icon-check"  action="#{contasPagarMB.novaLiberacao()}"  />
+                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}"/>
                     </p:contextMenu>
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
@@ -39,7 +38,7 @@
                             <p:commandLink>
                                 <img src="#{contasPagarMB.verStatus(contasPagar)}" />
                             </p:commandLink>
-                        </p:column>
+                        </p:column>  
                         <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; background:#E7EBEB; color:black; border:none;">
                             <h:outputText  value="#{contasPagar.dataVencimento}" style="margin-left:33%;" >
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
@@ -61,6 +60,9 @@
                             <h:outputText value="#{contasPagar.valor}" >
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
+                        </p:column>
+                        <p:column style="width:28px; background:#E7EBEB; color:black; border:none;">
+                            <p:selectBooleanCheckbox value="#{contasPagar.selecionado}"/>
                         </p:column>
                     </p:dataTable>
                     <br />

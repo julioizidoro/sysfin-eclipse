@@ -24,9 +24,11 @@ import org.primefaces.event.SelectEvent;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
+import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
+import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
 
 @Named
@@ -58,16 +60,66 @@ public class ContasPagarMB implements Serializable{
 	    @Inject
 	    private UsuarioLogadoMB usuarioLogadoMB;
 	    private Cptransferencia cpTransferencia;
+	    private Planocontas planocontas;
+	    private String descricao;
+	    private List<Planocontas> listaPlanoContas;
+		private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
 	
 	@PostConstruct
 	public void init(){
 		gerarListaCliente();
 		criarConsultaContasPagarInicial();
 		gerarListaContas();
+		gerarListaPlanoContas();
 	}
 	
 	
+	public List<Planocontas> getListaPlanoContas() {
+		return listaPlanoContas;
+	}
+
 	
+	public void setListaPlanoContas(List<Planocontas> listaPlanoContas) {
+		this.listaPlanoContas = listaPlanoContas;
+	}
+
+
+
+
+	public String getImagemFiltro() {
+		return imagemFiltro;
+	}
+
+
+	public void setImagemFiltro(String imagemFiltro) {
+		this.imagemFiltro = imagemFiltro;
+	}
+
+
+	public Planocontas getPlanocontas() {
+		return planocontas;
+	}
+
+
+
+	public void setPlanocontas(Planocontas planocontas) {
+		this.planocontas = planocontas;
+	}
+
+
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+
+
 	public Cptransferencia getCpTransferencia() {
 		return cpTransferencia;
 	}
@@ -485,11 +537,10 @@ public class ContasPagarMB implements Serializable{
         contaspagar = contasPagarFacade.salvar(contaspagar);
     }
 	
-	public String novaPesquisa() {
+	public void novoFiltro() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 500);
-        RequestContext.getCurrentInstance().openDialog("pesquisarConsContaPagar");
-        return "";
+        RequestContext.getCurrentInstance().openDialog("filtrarConsContaPagar");
     }
 	
 	public String editar(Contaspagar contaspagar){
@@ -508,4 +559,111 @@ public class ContasPagarMB implements Serializable{
         RequestContext.getCurrentInstance().openDialog("imprimir"); 
         return "";
     }
+	
+	 public String novaLiberacao() {
+		 totalLiberadas = "0.00";
+		 dataLiberacao = new Date();
+		 float valorTotal = 0.0f;
+		 listaContasSelecionadas = new ArrayList<Contaspagar>();
+		 for (int i = 0; i < listaContasPagar.size(); i++) {
+			 if (listaContasPagar.get(i).isSelecionado()) {
+				 listaContasSelecionadas.add(listaContasPagar.get(i));
+				 valorTotal = valorTotal + listaContasPagar.get(i).getValor();
+			 }
+	            
+		 }
+		 totalLiberadas = Formatacao.foramtarFloatString(valorTotal);
+		 Map<String, Object> options = new HashMap<String, Object>();
+		 options.put("contentWidth", 600);
+		 RequestContext.getCurrentInstance().openDialog("liberarContasPagar");
+		 return "";
+	 }
+	 
+	 public void filtrar(){
+		 
+		 sql = "Select v from Contaspagar v where ";
+		 if (liberadas){
+			 sql = sql + " v.contaPaga='S' and ";
+		 }else sql = sql + " v.contaPaga='N' and ";
+		 if (autorizadas){
+			 sql = sql + " v.autorizarPagamento='S' and ";
+		 }
+		 if (cliente!=null){
+			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
+		 }else {
+			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
+	  	     }
+		 if ((dataInicio!=null) && (dataFinal!=null)){
+			 if (liberadas){
+				 sql = sql + "v.dataLiberacao>='" + Formatacao.ConvercaoDataSql(dataInicio) + 
+						 "' and v.dataLiberacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+						 "' order by v.dataLiberacao";
+			 }else {
+				 sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicio) + 
+						 "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+						 "' order by v.dataVencimento";
+			 }
+		 }
+		 gerarListaContas();
+		 RequestContext.getCurrentInstance().closeDialog(sql);
+	 }
+	 
+	 public void gerarListaPlanoContas() {
+		 PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+		 try {
+			 listaPlanoContas = planoContasFacade.listar();
+			 if (listaPlanoContas == null) {
+				 listaPlanoContas = new ArrayList<Planocontas>();
+			 }
+		 } catch (Exception ex) {
+			 Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+			 mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
+		 }
+	        
+	 }
+	 
+	 public void retornoDialogFiltrar(SelectEvent event) {
+	        String sql = (String) event.getObject();
+	        gerarListaContaas(sql);
+	 }
+	 
+	 public void gerarListaContaas(String sql) {
+	        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+	        try {
+	            listaContasPagar = contasPagarFacade.listar(sql);
+	            if (listaContasPagar == null) {
+	                listaContasPagar = new ArrayList<Contaspagar>();
+	            }
+	        } catch (SQLException ex) {
+	            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+	            mostrarMensagem(ex, "Erro a listar contas a pagar", "Erro");
+	        }
+	        calcularTotal();
+	    }
+	 
+	 public String coresFiltrar(){
+		if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVerde.ico")) {
+			novoFiltro();
+			imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
+		}else if(imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")){
+			criarConsultaContasPagarInicial();
+			gerarListaContas();
+			imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+		}
+		return "";
+	 } 
+	  
+	 public String limparConsulta(){
+		 try {
+			 ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+			 listaContasPagar = contasPagarFacade.listar(sql);
+			 setLiberadas(false);
+			 setAutorizadas(false);
+		 } catch (SQLException ex) {
+			 Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+			 mostrarMensagem(ex, "Erro Listar Contas", "Erro");
+		 }
+		 return "";
+		 
+	 }
 }
