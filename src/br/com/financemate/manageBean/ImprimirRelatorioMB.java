@@ -21,7 +21,6 @@ import javax.imageio.ImageIO;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 
-import org.kohsuke.rngom.digested.DDataPattern;
 import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.ClienteFacade;
