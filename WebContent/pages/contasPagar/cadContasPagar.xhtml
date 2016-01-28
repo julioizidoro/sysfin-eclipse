@@ -49,16 +49,24 @@
              <h:panelGrid> 
             	<p:outputLabel value="Fornecedor" for="fornecedor"  class="left3" style="margin-left: 9.5%;"/>
              </h:panelGrid>
-            <h:panelGrid style="margin-left:5%; margin-top:-4.5%;">
+            <h:panelGrid style="margin-left:5%; margin-top:-5%;">
                 <p:inputText id="fornecedor" size="20"  class="left3" value="#{cadContasPagarMB.contaPagar.fornecedor}" style="margin-left: 24%;"/>       
             </h:panelGrid> 
-            <h:panelGrid style="margin-left:40%; margin-top:-5%;">
+            <h:panelGrid style="margin-left:40%; margin-top:-5.5%;">
             	<p:outputLabel value="Nº Documento" for="nDocumento"  class="left2"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:54%; margin-top:-4.5%;">     
                 <p:inputText id="nDocumento" size="13"  class="left4" value="#{cadContasPagarMB.contaPagar.numeroDocumento}" style="margin-left: 5px;"/>
             </h:panelGrid>
-            
+            <h:panelGrid style="margin-left:76%; margin-top:-5.8%; width:100px; height:20px;">
+            	<p:fileUpload style="right:-10;"  id="idAnexo" label="#{cadContasPagarMB.nomeAnexo}" value="#{ftpDadosMB.salvarArquivoFTP()}" mode="simple" skinSimple="true" />
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:91%; margin-top:-4.5%;"> 
+            	<p:commandLink title="Confirmar" style="text-decoration: none"   action="#{ftpDadosMB.salvarArquivoFTP()}" >
+                    <img src="../../resources/img/confirmarS.png" width="20" height="20"/>
+                </p:commandLink> 
+            </h:panelGrid>  
+            	
             <br />	
             <h:panelGrid style="margin-left:1%;">
             	 <p:outputLabel value="Valor " for="valor" class="leftvalor"/>
@@ -174,18 +182,19 @@
 	             	<p:inputText id="cpfcnpj" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}" size="27"/>
 	             </h:panelGrid>
 	             <hr /> 
-	         </h:panelGrid>  
-                <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none"   action="#{cadContasPagarMB.salvar()}" >
+	         </h:panelGrid>
+	         <h:panelGrid columns="3" style="margin-left:35%;"> 
+                <p:commandLink title="Confirmar" style="text-decoration: none"   action="#{cadContasPagarMB.salvar()}" >
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                 </p:commandLink>
-                <p:splitButton value="" actionListener="#" style="background:transparent; border:none">
-        			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}"  icon="ui-icon-arrowrefresh-1-w" />
-        			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-close" />
+                <p:splitButton value="" actionListener="#" style="margin-left:-2%; background:transparent; border:none">
+        			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}"  icon="ui-icon-disk" />
+        			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-arrowrefresh-1-w" />
     			</p:splitButton>
                 <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
-                  
+             </h:panelGrid>      
         </h:form>
     </h:body>
 </html>

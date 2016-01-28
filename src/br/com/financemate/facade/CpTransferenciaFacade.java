@@ -1,6 +1,7 @@
 package br.com.financemate.facade;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,5 +37,10 @@ CpTransferenciaDao cpTransferenciaDao;
     public Cptransferencia consultar(int idTransferencia) throws SQLException{
         cpTransferenciaDao = new CpTransferenciaDao();
         return cpTransferenciaDao.consultar(idTransferencia);
+    }
+    
+    public List<Cptransferencia> listarTranferencia(String sql) throws SQLException{
+        cpTransferenciaDao = new CpTransferenciaDao();
+        return cpTransferenciaDao.listarTransferencias(sql);
     }
 }

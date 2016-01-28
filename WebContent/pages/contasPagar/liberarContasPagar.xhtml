@@ -22,18 +22,18 @@
 
             <title  >Liberar Conta</title>
             <br />
-            <p:dataTable id="idLiberacaoConta" var="contasPagar"  rowStyleClass="tabela" class="tabelaselecionar" value="#{contasPagarMB.listaContasSelecionadas}" 
-                          scrollRows="10"  scrollable="true" scrollHeight="160"  rows="10" style="margin-bottom:20px"> 
+            <p:dataTable id="idLiberacaoConta" var="contasPagar"  rowStyleClass="tabela" class="tabelaselecionar" value="#{liberarContasPagarMB.listaContasSelecionadas}" 
+                          scrollRows="10"  scrollable="true" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
                 <p:column headerText="Data Vencimento" style="background:#E7EBEB; color:black; border:none;">
-                    <h:outputText  value="#{contasPagar.dataVencimento}">
+                    <h:outputText  value="#{contasPagar.dataVencimento}" style="margin-left:25%;">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </h:outputText>
+                    </h:outputText> 
                 </p:column>
-                <p:column headerText="Descrição" style="width: 400px; background:#E7EBEB; color:black; border:none;">
-                    <h:outputText value="#{contasPagar.descricao}"/>
+                <p:column headerText="Descrição" style="width: 300px; background:#E7EBEB; color:black; border:none;">
+                    <h:outputText value="#{contasPagar.descricao}" /> 
                 </p:column>
-                <p:column headerText="Valor da Conta"  styleClass="Center" style="background:#E7EBEB; color:black; border:none;">
-                    <h:outputText value="#{contasPagar.valor}">
+                <p:column headerText="Valor da Conta"   style="background:#E7EBEB; color:black; border:none;">
+                    <h:outputText value="#{contasPagar.valor}" style="margin-left:20%;">
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>
@@ -43,21 +43,21 @@
             <br />
             <h:panelGrid columns="2" style="margin-left:20%;">
                 <p:outputLabel value="Data da liberação"  class="left8"/>
-                <p:inputMask id="dataLiberação"   mask="99/99/9999" size="13" maxlength="15" class="left5" value="#{liberacaoContasPagarMB.contasPagar.dataLiberacao}" style="margin-left: 1%;">
+                <p:inputMask id="dataLiberação"   mask="99/99/9999" size="13" maxlength="15" class="left5" value="#{liberarContasPagarMB.dataLibercao()}" readonly="true" style="margin-left: 1%;">
                 	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
             	</p:inputMask>
             </h:panelGrid>
             <h:panelGrid columns="2" style="margin-left:58%; margin-top:-5.5%;">
             	<p:outputLabel value="Valor total a liberar" for="valorTotal" class="left" />
-            	<p:inputText id="valorTotal" size="16" maxlength="100" class="valorliberar" value="#{contasPagarMB.totalLiberadas}"  readonly="true" style="margin-left: 1%;"/>
+            	<p:inputText id="valorTotal" size="16" maxlength="100" class="valorliberar" value="#{liberarContasPagarMB.totalLiberadas}"  readonly="true" style="margin-left: 1%;"/>
             </h:panelGrid>
             <br />
             <hr />
             <br />
-            <p:commandLink title="Pesquisar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{contasPagarMB.filtrar()}" >
-                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            <p:commandLink title="Salvar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{liberarContasPagarMB.salvarContasLiberadas(contasPagar)}" >
+                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/> 
             </p:commandLink>
-            <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
+            <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{liberarContasPagarMB.cancelar()}" >
                  <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>	
         </h:form>

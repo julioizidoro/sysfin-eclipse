@@ -288,6 +288,38 @@ div.jqplot-table-legend-swatch{
 }
 
 
+.ui-fileupload{
+	border: none;
+}
+
+.fileupload-buttonbar{
+	border: none;
+}
+
+.fileinput-button{
+	border: none;
+}
+
+.ui-fileupload start{
+	border: none;
+}
+
+.ui-fileupload cancel{
+	border: none;
+}
+
+fileupload-content{
+	border: none;
+}
+
+.ui-fileupload-simple input[type="file"] {
+	top: 0;
+	right: 0;
+	min-width: 0%;
+	min-height: 0%;
+	font-size: 0px;
+}
+
 
 .tabelatipo{
     font-size:11px;

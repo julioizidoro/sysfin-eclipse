@@ -64,6 +64,7 @@ public class ContasPagarMB implements Serializable{
 	    private String descricao;
 	    private List<Planocontas> listaPlanoContas;
 		private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+		private List<Cptransferencia> listaTransferencia;
 	
 	@PostConstruct
 	public void init(){
@@ -83,7 +84,17 @@ public class ContasPagarMB implements Serializable{
 		this.listaPlanoContas = listaPlanoContas;
 	}
 
+	
 
+
+	public List<Cptransferencia> getListaTransferencia() {
+		return listaTransferencia;
+	}
+
+
+	public void setListaTransferencia(List<Cptransferencia> listaTransferencia) {
+		this.listaTransferencia = listaTransferencia;
+	}
 
 
 	public String getImagemFiltro() {
@@ -509,20 +520,24 @@ public class ContasPagarMB implements Serializable{
 	
 	public void retornoDialogNovo(SelectEvent event) {
         Contaspagar contaspagar = (Contaspagar) event.getObject();
-        listaContasPagar.add(contaspagar);
+        gerarListaContas();
     }
 	
 	public String excluir(){
         ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
         if (contasPagar.getFormaPagamento().equalsIgnoreCase("Transferencia")) {
 			CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
+			String sql = "";
 			try {
-				cpTransferenciaFacade.consultar(cpTransferencia.getIdcptransferencia());
+			 cpTransferenciaFacade.consultar(cpTransferencia.getContaspagar().getIdcontasPagar());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			cpTransferenciaFacade.excluir(cpTransferencia.getIdcptransferencia());
+			//for (int i = 0; i < listaTransferencia.size(); i++) {
+				cpTransferenciaFacade.excluir(cpTransferencia.getIdcptransferencia());
+			//}
+			
 		}
         contasPagarFacade.excluir(contasPagar.getIdcontasPagar());
         gerarListaContas();
@@ -547,7 +562,8 @@ public class ContasPagarMB implements Serializable{
         if (contaspagar!=null){
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-            session.setAttribute("contapagar", contaspagar);     
+            session.setAttribute("contapagar", contaspagar);
+            session.setAttribute("cptransferencia", cpTransferencia);
             RequestContext.getCurrentInstance().openDialog("cadContasPagar");
         }
         return "";
@@ -575,6 +591,11 @@ public class ContasPagarMB implements Serializable{
 		 totalLiberadas = Formatacao.foramtarFloatString(valorTotal);
 		 Map<String, Object> options = new HashMap<String, Object>();
 		 options.put("contentWidth", 600);
+		 FacesContext fc = FacesContext.getCurrentInstance();
+	     HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+	     session.setAttribute("listaContasSelecionadas", listaContasSelecionadas);
+	     session.setAttribute("totalLiberadas", totalLiberadas);
+	     session.setAttribute("contasPagar", contasPagar);
 		 RequestContext.getCurrentInstance().openDialog("liberarContasPagar");
 		 return "";
 	 }
@@ -664,6 +685,10 @@ public class ContasPagarMB implements Serializable{
 			 mostrarMensagem(ex, "Erro Listar Contas", "Erro");
 		 }
 		 return "";
+		 
+	 }
+	 
+	 public void retornoDialogLiberar(SelectEvent event) {
 		 
 	 }
 }

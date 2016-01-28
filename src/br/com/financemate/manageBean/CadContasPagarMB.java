@@ -48,19 +48,21 @@ public class CadContasPagarMB implements Serializable{
     private UploadedFile file;
     private Cptransferencia cptransferencia;
     Boolean selecionada = false;
-	
+	private String nomeAnexo = "Anexar"; 
 
 	@PostConstruct
 	public void init(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contaPagar = (Contaspagar) session.getAttribute("contapagar");
+        cptransferencia =  (Cptransferencia) session.getAttribute("cptransferencia");
         session.removeAttribute("contapagar");
         gerarListaCliente();
         gerarListaPlanoContas();
         if (contaPagar == null) { 
 			contaPagar = new Contaspagar();
 			cliente = new Cliente();
+			cptransferencia = new Cptransferencia();
 		}else{
             cliente = contaPagar.getCliente();
             planoContas = contaPagar.getPlanocontas();
@@ -73,7 +75,15 @@ public class CadContasPagarMB implements Serializable{
 		return selecionada;
 	}
 
+	
 
+	public String getNomeAnexo() {
+		return nomeAnexo;
+	}
+
+	public void setNomeAnexo(String nomeAnexo) {
+		this.nomeAnexo = nomeAnexo;
+	}
 
 	public void setSelecionada(Boolean selecionada) {
 		this.selecionada = selecionada;
@@ -284,8 +294,7 @@ public class CadContasPagarMB implements Serializable{
 	public void salvarTransferencia(){
 		CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
 		cptransferencia.setContaspagar(contaPagar);
-		cpTransferenciaFacade.salvar(cptransferencia);
- 	    cptransferencia = null;
+		cptransferencia = cpTransferenciaFacade.salvar(cptransferencia);
 	}
 	
 	public String validarDados(){
@@ -332,6 +341,13 @@ public class CadContasPagarMB implements Serializable{
 				cptransferencia = null;
 			}
 		}
+	}
+	
+	public String nomeAnexo(){
+		if (file != null) {
+			nomeAnexo = "Anexado";
+		}
+		return nomeAnexo;
 	}
 	
 }

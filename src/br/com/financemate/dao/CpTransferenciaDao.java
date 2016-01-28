@@ -1,8 +1,10 @@
 package br.com.financemate.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import br.com.financemate.connection.ConectionFactory;
 import br.com.financemate.model.Contaspagar;
@@ -34,5 +36,15 @@ public class CpTransferenciaDao {
         Cptransferencia transferencia = manager.find(Cptransferencia.class, idTransferencia);
         manager.getTransaction().commit();
         return transferencia;
+    }
+	
+	public List<Cptransferencia> listarTransferencias(String sql) throws SQLException{
+		sql = "Select c From cptransferencia c where c.contasPagar_idcontasPagar = contaspagar.idcontasPagar";
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery(sql);
+        List<Cptransferencia> listaTransferenfia = q.getResultList();
+        manager.getTransaction().commit();
+        return listaTransferenfia;
     }
 }

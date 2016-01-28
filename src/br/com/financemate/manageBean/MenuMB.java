@@ -32,5 +32,9 @@ public class MenuMB implements Serializable{
 		return "http://www.financemate.com.br/";
 	}
 	
+	
+	public String relatorioContasPagar(){
+		return "imprimir";
+	}
 
 }
