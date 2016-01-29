@@ -667,6 +667,7 @@ public class ContasPagarMB implements Serializable{
 			novoFiltro();
 			imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
 		}else if(imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")){
+			limparConsulta();
 			criarConsultaContasPagarInicial();
 			gerarListaContas();
 			imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
@@ -689,6 +690,6 @@ public class ContasPagarMB implements Serializable{
 	 }
 	 
 	 public void retornoDialogLiberar(SelectEvent event) {
-		 
+		 gerarListaContas();
 	 }
 }

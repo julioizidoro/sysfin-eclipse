@@ -30,7 +30,7 @@ public class Ftp {
     }
     
     public String enviarArquivo(String arquivoLocal, String arquivoFTP) throws IOException{
-        ftpClient.changeWorkingDirectory("systm");
+        ftpClient.changeWorkingDirectory("sysfin");
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
         FileInputStream arqEnviar = new FileInputStream(arquivoLocal);
         if (ftpClient.storeFile(arquivoFTP, arqEnviar)) {

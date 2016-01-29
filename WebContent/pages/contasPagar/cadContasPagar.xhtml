@@ -57,14 +57,14 @@
             </h:panelGrid>
             <h:panelGrid style="margin-left:54%; margin-top:-4.5%;">     
                 <p:inputText id="nDocumento" size="13"  class="left4" value="#{cadContasPagarMB.contaPagar.numeroDocumento}" style="margin-left: 5px;"/>
-            </h:panelGrid>
+            </h:panelGrid> 
             <h:panelGrid style="margin-left:76%; margin-top:-5.8%; width:100px; height:20px;">
-            	<p:fileUpload style="right:-10;"  id="idAnexo" label="#{cadContasPagarMB.nomeAnexo}" value="#{ftpDadosMB.salvarArquivoFTP()}" mode="simple" skinSimple="true" />
-            </h:panelGrid>
+            	<p:fileUpload style="right:-10;"  id="idAnexo" label="#{cadContasPagarMB.nomeAnexo}" value="#{cadContasPagarMB.file}" mode="simple" skinSimple="true" />
+            </h:panelGrid>  
             <h:panelGrid style="margin-left:91%; margin-top:-4.5%;"> 
-            	<p:commandLink title="Confirmar" style="text-decoration: none"   action="#{ftpDadosMB.salvarArquivoFTP()}" >
+            	<p:commandLink title="Confirmar" style="text-decoration: none"   action="#{cadContasPagarMB.salvarArquivoFTP()}" >
                     <img src="../../resources/img/confirmarS.png" width="20" height="20"/>
-                </p:commandLink> 
+                </p:commandLink>
             </h:panelGrid>  
             	
             <br />	

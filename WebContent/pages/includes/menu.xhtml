@@ -45,13 +45,15 @@
            		<img src="../../resources/img/iconeclientes.png" style="width: 10%;"/>
         		<h:outputText value="Área do cliente" style="font-size:16px; margin-left:5%;"/>
     		 </p:commandLink>
-    		 <br /> 
-        	 <p:panelMenu styleClass="ui-panelmenu"> 
+    		 <br />
+    		  
+        	 <h:panelGrid>
+        	 <p:panelMenu styleClass="ui-panelmenu">
         		<p:submenu  style="background:transparent; tranform:rotate(0deg); font-size:16px; color:white;  margin-top=-30%; font:normal;" label="Contas a Pagar">
         			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaConta()}" update="growl"/> 
             		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" update="growl"/>
             		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressao()}"/> 
-        		</p:submenu>
+        		</p:submenu> 
         		<p:submenu label="Contas a Receber" style="font-size:16px;">
            			<p:menuitem value="Lançamentos" actionListener="#"/>
             		<p:menuitem value="Relatório" actionListener="#"/>
@@ -72,12 +74,13 @@
                     
             	</p:submenu>
     		</p:panelMenu>
+    		</h:panelGrid>
     		<br />
-    		<p:commandLink id="ajaxx" style="text-decoration:none;"  action="#{menuMB.FinanceMate()}" ajax="false">
+    		<p:link id="ajaxx" style="text-decoration:none;" href="http://www.financemate.com.br/"  ajax="false">
            		<img src="../../resources/img/iconeinfo.png" style="width: 10%;"/>
         		<h:outputText value="Sobre a Financemate" style="font-size:16px; margin-left:5%;"/>
-    		</p:commandLink>
-    		
+    		</p:link>
+    		<br />
         </h:panelGrid>
         </div>
 		</h:form>

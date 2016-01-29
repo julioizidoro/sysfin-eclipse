@@ -1,5 +1,6 @@
 package br.com.financemate.manageBean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.UploadedFile;
@@ -21,12 +23,17 @@ import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
+import br.com.financemate.facade.FtpDadosFacade;
+import br.com.financemate.facade.NomeArquivoFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
+import br.com.financemate.model.Ftpdados;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.util.Formatacao;
+import br.com.financemate.util.Ftp;
 
 @Named
 @ViewScoped
@@ -49,6 +56,8 @@ public class CadContasPagarMB implements Serializable{
     private Cptransferencia cptransferencia;
     Boolean selecionada = false;
 	private String nomeAnexo = "Anexar"; 
+	private String nomeAquivoFTP;
+	private String nomeArquivoLocal;
 
 	@PostConstruct
 	public void init(){
@@ -349,5 +358,60 @@ public class CadContasPagarMB implements Serializable{
 		}
 		return nomeAnexo;
 	}
+	
+	
+	public void carregarArquivo(){
+		String mensagem = validarDadosArquivo();
+		FtpDadosMB ftpDadosMB = new FtpDadosMB();
+		
+	}
+	
+	public String validarDadosArquivo(){
+		String mensagem = "";
+		if (file==null){
+            mensagem = mensagem + "Não existe arquivo para adicionar\b\n";
+        }
+		return mensagem;
+	}
+	
+	public boolean salvarArquivoFTP(){
+        FtpDadosFacade ftpDadosFacade = new FtpDadosFacade();
+        Ftpdados dadosFTP = null;
+		try {
+			dadosFTP = ftpDadosFacade.getFTPDados();
+		} catch (SQLException ex) {
+			Logger.getLogger(FtpDadosMB.class.getName()).log(Level.SEVERE, null, ex);
+			mostrarMensagem(ex, "Erro", "");
+		}
+        if (dadosFTP==null){
+            return false;
+        }
+        Ftp ftp = new Ftp(dadosFTP.getHost(),dadosFTP.getUser(), dadosFTP.getPassword());
+        try {
+            if (!ftp.conectar()){
+                mostrarMensagem(null, "Erro conectar FTP", "");
+                return false;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FtpDadosMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro conectar FTP", "Erro");
+        }
+        try {
+        	
+            String msg = ftp.enviarArquivo(nomeArquivoLocal, nomeAquivoFTP);
+            mostrarMensagem(null, msg, "");
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(FtpDadosMB.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro Salvar Arquivo " + ex);
+        }
+        try {
+           ftp.desconectar();
+        } catch (IOException ex) {
+            Logger.getLogger(FtpDadosMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro desconectar FTP", "Erro");
+        }
+        return false;
+    }
 	
 }
