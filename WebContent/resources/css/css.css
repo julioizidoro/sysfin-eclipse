@@ -220,15 +220,23 @@ div.jqplot-table-legend-swatch{
 .ui-panelmenu .ui-panelmenu-header a {
     display: block;
     padding: 10px;
+    font-weight: normal;
+    color: white;
 }
 
 .ui-panelmenu .ui-panelmenu-header a:hover {
     display: block;
     padding: 10px;
-    width: 95%;
+    width: 93%;
 }
 
+.ui-icon-triangle-1-e {
+    background-position: 1px -1px;
+}
 
+.menu2  .ui-icon-triangle-1-e {
+    background-position: px -1px;
+}
 
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
     color: white;

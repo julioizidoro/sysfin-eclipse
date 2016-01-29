@@ -1,5 +1,6 @@
 package br.com.financemate.manageBean;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.financemate.facade.BancoFacade;
@@ -238,22 +240,27 @@ public class CadContasPagarMB implements Serializable{
     }
 	
 	public void salvar(){
-		contaPagar.setBanco(banco);
-		contaPagar.setPlanocontas(planoContas);
-		contaPagar.setCliente(cliente);
-		contaPagar.setContaPaga("N");
-		String mensagem = validarDados();
-		if (mensagem!=null) {
-			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-			contaPagar = contasPagarFacade.salvar(contaPagar);
-			if (cptransferencia!=null){
-		    	salvarTransferencia();
-		    }
-			RequestContext.getCurrentInstance().closeDialog(contaPagar);
-		}else{
-			FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(mensagem, ""));
-		}
+//		contaPagar.setBanco(banco);
+//		contaPagar.setPlanocontas(planoContas);
+//		contaPagar.setCliente(cliente);
+//		contaPagar.setContaPaga("N");
+//		String mensagem = validarDados();
+//		if (mensagem!=null) {
+//			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+//			contaPagar = contasPagarFacade.salvar(contaPagar);
+//			if (cptransferencia!=null){
+				
+//		    	salvarTransferencia();
+//		    }
+			if (file != null) {
+				nomeArquivo();
+				salvarArquivoFTP();
+			}
+//			RequestContext.getCurrentInstance().closeDialog(contaPagar);
+//		}else{
+//			FacesContext context = FacesContext.getCurrentInstance();
+//            context.addMessage(null, new FacesMessage(mensagem, ""));
+//		}
 		
     }
 	
@@ -277,6 +284,9 @@ public class CadContasPagarMB implements Serializable{
 	        	cptransferencia.setBeneficiario(copiaTranferencia.getBeneficiario());
 	        	cptransferencia.setCpfcnpj(copiaTranferencia.getCpfcnpj());
 		    }
+	        if (file != null) {
+				salvarArquivoFTP();
+			}
 	        Contaspagar copia = new Contaspagar();
 	        copia = contaPagar;
 	        contaPagar = new Contaspagar();
@@ -333,7 +343,7 @@ public class CadContasPagarMB implements Serializable{
 		return mensagem;
 	}
 	
-	public void upload() {
+	public void upload(FileUploadEvent event) {
         if(file != null) {
             FacesMessage message = new FacesMessage("Anexado com Sucesso", file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -358,29 +368,14 @@ public class CadContasPagarMB implements Serializable{
 		}
 		return nomeAnexo;
 	}
-	
-	
-	public void carregarArquivo(){
-		String mensagem = validarDadosArquivo();
-		FtpDadosMB ftpDadosMB = new FtpDadosMB();
-		
-	}
-	
-	public String validarDadosArquivo(){
-		String mensagem = "";
-		if (file==null){
-            mensagem = mensagem + "Não existe arquivo para adicionar\b\n";
-        }
-		return mensagem;
-	}
-	
+
 	public boolean salvarArquivoFTP(){
         FtpDadosFacade ftpDadosFacade = new FtpDadosFacade();
         Ftpdados dadosFTP = null;
 		try {
 			dadosFTP = ftpDadosFacade.getFTPDados();
 		} catch (SQLException ex) {
-			Logger.getLogger(FtpDadosMB.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
 			mostrarMensagem(ex, "Erro", "");
 		}
         if (dadosFTP==null){
@@ -393,25 +388,37 @@ public class CadContasPagarMB implements Serializable{
                 return false;
             }
         } catch (IOException ex) {
-            Logger.getLogger(FtpDadosMB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro conectar FTP", "Erro");
         }
         try {
         	
-            String msg = ftp.enviarArquivo(nomeArquivoLocal, nomeAquivoFTP);
+            String msg = ftp.enviarArquivo(file, nomeAquivoFTP);
             mostrarMensagem(null, msg, "");
             return true;
         } catch (IOException ex) {
-            Logger.getLogger(FtpDadosMB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro Salvar Arquivo " + ex);
         }
         try {
            ftp.desconectar();
         } catch (IOException ex) {
-            Logger.getLogger(FtpDadosMB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro desconectar FTP", "Erro");
         }
         return false;
     }
+	
+	public String nomeArquivo(){
+		nomeAquivoFTP = "" + contaPagar.getIdcontasPagar();
+		nomeAquivoFTP = nomeAquivoFTP + file.getFileName().trim();
+		return nomeAquivoFTP;
+	}
+	
+	public void fileUploadAction(FileUploadEvent event) {
+	        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
+	        FacesContext.getCurrentInstance().addMessage(null, msg);  
+	    
+	} 
 	
 }

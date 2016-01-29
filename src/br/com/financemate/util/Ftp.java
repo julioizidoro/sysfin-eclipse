@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.primefaces.model.UploadedFile;
 
 public class Ftp {
 	
@@ -29,10 +30,10 @@ public class Ftp {
         }else return false;
     }
     
-    public String enviarArquivo(String arquivoLocal, String arquivoFTP) throws IOException{
+    public String enviarArquivo(UploadedFile uploadedFile, String arquivoFTP) throws IOException{
         ftpClient.changeWorkingDirectory("sysfin");
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-        FileInputStream arqEnviar = new FileInputStream(arquivoLocal);
+        FileInputStream arqEnviar = (FileInputStream) uploadedFile.getInputstream();
         if (ftpClient.storeFile(arquivoFTP, arqEnviar)) {
             return "Arquivo Salvo com Sucesso";
         } else {

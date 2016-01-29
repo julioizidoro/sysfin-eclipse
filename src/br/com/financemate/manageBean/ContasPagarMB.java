@@ -637,7 +637,7 @@ public class ContasPagarMB implements Serializable{
 				 listaPlanoContas = new ArrayList<Planocontas>();
 			 }
 		 } catch (Exception ex) {
-			 Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+			 Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
 			 mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
 		 }
 	        
@@ -692,4 +692,6 @@ public class ContasPagarMB implements Serializable{
 	 public void retornoDialogLiberar(SelectEvent event) {
 		 gerarListaContas();
 	 }
+	 
+	 
 }

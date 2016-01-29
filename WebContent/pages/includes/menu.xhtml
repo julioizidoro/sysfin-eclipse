@@ -34,7 +34,7 @@
         
         </div>
         <br />
-        <h:panelGrid class="menu2" columns="2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:0.3%;" responsive="true">
+        <h:panelGrid  class="menu2" columns="2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:0.3%;" responsive="true">
         
         	 <p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;">
            		<img src="../../resources/img/iconeHome.png" style="width: 10%;"/>
@@ -49,7 +49,7 @@
     		  
         	 <h:panelGrid>
         	 <p:panelMenu styleClass="ui-panelmenu">
-        		<p:submenu  style="background:transparent; tranform:rotate(0deg); font-size:16px; color:white;  margin-top=-30%; font:normal;" label="Contas a Pagar">
+        		<p:submenu  style="background:transparent;  font-size:16px; color:white;  margin-top=-30%; font:normal;" label="Contas a Pagar">
         			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaConta()}" update="growl"/> 
             		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" update="growl"/>
             		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressao()}"/> 
@@ -64,7 +64,7 @@
         		<p:submenu label="Cadastro" style="font-size:16px;">
                     <p:menuitem value="Cliente"/>
                     <p:menuitem value="Banco"/>
-                    <p:menuitem value="Tipo de plano de conta"/>
+                    <p:menuitem value="Tipo plano de conta"/>
                     <p:menuitem value="Plano de conta" />
             	</p:submenu>
             	<p:submenu label="Outros Lançamentos" style="font-size:16px;">
