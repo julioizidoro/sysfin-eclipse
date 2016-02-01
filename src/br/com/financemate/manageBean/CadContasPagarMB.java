@@ -240,27 +240,27 @@ public class CadContasPagarMB implements Serializable{
     }
 	
 	public void salvar(){
-//		contaPagar.setBanco(banco);
-//		contaPagar.setPlanocontas(planoContas);
-//		contaPagar.setCliente(cliente);
-//		contaPagar.setContaPaga("N");
-//		String mensagem = validarDados();
-//		if (mensagem!=null) {
-//			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-//			contaPagar = contasPagarFacade.salvar(contaPagar);
-//			if (cptransferencia!=null){
+		contaPagar.setBanco(banco);
+		contaPagar.setPlanocontas(planoContas);
+		contaPagar.setCliente(cliente);
+		contaPagar.setContaPaga("N");
+		String mensagem = validarDados();
+		if (mensagem!=null) {
+			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+			contaPagar = contasPagarFacade.salvar(contaPagar);
+			if (cptransferencia!=null){
 				
-//		    	salvarTransferencia();
-//		    }
+		    	salvarTransferencia();
+		    }
 			if (file != null) {
 				nomeArquivo();
 				salvarArquivoFTP();
 			}
-//			RequestContext.getCurrentInstance().closeDialog(contaPagar);
-//		}else{
-//			FacesContext context = FacesContext.getCurrentInstance();
-//            context.addMessage(null, new FacesMessage(mensagem, ""));
-//		}
+			RequestContext.getCurrentInstance().closeDialog(contaPagar);
+		}else{
+			FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(mensagem, ""));
+		}
 		
     }
 	
@@ -350,16 +350,19 @@ public class CadContasPagarMB implements Serializable{
         }
     }
 	
-	public void transferenciaBancaria(){
+	public Boolean transferenciaBancaria(){
 		selecionada = false;
 		if (contaPagar.getFormaPagamento()!=null){
 			if (contaPagar.getFormaPagamento().equalsIgnoreCase("transferencia")){
 				selecionada=true;
-			    cptransferencia = new Cptransferencia();
+				if (cptransferencia == null) {
+				    cptransferencia = new Cptransferencia();
+				}
 			}else {
 				cptransferencia = null;
 			}
 		}
+		return selecionada;
 	}
 	
 	public String nomeAnexo(){

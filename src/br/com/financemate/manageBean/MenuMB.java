@@ -36,5 +36,9 @@ public class MenuMB implements Serializable{
 	public String relatorioContasPagar(){
 		return "imprimir";
 	}
+	
+	public String consContasReceber(){
+		return "consContasReceber";
+	}
 
 }

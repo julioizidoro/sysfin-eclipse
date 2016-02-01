@@ -31,7 +31,7 @@
                 <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadContasPagarMB.cliente}" converter="ClienteConverter"
                              filter="true" filterMatchMode="startsWith" panelStyle="width:180px">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems value="#{cadContasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                    <f:selectItems  value="#{cadContasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{cadContasPagarMB.listaCliente}"/>
                     <p:ajax event="change" listener="#{cadContasPagarMB.gerarListaBanco()}" update="idconta"/>
                 </p:selectOneMenu> 
@@ -58,17 +58,11 @@
             <h:panelGrid style="margin-left:54%; margin-top:-4.5%;">     
                 <p:inputText id="nDocumento" size="13"  class="left4" value="#{cadContasPagarMB.contaPagar.numeroDocumento}" style="margin-left: 5px;"/>
             </h:panelGrid> 
-            <h:panelGrid style="margin-left:76%; margin-top:-5.8%; width:100px; height:20px;"> 
+            <h:panelGrid style="margin-left:76%; margin-top:-5.8%; width:100px; height:20px;" styleClass=""> 
             	<p:fileUpload style="right:-10;"  id="idAnexo" label="#{cadContasPagarMB.nomeAnexo}"  mode="simple" skinSimple="true"
             	  fileUploadListener="#{cadContasPagarMB.fileUploadAction()}"  auto="true" multiple="false" value="#{cadContasPagarMB.file}"/>
             	  
-            </h:panelGrid>  
-            <h:panelGrid style="margin-left:91%; margin-top:-4.5%;"> 
-            	<p:commandLink title="Confirmar" style="text-decoration: none"   action="#{cadContasPagarMB.fileUploadAction()}" actionListener="#{cadContasPagarMB.fileUploadAction()}" >
-                    <img src="../../resources/img/confirmarS.png" width="20" height="20"/>  
-                </p:commandLink>  
-            </h:panelGrid>  
-            	
+            </h:panelGrid>
             <br />	
             <h:panelGrid style="margin-left:1%;">
             	 <p:outputLabel value="Valor " for="valor" class="leftvalor"/>
@@ -150,7 +144,7 @@
                 </p:inputMask>
              </h:panelGrid>
              <hr />
-             <h:panelGrid id="idtransferencia" rendered="#{cadContasPagarMB.selecionada}">
+             <h:panelGrid id="idtransferencia"  rendered="#{cadContasPagarMB.selecionada}">
 	             
 	             <br />
 	             <h:panelGrid style="margin-left:1%;">
@@ -185,14 +179,14 @@
 	             </h:panelGrid>
 	             <hr /> 
 	         </h:panelGrid>
-	         <h:panelGrid columns="3" style="margin-left:35%;"> 
+	         <h:panelGrid columns="3" style="margin-left:40%;"> 
                 <p:commandLink title="Confirmar" style="text-decoration: none"   action="#{cadContasPagarMB.salvar()}" >
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                 </p:commandLink>
-                <p:splitButton value="" actionListener="#" style="margin-left:-2%; background:transparent; border:none">
+                <p:menuButton value="" style="background:transparent; border:none; margin-left:-80%; margin-top:100%; font-size:51%;"> 
         			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}"  icon="ui-icon-disk" />
         			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-arrowrefresh-1-w" />
-    			</p:splitButton>
+    			</p:menuButton>
                 <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>

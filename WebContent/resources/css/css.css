@@ -43,6 +43,7 @@ h1 {
     font-family: "Pacifico",cursive;
 }
 
+
 .menu2 a:hover{
     background:black;
     color:white;
@@ -334,36 +335,58 @@ div.jqplot-table-legend-swatch{
 
 .ui-fileupload{
 	border: none;
+	font-size: 12px;
 }
 
 .fileupload-buttonbar{
 	border: none;
+	font-size: 12px;
 }
 
 .fileinput-button{
 	border: none;
+	font-size: 12px;
 }
 
 .ui-fileupload start{
 	border: none;
+	font-size: 12px;
 }
 
 .ui-fileupload cancel{
 	border: none;
+	font-size: 12px;
 }
 
 fileupload-content{
 	border: none;
+	font-size: 12px;
 }
 
 .ui-fileupload-simple input[type="file"] {
+	position: absolute;
 	top: 0;
-	right: 0;
-	min-width: 0%;
-	min-height: 0%;
-	font-size: 0px;
+	right: 0; 
+	min-width: 100%;
+	min-height: 100%;
+	text-align: right;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+ 
+.ui-button{
+	border: none;
+	background: transparent;
 }
 
+.ui-button-text{
+	border: none;
+	background: transparent;
+}
 
 .tabelatipo{
     font-size:11px;
@@ -379,6 +402,8 @@ fileupload-content{
     top:-1px;
     width:100%;
 }
+
+
 .tabela{
     color: #4F4F4F;
     background:#F0FFFF;

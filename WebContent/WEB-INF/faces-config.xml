@@ -62,6 +62,15 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
+			<from-outcome>consContasReceber</from-outcome>
+			<to-view-id>/pages/contasReceber/consContasReceber.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
 			<from-outcome>FinanceMate</from-outcome>
 			<to-view-id>http://www.financemate.com.br/</to-view-id>
 			<redirect />

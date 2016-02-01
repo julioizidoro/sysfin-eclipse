@@ -39,7 +39,7 @@ public class CpTransferenciaDao {
     }
 	
 	public List<Cptransferencia> listarTransferencias(String sql) throws SQLException{
-		sql = "Select c From cptransferencia c where c.contasPagar_idcontasPagar = contaspagar.idcontasPagar";
+		sql = "SELECT c FROM Cptransferencia c";
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery(sql);
