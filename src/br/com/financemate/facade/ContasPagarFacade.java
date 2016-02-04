@@ -81,4 +81,9 @@ public class ContasPagarFacade {
     	contasPagarDao = new ContasPagarDao();
         return contasPagarDao.calculaSaldos(data);
     }
+    
+    public Double calculaSaldosDia(String data) throws SQLException {
+    	contasPagarDao = new ContasPagarDao();
+        return contasPagarDao.calculaSaldosDia(data);
+    }
 }

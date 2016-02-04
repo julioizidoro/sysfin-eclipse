@@ -146,4 +146,15 @@ public class ContasPagarDao {
         
         return totalContas;
     }
+    
+    public Double calculaSaldosDia(String data) throws SQLException {
+        Double valor = 0.0;
+        EntityManager manager = ConectionFactory.getConnection();
+        Query query = manager.createNativeQuery("Select distinct sum(valor) as valor " +
+                "From Contaspagar where dataVencimento='" + data + "'");
+        if (query.getSingleResult()!=null){
+            valor =  (Double) query.getSingleResult();
+        }
+        return valor;
+    }
 }

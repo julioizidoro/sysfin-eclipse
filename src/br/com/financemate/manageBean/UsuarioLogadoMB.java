@@ -8,11 +8,15 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.financemate.util.Criptografia;
+import br.com.financemate.util.Formatacao;
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.UsuarioFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Usuario;
@@ -165,5 +169,17 @@ public class UsuarioLogadoMB implements Serializable{
         novaSenha="";
         confirmaNovaSenha="";
         return "index";
+    }
+     
+    public String calcularSaldoDia(){
+    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+    	Float valor = 0.0f;
+		try {
+			valor = contasPagarFacade.calculaSaldosDia(Formatacao.ConvercaoDataSql(new Date())).floatValue();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return Formatacao.foramtarFloatString(valor);
     }
 }
