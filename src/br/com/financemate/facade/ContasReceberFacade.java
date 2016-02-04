@@ -7,6 +7,7 @@
 package br.com.financemate.facade;
 
 
+import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.model.Contasreceber;
 import java.sql.SQLException;
@@ -55,6 +56,11 @@ public class ContasReceberFacade {
     public Contasreceber consultarVendaFornecedor(int idVenda) throws SQLException{
         contasReceberDao = new ContasReceberDao();
         return contasReceberDao.consultarVendaFornecedor(idVenda);
+    }
+    
+    public List<Double> calculaSaldos(String data) throws SQLException {
+    	contasReceberDao = new ContasReceberDao();
+        return contasReceberDao.calculaSaldos(data);
     }
     
 }

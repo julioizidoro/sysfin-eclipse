@@ -206,16 +206,16 @@ public class CadContasReceberMB implements Serializable {
 		
 		public void gerarListaBanco(){
 			if (cliente!=null) {
-		        BancoFacade bancoFacade = new BancoFacade();
-		        String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
-		        listaBanco = bancoFacade.listar(sql);
-		        if (listaBanco ==null){
+				BancoFacade bancoFacade = new BancoFacade();
+				String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+				listaBanco = bancoFacade.listar(sql);
+				if (listaBanco ==null){
 		            listaBanco = new ArrayList<Banco>();
-		        }
+				}
 			}else {
 				listaBanco = new ArrayList<Banco>();
-	        }
-	    }
+			}
+		}
 		
 		public void mostrarMensagem(Exception ex, String erro, String titulo){
 	        FacesContext context = FacesContext.getCurrentInstance();
@@ -275,5 +275,7 @@ public class CadContasReceberMB implements Serializable {
 			}
 	    	return mensagem;
 	    }
-
+	    
+	    
+	    
 }
