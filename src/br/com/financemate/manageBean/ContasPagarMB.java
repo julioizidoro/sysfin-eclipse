@@ -490,9 +490,7 @@ public class ContasPagarMB implements Serializable{
     }
 	
 	public void calcularTotal(){
-        float vencida = 0.0f;
-        float vencendo = 0.0f;
-        float vencer = 0.0f;
+        /*
         Date data = new Date();
         String diaData = Formatacao.ConvercaoDataPadrao(data);
         for(int i=0;i<listaContasPagar.size();i++){
@@ -504,7 +502,23 @@ public class ContasPagarMB implements Serializable{
             }else if (listaContasPagar.get(i).getDataVencimento().after(data)){
                 vencer = vencer + listaContasPagar.get(i).getValor();
             }
-        }
+        }*/
+		Float vencida = 0.0f;
+        Float vencendo = 0.0f;
+        Float vencer = 0.0f;
+		ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+		List<Double> listaTotais = null;
+		try {
+			listaTotais = contasPagarFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (listaTotais!=null){
+			vencida = listaTotais.get(0).floatValue();
+	        vencendo = listaTotais.get(1).floatValue();
+	        vencer = listaTotais.get(2).floatValue();
+		}
         setTotalVencidas(Formatacao.foramtarFloatString(vencida));
         setTotalVencendo(Formatacao.foramtarFloatString(vencendo));
         setTotalVencer(Formatacao.foramtarFloatString(vencer));

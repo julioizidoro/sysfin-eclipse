@@ -10,6 +10,7 @@ import br.com.financemate.connection.ConectionFactory;
 import br.com.financemate.model.Arquivocontaspagar;
 import br.com.financemate.model.Contaspagar;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -118,5 +119,31 @@ public class ContasPagarDao {
         manager.getTransaction().commit();
     }
     
-   
+    public List<Double> calculaSaldos(String data) throws SQLException {
+        Double valor;
+        EntityManager manager = ConectionFactory.getConnection();
+        Query query = manager.createNativeQuery("Select distinct sum(valor) as valor " +
+                "From Contaspagar where dataVencimento<'" + data + "'");
+        List<Double> totalContas = new ArrayList<Double>();
+        if (query.getSingleResult()!=null){
+            valor =  (Double) query.getSingleResult();
+            totalContas.add(valor.doubleValue());
+        }else totalContas.add(0.0);
+        
+        query = manager.createNativeQuery("Select distinct sum(valor) as valor " +
+                "From Contaspagar where dataVencimento='" + data + "'");
+        if (query.getSingleResult()!=null){
+            valor =  (Double) query.getSingleResult();
+            totalContas.add(valor.doubleValue());
+        }else totalContas.add(0.0);
+        
+        query = manager.createNativeQuery("Select distinct sum(valor) as valor " +
+                "From Contaspagar where dataVencimento>'" + data + "'");
+        if (query.getSingleResult()!=null){
+            valor =  (Double) query.getSingleResult();
+            totalContas.add(valor.doubleValue());
+        }else totalContas.add(0.0);
+        
+        return totalContas;
+    }
 }
