@@ -23,7 +23,7 @@ public class Cptransferencia implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idcptranserencia")
+    @Column(name = "idcptransferencia")
 	private Integer idcptransferencia;
 	@Column(name = "banco")
     private String banco;

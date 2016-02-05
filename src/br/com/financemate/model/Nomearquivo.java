@@ -36,9 +36,6 @@ public class Nomearquivo implements Serializable {
     @Column(name = "nomearquivo01")
     private String nomearquivo01;
     @Size(max = 200)
-    @Column(name = "nomearquivo02")
-    private String nomearquivo02;
-    @Size(max = 200)
     @Column(name = "caminho")
     private String caminho;
     @JoinColumn(name = "contasPagar_idcontasPagar", referencedColumnName = "idcontasPagar")
@@ -66,14 +63,6 @@ public class Nomearquivo implements Serializable {
 
     public void setNomearquivo01(String nomearquivo01) {
         this.nomearquivo01 = nomearquivo01;
-    }
-
-    public String getNomearquivo02() {
-        return nomearquivo02;
-    }
-
-    public void setNomearquivo02(String nomearquivo02) {
-        this.nomearquivo02 = nomearquivo02;
     }
 
     public String getCaminho() {
