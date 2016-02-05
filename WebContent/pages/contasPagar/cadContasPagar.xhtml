@@ -58,6 +58,10 @@
             <h:panelGrid style="margin-left:54%; margin-top:-4.5%;">     
                 <p:inputText id="nDocumento" size="13"  class="left4" value="#{cadContasPagarMB.contaPagar.numeroDocumento}" style="margin-left: 5px;"/>
             </h:panelGrid> 
+            <h:panelGrid style="margin-left:76%; margin-top:-5.8%; width:100px; height:20px;" styleClass=""> 
+    			<p:fileUpload style="right:-10;"  id="idAnexo" label="#{cadContasPagarMB.nomeAnexo}"  mode="simple" skinSimple="true"
+          			fileUploadListener="#{cadContasPagarMB.salvarArquivoFTP()}"  auto="true" multiple="false" value="#{cadContasPagarMB.file}"/>
+            </h:panelGrid>
             
             <br />	
             <h:panelGrid style="margin-left:1%;">
