@@ -418,10 +418,9 @@ public class CadContasPagarMB implements Serializable{
 		return nomeAquivoFTP;
 	}
 	
-	public void fileUploadAction(FileUploadEvent event) {
-	        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
-	        FacesContext.getCurrentInstance().addMessage(null, msg);  
-	    
-	} 
+	public void fileUploadListener(FileUploadEvent e){
+		this.file = e.getFile();
+		salvarArquivoFTP();
+	}
 	
 }
