@@ -48,6 +48,7 @@ public class RecebimentoContaMB implements  Serializable{
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasReceber = (Contasreceber) session.getAttribute("contareceber");
+        cliente = contasReceber.getCliente();
         session.removeAttribute("contareceber");
         gerarListaCliente();
         gerarListaBanco();

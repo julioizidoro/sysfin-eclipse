@@ -64,19 +64,19 @@
             	<p:outputLabel value="Fone 1"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputMask id="fone1" mask="(999) 9999-9999" value="#" size="17"/>
+            	<p:inputMask id="fone1" mask="(999) 9999-9999" value="#{cobrancaMB.cobranca.fone1}" size="17"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:34%; margin-top:-4.5%;">
             	<p:outputLabel value="Fone 2" />
             </h:panelGrid>
             <h:panelGrid style="margin-left:43%; margin-top:-5%;">
-            	<p:inputMask id="fone2" mask="(999) 9999-9999" value="#" size="17"/>
+            	<p:inputMask id="fone2" mask="(999) 9999-9999" value="#{cobrancaMB.cobranca.fone2}" size="17"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 67%; margin-top:-5%;">
             	<p:outputLabel value="Vcto. Original" for="dataVencOri" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 81.5%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencOri" value="#{cobrancaMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15"  readonly="true">
+            	<p:inputMask id="dataVencOri" value="#{cobrancaMB.cobranca.vencimentooriginal}" mask="99/99/9999" size="10" maxlength="15" >
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
             </h:panelGrid>
@@ -85,42 +85,42 @@
             	<p:outputLabel value="E-mail"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputText value="#" size="51"/>
+            	<p:inputText value="#{cobrancaMB.cobranca.email}" size="51"/>
             </h:panelGrid>
              <h:panelGrid style="margin-left: 67%; margin-top:-5%;">
             	<p:outputLabel value="Alterar Vcto." for="dataVencAlt" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 81.5%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencAlt" value="#{cobrancaMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15"  readonly="true">
+            	<p:inputMask id="dataVencAlt" value="#{cobrancaMB.cobranca.alterarvencimento}" mask="99/99/9999" size="10" maxlength="15" >
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
             </h:panelGrid>
             <br />
             <hr />
             <br />
-            <p:contextMenu for="idCobranca" style="background:white;">
-                <p:menuitem value="Visualizar"  icon=" ui-icon-pencil"  action="#"/>
+            <p:contextMenu  style="background:white;">
+                <p:menuitem value="Visualizar"  icon=" ui-icon-pencil" update=":frmidHistoricoCobranca:dialog_novo" oncomplete="PF('editarhistorico').show()"  action="#{cobrancaMB.editarHistorico()}"/>
             </p:contextMenu>   
-            <p:dataTable id="idCobranca" var="contasReceber"  rowStyleClass="tabela" class="tabelaselecionar" value="#" 
-                          scrollRows="10"  scrollable="true" scrollHeight="110"  rows="10" style="margin-bottom:20px;"> 
+            <p:dataTable id="idHistoricoCobranca" var="historicoCobranca"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cobrancaMB.listaHistorico}" 
+                          scrollRows="10"  scrollable="true" scrollHeight="110" selection="#{cobrancaMB.historico}" selectionMode="single" rowKey="#{historicoCobranca.idhistoricocobranca}"  rows="10" style="margin-bottom:20px;"> 
                 <p:column headerText="Data" style="background:#E7EBEB; color:black; border:none; width:70px;">
-                    <h:outputText  value="10/09/2016" style="margin-left:10%;">
+                    <h:outputText  value="#{historicoCobranca.data}" style="margin-left:10%;">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
                 <p:column headerText="Contato" style="width: 80px; background:#E7EBEB; color:black; border:none;">
-                    <h:outputText value="Carlos Souza" /> 
+                    <h:outputText value="#{historicoCobranca.contato}" /> 
                 </p:column>
                 <p:column headerText="Descrição" style=" background:#E7EBEB; color:black; border:none;">
-                    <h:outputText value="Fazendo teste de tamanho da tabela" /> 
+                    <h:outputText value="#{historicoCobranca.descricao}" /> 
                 </p:column> 
                 <p:column headerText="Usuário"   style="background:#E7EBEB; color:black; width: 80px; border:none;">
-                    <h:outputText value="Anderson" style="margin-left:20%;"/>
+                    <h:outputText value="#{historicoCobranca.usuario}" style="margin-left:20%;"/>
                 </p:column>
                 
             </p:dataTable>
             <br />
-            <p:commandLink   action="#{cobrancaMB.novoHistorico()}" style="margin-left:40%;text-decoration:none;" title="Adicionar">
+            <p:commandLink  update=":frmidHistoricoCobranca:dialog_novo" oncomplete="PF('historico').show()"  action="#{cobrancaMB.novoHistorico()}" style="margin-left:40%;text-decoration:none;" title="Adicionar">
 				<img src="../../resources/img/iconeplusS.ico"/>
 			
 			<h:panelGrid style="margin-left:45%; margin-top:-5%;">
@@ -129,7 +129,7 @@
 			</p:commandLink>
             <hr />
             <br />
-            <p:commandLink title="Confirmar" style="margin-left: 37%;text-decoration: none"   action="#" >
+            <p:commandLink title="Confirmar" style="margin-left: 37%;text-decoration: none"   action="#{cobrancaMB.salvarDadosCobranca()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 9%;text-decoration: none" action="#" >
@@ -137,5 +137,80 @@
             </p:commandLink>
             <br/>
         </h:form>
+        <h:form id="frmidHistoricoCobranca" class="body2" style="font-size: 12px;background: #E7EBEB">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            
+            <p:dialog id="dialog_novo" header="Novo Historico" widgetVar="historico"  width="80%" class="dialog2" >
+            <br />
+            <h:panelGrid style="margin-left: 1%">
+            	<p:outputLabel value="Unidade" />
+            </h:panelGrid>
+            <h:panelGrid style="margin-left: 10%; margin-top:-4.5%;">
+                <p:inputText id="unidade" style="width: 135px" value="#{cobrancaMB.contasReceber.cliente.nomeFantasia}" readonly="true" disabled="true"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left: 37%; margin-top:-5.1%;">
+            	<p:outputLabel value="Cliente" for="nomeCliente"  />
+            </h:panelGrid>
+            <h:panelGrid style="margin-left: 45%; margin-top:-4.5%;">
+                <p:inputText id="nomeCliente" size="48" value="#{cobrancaMB.contasReceber.nomeCliente}" readonly="true" disabled="true"/>
+            </h:panelGrid>
+            <br />
+            <h:panelGrid style="margin-left:1%;"> 
+            	<p:outputLabel value="Valor"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:7%; margin-top:-4.5%;">
+            	<p:inputText id="valor" size="17" value="#{cobrancaMB.contasReceber.valorParcela}" readonly="true" disabled="true"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left: 33%; margin-top:-5%;">
+            	<p:outputLabel value="Vencimento" for="dataVenc" /> 
+            </h:panelGrid>
+            <h:panelGrid style="margin-left: 46%; margin-top:-4.6%;">
+            	<p:inputMask id="dataVenc" value="#{cobrancaMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15" >
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:68%; margin-top:-5%;">
+            	<p:outputLabel value="Parcela"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:78%; margin-top:-5%;">
+            	<p:inputText style="width:103px;" value="#{cobrancaMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
+            </h:panelGrid>
+            <br />
+            <hr />
+            <br />
+            <h:panelGrid style="margin-left: 1%;">
+            	<p:outputLabel value="Data" for="dataVencOri" /> 
+            </h:panelGrid>
+            <h:panelGrid style="margin-left: 7%; margin-top:-4.6%;">
+            	<p:inputMask id="dataVencOri" value="#{cobrancaMB.historico.data}" mask="99/99/9999" size="10" maxlength="15"  readonly="true">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask>
+            </h:panelGrid> 
+            <h:panelGrid style="margin-left:63%; margin-top:-4.5%;">
+            	<p:outputLabel value="Contato"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:72%; margin-top:-4.5%;">
+            	<p:inputText value="#{cobrancaMB.historico.contato}"/>
+            </h:panelGrid>
+            <br />
+            <h:panelGrid style="margin-left:1%;">
+            	<p:outputLabel value="Descrição" />
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:1%;">
+            	<p:inputTextarea style="width:585px;" value="#{cobrancaMB.historico.contato}"/>
+            </h:panelGrid>
+            <br />
+            <hr /> 
+            <br />
+            <p:commandLink title="Confirmar"    style="margin-left: 40%;text-decoration: none"   action="#{cobrancaMB.salvarHitorico()}" ajax="false">
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#" >
+            	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>     
+             <br /> 
+          </p:dialog> 
+       </h:form>
     </h:body>
 </html>

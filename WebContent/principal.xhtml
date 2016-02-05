@@ -73,7 +73,7 @@
             	</p:submenu>
     		</p:panelMenu>
     		<br />
-    		<p:link id="ajaxx" style="text-decoration:none;" href="http://www.financemate.com.br/"  ajax="false">
+    		<p:link id="ajaxx"  target="_blank" style="text-decoration:none;" href="http://www.financemate.com.br/"  ajax="false">
            		<img src="resources/img/iconeinfo.png" style="width: 10%;"/>
         		<h:outputText value="Sobre a Financemate" style="font-size:16px; margin-left:5%;"/>
     		</p:link>
@@ -117,7 +117,7 @@
 	                <br/>
 			            <b style="margin-left:10%; font-size:12px; color:black;">Todos os recebimentos em atraso</b>
 			            <br /><br />
-			            <h:outputText value="R$" style="color:green; margin-left:10%; font-size:28px;"/>
+			            <h:outputText value="R$ #{contasReceberMB.totalVencidas}" style="color:green; margin-left:10%; font-size:28px;"/>
 			            <br /><br />
 	        		</h:panelGrid> 
 	        		<h:panelGrid  style="width:25%; margin-left: 47%; margin-top:-11.2%; background-color:white; border-radius:5px;">

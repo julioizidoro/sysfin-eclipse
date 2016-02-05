@@ -19,7 +19,7 @@
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <img src="../../resources/img/ajax-carregando.gif" />
-            </p:dialog>
+            </p:dialog> 
             
             <title  >Novo Histórico</title>
             <br />
@@ -62,11 +62,34 @@
             <h:panelGrid style="margin-left: 1%;">
             	<p:outputLabel value="Data" for="dataVencOri" /> 
             </h:panelGrid>
-            <h:panelGrid style="margin-left: 81.5%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencOri" value="#{historicoMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15"  readonly="true">
+            <h:panelGrid style="margin-left: 7%; margin-top:-4.6%;">
+            	<p:inputMask id="dataVencOri" value="#{historicoMB.historicaCobranca.data}" mask="99/99/9999" size="10" maxlength="15"  readonly="true">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
             </h:panelGrid> 
+            <h:panelGrid style="margin-left:63%; margin-top:-4.5%;">
+            	<p:outputLabel value="Contato"/>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:72%; margin-top:-4.5%;">
+            	<p:inputText value="#{historicoMB.historicaCobranca.contato}"/>
+            </h:panelGrid>
+            <br />
+            <h:panelGrid style="margin-left:1%;">
+            	<p:outputLabel value="Descrição" />
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:1%;">
+            	<p:inputTextarea style="width:585px;" value="#{historicoMB.historicaCobranca.descricao}"/>
+            </h:panelGrid>
+            <br />
+            <hr /> 
+            <br />
+            <p:commandLink title="Confirmar"  target="_blank"  style="margin-left: 40%;text-decoration: none"   action="#{imprimirContasReceberMB.gerarRelatorio()}" ajax="false">
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{imprimirContasReceberMB.fechar()}" >
+            	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>     
+             <br />  
        </h:form>
     </h:body>
 </html>

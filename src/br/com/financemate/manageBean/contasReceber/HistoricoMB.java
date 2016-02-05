@@ -17,6 +17,7 @@ import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Historicocobranca;
 
 @Named
 @ViewScoped
@@ -32,11 +33,26 @@ public class HistoricoMB implements Serializable {
     private Cliente cliente;
     private Contasreceber contasReceber;
     private List<Contasreceber> listaContasReceber;
+    private Historicocobranca historicaCobranca;
     
     @PostConstruct
     public void init(){
     	gerarListaCliente();
     }
+    
+    
+
+	public Historicocobranca getHistoricaCobranca() {
+		return historicaCobranca;
+	}
+
+
+
+	public void setHistoricaCobranca(Historicocobranca historicaCobranca) {
+		this.historicaCobranca = historicaCobranca;
+	}
+
+
 
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
 		return usuarioLogadoMB;

@@ -30,6 +30,7 @@ import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
 
 @Named
@@ -63,6 +64,7 @@ public class ContasReceberMB implements Serializable {
     private List<Banco> listaBanco;
     private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
     private List<Contasreceber> listaSelecionadas;
+    private Vendas vendas;
 	
     @PostConstruct
 	public void init(){
@@ -77,6 +79,22 @@ public class ContasReceberMB implements Serializable {
     
 	
 	
+	public Vendas getVendas() {
+		return vendas;
+	}
+
+
+
+
+
+	public void setVendas(Vendas vendas) {
+		this.vendas = vendas;
+	}
+
+
+
+
+
 	public List<Contasreceber> getListaSelecionadas() {
 		return listaSelecionadas;
 	}
@@ -532,33 +550,33 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public void calcularTotal(){
-		 float vencida = 0.0f;
-		 float vencer = 0.0f;
-		 Date data = new Date();
-		 for(int i=0;i<listaContasReceber.size();i++){
-			 if (listaContasReceber.get(i).getDataVencimento().before(data)){
-				 vencida = vencida + listaContasReceber.get(i).getValorParcela();
-			 }else if (listaContasReceber.get(i).getDataVencimento().after(data)){
-				 vencer = vencer + listaContasReceber.get(i).getValorParcela();
-			 }
-		 }
-		 
-	//	 Float vencida = 0.0f;
-	//	 Float vencendo = 0.0f;
-	//	 Float vencer = 0.0f;
-	//	 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-	//	 List<Double> listaTotais = null;
-	//	 try {
-		//	 listaTotais = contasReceberFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
-		// } catch (SQLException e) {
-		//	 // TODO Auto-generated catch block
-		//	 e.printStackTrace();
-		 //}
-		// if (listaTotais!=null){
-		//	 vencida = listaTotais.get(0).floatValue();
-		//	 vencendo = listaTotais.get(1).floatValue();
-		//	 vencer = listaTotais.get(2).floatValue();
+		 //float vencida = 0.0f;
+		 //float vencer = 0.0f;
+		 //Date data = new Date();
+		 //for(int i=0;i<listaContasReceber.size();i++){
+		//	 if (listaContasReceber.get(i).getDataVencimento().before(data)){
+		//		 vencida = vencida + listaContasReceber.get(i).getValorParcela();
+		//	 }else if (listaContasReceber.get(i).getDataVencimento().after(data)){
+		//		 vencer = vencer + listaContasReceber.get(i).getValorParcela();
+		//	 }
 		// }
+		 
+		 Float vencida = 0.0f;
+		 Float vencendo = 0.0f;
+		 Float vencer = 0.0f;
+		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+		 List<Double> listaTotais = null;
+		 try {
+			 listaTotais = contasReceberFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
+		 } catch (SQLException e) {
+			 // TODO Auto-generated catch block
+			 e.printStackTrace();
+		 }
+		 if (listaTotais!=null){
+			 vencida = listaTotais.get(0).floatValue();
+			 vencendo = listaTotais.get(1).floatValue();
+			 vencer = listaTotais.get(2).floatValue();
+		 }
 		 setTotalVencidas(Formatacao.foramtarFloatString(vencida));
 		 setTotalVencer(Formatacao.foramtarFloatString(vencer));
 		 setTotal(Formatacao.foramtarFloatString(vencida+vencer));
@@ -630,7 +648,7 @@ public class ContasReceberMB implements Serializable {
 		 if (contasreceber!=null){
 			 FacesContext fc = FacesContext.getCurrentInstance();
 			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-			 session.setAttribute("contareceber", contasreceber);       
+			 session.setAttribute("contareceber", contasreceber);
 			 RequestContext.getCurrentInstance().openDialog("recebimentoConta");
 		 }
 		 return "";
@@ -643,9 +661,16 @@ public class ContasReceberMB implements Serializable {
 			 FacesContext fc = FacesContext.getCurrentInstance();
 		     HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		     session.setAttribute("contasReceber", contasReceber);
+		     session.setAttribute("vendas", contasReceber.getVendas());
 			 RequestContext.getCurrentInstance().openDialog("cobranca");
 		}
 		 return "";
+	 }
+	 
+	 public void novoHistorico(Contasreceber contasreceber) {
+		 Map<String, Object> options = new HashMap<String, Object>();
+		 options.put("contentWidth", 500);
+		 RequestContext.getCurrentInstance().openDialog("historico");
 	 }
 	 
 }

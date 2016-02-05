@@ -33,6 +33,9 @@ public class Historicocobranca implements Serializable {
     @JoinColumn(name = "cobranca_idcobranca", referencedColumnName = "idcobranca")
     @ManyToOne(optional = false)
     private Cobranca cobranca;
+    @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
+    @ManyToOne(optional = false)
+    private Usuario usuario;
 
     public Historicocobranca() {
     }
@@ -40,8 +43,18 @@ public class Historicocobranca implements Serializable {
     public Historicocobranca(Integer idhistoricocobranca) {
         this.idhistoricocobranca = idhistoricocobranca;
     }
+    
+    
 
-    public Integer getIdhistoricocobranca() {
+    public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Integer getIdhistoricocobranca() {
         return idhistoricocobranca;
     }
 

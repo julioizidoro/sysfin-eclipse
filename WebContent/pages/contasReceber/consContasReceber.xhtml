@@ -36,6 +36,7 @@
                         <p:menuitem value="Editar"  icon=" icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Receber"  icon=" ui-icon-pencil"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Cobrança"  icon=" ui-icon-pencil"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}"/>
+                    	<p:menuitem value="Historico"  icon=" ui-icon-pencil"  action="#{contasReceberMB.novoHistorico(contasReceberMB.contasReceber)}"/>
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaContaReceber"  var="contasReceber"  value="#{contasReceberMB.listaContasReceber}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">

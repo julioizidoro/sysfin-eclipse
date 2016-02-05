@@ -30,6 +30,7 @@ import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
+import br.com.financemate.util.calcularTotais;
 
 @Named
 @ViewScoped
