@@ -12,6 +12,8 @@ import java.util.List;
  * The persistent class for the cobranca database table.
  * 
  */
+
+
 @Entity
 @Table(name="cobranca")
 public class Cobranca implements Serializable {
