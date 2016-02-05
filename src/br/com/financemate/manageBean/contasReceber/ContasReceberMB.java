@@ -21,9 +21,12 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
+import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
@@ -53,6 +56,13 @@ public class ContasReceberMB implements Serializable {
     private float totalJurosReceber;
     private float totalDescontosReceber;
     private float valorTotalRecebido;
+    private String totalVencer;
+    private String totalVencidas;
+    private String total;
+    private Banco banco;
+    private List<Banco> listaBanco;
+    private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+    private List<Contasreceber> listaSelecionadas;
 	
     @PostConstruct
 	public void init(){
@@ -63,8 +73,122 @@ public class ContasReceberMB implements Serializable {
 		gerarListaContas();
 	}
 	
+    
+    
 	
 	
+	public List<Contasreceber> getListaSelecionadas() {
+		return listaSelecionadas;
+	}
+
+
+
+
+
+	public void setListaSelecionadas(List<Contasreceber> listaSelecionadas) {
+		this.listaSelecionadas = listaSelecionadas;
+	}
+
+
+
+
+
+	public String getImagemFiltro() {
+		return imagemFiltro;
+	}
+
+
+
+
+
+	public void setImagemFiltro(String imagemFiltro) {
+		this.imagemFiltro = imagemFiltro;
+	}
+
+
+
+
+
+	public Banco getBanco() {
+		return banco;
+	}
+
+
+
+
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
+	}
+
+
+
+
+
+	public List<Banco> getListaBanco() {
+		return listaBanco;
+	}
+
+
+
+
+
+	public void setListaBanco(List<Banco> listaBanco) {
+		this.listaBanco = listaBanco;
+	}
+
+
+
+
+
+	public String getTotal() {
+		return total;
+	}
+
+
+
+
+
+	public void setTotal(String total) {
+		this.total = total;
+	}
+
+
+
+
+
+	public String getTotalVencer() {
+		return totalVencer;
+	}
+
+
+
+
+
+	public void setTotalVencer(String totalVencer) {
+		this.totalVencer = totalVencer;
+	}
+
+
+
+
+
+	public String getTotalVencidas() {
+		return totalVencidas;
+	}
+
+
+
+
+
+	public void setTotalVencidas(String totalVencidas) {
+		this.totalVencidas = totalVencidas;
+	}
+
+
+
+
+
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
 		return usuarioLogadoMB;
 	}
@@ -316,8 +440,8 @@ public class ContasReceberMB implements Serializable {
 			 Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
 			 mostrarMensagem(ex, "Erro Listar Contas", "Erro");
 		 }
-		 gerarTotalContas();
-		 
+		 //gerarTotalContas();
+		 calcularTotal();
 	 }
 	 
 	 public void gerarTotalContas(){
@@ -406,4 +530,122 @@ public class ContasReceberMB implements Serializable {
 		 }
 		 return "";
 	 }
+	 
+	 public void calcularTotal(){
+		 float vencida = 0.0f;
+		 float vencer = 0.0f;
+		 Date data = new Date();
+		 for(int i=0;i<listaContasReceber.size();i++){
+			 if (listaContasReceber.get(i).getDataVencimento().before(data)){
+				 vencida = vencida + listaContasReceber.get(i).getValorParcela();
+			 }else if (listaContasReceber.get(i).getDataVencimento().after(data)){
+				 vencer = vencer + listaContasReceber.get(i).getValorParcela();
+			 }
+		 }
+		 
+	//	 Float vencida = 0.0f;
+	//	 Float vencendo = 0.0f;
+	//	 Float vencer = 0.0f;
+	//	 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+	//	 List<Double> listaTotais = null;
+	//	 try {
+		//	 listaTotais = contasReceberFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
+		// } catch (SQLException e) {
+		//	 // TODO Auto-generated catch block
+		//	 e.printStackTrace();
+		 //}
+		// if (listaTotais!=null){
+		//	 vencida = listaTotais.get(0).floatValue();
+		//	 vencendo = listaTotais.get(1).floatValue();
+		//	 vencer = listaTotais.get(2).floatValue();
+		// }
+		 setTotalVencidas(Formatacao.foramtarFloatString(vencida));
+		 setTotalVencer(Formatacao.foramtarFloatString(vencer));
+		 setTotal(Formatacao.foramtarFloatString(vencida+vencer));
+	 }
+	 
+	 
+	 public void gerarListaBanco(){
+		 if (cliente!=null) {
+			 BancoFacade bancoFacade = new BancoFacade();
+			 String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+			 listaBanco = bancoFacade.listar(sql);
+			 if (listaBanco ==null){
+				 listaBanco = new ArrayList<Banco>();
+			 }
+		 }else {
+			 listaBanco = new ArrayList<Banco>();
+		 }
+	 }
+	 
+	 public void novoFiltro() {
+		 Map<String, Object> options = new HashMap<String, Object>();
+		 options.put("contentWidth", 500);
+		 RequestContext.getCurrentInstance().openDialog("filtroConsContaReceber");
+	 }
+	 
+	 public void filtrar(){		 
+		 sql = "Select v from Contasreceber v where ";
+		 if (cliente!=null){
+			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
+		 }else {
+			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
+		 }
+		 
+		 if (contasReceber.getNomeCliente()!=null) {
+			 sql = sql + " v.nomeCliente=" + contasReceber.getNomeCliente() + " and ";
+		 }
+		 if (contasReceber.getVendas()!=null) {
+			 sql = sql +  " v.vendas_idvendas=" + contasReceber.getVendas().getIdvendas() + " and ";
+		 }
+		if (contasReceber.getBanco()!=null) {
+			sql = sql +  " v.banco_idbanco=" + contasReceber.getBanco().getIdbanco() + " and ";
+		}
+		if (contasReceber.getValorParcela()!=null) {
+			sql = sql + " v.valorParcela=" + contasReceber.getValorParcela() + " and ";
+		}
+		 
+		 if ((dataInicial!=null) && (dataFinal!=null)){
+			 sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
+					 "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+					 "' order by v.dataVencimento";
+		 }
+		 gerarListaContas();
+		 RequestContext.getCurrentInstance().closeDialog(sql);
+	 }
+	 
+	 public String coresFiltrar(){
+		 if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVerde.ico")) {
+			 novoFiltro();
+			 imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
+		 }else if(imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")){
+			 criarConsultaContaReceber();
+			 gerarListaContas();
+			 imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+		 }
+		 return "";
+	 } 
+	 
+	 public String recebimentoConta(Contasreceber contasreceber){
+		 if (contasreceber!=null){
+			 FacesContext fc = FacesContext.getCurrentInstance();
+			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			 session.setAttribute("contareceber", contasreceber);       
+			 RequestContext.getCurrentInstance().openDialog("recebimentoConta");
+		 }
+		 return "";
+	 }
+	 
+	 public String novaCobranca(Contasreceber contasreceber) {
+		 if (contasreceber!=null) {
+			 Map<String, Object> options = new HashMap<String, Object>();
+			 options.put("contentWidth", 600);
+			 FacesContext fc = FacesContext.getCurrentInstance();
+		     HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		     session.setAttribute("contasReceber", contasReceber);
+			 RequestContext.getCurrentInstance().openDialog("cobranca");
+		}
+		 return "";
+	 }
+	 
 }
