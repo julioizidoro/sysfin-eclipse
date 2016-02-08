@@ -31,8 +31,8 @@
             <br /><br />
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="idTabelaContaPagar"/>
-                        <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.gerarListaContas()}" />
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}"/>
+                        <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.gerarListaContas()}" update="idTabelaContaPagar"/>
+                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}"/> 
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
@@ -56,8 +56,8 @@
                         <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; background:#E7EBEB; color:black; border:none;" >
                             <h:outputText value="#{contasPagar.fornecedor}" style="margin-left:25%;"/>
                         </p:column>  
-                        <p:column headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter" >
-                            <img src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="margin-right:50%;"/>
+                        <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter" >
+                            <img  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="margin-right:50%;"/>
                         </p:column>
                         <p:column headerText="Valor Conta" style="width:5%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
                             <h:outputText value="#{contasPagar.valor}" >

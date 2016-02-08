@@ -438,11 +438,11 @@ public class ContasReceberMB implements Serializable {
 		 if (usuarioLogadoMB.getUsuario().getCliente()>0){
 			 sql = " Select v from Contasreceber v where v.dataVencimento<='" + dataFinal + 
 					 "' and v.valorPago=0 and v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
-					 " order by v.dataVencimento";
+					 " and v.dataPagamento=null order by v.dataVencimento";
 		 }else {
 			 sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and "
 					 + "v.dataVencimento<='" + dataFinal + 
-					 "' and v.valorPago=0 order by v.dataVencimento";
+					 "' and v.valorPago=0  and v.dataPagamento=null order by v.dataVencimento";
 	        }  
 		 
 	 }
@@ -613,12 +613,7 @@ public class ContasReceberMB implements Serializable {
 		 if (contasReceber.getNomeCliente()!=null) {
 			 sql = sql + " v.nomeCliente=" + contasReceber.getNomeCliente() + " and ";
 		 }
-		 if (contasReceber.getVendas()!=null) {
-			 sql = sql +  " v.vendas_idvendas=" + contasReceber.getVendas().getIdvendas() + " and ";
-		 }
-		if (contasReceber.getBanco()!=null) {
-			sql = sql +  " v.banco_idbanco=" + contasReceber.getBanco().getIdbanco() + " and ";
-		}
+		
 		if (contasReceber.getValorParcela()!=null) {
 			sql = sql + " v.valorParcela=" + contasReceber.getValorParcela() + " and ";
 		}

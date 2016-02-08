@@ -81,7 +81,7 @@
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="89" y="149" width="246" height="20" uuid="97f66d0c-62c8-4c04-b2db-46022e48e104"/>
+				<reportElement x="84" y="149" width="246" height="20" uuid="97f66d0c-62c8-4c04-b2db-46022e48e104"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>

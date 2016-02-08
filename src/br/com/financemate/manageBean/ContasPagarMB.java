@@ -615,8 +615,7 @@ public class ContasPagarMB implements Serializable{
 		 return "";
 	 }
 	 
-	 public void filtrar(){
-		 
+	 public void filtrar(){		 
 		 sql = "Select v from Contaspagar v where ";
 		 if (liberadas){
 			 sql = sql + " v.contaPaga='S' and ";
@@ -628,7 +627,13 @@ public class ContasPagarMB implements Serializable{
 			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
 		 }else {
 			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
-	  	     }
+		 }
+		 if (!descricao.equalsIgnoreCase("")) {
+			sql =  sql + " v.descricao= '" + descricao + "' and ";
+		}
+		if (planocontas!=null) {
+			sql = sql + " v.planocontas.idplanocontas=" + planocontas.getIdplanoContas() + " and ";
+		}
 		 if ((dataInicio!=null) && (dataFinal!=null)){
 			 if (liberadas){
 				 sql = sql + "v.dataLiberacao>='" + Formatacao.ConvercaoDataSql(dataInicio) + 
@@ -638,7 +643,7 @@ public class ContasPagarMB implements Serializable{
 				 sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicio) + 
 						 "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
 						 "' order by v.dataVencimento";
-			 }
+			 } 
 		 }
 		 gerarListaContas();
 		 RequestContext.getCurrentInstance().closeDialog(sql);
