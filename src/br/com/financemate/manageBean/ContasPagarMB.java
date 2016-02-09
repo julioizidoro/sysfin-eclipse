@@ -30,7 +30,7 @@ import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
-import br.com.financemate.util.calcularTotais;
+
 
 @Named
 @ViewScoped
@@ -512,7 +512,6 @@ public class ContasPagarMB implements Serializable{
 		try {
 			listaTotais = contasPagarFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (listaTotais!=null){
@@ -546,7 +545,6 @@ public class ContasPagarMB implements Serializable{
 			try {
 				listaTransferencia = cpTransferenciaFacade.listarTranferencia(sql);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			for (int i = 0; i < listaTransferencia.size(); i++) {

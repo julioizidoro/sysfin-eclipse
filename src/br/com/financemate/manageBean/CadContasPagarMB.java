@@ -1,6 +1,6 @@
 package br.com.financemate.manageBean;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -26,7 +26,6 @@ import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.facade.FtpDadosFacade;
-import br.com.financemate.facade.NomeArquivoFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -34,7 +33,6 @@ import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Ftpdados;
 import br.com.financemate.model.Planocontas;
-import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.Ftp;
 
 @Named
@@ -59,7 +57,7 @@ public class CadContasPagarMB implements Serializable{
     Boolean selecionada = false;
 	private String nomeAnexo = "Anexar"; 
 	private String nomeAquivoFTP;
-	private String nomeArquivoLocal;
+	
 
 	@PostConstruct
 	public void init(){

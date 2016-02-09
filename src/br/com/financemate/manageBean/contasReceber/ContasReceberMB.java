@@ -569,7 +569,6 @@ public class ContasReceberMB implements Serializable {
 		 try {
 			 listaTotais = contasReceberFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
 		 } catch (SQLException e) {
-			 // TODO Auto-generated catch block
 			 e.printStackTrace();
 		 }
 		 if (listaTotais!=null){

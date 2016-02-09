@@ -40,7 +40,6 @@ public class Cptransferencia implements Serializable {
     private Contaspagar contaspagar;
 	
 	public Cptransferencia() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Cptransferencia(Integer idcptransferencia) {
@@ -113,7 +112,7 @@ public class Cptransferencia implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // 
         if (!(object instanceof Cptransferencia)) {
             return false;
         }

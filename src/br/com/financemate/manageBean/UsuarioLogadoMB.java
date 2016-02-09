@@ -177,7 +177,6 @@ public class UsuarioLogadoMB implements Serializable{
 		try {
 			valor = contasPagarFacade.calculaSaldosDia(Formatacao.ConvercaoDataSql(new Date())).floatValue();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return Formatacao.foramtarFloatString(valor);
