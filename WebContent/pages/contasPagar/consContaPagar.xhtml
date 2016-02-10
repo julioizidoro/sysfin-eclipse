@@ -28,11 +28,11 @@
             <p:commandLink   action="#{contasPagarMB.novaImpressao()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 				<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
             </p:commandLink>   
-            <br /><br />
+            <br /><br /> 
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="idTabelaContaPagar"/>
-                        <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.gerarListaContas()}" update="idTabelaContaPagar"/>
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}"/> 
+                        <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update="idTabelaContaPagar"/>
+                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" ajax="#{contasPagarMB.gerarListaContas()}"/> 
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
@@ -57,14 +57,14 @@
                             <h:outputText value="#{contasPagar.fornecedor}" style="margin-left:25%;"/>
                         </p:column>  
                         <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter" >
-                            <img  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="margin-right:50%;"/>
+                            <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="margin-right:50%;"/>
                         </p:column>
                         <p:column headerText="Valor Conta" style="width:5%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
                             <h:outputText value="#{contasPagar.valor}" >
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
                         </p:column>
-                        <p:column style="width:28px; background:#E7EBEB; color:black; border:none;">
+                        <p:column  style="width:28px; background:#E7EBEB; color:black; border:none;">
                             <p:selectBooleanCheckbox value="#{contasPagar.selecionado}"/>
                         </p:column>
                     </p:dataTable>
@@ -73,19 +73,19 @@
 	                	<br />
 			            <tt style="margin-left:10%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
 			            <br />
-			              <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasPagarMB.totalVencidas}"  readonly="true"/>
+			              <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{calculosContasMB.cpVencidas}"  readonly="true"/>
 	        		</h:panelGrid>
 	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:green;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Vencer</tt>
 			            <br/>
-			            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasPagarMB.totalVencer}"  readonly="true"/>
+			            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{calculosContasMB.cpVencer}" readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid style="width:20%;  margin-left:77%; margin-top: -7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:blue;">
+	        		<h:panelGrid  style="width:20%;  margin-left:77%; margin-top: -7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:blue;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Pagar</tt>
 			            <br/>
-			            <h:outputText id="contasPagar" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasPagarMB.total}"  readonly="true"/>
+			            <h:outputText id="contasPagar" size="20" maxlength="100" class="totallancamentos" value="R$ #{calculosContasMB.cpTotal}"  readonly="true"/>
 			             
 	        		</h:panelGrid>
 	        		<br />

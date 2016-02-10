@@ -63,7 +63,7 @@
             	<p:outputLabel value="Data" for="dataVencOri" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 7%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencOri" value="#{historicoMB.historicaCobranca.data}" mask="99/99/9999" size="10" maxlength="15"  readonly="true">
+            	<p:inputMask id="dataVencOri" value="#{historicoMB.historicaCobranca.data}" mask="99/99/9999" size="10" maxlength="15" >
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
             </h:panelGrid> 
@@ -83,10 +83,10 @@
             <br />
             <hr /> 
             <br />
-            <p:commandLink title="Confirmar"  target="_blank"  style="margin-left: 40%;text-decoration: none"   action="#{imprimirContasReceberMB.gerarRelatorio()}" ajax="false">
+            <p:commandLink title="Confirmar"    style="margin-left: 40%;text-decoration: none"   action="#{historicoMB.salvarHitorico()}" ajax="false">
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-            <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{imprimirContasReceberMB.fechar()}" >
+            <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{historicoMB.cancelar()}" >
             	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>     
              <br />  

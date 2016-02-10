@@ -66,6 +66,8 @@ public class ContasPagarMB implements Serializable{
 	    private List<Planocontas> listaPlanoContas;
 		private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
 		private List<Cptransferencia> listaTransferencia;
+		@Inject
+		private CalculosContasMB calculosContasMB;
 	
 	@PostConstruct
 	public void init(){
@@ -76,6 +78,22 @@ public class ContasPagarMB implements Serializable{
 	}
 	
 	
+	
+	
+	public CalculosContasMB getCalculosContasMB() {
+		return calculosContasMB;
+	}
+
+
+
+
+	public void setCalculosContasMB(CalculosContasMB calculosContasMB) {
+		this.calculosContasMB = calculosContasMB;
+	}
+
+
+
+
 	public List<Planocontas> getListaPlanoContas() {
 		return listaPlanoContas;
 	}
@@ -467,6 +485,7 @@ public class ContasPagarMB implements Serializable{
             Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro a listar contas a pagar", "Erro");
         }
+        calculosContasMB.calcularTotalContasPagar();
     }
 	
 	public void gerarListaCliente() {
@@ -499,6 +518,7 @@ public class ContasPagarMB implements Serializable{
 	public void retornoDialogNovo(SelectEvent event) {
         Contaspagar contaspagar = (Contaspagar) event.getObject();
         gerarListaContas();
+        calculosContasMB.calcularTotalContasPagar();
     }
 	
 	public String excluir(){
@@ -672,6 +692,7 @@ public class ContasPagarMB implements Serializable{
 	 
 	 public void retornoDialogLiberar(SelectEvent event) {
 		 gerarListaContas();
+		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 
 	 

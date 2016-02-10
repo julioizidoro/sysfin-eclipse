@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
@@ -188,9 +189,14 @@ public class CobrancaMB implements Serializable {
         context.addMessage(null, new FacesMessage(titulo, erro));
     }
 	
-	public void novoHistorico() {
-        historico = new Historicocobranca();
-        historico.setData(new Date());
+	public String novoHistorico() {
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put("contentWidth", 500);
+		FacesContext fc = FacesContext.getCurrentInstance();
+	    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+	    session.setAttribute("contasReceber", contasReceber);
+	    session.setAttribute("cobranca", cobranca);
+		return "historico";
     }
 	
 	public String salvarDadosCobranca(){
@@ -214,7 +220,7 @@ public class CobrancaMB implements Serializable {
         cobranca.getHistoricocobrancaList().add(historico);
         FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobrança Salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
-        return "consContasReceber";
+        return "cobranca";
     }
 	
 	public String editarHistorico() { 

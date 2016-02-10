@@ -38,6 +38,8 @@ public class LiberarContasPagarMB implements Serializable {
     private Date dataLiberacao;
     @Inject
     private UsuarioLogadoMB usuarioLogadoMB;
+    @Inject
+    private CalculosContasMB calculosContasMB;
 	
     
 	@PostConstruct
@@ -54,6 +56,20 @@ public class LiberarContasPagarMB implements Serializable {
             contasPagar = new Contaspagar();
         }
 	}
+	
+	
+
+	public CalculosContasMB getCalculosContasMB() {
+		return calculosContasMB;
+	}
+
+
+
+	public void setCalculosContasMB(CalculosContasMB calculosContasMB) {
+		this.calculosContasMB = calculosContasMB;
+	}
+
+
 
 	public List<Contaspagar> getListaContasPagar() {
 		return listaContasPagar;
@@ -115,9 +131,11 @@ public class LiberarContasPagarMB implements Serializable {
 			for (int i = 0; i < listaContasSelecionadas.size(); i++) {
 	            salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
 	        }
+			calculosContasMB.calcularTotalContasPagar();
 	        RequestContext.getCurrentInstance().closeDialog(contasPagar);
 	        return "";
 		}
+		
 		return "";
     }
     

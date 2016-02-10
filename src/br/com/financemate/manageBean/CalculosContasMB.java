@@ -37,7 +37,7 @@ public class CalculosContasMB implements Serializable{
 	public void init(){
 		getCrTotal();
 		calcularTotalContasPagar();
-		calcularTotalContasPagar();
+		calcularTotaisContasReceber();
 	}
 
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
@@ -116,7 +116,7 @@ public class CalculosContasMB implements Serializable{
 		this.cpTotal = cpTotal;
 	}
 
-	private void calcularTotalContasPagar(){
+	public void calcularTotalContasPagar(){
 		Float vencida = 0.0f;
         Float vencendo = 0.0f;
         Float vencer = 0.0f;

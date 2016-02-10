@@ -25,6 +25,7 @@ import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.manageBean.CalculosContasMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -65,6 +66,8 @@ public class ContasReceberMB implements Serializable {
     private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
     private List<Contasreceber> listaSelecionadas;
     private Vendas vendas;
+    @Inject
+    private CalculosContasMB calculosContasMB;
 	
     @PostConstruct
 	public void init(){
@@ -79,6 +82,22 @@ public class ContasReceberMB implements Serializable {
     
 	
 	
+	public CalculosContasMB getCalculosContasMB() {
+		return calculosContasMB;
+	}
+
+
+
+
+
+	public void setCalculosContasMB(CalculosContasMB calculosContasMB) {
+		this.calculosContasMB = calculosContasMB;
+	}
+
+
+
+
+
 	public Vendas getVendas() {
 		return vendas;
 	}
@@ -459,6 +478,7 @@ public class ContasReceberMB implements Serializable {
 			 mostrarMensagem(ex, "Erro Listar Contas", "Erro");
 		 }
 		 //gerarTotalContas();
+		 calculosContasMB.calcularTotaisContasReceber();
 	 }
 	 
 	 public void gerarTotalContas(){
@@ -527,6 +547,7 @@ public class ContasReceberMB implements Serializable {
 	 public void retornoDialogNovo(SelectEvent event) {
 		 Contasreceber contasreceber = (Contasreceber) event.getObject();
 		 gerarListaContas();
+		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 
 	 public void excluir(){

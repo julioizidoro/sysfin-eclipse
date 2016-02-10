@@ -28,7 +28,7 @@
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://200.175.61.147:8082/sysfin"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="simples"/>
+			<property name="javax.persistence.jdbc.password" value="jfhmaster123"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 		</properties>
 	</persistence-unit>

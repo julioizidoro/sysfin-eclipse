@@ -80,6 +80,20 @@ public class CadContasPagarMB implements Serializable{
         }
 	}
 	
+	
+	
+	public String getNomeAquivoFTP() {
+		return nomeAquivoFTP;
+	}
+
+
+
+	public void setNomeAquivoFTP(String nomeAquivoFTP) {
+		this.nomeAquivoFTP = nomeAquivoFTP;
+	}
+
+
+
 	public Boolean getSelecionada() {
 		return selecionada;
 	}
@@ -261,6 +275,8 @@ public class CadContasPagarMB implements Serializable{
 		}
 		
     }
+	
+
 	
 	public void salvarRepetir(){
         contaPagar.setBanco(banco);

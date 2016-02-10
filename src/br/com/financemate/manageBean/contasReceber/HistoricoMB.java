@@ -2,6 +2,7 @@ package br.com.financemate.manageBean.contasReceber;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,12 +13,18 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
+
+import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.CobrancaFacade;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Cobranca;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Historicocobranca;
+import br.com.financemate.model.Vendas;
 
 @Named
 @ViewScoped
@@ -34,10 +41,18 @@ public class HistoricoMB implements Serializable {
     private Contasreceber contasReceber;
     private List<Contasreceber> listaContasReceber;
     private Historicocobranca historicaCobranca;
+    private Cobranca cobranca;
     
     @PostConstruct
     public void init(){
+    	FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        contasReceber = (Contasreceber) session.getAttribute("contasReceber");
+        cobranca = (Cobranca) session.getAttribute("cobranca");
+        session.removeAttribute("cobranca");
+        session.removeAttribute("contasReceber");
     	gerarListaCliente();
+    	historicaCobranca = new Historicocobranca();
     }
     
     
@@ -50,6 +65,18 @@ public class HistoricoMB implements Serializable {
 
 	public void setHistoricaCobranca(Historicocobranca historicaCobranca) {
 		this.historicaCobranca = historicaCobranca;
+	}
+
+
+
+	public Cobranca getCobranca() {
+		return cobranca;
+	}
+
+
+
+	public void setCobranca(Cobranca cobranca) {
+		this.cobranca = cobranca;
 	}
 
 
@@ -108,6 +135,27 @@ public class HistoricoMB implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
         context.addMessage(null, new FacesMessage(titulo, erro));
+    }
+	
+	public String salvarHitorico(){
+        CobrancaFacade cobrancaFacade = new CobrancaFacade();
+        if (cobranca.getIdcobranca()==null){
+            cobranca = cobrancaFacade.salvar(cobranca);
+            
+        }
+        historicaCobranca.setData(new Date());
+        historicaCobranca.setCobranca(cobranca);
+        historicaCobranca.setUsuario(usuarioLogadoMB.getUsuario());
+        historicaCobranca = cobrancaFacade.salvar(historicaCobranca);
+        cobranca.getHistoricocobrancaList().add(historicaCobranca);
+        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobrança Salvo.");
+        FacesContext.getCurrentInstance().addMessage(null, mensagem);
+        return "cobranca";
+    }
+	
+	public String cancelar(){
+        RequestContext.getCurrentInstance().closeDialog(null);
+        return "cobranca";
     }
 
 }
