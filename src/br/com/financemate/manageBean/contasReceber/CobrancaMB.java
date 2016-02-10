@@ -23,9 +23,14 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.CobrancaFacade;
+import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.facade.HistoricoCobrancaFacade;
+import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobranca;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Historicocobranca;
 import br.com.financemate.model.Vendas;
@@ -58,9 +63,6 @@ public class CobrancaMB implements Serializable {
         session.removeAttribute("contasReceber");
     	gerarListaCliente();
         cliente = contasReceber.getCliente();
-        if (venda==null){
-            venda = new Vendas();
-        }
         if (cobranca == null) {
 			cobranca = new Cobranca();
 			listaHistorico = new ArrayList<Historicocobranca>();
@@ -68,9 +70,16 @@ public class CobrancaMB implements Serializable {
 			listaHistorico = cobranca.getHistoricocobrancaList();
 		}
         historico = new Historicocobranca();
+        gerarListaHistorico();
     }
     
-    
+    public void gerarListaHistorico(){
+    	HistoricoCobrancaFacade historicoCobrancaFacade = new HistoricoCobrancaFacade();
+        listaHistorico = historicoCobrancaFacade.listar("Select h from Historicocobranca h");
+		if (listaHistorico == null) {
+			listaHistorico = new ArrayList<Historicocobranca>();
+		}
+    }
     
 
 	public Vendas getVenda() {
@@ -202,6 +211,9 @@ public class CobrancaMB implements Serializable {
 	public String salvarDadosCobranca(){
         CobrancaFacade cobrancaFacade = new CobrancaFacade();
         cobranca = cobrancaFacade.salvar(cobranca);
+        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+        contasReceber.setCobranca(cobranca);
+        contasReceberFacade.salvar(contasReceber);
         FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Dados  salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
         return "";
@@ -231,6 +243,11 @@ public class CobrancaMB implements Serializable {
             session.setAttribute("cobranca", cobranca);
         }
         return "";
+    }
+	
+	public String cancelar(){
+        RequestContext.getCurrentInstance().closeDialog(null);
+        return null;
     }
 
 }

@@ -115,7 +115,7 @@
                     <h:outputText value="#{historicoCobranca.descricao}" /> 
                 </p:column> 
                 <p:column headerText="Usuário"   style="background:#E7EBEB; color:black; width: 80px; border:none;">
-                    <h:outputText value="#{historicoCobranca.usuario}" style="margin-left:20%;"/>
+                    <h:outputText value="#{historicoCobranca.usuario.nome}" style="margin-left:20%;"/>
                 </p:column>
                 
             </p:dataTable>
@@ -132,11 +132,11 @@
             <p:commandLink title="Confirmar" style="margin-left: 37%;text-decoration: none"   action="#{cobrancaMB.salvarDadosCobranca()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-            <p:commandLink title="Cancelar" style="margin-left: 9%;text-decoration: none" action="#" >
+            <p:commandLink title="Cancelar" style="margin-left: 9%;text-decoration: none" action="#{cobrancaMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
             <br/>
-        </h:form>
+        </h:form> 
         
     </h:body>
 </html>

@@ -49,8 +49,6 @@ public class HistoricoMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasReceber = (Contasreceber) session.getAttribute("contasReceber");
         cobranca = (Cobranca) session.getAttribute("cobranca");
-        session.removeAttribute("cobranca");
-        session.removeAttribute("contasReceber");
     	gerarListaCliente();
     	historicaCobranca = new Historicocobranca();
     }

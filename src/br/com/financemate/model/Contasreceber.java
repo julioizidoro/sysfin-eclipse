@@ -86,10 +86,15 @@ public class Contasreceber implements Serializable {
     private Vendas vendas;
     @Transient
     private boolean selecionado;
+    @JoinColumn(name = "cobranca_idcobranca", referencedColumnName = "idcobranca")
+    @ManyToOne(optional = false)
+    private Cobranca cobranca;
 
     public Contasreceber() {
     }
 
+    
+    
     public Contasreceber(Integer idcontasReceber) {
         this.idcontasReceber = idcontasReceber;
     }
@@ -253,8 +258,22 @@ public class Contasreceber implements Serializable {
     public void setVendas(Vendas vendas) {
         this.vendas = vendas;
     }
+    
+    
 
-    @Override
+    public Cobranca getCobranca() {
+		return cobranca;
+	}
+
+
+
+	public void setCobranca(Cobranca cobranca) {
+		this.cobranca = cobranca;
+	}
+
+
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idcontasReceber != null ? idcontasReceber.hashCode() : 0);

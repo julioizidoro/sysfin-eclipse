@@ -20,7 +20,7 @@
             <p:commandLink id="idImagemLiberar"  action="#{contasPagarMB.novaLiberacao()}" update="idImagemFiltro" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Liberar">
 				<img  src="../../resources/img/iconeLibera.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 				<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogLiberar}" update="idTabelaContaPagar"/>
-           	</p:commandLink>
+           	</p:commandLink> 
             <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
 				<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 				<p:dataExporter type="xls" target="idTabelaContaPagar" fileName="contasPagar" />

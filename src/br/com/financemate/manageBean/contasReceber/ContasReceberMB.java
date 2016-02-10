@@ -80,8 +80,8 @@ public class ContasReceberMB implements Serializable {
 	
     
     
-	
-	
+
+
 	public CalculosContasMB getCalculosContasMB() {
 		return calculosContasMB;
 	}
