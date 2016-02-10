@@ -467,7 +467,6 @@ public class ContasPagarMB implements Serializable{
             Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro a listar contas a pagar", "Erro");
         }
-        calcularTotal();
     }
 	
 	public void gerarListaCliente() {
@@ -488,41 +487,6 @@ public class ContasPagarMB implements Serializable{
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
         context.addMessage(null, new FacesMessage(titulo, erro));
-    }
-	
-	public void calcularTotal(){
-        /*
-        Date data = new Date();
-        String diaData = Formatacao.ConvercaoDataPadrao(data);
-        for(int i=0;i<listaContasPagar.size();i++){
-            String vencData = Formatacao.ConvercaoDataPadrao(listaContasPagar.get(i).getDataVencimento());
-            if (diaData.equalsIgnoreCase(vencData)){
-                vencendo = vencendo + listaContasPagar.get(i).getValor();
-            }else if (listaContasPagar.get(i).getDataVencimento().before(data)){
-                vencida = vencida + listaContasPagar.get(i).getValor();
-            }else if (listaContasPagar.get(i).getDataVencimento().after(data)){
-                vencer = vencer + listaContasPagar.get(i).getValor();
-            }
-        }*/
-		Float vencida = 0.0f;
-        Float vencendo = 0.0f;
-        Float vencer = 0.0f;
-		ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-		List<Double> listaTotais = null;
-		try {
-			listaTotais = contasPagarFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		if (listaTotais!=null){
-			vencida = listaTotais.get(0).floatValue();
-	        vencendo = listaTotais.get(1).floatValue();
-	        vencer = listaTotais.get(2).floatValue();
-		}
-        setTotalVencidas(Formatacao.foramtarFloatString(vencida));
-        setTotalVencendo(Formatacao.foramtarFloatString(vencendo));
-        setTotalVencer(Formatacao.foramtarFloatString(vencer));
-        setTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
     }
 	
 	public String novaConta() {
@@ -677,7 +641,6 @@ public class ContasPagarMB implements Serializable{
 	            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
 	            mostrarMensagem(ex, "Erro a listar contas a pagar", "Erro");
 	        }
-	        calcularTotal();
 	    }
 	 
 	 public String coresFiltrar(){

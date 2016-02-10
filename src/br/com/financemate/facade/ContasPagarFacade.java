@@ -77,13 +77,8 @@ public class ContasPagarFacade {
         contasPagarDao.excluirArquivo(idArquivo);
     }
     
-    public List<Double> calculaSaldos(String data) throws SQLException {
+    public List<Double> calculaSaldos(String data, int idcliente) throws SQLException {
     	contasPagarDao = new ContasPagarDao();
-        return contasPagarDao.calculaSaldos(data);
-    }
-    
-    public Double calculaSaldosDia(String data) throws SQLException {
-    	contasPagarDao = new ContasPagarDao();
-        return contasPagarDao.calculaSaldosDia(data);
+        return contasPagarDao.calculaSaldos(data, idcliente);
     }
 }

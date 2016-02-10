@@ -122,8 +122,12 @@ public class CalculosContasMB implements Serializable{
         Float vencer = 0.0f;
 		ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 		List<Double> listaTotais = null;
+		int idcliente = 0;
+		if (usuarioLogadoMB.getUsuario().getCliente()>0){
+			idcliente = usuarioLogadoMB.getUsuario().getCliente();
+		}else idcliente = 8;
 		try {
-			listaTotais = contasPagarFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
+			listaTotais = contasPagarFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()), idcliente);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -145,8 +149,12 @@ public class CalculosContasMB implements Serializable{
 		 Float vencer = 0.0f;
 		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 		 List<Double> listaTotais = null;
+		 int idcliente = 0;
+			if (usuarioLogadoMB.getUsuario().getCliente()>0){
+				idcliente = usuarioLogadoMB.getUsuario().getCliente();
+			}else idcliente = 8;
 		 try {
-			 listaTotais = contasReceberFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
+			 listaTotais = contasReceberFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()), idcliente);
 		 } catch (SQLException e) {
 			 e.printStackTrace();
 		 }

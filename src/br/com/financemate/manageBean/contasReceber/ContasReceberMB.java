@@ -459,7 +459,6 @@ public class ContasReceberMB implements Serializable {
 			 mostrarMensagem(ex, "Erro Listar Contas", "Erro");
 		 }
 		 //gerarTotalContas();
-		 calcularTotal();
 	 }
 	 
 	 public void gerarTotalContas(){
@@ -548,39 +547,6 @@ public class ContasReceberMB implements Serializable {
 		 }
 		 return "";
 	 }
-	 
-	 public void calcularTotal(){
-		 //float vencida = 0.0f;
-		 //float vencer = 0.0f;
-		 //Date data = new Date();
-		 //for(int i=0;i<listaContasReceber.size();i++){
-		//	 if (listaContasReceber.get(i).getDataVencimento().before(data)){
-		//		 vencida = vencida + listaContasReceber.get(i).getValorParcela();
-		//	 }else if (listaContasReceber.get(i).getDataVencimento().after(data)){
-		//		 vencer = vencer + listaContasReceber.get(i).getValorParcela();
-		//	 }
-		// }
-		 
-		 Float vencida = 0.0f;
-		 Float vencendo = 0.0f;
-		 Float vencer = 0.0f;
-		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-		 List<Double> listaTotais = null;
-		 try {
-			 listaTotais = contasReceberFacade.calculaSaldos(Formatacao.ConvercaoDataSql(new Date()));
-		 } catch (SQLException e) {
-			 e.printStackTrace();
-		 }
-		 if (listaTotais!=null){
-			 vencida = listaTotais.get(0).floatValue();
-			 vencendo = listaTotais.get(1).floatValue();
-			 vencer = listaTotais.get(2).floatValue();
-		 }
-		 setTotalVencidas(Formatacao.foramtarFloatString(vencida));
-		 setTotalVencer(Formatacao.foramtarFloatString(vencer));
-		 setTotal(Formatacao.foramtarFloatString(vencida+vencer));
-	 }
-	 
 	 
 	 public void gerarListaBanco(){
 		 if (cliente!=null) {

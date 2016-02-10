@@ -58,9 +58,9 @@ public class ContasReceberFacade {
         return contasReceberDao.consultarVendaFornecedor(idVenda);
     }
     
-    public List<Double> calculaSaldos(String data) throws SQLException {
+    public List<Double> calculaSaldos(String data, int idcliente) throws SQLException {
     	contasReceberDao = new ContasReceberDao();
-        return contasReceberDao.calculaSaldos(data);
+        return contasReceberDao.calculaSaldos(data, idcliente);
     }
     
 }

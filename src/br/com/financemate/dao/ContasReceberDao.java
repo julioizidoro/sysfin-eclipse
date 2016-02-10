@@ -70,11 +70,11 @@ public class ContasReceberDao {
         return conta;
     }
     
-    public List<Double> calculaSaldos(String data) throws SQLException {
+    public List<Double> calculaSaldos(String data, int idcliente) throws SQLException {
         Double valor;
         EntityManager manager = ConectionFactory.getConnection();
         Query query = manager.createNativeQuery("Select distinct sum(valorparcela) as valorparcela " +
-                "From Contasreceber where dataVencimento<'" + data + "'");
+                "From Contasreceber where dataVencimento<'" + data + "' and cliente_idcliente=" + idcliente);
         List<Double> totalContas = new ArrayList<Double>();
         if (query.getSingleResult()!=null){
             valor =  (Double) query.getSingleResult();
@@ -82,14 +82,14 @@ public class ContasReceberDao {
         }else totalContas.add(0.0);
         
         query = manager.createNativeQuery("Select distinct sum(valorparcela) as valorparcela " +
-                "From Contasreceber where dataVencimento='" + data + "'");
+                "From Contasreceber where dataVencimento='" + data + "' and cliente_idcliente=" + idcliente);
         if (query.getSingleResult()!=null){
             valor =  (Double) query.getSingleResult();
             totalContas.add(valor.doubleValue());
         }else totalContas.add(0.0);
         
         query = manager.createNativeQuery("Select distinct sum(valorparcela) as valorparcela " +
-                "From Contasreceber where dataVencimento>'" + data + "'");
+                "From Contasreceber where dataVencimento>'" + data + "' and cliente_idcliente=" + idcliente);
         if (query.getSingleResult()!=null){
             valor =  (Double) query.getSingleResult();
             totalContas.add(valor.doubleValue());

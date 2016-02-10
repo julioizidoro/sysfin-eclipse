@@ -119,11 +119,11 @@ public class ContasPagarDao {
         manager.getTransaction().commit();
     }
     
-    public List<Double> calculaSaldos(String data) throws SQLException {
+    public List<Double> calculaSaldos(String data, int idcliente) throws SQLException {
         Double valor;
         EntityManager manager = ConectionFactory.getConnection();
         Query query = manager.createNativeQuery("Select distinct sum(valor) as valor " +
-                "From Contaspagar where dataVencimento<'" + data + "'");
+                "From Contaspagar where dataVencimento<'" + data + "' and cliente_idcliente=" + idcliente);
         List<Double> totalContas = new ArrayList<Double>();
         if (query.getSingleResult()!=null){
             valor =  (Double) query.getSingleResult();
@@ -131,30 +131,19 @@ public class ContasPagarDao {
         }else totalContas.add(0.0);
         
         query = manager.createNativeQuery("Select distinct sum(valor) as valor " +
-                "From Contaspagar where dataVencimento='" + data + "'");
+                "From Contaspagar where dataVencimento='" + data + "' and cliente_idcliente=" + idcliente);
         if (query.getSingleResult()!=null){
             valor =  (Double) query.getSingleResult();
             totalContas.add(valor.doubleValue());
         }else totalContas.add(0.0);
         
         query = manager.createNativeQuery("Select distinct sum(valor) as valor " +
-                "From Contaspagar where dataVencimento>'" + data + "'");
+                "From Contaspagar where dataVencimento>'" + "' and cliente_idcliente=" + idcliente);
         if (query.getSingleResult()!=null){
             valor =  (Double) query.getSingleResult();
             totalContas.add(valor.doubleValue());
         }else totalContas.add(0.0);
         
         return totalContas;
-    }
-    
-    public Double calculaSaldosDia(String data) throws SQLException {
-        Double valor = 0.0;
-        EntityManager manager = ConectionFactory.getConnection();
-        Query query = manager.createNativeQuery("Select distinct sum(valor) as valor " +
-                "From Contaspagar where dataVencimento='" + data + "'");
-        if (query.getSingleResult()!=null){
-            valor =  (Double) query.getSingleResult();
-        }
-        return valor;
     }
 }

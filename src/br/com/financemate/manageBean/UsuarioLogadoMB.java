@@ -170,15 +170,4 @@ public class UsuarioLogadoMB implements Serializable{
         confirmaNovaSenha="";
         return "index";
     }
-     
-    public String calcularSaldoDia(){
-    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-    	Float valor = 0.0f;
-		try {
-			valor = contasPagarFacade.calculaSaldosDia(Formatacao.ConvercaoDataSql(new Date())).floatValue();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	return Formatacao.foramtarFloatString(valor);
-    }
 }
