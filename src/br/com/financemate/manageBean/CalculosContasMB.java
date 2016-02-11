@@ -32,6 +32,7 @@ public class CalculosContasMB implements Serializable{
 	private String cpVencidas;
 	private String cpVencendo;
 	private String cpTotal;
+	private String mes;
 	
 	@PostConstruct
 	public void init(){

@@ -152,8 +152,7 @@ public class HistoricoMB implements Serializable {
     }
 	
 	public String cancelar(){
-        RequestContext.getCurrentInstance().closeDialog(null);
         return "cobranca";
-    }
+    } 
 
 }

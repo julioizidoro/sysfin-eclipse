@@ -68,6 +68,7 @@ public class ContasPagarMB implements Serializable{
 		private List<Cptransferencia> listaTransferencia;
 		@Inject
 		private CalculosContasMB calculosContasMB;
+		private Boolean habilitarDesabilitar;
 	
 	@PostConstruct
 	public void init(){
@@ -80,6 +81,21 @@ public class ContasPagarMB implements Serializable{
 	
 	
 	
+	public Boolean getHabilitarDesabilitar() {
+		return habilitarDesabilitar;
+	}
+
+
+
+
+	public void setHabilitarDesabilitar(Boolean habilitarDesabilitar) {
+		this.habilitarDesabilitar = habilitarDesabilitar;
+	}
+
+
+
+
+
 	public CalculosContasMB getCalculosContasMB() {
 		return calculosContasMB;
 	}
@@ -695,5 +711,16 @@ public class ContasPagarMB implements Serializable{
 		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 
+	 
+	
+	 
+	 public Boolean habilitarDesabilitarCompraTelaPrincipal(){
+		 Float valorVencendo = Float.parseFloat(calculosContasMB.getCpVencendo());
+		 if (valorVencendo > 0) {
+			habilitarDesabilitar = false;
+			return habilitarDesabilitar;
+		}
+		return true;
+	 }
 	 
 }

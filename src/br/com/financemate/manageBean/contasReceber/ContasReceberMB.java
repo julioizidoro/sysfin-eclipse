@@ -654,4 +654,12 @@ public class ContasReceberMB implements Serializable {
 		 RequestContext.getCurrentInstance().openDialog("historico");
 	 }
 	 
+	 public void desfazerRecebimento(Contasreceber contasreceber){
+		 contasreceber.setDataPagamento(null);
+		 contasreceber.setDesagio(0f);
+		 contasreceber.setJuros(0f);
+		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+		 contasReceberFacade.salvar(contasreceber);
+	 }
+	 
 }
