@@ -11,6 +11,7 @@ import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.model.Arquivocontaspagar;
 import br.com.financemate.model.Contaspagar;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,5 +81,10 @@ public class ContasPagarFacade {
     public List<Double> calculaSaldos(String data, int idcliente) throws SQLException {
     	contasPagarDao = new ContasPagarDao();
         return contasPagarDao.calculaSaldos(data, idcliente);
+    }
+    
+    public Double calculaSaldosRestantes(Calendar dataAtual,Calendar dataFinal, int idcliente) throws SQLException {
+    	contasPagarDao = new ContasPagarDao();
+        return contasPagarDao.calculaSaldosRestantes(dataAtual, dataFinal, idcliente);
     }
 }

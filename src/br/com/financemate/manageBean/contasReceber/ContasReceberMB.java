@@ -413,6 +413,18 @@ public class ContasReceberMB implements Serializable {
         return "";
     }
 	
+	public String novaContaReceberTelaPrincipal() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 600);
+        RequestContext.getCurrentInstance().openDialog("cadContasReceberPrincipal");
+        return "";
+    }
+	
+	public void retornoDialogNovoPrincipal(String valor) {
+        calculosContasMB.calcularTotaisContasReceber();
+        calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(valor);
+    }
+	
 	public void mostrarMensagem(Exception ex, String erro, String titulo){
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
@@ -423,6 +435,13 @@ public class ContasReceberMB implements Serializable {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 500);
         RequestContext.getCurrentInstance().openDialog("imprimirContasReceber"); 
+        return "";
+    }
+	
+	public String novaImpressaoContasReceberTelaPrincipal() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("imprimirContasReceberTelaPrincipal"); 
         return "";
     }
 	

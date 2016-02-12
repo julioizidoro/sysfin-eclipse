@@ -186,6 +186,12 @@ public class Formatacao {
       return dataFormatada;
   }
     
+    public static String ConvercaoCalendarSql(Calendar data){
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        String dataFormatada = df.format(data);
+        return dataFormatada;
+    }
+    
   public static String ConvercaoDataNfe(Date data){
       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
       String dataFormatada = df.format(data);

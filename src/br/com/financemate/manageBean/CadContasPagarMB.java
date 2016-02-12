@@ -269,6 +269,7 @@ public class CadContasPagarMB implements Serializable{
 				salvarArquivoFTP();
 			}
 			RequestContext.getCurrentInstance().closeDialog(contaPagar);
+			
 		}else{
 			FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(mensagem, ""));

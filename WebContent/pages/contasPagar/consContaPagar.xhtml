@@ -7,13 +7,13 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="/pages/templates/default.xhtml">
 	<ui:define name="corpo">
-	<h:form id="frmConsultaPagar">
+	<h:form id="frmConsultaPagar"> 
 		<br/>  
 			<p:commandLink   action="#{contasPagarMB.novaConta()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplusS.ico" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="idTabelaContaPagar"/>
             </p:commandLink>  
-            <p:commandLink id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="idImagemFiltro" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
+            <p:commandLink id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="@all" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
 				<img  src="#{contasPagarMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
            		<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogFiltrar}" update="idTabelaContaPagar"/>
             </p:commandLink>
@@ -32,14 +32,14 @@
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="idTabelaContaPagar"/>
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update="idTabelaContaPagar"/>
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" ajax="#{contasPagarMB.gerarListaContas()}"/> 
+                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
                         
                         <p:column headerText="Status"  style="width:30px; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
-                            <p:commandLink>
-                                <img src="#{contasPagarMB.verStatus(contasPagar)}" />
+                            <p:commandLink style="margin-left:-2%;">
+                                <img src="#{contasPagarMB.verStatus(contasPagar)}" style="margin-right:25%;"/>
                             </p:commandLink>
                         </p:column>  
                         <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; background:#E7EBEB; color:black; border:none;">
@@ -54,7 +54,7 @@
                             <h:outputText value="#{contasPagar.descricao}"/>
                         </p:column>
                         <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; background:#E7EBEB; color:black; border:none;" >
-                            <h:outputText value="#{contasPagar.fornecedor}" style="margin-left:25%;"/>
+                            <h:outputText value="#{contasPagar.fornecedor}" style="margin-left:30%;"/>
                         </p:column>  
                         <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter" >
                             <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="margin-right:50%;"/>

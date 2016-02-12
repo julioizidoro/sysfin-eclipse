@@ -68,7 +68,7 @@ public class ContasPagarMB implements Serializable{
 		private List<Cptransferencia> listaTransferencia;
 		@Inject
 		private CalculosContasMB calculosContasMB;
-		private Boolean habilitarDesabilitar;
+		
 	
 	@PostConstruct
 	public void init(){
@@ -79,21 +79,6 @@ public class ContasPagarMB implements Serializable{
 	}
 	
 	
-	
-	
-	public Boolean getHabilitarDesabilitar() {
-		return habilitarDesabilitar;
-	}
-
-
-
-
-	public void setHabilitarDesabilitar(Boolean habilitarDesabilitar) {
-		this.habilitarDesabilitar = habilitarDesabilitar;
-	}
-
-
-
 
 
 	public CalculosContasMB getCalculosContasMB() {
@@ -531,10 +516,22 @@ public class ContasPagarMB implements Serializable{
         return "";
     }
 	
+	public String novaContaTelaPrincipal() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 600);
+        RequestContext.getCurrentInstance().openDialog("cadContasPagarPrincipal");
+        return "";
+    }
+	
 	public void retornoDialogNovo(SelectEvent event) {
         Contaspagar contaspagar = (Contaspagar) event.getObject();
         gerarListaContas();
         calculosContasMB.calcularTotalContasPagar();
+    }
+	
+	public void retornoDialogNovoPrincipal(String valor) {
+        calculosContasMB.calcularTotalContasPagar();
+        calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(valor);
     }
 	
 	public String excluir(){
@@ -586,6 +583,13 @@ public class ContasPagarMB implements Serializable{
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 500);
         RequestContext.getCurrentInstance().openDialog("imprimir"); 
+        return "";
+    }
+	
+	public String novaImpressaoPrincipal() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("imprimirRelatorioContasPagar"); 
         return "";
     }
 	
@@ -714,13 +718,6 @@ public class ContasPagarMB implements Serializable{
 	 
 	
 	 
-	 public Boolean habilitarDesabilitarCompraTelaPrincipal(){
-		 Float valorVencendo = Float.parseFloat(calculosContasMB.getCpVencendo());
-		 if (valorVencendo > 0) {
-			habilitarDesabilitar = false;
-			return habilitarDesabilitar;
-		}
-		return true;
-	 }
+	 
 	 
 }

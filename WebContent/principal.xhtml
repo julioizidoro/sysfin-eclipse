@@ -48,13 +48,14 @@
     		 <br />
         	 <p:panelMenu styleClass="ui-panelmenu"> 
         		<p:submenu  style="background:transparent; font-size:16px; color:white;  margin-top=-30%; font:normal;" label="Contas a Pagar">
-        			<p:menuitem value=" Novo Lançamento" action="#{contasPagarMB.novaConta()}" update="growl"/> 
+        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaContaTelaPrincipal()}" update="growl"/> 
             		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" update="growl"/>
-            		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressao()}"/>
+            		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressaoPrincipal()}"/>
         		</p:submenu>
         		<p:submenu label="Contas a Receber" style="font-size:16px;">
-           			<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}"/>
-            		<p:menuitem value="Relatório" actionListener="#"/>
+        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" update="growl"/> 
+            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}"/>
+            		<p:menuitem value="Relatório" actionListener="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}"/>
         		</p:submenu>
         		<p:separator /> 
         		<p:submenu label="Vendas" style="font-size:16px;">
@@ -84,36 +85,51 @@
 
 	<ui:insert name="corpo"> 
 	        <h:form>
-	                <h:panelGrid  style="width:25%; margin-left: 18%; background-color:white; border-radius:5px;">
+	                <h:panelGrid id="idReceberHoje" style="width:25%; margin-left: 18%; background-color:white; border-radius:5px;">
 	                	<br />
 			            <b style="margin-left:10%; font:bold; color:black;">A receber hoje</b>
 			            <br /><br />
-			            <h:outputText value="R$ #{calculosContasMB.crVencendo}" style="margin-left:10%; font-size:28px; color:green;"/>
-			            <h:panelGrid rendered="#">
-			            	<h:link  style="margin-left:40%; font-size:11px; color:black;">Gerar venda</h:link>
+			            <h:panelGrid style="margin-left:35%;" rendered="#{!calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.crVencendo)}">
+			            	<h:outputText value="R$ #{calculosContasMB.crVencendo}" style="font-size:18px; color:green;"/>
+			            	<br />
+			            </h:panelGrid>
+			            <h:panelGrid style="margin-left:35%;" rendered="#{calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.crVencendo)}">
+			            	<p:outputLabel value="Você não possui recebimentos hoje" style="margin-left:-20%; font-size:11px; color:black;"/>
+			            	<p:commandLink  action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" style="color:black;">
+        						<h:outputText value="Gerar Venda" style="font-size:18px; color:black;"/>
+        						<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovoPrincipal(calculosContasMB.crVencendo)}" update="idReceberHoje"/>
+    		 				</p:commandLink> 
 			            </h:panelGrid>
 			            <br />
 			            <h:panelGrid style="margin-left:9%; font-size:12px; color:black;">
 			             	<p:outputLabel value="Restante do mês"/> 
 			            </h:panelGrid> 
-			            <h:panelGrid style="color:black; margin-left:75%; margin-top:-9%; font-size:12px;">
-			            	<p:outputLabel  value="R$"/>
+			            <h:panelGrid style="color:black; margin-left:70%; margin-top:-9%; font-size:12px;">
+			            	<p:outputLabel  value="R$ #{calculosContasMB.crVencer}"/>
 			            </h:panelGrid> 
 	        		</h:panelGrid>
-	        		<h:panelGrid style="width:25%;  margin-left: 47%; margin-top: -12.1%; background-color:white; border-radius:5px;">
+	        		<h:panelGrid id="idPagarHoje" style="width:25%;  margin-left: 47%; margin-top: -13.5%; background-color:white; border-radius:5px;">
 	        			<br />
 			            <b style="margin-left:10%; font:bold; color:black;">A pagar hoje</b>
 			            <br/><br />
-			            <h:outputText value="R$ #{calculosContasMB.cpVencendo}" style="margin-left:10%; font-size:28px; color:red;"/>
-			            <h:panelGrid rendered="#">
-			            	<h:link style=" font-size:11px; color:black;">Gerar compra</h:link>
+			            <h:panelGrid style="margin-left:35%;" rendered="#{!calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
+			            	
+			            	<h:outputText value="R$ #{calculosContasMB.cpVencendo}" style=" font-size:18px; color:red;"/>
+			            	<br />
+			            </h:panelGrid> 
+			            <h:panelGrid style="margin-left:35%;" rendered="#{calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
+			            	<p:outputLabel value="Você não possui pagamentos hoje" style="margin-left:-20%; font-size:11px; color:black;"/>
+			            	<p:commandLink ajax="false" action="#{contasPagarMB.novaContaTelaPrincipal()}" style="color:black;">
+        						<h:outputText value="Gerar Compra" style="font-size:18px; color:black;"/>
+        						<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovoPrincipal(calculosContasMB.cpVencendo)}" update="idPagarHoje"/>
+    		 				</p:commandLink>
 			            </h:panelGrid>  
 			            <br />
 			            <h:panelGrid style="margin-left:9%; font-size:12px; color:black;">
 			             	<p:outputLabel value="Restante do mês"/> 
 			            </h:panelGrid> 
-			            <h:panelGrid style="color:black; margin-left:75%; margin-top:-9%; font-size:12px;">
-			            	<p:outputLabel  value="R$"/>
+			            <h:panelGrid style="color:black; margin-left:70%; margin-top:-9%; font-size:12px;">
+			            	<p:outputLabel  value="R$ #{calculosContasMB.cpVencer}"/>
 			            </h:panelGrid>
 	        		</h:panelGrid>
 	        		<br />
