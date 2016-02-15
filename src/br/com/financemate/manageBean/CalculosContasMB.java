@@ -236,8 +236,12 @@ public class CalculosContasMB implements Serializable{
 			idcliente = usuarioLogadoMB.getUsuario().getCliente();
 		}else idcliente = 8;
 		ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+		Date dataAtuual = dataAtual.getTime();
+		Date dataFiinal = dataFinal.getTime();
+		Formatacao.ConvercaoDataSql(dataAtuual);
+		Formatacao.ConvercaoDataSql(dataFiinal);
 		try {
-			TotaisRestantes =  contasPagarFacade.calculaSaldosRestantes(dataAtual, dataFinal, idcliente);
+			TotaisRestantes =  contasPagarFacade.calculaSaldosRestantes(dataAtuual, dataFiinal, idcliente);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

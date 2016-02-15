@@ -68,6 +68,10 @@ public class ContasReceberMB implements Serializable {
     private Vendas vendas;
     @Inject
     private CalculosContasMB calculosContasMB;
+    private Boolean habilitar = true;
+    private List<Contasreceber> listaContasSelecionadas;
+    private String totalReceberLote;
+    private Date dataRecebimentoLote;
 	
     @PostConstruct
 	public void init(){
@@ -77,9 +81,66 @@ public class ContasReceberMB implements Serializable {
 		criarConsultaContaReceber();
 		gerarListaContas();
 	}
-	
-    
-    
+
+
+	public List<Contasreceber> getListaContasSelecionadas() {
+		return listaContasSelecionadas;
+	}
+
+
+
+	public void setListaContasSelecionadas(List<Contasreceber> listaContasSelecionadas) {
+		this.listaContasSelecionadas = listaContasSelecionadas;
+	}
+
+
+
+	public String getTotalReceberLote() {
+		return totalReceberLote;
+	}
+
+
+
+
+
+	public void setTotalReceberLote(String totalReceberLote) {
+		this.totalReceberLote = totalReceberLote;
+	}
+
+
+
+
+
+	public Date getDataRecebimentoLote() {
+		return dataRecebimentoLote;
+	}
+
+
+
+
+
+	public void setDataRecebimentoLote(Date dataRecebimentoLote) {
+		this.dataRecebimentoLote = dataRecebimentoLote;
+	}
+
+
+
+
+
+	public Boolean getHabilitar() {
+		return habilitar;
+	}
+
+
+
+
+
+	public void setHabilitar(Boolean habilitar) {
+		this.habilitar = habilitar;
+	}
+
+
+
 
 
 	public CalculosContasMB getCalculosContasMB() {
@@ -679,6 +740,55 @@ public class ContasReceberMB implements Serializable {
 		 contasreceber.setJuros(0f);
 		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 		 contasReceberFacade.salvar(contasreceber);
+	 }
+	 
+	 public Boolean habilitarDesabilitarDesfazer(Contasreceber contasreceber){
+		 Boolean desabilitar = true;
+		 if (contasreceber.getDataPagamento().equals(null)) {
+			desabilitar = false;
+			return desabilitar;
+		}
+		 return desabilitar;
+	 }
+	 
+	 public String novoRecebimentoLote() {
+		 float semJuros = 0.0f;
+		 float semDesagio = 0.0f;
+		 totalReceberLote = "0.00";
+		 dataRecebimentoLote = new Date();
+		 float valorTotal = 0.0f;
+		 listaContasSelecionadas = new ArrayList<Contasreceber>();
+		 for (int i = 0; i < listaContasReceber.size(); i++) {
+			 if (listaContasReceber.get(i).isSelecionado()) {
+				 if (!listaContasReceber.get(i).getJuros().equals(0)) {
+					 semJuros = listaContasReceber.get(i).getJuros();
+					 listaContasReceber.get(i).setValorParcela(listaContasReceber.get(i).getValorParcela() - semJuros);
+				 }
+				 if (!listaContasReceber.get(i).getDesagio().equals(0)) {
+					 semDesagio = listaContasReceber.get(i).getDesagio();
+					 listaContasReceber.get(i).setValorParcela(listaContasReceber.get(i).getValorParcela() - semDesagio);
+				 }
+				 listaContasSelecionadas.add(listaContasReceber.get(i));
+				 valorTotal = valorTotal + listaContasReceber.get(i).getValorParcela();
+			 }
+	            
+		 }
+		 totalReceberLote = Formatacao.foramtarFloatString(valorTotal);
+		 Map<String, Object> options = new HashMap<String, Object>();
+		 options.put("contentWidth", 500);
+		 FacesContext fc = FacesContext.getCurrentInstance();
+		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		 session.setAttribute("listaContasSelecionadas", listaContasSelecionadas);
+		 session.setAttribute("totalReceberLote", totalReceberLote);
+		 session.setAttribute("contasReceber", contasReceber);
+		 session.setAttribute("cliente", cliente);
+		 RequestContext.getCurrentInstance().openDialog("recebimentoLote");
+		 return "";
+	 }
+	 
+	 public void retornoDialogRecebimentoLote(SelectEvent event) {
+		 gerarListaContas();
+		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 
 }

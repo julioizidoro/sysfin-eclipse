@@ -12,6 +12,7 @@ import br.com.financemate.model.Contaspagar;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -148,7 +149,7 @@ public class ContasPagarDao {
         return totalContas;
     }
     
-    public Double calculaSaldosRestantes(Calendar dataAtual, Calendar dataFinal, int idcliente) throws SQLException {
+    public Double calculaSaldosRestantes(Date dataAtual, Date dataFinal, int idcliente) throws SQLException {
         Double valor = null;
         EntityManager manager = ConectionFactory.getConnection();
         Query query = manager.createNativeQuery("Select distinct sum(valor) as valor " +

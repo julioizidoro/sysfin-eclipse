@@ -17,9 +17,9 @@
 				<img  src="#{contasReceberMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
            		
             </p:commandLink>
-            <p:commandLink id="idImagemReceber"  action="#{contasReceberMB.recebimentoConta()}" update="idImagemFiltro" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Recebimento">
+            <p:commandLink id="idImagemReceber"  action="#{contasReceberMB.novoRecebimentoLote()}" update="idImagemFiltro" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Recebimento em lote">
 				<img  src="../../resources/img/iconeReceber.jpg" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-				
+				<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogRecebimentoLote()}" update="idTabelaContaReceber"/>
            	</p:commandLink>
             <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
 				<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
@@ -30,13 +30,13 @@
             </p:commandLink>   
             <br /><br /> 
             
-            		<p:contextMenu for="idTabelaContaReceber" style="background:white;">
+            		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick">
                         <p:menuitem value="Cancelar"   icon=" ui-icon-trash"  action="#" update="idTabelaContaReceber"/>
                         <p:menuitem value="Recebimento em lote"  icon=" ui-icon-check"  action="#" actionListener="#{contasPagarMB.gerarListaContas()}" />
                         <p:menuitem value="Editar"  icon=" icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Receber"  icon=" ui-icon-pencil"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Cobrança"  icon=" ui-icon-pencil"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}"/>
-                        <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-pencil"  action="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
+                       <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-pencil"  action="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaContaReceber"  var="contasReceber"  value="#{contasReceberMB.listaContasReceber}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">
@@ -80,9 +80,9 @@
                         </p:column>
                         <p:column headerText="Cob" style="width:4%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
                             <h:outputText value="#{contasReceber.cobranca.idcobranca}" />                                    
-                        </p:column>
+                        </p:column> 
                         <p:column style="width:28px; background:#E7EBEB; color:black; border:none;">
-                            <p:selectBooleanCheckbox value="#"/>
+                            <p:selectBooleanCheckbox value="#{contasReceber.selecionado}"/>
                         </p:column>
                     </p:dataTable>
                     <br />
