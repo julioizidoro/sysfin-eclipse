@@ -26,6 +26,7 @@ import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.manageBean.CalculosContasMB;
+import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -72,6 +73,9 @@ public class ContasReceberMB implements Serializable {
     private List<Contasreceber> listaContasSelecionadas;
     private String totalReceberLote;
     private Date dataRecebimentoLote;
+    private String nomeCliente;
+    private float valorParcela;
+    private Integer nVenda;
 	
     @PostConstruct
 	public void init(){
@@ -81,6 +85,50 @@ public class ContasReceberMB implements Serializable {
 		criarConsultaContaReceber();
 		gerarListaContas();
 	}
+    
+    
+
+
+	public Integer getnVenda() {
+		return nVenda;
+	}
+
+
+
+
+	public void setnVenda(Integer nVenda) {
+		this.nVenda = nVenda;
+	}
+
+
+
+
+	public float getValorParcela() {
+		return valorParcela;
+	}
+
+
+
+
+	public void setValorParcela(float valorParcela) {
+		this.valorParcela = valorParcela;
+	}
+
+
+
+
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+
+
+
+
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
+	}
+
+
 
 
 	public List<Contasreceber> getListaContasSelecionadas() {
@@ -676,12 +724,20 @@ public class ContasReceberMB implements Serializable {
 			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
 		 }
 		 
-		 if (contasReceber.getNomeCliente()!=null) {
-			 sql = sql + " v.nomeCliente=" + contasReceber.getNomeCliente() + " and ";
+		 if (nomeCliente!="") {
+			 sql = sql + " v.nomeCliente=" + nomeCliente + " and ";
 		 }
 		
-		if (contasReceber.getValorParcela()!=null) {
-			sql = sql + " v.valorParcela=" + contasReceber.getValorParcela() + " and ";
+		if (valorParcela!=0f) {
+			sql = sql + " v.valorParcela=" + valorParcela + " and ";
+		}
+		
+		if (nVenda!=0) {
+			sql = sql + " v.vendas_idvendas=" + nVenda + " and ";
+		}
+		
+		if (banco!=null) {
+			sql = sql + " v.banco_idbanco=" + banco + " and ";
 		}
 		 
 		 if ((dataInicial!=null) && (dataFinal!=null)){
@@ -789,6 +845,37 @@ public class ContasReceberMB implements Serializable {
 	 public void retornoDialogRecebimentoLote(SelectEvent event) {
 		 gerarListaContas();
 		 calculosContasMB.calcularTotalContasPagar();
+	 }
+	 
+	 public void retornoDialogFiltrar(SelectEvent event) {
+	        String sql = (String) event.getObject();
+	        gerarListaContaas(sql);
+	 }
+	 
+	 public void gerarListaContaas(String sql) {
+		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+		 try {
+			 listaContasReceber = contasReceberFacade.listar(sql);
+			 if (listaContasReceber == null) {
+				 listaContasReceber = new ArrayList<Contasreceber>();
+			 }	
+		 } catch (SQLException ex) {
+			 Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+			 mostrarMensagem(ex, "Erro a listar contas a receber", "Erro");
+		 }
+	 }
+	 
+		  
+	 public String limparConsulta(){
+		 try {
+			 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+			 listaContasReceber = contasReceberFacade.listar(sql);
+		 } catch (SQLException ex) {
+			 Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+			 mostrarMensagem(ex, "Erro Listar Contas", "Erro");
+		 }
+		 return "";
+		 
 	 }
 	 
 }

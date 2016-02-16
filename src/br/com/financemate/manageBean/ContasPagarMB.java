@@ -671,17 +671,17 @@ public class ContasPagarMB implements Serializable{
 	 }
 	 
 	 public void gerarListaContaas(String sql) {
-	        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-	        try {
-	            listaContasPagar = contasPagarFacade.listar(sql);
-	            if (listaContasPagar == null) {
-	                listaContasPagar = new ArrayList<Contaspagar>();
-	            }
-	        } catch (SQLException ex) {
-	            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-	            mostrarMensagem(ex, "Erro a listar contas a pagar", "Erro");
-	        }
-	    }
+		 ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+		 try {
+			 listaContasPagar = contasPagarFacade.listar(sql);
+			 if (listaContasPagar == null) {
+				 listaContasPagar = new ArrayList<Contaspagar>();
+			 }	
+		 } catch (SQLException ex) {
+			 Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+			 mostrarMensagem(ex, "Erro a listar contas a pagar", "Erro");
+		 }
+	 }
 	 
 	 public String coresFiltrar(){
 		if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVerde.ico")) {

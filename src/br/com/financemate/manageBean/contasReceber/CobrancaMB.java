@@ -63,14 +63,15 @@ public class CobrancaMB implements Serializable {
         session.removeAttribute("contasReceber");
     	gerarListaCliente();
         cliente = contasReceber.getCliente();
-        if (cobranca == null) {
+        if (contasReceber.getCobranca().getIdcobranca() == null) {
 			cobranca = new Cobranca();
+			historico = new Historicocobranca();
 			listaHistorico = new ArrayList<Historicocobranca>();
 		}else{
-			listaHistorico = cobranca.getHistoricocobrancaList();
+			listaHistorico = contasReceber.getCobranca().getHistoricocobrancaList();
 		}
-        historico = new Historicocobranca();
-        gerarListaHistorico();
+        
+        //gerarListaHistorico();
     }
     
     public void gerarListaHistorico(){

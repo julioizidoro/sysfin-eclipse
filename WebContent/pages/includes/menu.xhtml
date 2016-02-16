@@ -55,14 +55,15 @@
             		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressao()}"/> 
         		</p:submenu> 
         		<p:submenu label="Contas a Receber" style="font-size:16px;">
-           			<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}"/>
+        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaConta()}" update="growl"/> 
+            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}"/>
             		<p:menuitem value="Relatório" actionListener="#"/>
         		</p:submenu>
         		<p:separator />
         		<p:submenu label="Vendas" style="font-size:16px;">
         		</p:submenu>
         		<p:submenu label="Cadastro" style="font-size:16px;">
-                    <p:menuitem value="Cliente"/>
+                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}"/>
                     <p:menuitem value="Banco"/>
                     <p:menuitem value="Tipo plano de conta"/>
                     <p:menuitem value="Plano de conta" />
@@ -71,8 +72,8 @@
                     
             	</p:submenu>
             	<p:submenu label="Relatórios" style="font-size:16px;">
-                    
-            	</p:submenu>
+                    <p:menuitem value="Alterações" action="#"/>
+            	</p:submenu> 
     		</p:panelMenu>
     		</h:panelGrid>
     		<br />

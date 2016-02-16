@@ -207,7 +207,7 @@ public class ImprimirContasReceberMB implements Serializable{
             titulo = "RELATÓRIO DE CONTAS RECEBIDAS";
         }else if (contasAberto){
             titulo= "RELATÓRIO DE CONTAS EM ABERTO";
-        }else if (todas){
+        }else{
             titulo = "RELATÓRIO DE CONTAS A RECEBER";
         }
         if (cliente==null){
@@ -230,11 +230,11 @@ public class ImprimirContasReceberMB implements Serializable{
 	public String gerarSql(){
 		String sql = "";
 		if (relatorio.equalsIgnoreCase("Contas a receber")) {
-			sql = "SELECT distinct contasreceber.idcontasReceber, contasreceber.numeroDocumento, contasreceber.nomeCliente as nomeCliente,contasreceber.valorParcela, contasreceber.numeroParcela, contasreceber.dataVencimento, contasreceber.juros,contasreceber.desagio, contasreceber.tipodocumento, contasreceber.venda, contasreceber.dataPagamento, contasreceber.valorPago,cliente.nomeFantasia, banco.nome\r\n";
-			sql = sql + "from\r\n";
-			sql = sql + "contasreceber join cliente on contasreceber.cliente_idcliente = cliente.idcliente\r\n";
-			sql = sql + "join banco on contasreceber.banco_idbanco = banco.idbanco\r\n";
-			sql = sql + "where\r\n";
+			sql = "SELECT distinct contasreceber.idcontasReceber, contasreceber.numeroDocumento, contasreceber.nomeCliente as nomeCliente,contasreceber.valorParcela, contasreceber.numeroParcela, contasreceber.dataVencimento, contasreceber.juros,contasreceber.desagio, contasreceber.tipodocumento, contasreceber.venda, contasreceber.dataPagamento, contasreceber.valorPago,cliente.nomeFantasia, banco.nome ";
+			sql = sql + "from ";
+			sql = sql + "contasreceber join cliente on contasreceber.cliente_idcliente = cliente.idcliente ";
+			sql = sql + "join banco on contasreceber.banco_idbanco = banco.idbanco ";
+			sql = sql + "where ";
 			String ordem = "";
 			if (contasAberto){
 				sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
@@ -250,11 +250,11 @@ public class ImprimirContasReceberMB implements Serializable{
 			}
 			if (todas){
 				sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
-				sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
+				sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
 				ordem = " order by contasReceber.dataVencimento";
 			}
 			if (cliente!=null){
-				sql = sql  + " and cliente.idcliente="  + cliente.getIdcliente();
+				sql = sql  + " and cliente.idcliente="  + cliente.getIdcliente() + "";
 			}
 			sql = sql + ordem;
 		}

@@ -61,7 +61,7 @@
         		<p:submenu label="Vendas" style="font-size:16px;">
         		</p:submenu>
         		<p:submenu label="Cadastro" style="font-size:16px;">
-                    <p:menuitem value="Cliente"/>
+                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}"/>
                     <p:menuitem value="Banco"/>
                     <p:menuitem value="Tipo de plano de conta"/>
                     <p:menuitem value="Plano de conta" />
@@ -70,7 +70,7 @@
                     
             	</p:submenu>
             	<p:submenu label="Relatórios" style="font-size:16px;">
-                    
+                    <p:menuitem value="Alterações" action="#"/>
             	</p:submenu>
     		</p:panelMenu>
     		<br />
