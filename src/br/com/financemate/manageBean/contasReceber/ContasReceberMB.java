@@ -76,6 +76,7 @@ public class ContasReceberMB implements Serializable {
     private String nomeCliente;
     private float valorParcela;
     private Integer nVenda;
+    private String status;
 	
     @PostConstruct
 	public void init(){
@@ -87,6 +88,20 @@ public class ContasReceberMB implements Serializable {
 	}
     
     
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
 
 
 	public Integer getnVenda() {
@@ -736,17 +751,21 @@ public class ContasReceberMB implements Serializable {
 			sql = sql + " v.vendas_idvendas=" + nVenda + " and ";
 		}
 		
-		if (banco!=null) {
-			sql = sql + " v.banco_idbanco=" + banco + " and ";
+		//if (banco!=null) {
+		//	sql = sql + " v.banco_idbanco=" + banco.getIdbanco() + " and ";
+		//}
+		
+		if (status.equalsIgnoreCase("Recebidas")) {
+			sql = sql + " v.valorPago>0 and "; 
+		} 
+		
+		if ((dataInicial!=null) && (dataFinal!=null)){
+			sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
+					"' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+					"' order by v.dataVencimento";
 		}
-		 
-		 if ((dataInicial!=null) && (dataFinal!=null)){
-			 sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
-					 "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
-					 "' order by v.dataVencimento";
-		 }
-		 gerarListaContas();
-		 RequestContext.getCurrentInstance().closeDialog(sql);
+		gerarListaContas();
+		RequestContext.getCurrentInstance().closeDialog(sql);
 	 }
 	 
 	 public String coresFiltrar(){

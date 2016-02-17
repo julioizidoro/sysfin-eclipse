@@ -59,18 +59,19 @@ public class CobrancaMB implements Serializable {
     	FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasReceber = (Contasreceber) session.getAttribute("contasReceber");
-        venda = (Vendas) session.getAttribute("vendas");
-        session.removeAttribute("contasReceber");
     	gerarListaCliente();
         cliente = contasReceber.getCliente();
-        if (contasReceber.getCobranca().getIdcobranca() == null) {
+        if (contasReceber.getCobranca() == null) {
 			cobranca = new Cobranca();
-			historico = new Historicocobranca();
 			listaHistorico = new ArrayList<Historicocobranca>();
 		}else{
-			listaHistorico = contasReceber.getCobranca().getHistoricocobrancaList();
+			if (contasReceber.getCobranca().getIdcobranca() > 0) {
+				cobranca = (Cobranca) contasReceber.getCobranca();
+				listaHistorico = cobranca.getHistoricocobrancaList();
+			} 
+			
 		}
-        
+        historico = new Historicocobranca();
         //gerarListaHistorico();
     }
     
@@ -243,7 +244,7 @@ public class CobrancaMB implements Serializable {
             session.setAttribute("historico", historico);
             session.setAttribute("cobranca", cobranca);
         }
-        return "";
+        return "editarHistorico";
     }
 	
 	public String cancelar(){

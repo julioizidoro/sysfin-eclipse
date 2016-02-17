@@ -64,19 +64,19 @@
             	<p:outputLabel value="Fone 1"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputMask id="fone1" mask="(999) 9999-9999" value="#{cobrancaMB.cobranca.fone1}" size="17"/>
+            	<p:inputMask id="fone1" mask="(999) 9999-9999" value="#{cobrancaMB.contasReceber.cobranca.fone1}" size="17"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:34%; margin-top:-4.5%;">
             	<p:outputLabel value="Fone 2" />
             </h:panelGrid>
             <h:panelGrid style="margin-left:43%; margin-top:-5%;">
-            	<p:inputMask id="fone2" mask="(999) 9999-9999" value="#{cobrancaMB.cobranca.fone2}" size="17"/>
+            	<p:inputMask id="fone2" mask="(999) 9999-9999" value="#{cobrancaMB.contasReceber.cobranca.fone2}" size="17"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 67%; margin-top:-5%;">
             	<p:outputLabel value="Vcto. Original" for="dataVencOri" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 81.5%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencOri" value="#{cobrancaMB.cobranca.vencimentooriginal}" mask="99/99/9999" size="10" maxlength="15" >
+            	<p:inputMask id="dataVencOri" value="#{cobrancaMB.contasReceber.cobranca.vencimentooriginal}" mask="99/99/9999" size="10" maxlength="15" >
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
             </h:panelGrid>
@@ -85,13 +85,13 @@
             	<p:outputLabel value="E-mail"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputText value="#{cobrancaMB.cobranca.email}" size="51"/>
+            	<p:inputText value="#{cobrancaMB.contasReceber.cobranca.email}" size="51"/>
             </h:panelGrid>
              <h:panelGrid style="margin-left: 67%; margin-top:-5%;">
             	<p:outputLabel value="Alterar Vcto." for="dataVencAlt" /> 
             </h:panelGrid>
             <h:panelGrid style="margin-left: 81.5%; margin-top:-4.6%;">
-            	<p:inputMask id="dataVencAlt" value="#{cobrancaMB.cobranca.alterarvencimento}" mask="99/99/9999" size="10" maxlength="15" >
+            	<p:inputMask id="dataVencAlt" value="#{cobrancaMB.contasReceber.cobranca.alterarvencimento}" mask="99/99/9999" size="10" maxlength="15" >
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
             </h:panelGrid>

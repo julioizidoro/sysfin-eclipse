@@ -68,18 +68,18 @@
                     <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems value="#{contasReceberMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
                     <f:attribute name="listaBanco" value="#{contasReceberMB.listaBanco}"/>
-                </p:selectOneMenu> 
+                </p:selectOneMenu>  
             </h:panelGrid>
            <h:panelGrid style="margin-left: 38%; margin-top:-5.5%;">
 	            <p:outputLabel value="Status" for="status"  />
 	       </h:panelGrid>
 	      <h:panelGrid style="margin-left: 45%; margin-top:-4.5%;"> 
-	            	<p:selectOneMenu id="status" style="width:130px;" value="#">
+	            	<p:selectOneMenu id="status" style="width:130px;" value="#{contasReceberMB.status}">
 	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
-	                    <f:selectItem itemLabel="Vencidas" itemValue="Mensal" />  
-	                    <f:selectItem itemLabel="A vencer" itemValue="Semanal" /> 
-	                    <f:selectItem itemLabel="Recebidas" itemValue="Diaria" />  
-	                    <f:selectItem itemLabel="Canceladas" itemValue="Anual" />
+	                    <f:selectItem itemLabel="Vencidas" itemValue="Vencidas" />  
+	                    <f:selectItem itemLabel="A vencer" itemValue="A vencer" /> 
+	                    <f:selectItem itemLabel="Recebidas" itemValue="Recebidas" />  
+	                    <f:selectItem itemLabel="Canceladas" itemValue="Canceladas" />
 	                </p:selectOneMenu>
 	       </h:panelGrid>  
 	       <h:panelGrid style="margin-left:70%; margin-top:-5.5%;">
