@@ -25,6 +25,7 @@ import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.CalculosContasMB;
 import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
@@ -600,11 +601,11 @@ public class ContasReceberMB implements Serializable {
 		 if (usuarioLogadoMB.getUsuario().getCliente()>0){
 			 sql = " Select v from Contasreceber v where v.dataVencimento<='" + dataFinal + 
 					 "' and v.valorPago=0 and v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
-					 " and v.dataPagamento=null order by v.dataVencimento";
-		 }else {
+					 " and v.dataPagamento=null and v.vendas.situacao<>" + "'CANCELADA'" + " order by v.dataVencimento";
+		 }else { 
 			 sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and "
 					 + "v.dataVencimento<='" + dataFinal + 
-					 "' and v.valorPago=0  and v.dataPagamento=null order by v.dataVencimento";
+					 "' and v.valorPago=0  and v.dataPagamento=null and v.vendas.situacao<>" + "'CANCELADA'" + " order by v.dataVencimento";
 	        }  
 		 
 	 }
@@ -757,8 +758,14 @@ public class ContasReceberMB implements Serializable {
 		
 		if (status.equalsIgnoreCase("Recebidas")) {
 			sql = sql + " v.valorPago>0 and "; 
+		}else if(status.equalsIgnoreCase("Vencidas")){
+			sql = sql + " v.dataVencimento<'" + Formatacao.ConvercaoDataSql(dataFinal) + "' and v.dataPagamento=null and ";
+		}else if(status.equalsIgnoreCase("A vencer")){
+			sql = sql + " v.dataVencimento>'" + Formatacao.ConvercaoDataSql(new Date()) + "' and ";
+		}else if (status.equalsIgnoreCase("Canceladas")){
+			sql = sql + " v.vendas.situacao=" + "'CANCELADA' and "; 
 		} 
-		
+		 
 		if ((dataInicial!=null) && (dataFinal!=null)){
 			sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
 					"' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
@@ -895,6 +902,20 @@ public class ContasReceberMB implements Serializable {
 		 }
 		 return "";
 		 
+	 }
+	 
+	 public void cancelar(Contasreceber contasreceber){
+		if (contasreceber.getVendas() != null) {
+			vendas = contasreceber.getVendas();
+			vendas.setSituacao("CANCELADA");
+			VendasFacade vendasFacade = new VendasFacade();
+			try {
+				vendasFacade.salvar(vendas);
+			} catch (SQLException ex) {
+				Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+				 mostrarMensagem(ex, "Erro ao salvar venda cancelada", "Erro");
+			}
+		} 
 	 }
 	 
 }

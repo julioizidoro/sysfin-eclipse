@@ -30,8 +30,8 @@
             </p:commandLink>   
             <br /><br /> 
             
-            		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick">
-                        <p:menuitem value="Cancelar"   icon=" ui-icon-trash"  action="#" update="idTabelaContaReceber"/>
+            		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick"> 
+                        <p:menuitem value="Cancelar"   icon=" ui-icon-trash"  action="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
                         <p:menuitem value="Recebimento em lote"  icon=" ui-icon-check"  action="#" actionListener="#{contasPagarMB.gerarListaContas()}" />
                         <p:menuitem value="Editar"  icon=" icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Receber"  icon=" ui-icon-check"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>

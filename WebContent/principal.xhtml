@@ -10,6 +10,7 @@
         <title>SysFIN</title>
         <link href="resources/css/css.css" rel="stylesheet" media="screen" />
         <link href="../../resources/css/css.css" rel="stylesheet" media="screen" />
+        <link rel="icon" href="resources/img/iconeLogoNavegador.jpg" type="image/x-icon" />
     </h:head>
 
     <h:body style="color:#E7EBEB !important;">
@@ -52,7 +53,7 @@
             		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" update="growl"/>
             		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressaoPrincipal()}"/>
         		</p:submenu>
-        		<p:submenu label="Contas a Receber" style="font-size:16px;">
+        		<p:submenu  label="Contas a Receber" style="font-size:16px;">
         			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" update="growl"/> 
             		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}"/>
             		<p:menuitem value="Relatório" actionListener="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}"/>
@@ -60,9 +61,9 @@
         		<p:separator /> 
         		<p:submenu label="Vendas" style="font-size:16px;">
         		</p:submenu>
-        		<p:submenu label="Cadastro" style="font-size:16px;">
+        		<p:submenu  label="Cadastro" style="font-size:16px;">
                     <p:menuitem value="Cliente" action="#{menuMB.consCliente()}"/>
-                    <p:menuitem value="Banco"/>
+                    <p:menuitem value="Banco" action="#{menuMB.consBanco()}"/>
                     <p:menuitem value="Tipo de plano de conta"/>
                     <p:menuitem value="Plano de conta" />
             	</p:submenu>

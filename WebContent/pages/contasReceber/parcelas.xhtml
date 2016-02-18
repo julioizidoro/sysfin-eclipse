@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head> 
+
+    <h:body >
+
+        <h:form id="frmidRecebimentoContaHistorico" class="body2" style="font-size: 12px;background: #E7EBEB">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog> 
+            
+            <h2  >Parcelamento</h2>
+            <br />
+            <p:dataTable id="idFrmTabelaParcelas" var="car" value="#" editable="true" editMode="cell" widgetVar="cellCars"
+            			 scrollRows="10"  scrollable="true" scrollHeight="110" selection="#" 
+            			 selectionMode="single" rowKey="#"  rows="10" style="margin-bottom:20px;">
+		       <f:facet name="header">
+		          Edição de tabela
+		       </f:facet>
+		 
+		       <p:ajax event="cellEdit" listener="#{cadContasReceberMB.onCellEdit}"  />
+		 
+		       <p:column headerText="Parcela">
+		              <p:cellEditor>
+		                  <f:facet name="output"><h:outputText value="#" /></f:facet>
+		                  <f:facet name="input"><p:inputText id="modelInput" value="#" style="width:96%"/></f:facet>
+		              </p:cellEditor>
+		       </p:column>
+		 
+		       <p:column headerText="Vencimento">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#" /></f:facet>
+		               <f:facet name="input"><p:inputText value="#" style="width:96%" label="vencimento"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		       
+		       <p:column headerText="Valor">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#" /></f:facet>
+		               <f:facet name="input"><p:inputText value="#" style="width:96%" label="valor"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		 
+		   </p:dataTable>
+		   <br />
+		   <h:panelGrid columns="2">
+		   		<p:outputLabel value="Total"/>
+		   		<p:outputLabel style="margin-left:5%;" value="R$"/>
+		   </h:panelGrid>
+       </h:form>
+    </h:body>
+</html>

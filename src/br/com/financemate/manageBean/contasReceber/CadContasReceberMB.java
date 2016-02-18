@@ -3,7 +3,9 @@ package br.com.financemate.manageBean.contasReceber;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +18,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.CellEditEvent;
 
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
@@ -54,7 +57,6 @@ public class CadContasReceberMB implements Serializable {
 	    	FacesContext fc = FacesContext.getCurrentInstance();
 	        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 	        contasReceber = (Contasreceber) session.getAttribute("contareceber");
-	        session.removeAttribute("contareceber");
 	    	gerarListaCliente();
 	    	gerarListaPlanoContas();
 	    	if (contasReceber == null){
@@ -276,6 +278,23 @@ public class CadContasReceberMB implements Serializable {
 	    	return mensagem;
 	    }
 	    
+	    public String abrirParcelamento() {
+			Map<String, Object> options = new HashMap<String, Object>();
+			options.put("contentWidth", 500);
+			FacesContext fc = FacesContext.getCurrentInstance();
+		    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		    session.setAttribute("contasReceber", contasReceber);
+			return "parcelas";
+	    }
 	    
+	    public void onCellEdit(CellEditEvent event) {
+	        Object oldValue = event.getOldValue();
+	        Object newValue = event.getNewValue();
+	         
+	        if(newValue != null && !newValue.equals(oldValue)) {
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+	        }
+	    }
 	    
 }

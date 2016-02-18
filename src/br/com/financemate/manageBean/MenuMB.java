@@ -44,5 +44,9 @@ public class MenuMB implements Serializable{
 	public String consCliente(){
 		return "consCliente";
 	}
+	
+	public String consBanco(){
+		return "consBanco";
+	}
 
 }
