@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.BancoFacade;
+import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 
@@ -31,6 +32,8 @@ public class CadBancoMB implements Serializable {
 	@Inject
     private UsuarioLogadoMB usuarioLogadoMB;
     private Banco banco;
+    private int idCliente;
+    private Cliente cliente;
 	
 	@PostConstruct
 	public void init(){
@@ -39,12 +42,46 @@ public class CadBancoMB implements Serializable {
         banco = (Banco) session.getAttribute("banco");
         session.removeAttribute("banco");
         if (banco == null) {
-            banco = new Banco();
-            Cliente cliente = (Cliente) session.getAttribute("cliente");
-            banco.setCliente(cliente);
-            session.removeAttribute("cliente");
+        	banco = new Banco();
+            idCliente =  (int) session.getAttribute("idcliente");
+            ClienteFacade clienteFacade = new  ClienteFacade();
+            try {
+            	cliente =  clienteFacade.consultar(idCliente);
+            	banco.setCliente(cliente);
+	            session.removeAttribute("idcliente");
+            } catch (SQLException ex) {
+				 Logger.getLogger(CadBancoMB.class.getName()).log(Level.SEVERE, null, ex);
+				 mostrarMensagem(ex, "Erro ao cadastrar banco", "Erro");
+            }
+            
         }
 	}
+	
+	
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+
+
+	public int getIdCliente() {
+		return idCliente;
+	}
+
+
+
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+
+
 
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
 		return usuarioLogadoMB;

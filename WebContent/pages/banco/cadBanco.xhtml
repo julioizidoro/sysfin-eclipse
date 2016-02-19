@@ -23,41 +23,45 @@
             <title  >Novo Banco</title>
             
             <br></br>
-           
-            <p:outputLabel value="Nome" for="nome"  style="margin-left: 5.5%" />
-                <p:outputLabel value="Número" for="numero"  style="margin-left: 62%" />
-           
-            <h:panelGrid columns="3">
-                <p:inputText id="nome" style="width:  200%;margin-left: 15%"  value="#{cadBancoMB.banco.nome}"/>
-                <p:inputText id="numero" style="width:  30%;margin-left: 60%"    value="#{cadBancoMB.banco.numeroBanco}"/>
+            <h:panelGrid columns="2" style="margin-left:11%;">
+	            <p:outputLabel value="Nome" for="nome" />
+	            <p:inputText id="nome" size="45" value="#{cadBancoMB.banco.nome}"/>
+	        </h:panelGrid>
+            <h:panelGrid columns="2" style="margin-left:66.5%; margin-top:-5.5%;">
+            	<p:outputLabel value="Número" for="numero"  />
+                <p:inputText id="numero"    value="#{cadBancoMB.banco.numeroBanco}"/>
             </h:panelGrid>
-
-        
-                <p:outputLabel value="Nº Agencia" for="nAgencia"  style="margin-left: 5.5%"/>
-                <p:outputLabel value="Nº Conta" for="nConta"  style="margin-left: 14.5%"/>
-                <p:outputLabel value="Chave" for="chave"  style="margin-left: 15%"/>
-                <p:outputLabel value="Senha" for="senha"  style="margin-left: 19%"/>
-            
-            <h:panelGrid columns="4">
-                <p:inputText id="nAgencia"  style="margin-left: 19%;width: 60%"  value="#{cadBancoMB.banco.agencia}"/>
-                <p:inputText id="nConta" style="margin-left: 10%;width: 60%"  value="#{cadBancoMB.banco.conta}"/>
-                <p:inputText id="chave" style="margin-left: 10%;width: 60%" value="#{cadBancoMB.banco.cahve}"/>
-                <p:inputText id="senha" style="margin-left: 10%;width: 60%"  value="#{cadBancoMB.banco.senha}"/>
+			<br />
+        	<h:panelGrid columns="2" style="margin-left:7%;">
+                <p:outputLabel value="Nº Agencia" for="nAgencia"/>
+                <p:inputText id="nAgencia" size="7" value="#{cadBancoMB.banco.agencia}"/>
+            </h:panelGrid> 
+            <h:panelGrid columns="2" style="margin-left:30%; margin-top:-5.3%;">  
+                <p:outputLabel value="Nº Conta" for="nConta"/>
+                <p:inputText id="nConta" size="10" value="#{cadBancoMB.banco.conta}"/>
+            </h:panelGrid> 
+            <h:panelGrid columns="2" style="margin-left:55%; margin-top:-5.3%;">
+                <p:outputLabel value="Chave" for="chave"/>
+                <p:inputText id="chave"  size="10" value="#{cadBancoMB.banco.cahve}"/>
             </h:panelGrid>
-            
-                <p:outputLabel value="Nome do Gerente" for="nomegerente"  style="margin-left: 5.5%" />
-           
-            <h:panelGrid columns="3">
-                <p:inputText id="nomegerente" size="97"  style="margin-left: 5%;width: 88%"  value="#{cadBancoMB.banco.gerente}"/>
+            <h:panelGrid columns="2" style="margin-left:77%; margin-top:-5%;"> 
+                 <p:outputLabel value="Senha" for="senha"/>
+                 <p:inputText id="senha" size="10"  value="#{cadBancoMB.banco.senha}"/>
             </h:panelGrid>
-            
-                <p:outputLabel value="E-mail do Gerente" for="emailgerente"  style="margin-left: 5.5%"/>
-            
-            <h:panelGrid columns="3">
-                <p:inputText id="emailgerente" size="97"  style="margin-left: 5%;width: 88%" value="#{cadBancoMB.banco.emailGerente}"/>
+            <br />
+            <h:panelGrid columns="2" style="margin-left:1%;">
+            	<p:outputLabel value="Nome do Gerente" for="nomegerente"/>
+           		<p:inputText id="nomegerente" size="85"   value="#{cadBancoMB.banco.gerente}"/>
             </h:panelGrid>
-
-                <p:commandLink title="Confirmar" style="margin-left: 76%;text-decoration: none"  action="#{cadBancoMB.salvar()}" >
+            <br />
+            <h:panelGrid columns="3" style="margin-left:1%;">
+            	<p:outputLabel value="E-mail do Gerente" for="emailgerente" />
+                <p:inputText id="emailgerente" size="85" value="#{cadBancoMB.banco.emailGerente}"/>
+            </h:panelGrid>
+			<br/>
+			<hr />
+			<br />
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"  action="#{cadBancoMB.salvar()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
                 <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{cadBancoMB.cancelar()}" >

@@ -600,13 +600,13 @@ public class ContasReceberMB implements Serializable {
 		 setDataFinal(Formatacao.ConvercaoStringData(dataFinal));
 		 if (usuarioLogadoMB.getUsuario().getCliente()>0){
 			 sql = " Select v from Contasreceber v where v.dataVencimento<='" + dataFinal + 
-					 "' and v.valorPago=0 and v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
+					 "' and v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
 					 " and v.dataPagamento=null and v.vendas.situacao<>" + "'CANCELADA'" + " order by v.dataVencimento";
 		 }else { 
 			 sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and "
 					 + "v.dataVencimento<='" + dataFinal + 
-					 "' and v.valorPago=0  and v.dataPagamento=null and v.vendas.situacao<>" + "'CANCELADA'" + " order by v.dataVencimento";
-	        }  
+					 "'  and v.dataPagamento=null and v.vendas.situacao<>" + "'CANCELADA'" + " order by v.dataVencimento";
+	        }   
 		 
 	 }
 	 
@@ -820,6 +820,7 @@ public class ContasReceberMB implements Serializable {
 		 contasreceber.setDataPagamento(null);
 		 contasreceber.setDesagio(0f);
 		 contasreceber.setJuros(0f);
+		 contasreceber.setValorPago(0f);
 		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 		 contasReceberFacade.salvar(contasreceber);
 	 }

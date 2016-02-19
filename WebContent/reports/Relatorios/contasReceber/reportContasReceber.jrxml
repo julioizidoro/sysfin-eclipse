@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório Contas Receber" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="feecb075-5a7f-42f6-832b-1a654a7aa009">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="23"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -59,6 +59,7 @@
 	<field name="nome" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="dataVenda" class="java.lang.String"/>
 	<variable name="totalParcela" class="java.lang.Float" calculation="Sum">
 		<variableExpression><![CDATA[$F{valorParcela}]]></variableExpression>
 	</variable>
@@ -113,7 +114,7 @@
 				<text><![CDATA[Valor Parcela]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="68" y="203" width="236" height="15" uuid="fc1a2f11-984e-4616-9ac0-0b3c579574e1"/>
+				<reportElement x="68" y="203" width="95" height="15" uuid="fc1a2f11-984e-4616-9ac0-0b3c579574e1"/>
 				<text><![CDATA[Nome do Cliente]]></text>
 			</staticText>
 			<staticText>
@@ -152,6 +153,10 @@
 				<reportElement x="442" y="221" width="107" height="15" uuid="a1dfcba4-04ec-4c59-af02-79e434998364"/>
 				<text><![CDATA[Banco]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="192" y="203" width="95" height="15" uuid="dcfc6a28-021d-48ab-9f05-08d8fb96ee13"/>
+				<text><![CDATA[Data da venda]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -164,7 +169,7 @@
 				<textFieldExpression><![CDATA[$F{numeroDocumento}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="66" y="2" width="236" height="13" uuid="ee42823d-1d75-4624-b06d-c8e5a0bf95bd"/>
+				<reportElement x="66" y="2" width="126" height="13" uuid="ee42823d-1d75-4624-b06d-c8e5a0bf95bd"/>
 				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0;-###0" isBlankWhenNull="true">
@@ -214,6 +219,13 @@
 			<line>
 				<reportElement x="1" y="34" width="554" height="1" uuid="04ab79cd-7442-480b-84b5-6bd2fc786651"/>
 			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="196" y="2" width="91" height="17" uuid="2786838d-6f83-40b2-b14e-88696fa05786"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataVenda}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<lastPageFooter>

@@ -112,15 +112,15 @@
 	            	<p:outputLabel value="Recebimento" for="dataRec1" /> 
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left: 2%;">
-	            	<p:inputMask id="dataRec1" disabled="#{recebimentoContaMB.disabilitar}" value="#{recebimentoContaMB.contasReceber.dataPagamento}" mask="99/99/9999" size="10" maxlength="15" >
+	            	<p:inputMask id="dataRec1" disabled="#{recebimentoContaMB.disabilitar}" value="#{recebimentoContaMB.dataRecebimentoParcial}" mask="99/99/9999" size="10" maxlength="15" >
 	                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	                </p:inputMask>
 	            </h:panelGrid>
-	            <h:panelGrid style="margin-left:12%;"> 
+	            <h:panelGrid style="margin-left:12%;">  
 	            	<p:outputLabel value="Valor"/>
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left:2%;">
-	            	<p:inputText id="valor1" size="16" disabled="#{recebimentoContaMB.disabilitar}" value="#{recebimentoContaMB.contasReceber.valorParcela}" />
+	            	<p:inputText id="valor1" size="16" disabled="#{recebimentoContaMB.disabilitar}" value="#{recebimentoContaMB.valorParcial}" />
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left:12%;">
 	            	<p:outputLabel value="Conta" for="idconta1"/>
@@ -132,13 +132,13 @@
 	                    <f:selectItems value="#{recebimentoContaMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
 	                    <f:attribute name="listaBanco" value="#{recebimentoContaMB.listaBanco}"/>
 	                </p:selectOneMenu> 
-	            </h:panelGrid>
+	            </h:panelGrid> 
 	        </h:panelGrid>
 	        <br />
-	        <p:commandLink   action="#" style="margin-left:40%;text-decoration:none;" title="Adicionar">
+	        <p:commandLink   action="#{recebimentoContaMB.salvarRecebimentoParcial()}" style="margin-left:40%;text-decoration:none;" title="Adicionar">
 				<img src="../../resources/img/iconeplusS.ico"/>
 			</p:commandLink>
-			<p:commandLink title="Pesquisar" style="text-decoration: none; margin-left:6%;"   action="#" >
+			<p:commandLink title="Visualizar Parciais" style="text-decoration: none; margin-left:6%;"   action="#{recebimentoContaMB.recebimentoContaParcial(recebimentoContaMB.contasReceber)}" >
                	<img src="../../resources/img/iconelupaS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
             </p:commandLink>
             <br />

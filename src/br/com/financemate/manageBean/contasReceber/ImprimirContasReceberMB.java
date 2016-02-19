@@ -230,10 +230,11 @@ public class ImprimirContasReceberMB implements Serializable{
 	public String gerarSql(){
 		String sql = "";
 		if (relatorio.equalsIgnoreCase("Contas a receber")) {
-			sql = "SELECT distinct contasreceber.idcontasReceber, contasreceber.numeroDocumento, contasreceber.nomeCliente as nomeCliente,contasreceber.valorParcela, contasreceber.numeroParcela, contasreceber.dataVencimento, contasreceber.juros,contasreceber.desagio, contasreceber.tipodocumento, contasreceber.venda, contasreceber.dataPagamento, contasreceber.valorPago,cliente.nomeFantasia, banco.nome ";
+			sql = "SELECT distinct contasreceber.idcontasReceber, contasreceber.numeroDocumento, contasreceber.nomeCliente as nomeCliente,contasreceber.valorParcela, contasreceber.numeroParcela, contasreceber.dataVencimento, contasreceber.juros,contasreceber.desagio, contasreceber.tipodocumento, contasreceber.venda, contasreceber.dataPagamento, contasreceber.valorPago,cliente.nomeFantasia, banco.nome, vendas.dataVenda ";
 			sql = sql + "from ";
 			sql = sql + "contasreceber join cliente on contasreceber.cliente_idcliente = cliente.idcliente ";
-			sql = sql + "join banco on contasreceber.banco_idbanco = banco.idbanco ";
+			sql = sql + "join banco on contasreceber.banco_idbanco = banco.idbanco "; 
+			sql = sql + "join vendas on contasreceber.vendas_idvendas = vendas.idvendas ";
 			sql = sql + "where ";
 			String ordem = "";
 			if (contasAberto){

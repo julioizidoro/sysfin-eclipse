@@ -22,17 +22,17 @@
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{bancoMB.banco}" selectionMode="single" rowKey="#{banco.idbanco}">
              	<p:column headerText="Nome" sortBy="#{banco.nome}" style=" background:#E7EBEB; color:black; border:none;">
                    <h:outputText value="#{banco.nome}" />
+              	</p:column> 
+              	<p:column headerText="Agencia" sortBy="#{banco.agencia}" style=" width:70px; background:#E7EBEB; color:black; border:none;">
+                   <h:outputText   value="#{banco.agencia}"/> 
               	</p:column>
-              	<p:column headerText="Agencia" sortBy="#{banco.agencia}" style=" background:#E7EBEB; color:black; border:none;">
-                   <h:outputText   value="#{banco.agencia}"/>
-              	</p:column>
-              	<p:column headerText="Conta"  sortBy="#{banco.conta}" style=" background:#E7EBEB; color:black; border:none;">
+              	<p:column headerText="Conta"  sortBy="#{banco.conta}" style="width:80px; background:#E7EBEB; color:black; border:none;">
                   	<h:outputText value="#{banco.conta}"/>
               	</p:column>
               	<p:column headerText="Gerente" sortBy="#{banco.gerente}" style=" background:#E7EBEB; color:black; border:none;">
                   	<h:outputText value="#{banco.gerente}"/>
               	</p:column>
-              	<p:column headerText="Gerente e-mail" sortBy="#{banco.emailgerente}" style=" background:#E7EBEB; color:black; border:none;">
+              	<p:column headerText="Gerente e-mail" sortBy="#{banco.emailGerente}" style=" background:#E7EBEB; color:black; border:none;">
                   	<h:outputText value="#{banco.emailGerente}"/>
               	</p:column>
              </p:dataTable>

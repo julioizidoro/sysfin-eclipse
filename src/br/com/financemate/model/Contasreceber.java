@@ -7,7 +7,10 @@ package br.com.financemate.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -89,13 +93,26 @@ public class Contasreceber implements Serializable {
     @JoinColumn(name = "cobranca_idcobranca", referencedColumnName = "idcobranca")
     @ManyToOne(optional = false)
     private Cobranca cobranca;
+    private List<Contasreceber> recebimentoParcialList;
 
     public Contasreceber() {
     }
 
     
     
-    public Contasreceber(Integer idcontasReceber) {
+    public List<Contasreceber> getRecebimentoParcialList() {
+		return recebimentoParcialList;
+	}
+
+
+
+	public void setRecebimentoParcialList(List<Contasreceber> recebimentoParcialList) {
+		this.recebimentoParcialList = recebimentoParcialList;
+	}
+
+
+
+	public Contasreceber(Integer idcontasReceber) {
         this.idcontasReceber = idcontasReceber;
     }
 

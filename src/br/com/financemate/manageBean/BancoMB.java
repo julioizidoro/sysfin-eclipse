@@ -40,6 +40,8 @@ public class BancoMB implements Serializable {
     private Cliente cliente;
     private List<Cliente> listaCliente;
     private Banco banco;
+    private String sql;
+    private int idcliente;
 	
     @PostConstruct
 	public void init(){
@@ -49,6 +51,30 @@ public class BancoMB implements Serializable {
 
     
     
+	public int getIdcliente() {
+		return idcliente;
+	}
+
+
+
+	public void setIdcliente(int idcliente) {
+		this.idcliente = idcliente;
+	}
+
+
+
+	public String getSql() {
+		return sql;
+	}
+
+
+
+	public void setSql(String sql) {
+		this.sql = sql;
+	}
+
+
+
 	public Banco getBanco() {
 		return banco;
 	}
@@ -111,35 +137,27 @@ public class BancoMB implements Serializable {
 	 }
 	 
 	 public void gerarListaBanco() {
-		 if (cliente!=null){
 			 BancoFacade bancoFacade = new BancoFacade();
-			 String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+			 if (usuarioLogadoMB.getUsuario().getCliente() > 0) {
+				idcliente = usuarioLogadoMB.getUsuario().getCliente();
+				sql = "Select distinct b from Banco b where b.cliente.idcliente=" + idcliente + " order by b.nome";
+			 }else{
+				 idcliente = 8;
+				 sql = "Select distinct b from Banco b  where b.cliente.idcliente=" + idcliente + " order by b.nome";
+			 }
 			 listaBanco = bancoFacade.listar(sql);
 			 if (listaBanco==null){
 				 listaBanco = new ArrayList<Banco>();
 			 }
-		 }else {
-			 listaBanco = new ArrayList<Banco>();
-		 }
 	 }
 	 
 	 public String novoBanco() {
-		 try {
-			 if (cliente != null) {
-				 FacesContext fc = FacesContext.getCurrentInstance();
-				 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-				 session.setAttribute("cliente", cliente);
-				 Map<String, Object> options = new HashMap<String, Object>();
-				 options.put("contentWidth", 500);
-				 RequestContext.getCurrentInstance().openDialog("cadBanco");
-			 }else{
-				 mostrarMensagem(null, "Erro ao Cadastrar Banco", "Erro");
-			 }
-		 } catch (Exception ex) {
-			 Logger.getLogger(BancoMB.class.getName()).log(Level.SEVERE, null, ex);
-			 mostrarMensagem(ex, "Erro ao Cadastrar Banco", "Erro");
-			 
-		 }
+		 FacesContext fc = FacesContext.getCurrentInstance();
+		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		 Map<String, Object> options = new HashMap<String, Object>();
+		 options.put("contentWidth", 700);
+		 session.setAttribute("idcliente", idcliente);
+		 RequestContext.getCurrentInstance().openDialog("cadBanco", options, null);
 		 return "";
 	 }
 	 

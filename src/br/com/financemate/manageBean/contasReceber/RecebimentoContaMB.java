@@ -11,6 +11,7 @@ import br.com.financemate.model.Contasreceber;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +42,9 @@ public class RecebimentoContaMB implements  Serializable{
     private Contasreceber contasReceber;
     private Boolean checkRecebimento = false;
     private Boolean disabilitar = true;
+    private float valorParcial = 0f;
+    private Date dataRecebimentoParcial;
+    private List<Contasreceber> listaRecebimentoParial;
     
     
     @PostConstruct
@@ -49,18 +53,66 @@ public class RecebimentoContaMB implements  Serializable{
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasReceber = (Contasreceber) session.getAttribute("contareceber");
         cliente = contasReceber.getCliente();
-        session.removeAttribute("contareceber");
         gerarListaCliente();
         gerarListaBanco();
         contasReceber.setValorPago(contasReceber.getValorParcela());
-         cliente = contasReceber.getCliente();
-         banco = contasReceber.getBanco();
+        cliente = contasReceber.getCliente();
+        banco = contasReceber.getBanco();
+		if (contasReceber.getValorPago() > 0) {
+			listaRecebimentoParial = new ArrayList<Contasreceber>();
+			listaRecebimentoParial = contasReceber.getRecebimentoParcialList();
+		}else{
+			listaRecebimentoParial = new ArrayList<Contasreceber>();
+		}
+		
     }
     
     
     
 
-    public Boolean getDisabilitar() {
+    public List<Contasreceber> getListaRecebimentoParial() {
+		return listaRecebimentoParial;
+	}
+
+
+
+
+	public void setListaRecebimentoParial(List<Contasreceber> listaRecebimentoParial) {
+		this.listaRecebimentoParial = listaRecebimentoParial;
+	}
+
+
+
+
+	public Date getDataRecebimentoParcial() {
+		return dataRecebimentoParcial;
+	}
+
+
+
+
+	public void setDataRecebimentoParcial(Date dataRecebimentoParcial) {
+		this.dataRecebimentoParcial = dataRecebimentoParcial;
+	}
+
+
+
+
+	public float getValorParcial() {
+		return valorParcial;
+	}
+
+
+
+
+	public void setValorParcial(float valorParcial) {
+		this.valorParcial = valorParcial;
+	}
+
+
+
+
+	public Boolean getDisabilitar() {
 		return disabilitar;
 	}
 
@@ -201,4 +253,29 @@ public class RecebimentoContaMB implements  Serializable{
 		} 
 		
 	}
+    
+    public String salvarRecebimentoParcial(){
+        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+        contasReceber.setBanco(banco);
+        contasReceber.setCliente(cliente);
+        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+        contasReceber.setValorPago(valorParcial);
+        contasReceber.setValorParcela(contasReceber.getValorParcela() - valorParcial);
+        contasReceber = contasReceberFacade.salvar(contasReceber);
+        contasReceber.setDataPagamento(dataRecebimentoParcial);
+        listaRecebimentoParial.add(contasReceber);
+        contasReceber.setRecebimentoParcialList(listaRecebimentoParial);
+        RequestContext.getCurrentInstance().closeDialog(contasReceber);
+        return "";
+    }
+    
+    public String recebimentoContaParcial(Contasreceber contasreceber){
+		 if (contasreceber!=null){
+			 FacesContext fc = FacesContext.getCurrentInstance();
+			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			 session.setAttribute("contareceber", contasreceber);
+			 return "visualizarRecebimentoParcial";
+		 }
+		 return "";
+	 }
 }
