@@ -12,7 +12,7 @@
         <link href="../../resources/css/css.css" rel="stylesheet" media="screen" />
         <link rel="icon" href="../../resources/img/iconeLogoNavegador.jpg" type="image/x-icon" />
     </h:head>
-
+ 
     <h:body style="color:#E7EBEB !important; font-family:'Pacifico',cursive">
         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
             <img src="resources/img/ajax-carregando.gif" />
@@ -28,16 +28,15 @@
         	<h:outputText value="Bem Vindo" style="font-size:14px; margin-left:0.5%;" />,
         	 <h:outputText style="font-size:14px;" value="#{usuarioLogadoMB.usuario.nome}" />
         	<tt style="margin-left: 35%; font-size: 30px; font-family: 'Pacifico',cursive;">SysFin</tt>
-        	<p:commandLink   action="#" style="margin-left:32%;" title="Adicionar">
-                    <img src="../../resources/img/adicionarmenu.png" width="32" height="32" /> 
+        	<p:commandLink  action="#" style="margin-left:32%; text-decoration:none;" title="Adicionar">
+                    <img src="../../resources/img/adicionarmenu.png" width="32" height="32" border="none" style="text-decoration:none;"/> 
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
         
         </div>
         <br />
         <h:panelGrid  class="menu2" columns="2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:0.2%;" responsive="true">
-        
-        	 <p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;">
+        	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;">
            		<img src="../../resources/img/iconeHome.png" style="width: 10%;"/> 
         		<h:outputText value="Visão Geral" style="font-size:16px; margin-left:5%;"/>
     		 </p:commandLink>
@@ -46,8 +45,7 @@
            		<img src="../../resources/img/iconeclientes.png" style="width: 10%;"/>
         		<h:outputText value="Área do cliente" style="font-size:16px; margin-left:5%;"/>
     		 </p:commandLink>
-    		 <br />
-    		  
+    		<br />
         	 <h:panelGrid>
         	 <p:panelMenu styleClass="ui-panelmenu">
         		<p:submenu  style="background:transparent;  font-size:16px; color:white;  margin-top=-30%; font:normal;" label="Contas a Pagar">

@@ -40,7 +40,7 @@ public class TipoPlanoContaMB implements Serializable {
 	
 	@PostConstruct
 	public void init(){
-		
+		gerarListaTipoPlanoConta();
 	}
 
 

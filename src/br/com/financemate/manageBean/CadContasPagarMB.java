@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,6 +58,7 @@ public class CadContasPagarMB implements Serializable{
     Boolean selecionada = false;
 	private String nomeAnexo = "Anexar"; 
 	private String nomeAquivoFTP;
+	private Date dataEnvio;
 	
 
 	@PostConstruct
@@ -82,6 +84,18 @@ public class CadContasPagarMB implements Serializable{
 	
 	
 	
+	public Date getDataEnvio() {
+		return dataEnvio;
+	}
+
+
+
+	public void setDataEnvio(Date dataEnvio) {
+		this.dataEnvio = dataEnvio;
+	}
+
+
+
 	public String getNomeAquivoFTP() {
 		return nomeAquivoFTP;
 	}
@@ -436,6 +450,12 @@ public class CadContasPagarMB implements Serializable{
 	public void fileUploadListener(FileUploadEvent e){
 		this.file = e.getFile();
 		salvarArquivoFTP();
+	}
+	
+	public Date dataEnvio(){
+		dataEnvio = new Date();
+		contaPagar.setDataEnvio(dataEnvio);
+		return dataEnvio;
 	}
 	
 }

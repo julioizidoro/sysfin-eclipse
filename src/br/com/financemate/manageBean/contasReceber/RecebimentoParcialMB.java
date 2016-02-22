@@ -27,20 +27,35 @@ public class RecebimentoParcialMB implements Serializable {
 	 private Cliente cliente;
 	 private Contasreceber contasReceber;
 	 private List<Contasreceber> listaRecebimentoParcial;
+	 private Float valorPagoParcial;
 	
 	@PostConstruct
 	public void init(){
 		FacesContext fc = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		contasReceber = (Contasreceber) session.getAttribute("contareceber");
-		if (contasReceber!=null) {
+		valorPagoParcial = (Float) session.getAttribute("valorPagoParcial");
+		if (valorPagoParcial > 0f) {
 			listaRecebimentoParcial = contasReceber.getRecebimentoParcialList();
+			listaRecebimentoParcial = new ArrayList<Contasreceber>();
 		}else{
 			listaRecebimentoParcial = new ArrayList<Contasreceber>();
 		}
 	}
 	
 	
+
+	public Float getValorPagoParcial() {
+		return valorPagoParcial;
+	}
+
+
+
+	public void setValorPagoParcial(Float valorPagoParcial) {
+		this.valorPagoParcial = valorPagoParcial;
+	}
+
+
 
 	public List<Contasreceber> getListaRecebimentoParcial() {
 		return listaRecebimentoParcial;

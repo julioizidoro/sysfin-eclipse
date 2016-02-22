@@ -10,7 +10,7 @@
 		<h:form id="frmConsultaTipoPlanoConta">
 		<br/> 
 			<p:commandLink   action="#{tipoPlanoContaMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
-				<img src="../../resources/img/iconeplusS.ico" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogNovo}" update="idTabelaTipoPlanoConta"/>
             </p:commandLink>
             <br /><br /> 
@@ -21,11 +21,11 @@
                     <p:dataTable id="idTabelaTipoPlanoConta"  var="tipoPlanoConta"  value="#{tipoPlanoContaMB.listarTipoPlanoContas}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{tipoPlanoContaMB.tipoplanocontas}" selectionMode="single" rowKey="#{tipoPlanoConta.idtipoplanocontas}">
                     		
-                    	<p:column headerText="Descrição"  sortBy="#{tipoPlanoConta.descricao}" style="width:95%; background:#E7EBEB; color:black; border:none;">
-                            <h:outputText value="#{tipoplanoconta.descricao}"/>
+                    	<p:column headerText="Descrição"  sortBy="#{tipoPlanoConta.descricao}" style="width:95%; background:white; color:black; border:none;">
+                            <h:outputText value="#{tipoplanoconta.descricao}" style="color:black;"/> 
                         </p:column>
-                        <p:column  style=" background:#E7EBEB; color:black; border:none;">
-                            <p:selectBooleanCheckbox value="#{tipoplanoconta.selecionado}"/>
+                        <p:column  style=" background:white; color:black; border:none;">
+                            <p:selectBooleanCheckbox value="#{tipoPlanoConta.selecionado}"/>
                         </p:column>
                     </p:dataTable>
       </h:form>

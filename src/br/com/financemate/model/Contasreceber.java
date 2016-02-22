@@ -98,18 +98,6 @@ public class Contasreceber implements Serializable {
     public Contasreceber() {
     }
 
-    
-    
-    public List<Contasreceber> getRecebimentoParcialList() {
-		return recebimentoParcialList;
-	}
-
-
-
-	public void setRecebimentoParcialList(List<Contasreceber> recebimentoParcialList) {
-		this.recebimentoParcialList = recebimentoParcialList;
-	}
-
 
 
 	public Contasreceber(Integer idcontasReceber) {
@@ -287,6 +275,18 @@ public class Contasreceber implements Serializable {
 	public void setCobranca(Cobranca cobranca) {
 		this.cobranca = cobranca;
 	}
+	
+    
+    public List<Contasreceber> getRecebimentoParcialList() {
+		return recebimentoParcialList;
+	}
+
+
+
+	public void setRecebimentoParcialList(List<Contasreceber> recebimentoParcialList) {
+		this.recebimentoParcialList = recebimentoParcialList;
+	}
+
 
 
 

@@ -119,7 +119,7 @@
 	            	 <p:outputLabel value="Frequencia" for="frequencia"  />
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left: 2%;"> 
-	            	<p:selectOneMenu id="frequencia" style="width:194px;" disabled="#{cadContasReceberMB.disabilitar}" value="#">
+	            	<p:selectOneMenu id="frequencia" style="width:194px;" disabled="#{cadContasReceberMB.disabilitar}" value="#{cadContasReceberMB.frequencia}">
 	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
 	                    <f:selectItem itemLabel="Mensal" itemValue="Mensal" />  
 	                    <f:selectItem itemLabel="Semanal" itemValue="Semanal" /> 
@@ -128,7 +128,7 @@
 	                </p:selectOneMenu>
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left: 30%;"> 
-	            	<p:selectOneMenu id="vezes" style="width:100px;" disabled="#{cadContasReceberMB.disabilitar}" value="#">
+	            	<p:selectOneMenu id="vezes" style="width:100px;" disabled="#{cadContasReceberMB.disabilitar}" value="#{cadContasReceberMB.vezes}">
 	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
 	                    <f:selectItem itemLabel="1" itemValue="1" />  
 	                    <f:selectItem itemLabel="2" itemValue="2" /> 

@@ -6,7 +6,6 @@
 		<class>br.com.financemate.model.Banco</class>
 		<class>br.com.financemate.model.Cliente</class>
 		<class>br.com.financemate.model.Contaspagar</class>
-		<class>br.com.financemate.model.Contasreceber</class>
 		<class>br.com.financemate.model.Dadosmunicipais</class>
 		<class>br.com.financemate.model.Emissaonota</class>
 		<class>br.com.financemate.model.Fluxocaixa</class>
@@ -25,6 +24,7 @@
 		<class>br.com.financemate.model.Ftpdados</class>
 		<class>br.com.financemate.model.Cobranca</class>
 		<class>br.com.financemate.model.Historicocobranca</class>
+		<class>br.com.financemate.model.Contasreceber</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://200.175.61.147:8082/sysfin"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>

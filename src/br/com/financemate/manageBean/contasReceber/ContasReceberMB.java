@@ -78,6 +78,7 @@ public class ContasReceberMB implements Serializable {
     private float valorParcela;
     private Integer nVenda;
     private String status;
+    private Float valorPagoParcial;
 	
     @PostConstruct
 	public void init(){
@@ -88,7 +89,21 @@ public class ContasReceberMB implements Serializable {
 		gerarListaContas();
 	}
     
-    
+
+
+
+	public Float getValorPagoParcial() {
+		return valorPagoParcial;
+	}
+
+
+
+
+	public void setValorPagoParcial(Float valorPagoParcial) {
+		this.valorPagoParcial = valorPagoParcial;
+	}
+
+
 
 
 	public String getStatus() {
@@ -789,9 +804,11 @@ public class ContasReceberMB implements Serializable {
 	 
 	 public String recebimentoConta(Contasreceber contasreceber){
 		 if (contasreceber!=null){
+			 valorPagoParcial =  contasreceber.getValorPago();
 			 FacesContext fc = FacesContext.getCurrentInstance();
 			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 			 session.setAttribute("contareceber", contasreceber);
+			 session.setAttribute("valorPagoParcial", valorPagoParcial);
 			 RequestContext.getCurrentInstance().openDialog("recebimentoConta");
 		 }
 		 return "";
@@ -820,6 +837,7 @@ public class ContasReceberMB implements Serializable {
 		 contasreceber.setDataPagamento(null);
 		 contasreceber.setDesagio(0f);
 		 contasreceber.setJuros(0f);
+		 contasreceber.setValorParcela(contasreceber.getValorParcela() + contasreceber.getValorPago());
 		 contasreceber.setValorPago(0f);
 		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 		 contasReceberFacade.salvar(contasreceber);

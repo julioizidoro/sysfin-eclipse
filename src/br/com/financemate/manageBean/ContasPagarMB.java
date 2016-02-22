@@ -428,11 +428,11 @@ public class ContasPagarMB implements Serializable{
 	
 	public String imagemAutorizadas(Contaspagar contaspagar){
         if (contaspagar.getAutorizarPagamento() == null) {
-            return "../../resources/img/cancel.png";
+            return "../../resources/img/cancelarS.png";
         } else if (contaspagar.getAutorizarPagamento().equalsIgnoreCase("s")) {
-            return "../../resources/img/confirmar.png";
+            return "../../resources/img/confirmarS.png";
         } else {
-            return "../../resources/img/cancel.png";
+            return "../../resources/img/cancelarS.png";
         }
     }
 	

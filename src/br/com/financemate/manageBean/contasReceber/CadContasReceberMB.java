@@ -3,6 +3,7 @@ package br.com.financemate.manageBean.contasReceber;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import org.jfree.data.time.Month;
+import org.jfree.data.time.Year;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 
@@ -51,6 +54,8 @@ public class CadContasReceberMB implements Serializable {
 	    private Contasreceber contasReceber;
 	    private Boolean repetir = false;
 		private Boolean disabilitar = true;
+		private String vezes;
+		private String frequencia;
 	    
 	    @PostConstruct
 	    public void init(){
@@ -71,6 +76,38 @@ public class CadContasReceberMB implements Serializable {
 	    
 	    
 	    
+
+		public String getVezes() {
+			return vezes;
+		}
+
+
+
+
+
+		public void setVezes(String vezes) {
+			this.vezes = vezes;
+		}
+
+
+
+
+
+		public String getFrequencia() {
+			return frequencia;
+		}
+
+
+
+
+
+		public void setFrequencia(String frequencia) {
+			this.frequencia = frequencia;
+		}
+
+
+
+
 
 		public Boolean getDisabilitar() {
 			return disabilitar;
@@ -237,20 +274,42 @@ public class CadContasReceberMB implements Serializable {
 		}
 		
 		public String salvar(){
-	        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-	        contasReceber.setBanco(banco);
-	        contasReceber.setPlanocontas(planoContas);
-	        contasReceber.setCliente(cliente);
-	        contasReceber.setValorPago(0.0f);
-	        contasReceber.setDesagio(0.0f);
-	        contasReceber.setJuros(0.0f);
-	        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-	        String mensagem = validarDados();
-	        if (mensagem!=null) {
-	        	contasReceber = contasReceberFacade.salvar(contasReceber);
+			if (!frequencia.equalsIgnoreCase(null) && vezes.equalsIgnoreCase(null)) {
+				int numeroVezes = Integer.parseInt(vezes);
+				for (int i = 1; i < numeroVezes; i++) {
+					ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+			        contasReceber.setBanco(banco);
+			        contasReceber.setPlanocontas(planoContas);
+			        contasReceber.setCliente(cliente);
+			        contasReceber.setValorPago(0.0f);
+			        contasReceber.setDesagio(0.0f);
+			        contasReceber.setJuros(0.0f);
+			        contasReceber.setNumeroParcela(i/numeroVezes);
+			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+			        String mensagem = validarDados();
+			        if (mensagem!=null) {
+			        	contasReceber = contasReceberFacade.salvar(contasReceber);
+					}
+			        RequestContext.getCurrentInstance().closeDialog(contasReceber);
+			        return "";
+				}
+			}else{
+				 	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+			        contasReceber.setBanco(banco);
+			        contasReceber.setPlanocontas(planoContas);
+			        contasReceber.setCliente(cliente);
+			        contasReceber.setValorPago(0.0f);
+			        contasReceber.setDesagio(0.0f);
+			        contasReceber.setJuros(0.0f);
+			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+			        String mensagem = validarDados();
+			        if (mensagem!=null) {
+			        	contasReceber = contasReceberFacade.salvar(contasReceber);
+					}
+			        RequestContext.getCurrentInstance().closeDialog(contasReceber);
+			        return "";
 			}
-	        RequestContext.getCurrentInstance().closeDialog(contasReceber);
-	        return "consContasReceber";
+			return"";
 	    }
 	    
 	    public String cancelar(){

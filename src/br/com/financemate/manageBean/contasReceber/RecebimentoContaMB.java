@@ -45,6 +45,7 @@ public class RecebimentoContaMB implements  Serializable{
     private float valorParcial = 0f;
     private Date dataRecebimentoParcial;
     private List<Contasreceber> listaRecebimentoParial;
+    private Float valorPagoParcial;
     
     
     @PostConstruct
@@ -52,13 +53,14 @@ public class RecebimentoContaMB implements  Serializable{
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasReceber = (Contasreceber) session.getAttribute("contareceber");
+        valorPagoParcial = (Float) session.getAttribute("valorPagoParcial");
         cliente = contasReceber.getCliente();
         gerarListaCliente();
         gerarListaBanco();
         contasReceber.setValorPago(contasReceber.getValorParcela());
         cliente = contasReceber.getCliente();
         banco = contasReceber.getBanco();
-		if (contasReceber.getValorPago() > 0) {
+		if (valorPagoParcial > 0f) {
 			listaRecebimentoParial = new ArrayList<Contasreceber>();
 			listaRecebimentoParial = contasReceber.getRecebimentoParcialList();
 		}else{
@@ -70,7 +72,21 @@ public class RecebimentoContaMB implements  Serializable{
     
     
 
-    public List<Contasreceber> getListaRecebimentoParial() {
+    public Float getValorPagoParcial() {
+		return valorPagoParcial;
+	}
+
+
+
+
+	public void setValorPagoParcial(Float valorPagoParcial) {
+		this.valorPagoParcial = valorPagoParcial;
+	}
+
+
+
+
+	public List<Contasreceber> getListaRecebimentoParial() {
 		return listaRecebimentoParial;
 	}
 
@@ -259,7 +275,7 @@ public class RecebimentoContaMB implements  Serializable{
         contasReceber.setBanco(banco);
         contasReceber.setCliente(cliente);
         contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-        contasReceber.setValorPago(valorParcial);
+        contasReceber.setValorPago(valorPagoParcial + valorParcial);
         contasReceber.setValorParcela(contasReceber.getValorParcela() - valorParcial);
         contasReceber = contasReceberFacade.salvar(contasReceber);
         contasReceber.setDataPagamento(dataRecebimentoParcial);

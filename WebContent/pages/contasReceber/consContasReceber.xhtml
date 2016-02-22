@@ -10,7 +10,7 @@
 		<h:form id="frmConsultaReceber">
 		<br/>  
 			<p:commandLink   action="#{contasReceberMB.novaConta()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
-				<img src="../../resources/img/iconeplusS.ico" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
+				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 				
             </p:commandLink>  
             <p:commandLink id="idImagemFiltro"  action="#{contasReceberMB.coresFiltrar()}" update="@all" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
@@ -40,64 +40,64 @@
                     <p:dataTable id="idTabelaContaReceber"  var="contasReceber"  value="#{contasReceberMB.listaContasReceber}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">
                         
-                        <p:column headerText="Status"  style="width:20px; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
+                        <p:column headerText="Status"  style="width:20px; background:white; color:black; border:none;" styleClass="alinharCenter">
                             <p:commandLink>
                                 <img src="#{contasReceberMB.verStatus(contasReceber)}" />
                             </p:commandLink>
                         </p:column>  
-                        <p:column headerText=" Data Vencimento" sortBy="#{contasReceber.dataVencimento}" style="width:70px;  background:#E7EBEB; color:black; border:none;">
-                            <h:outputText  value="#{contasReceber.dataVencimento}" style="margin-left:33%;" > 
+                        <p:column headerText=" Data Vencimento" sortBy="#{contasReceber.dataVencimento}" style="width:70px;  background:white; color:black; border:none;">
+                            <h:outputText  value="#{contasReceber.dataVencimento}" style="margin-left:33%; font-size:12px;" > 
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText> 
                         </p:column> 
-                        <p:column headerText="Cliente" sortBy="#{contasReceber.nomeCliente}" style="width:200px; background:#E7EBEB; color:black; border:#fff;">
-                            <h:outputText value="#{contasReceber.nomeCliente}" style="margin-left:25%;"/> 
+                        <p:column headerText="Cliente" sortBy="#{contasReceber.nomeCliente}" style="width:250px; background:white; color:black; border:#fff;">
+                            <h:outputText value="#{contasReceber.nomeCliente}" style="margin-left:20%; font-size:12px;"/> 
                         </p:column> 
-                        <p:column headerText="Valor" sortBy="#{contasReceber.valorParcela}" style="width:5%; background:#E7EBEB; color:black; border:none;" >
-                            <h:outputText value="R$ #{contasReceber.valorParcela}" >
+                        <p:column headerText="Valor" sortBy="#{contasReceber.valorParcela}" style="width:8%; background:white; color:black; border:none;" >
+                            <h:outputText value="R$ #{contasReceber.valorParcela}" style="font-size:12px;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Parcela" sortBy="#{contasReceber.numeroParcela}" style="width:26px; background:#E7EBEB; color:black; border:none;" >
-                            <h:outputText value="#{contasReceber.numeroParcela}" style="margin-left:10%;"/>
+                        <p:column headerText="Parcela" sortBy="#{contasReceber.numeroParcela}" style="width:26px; background:white; color:black; border:none;" >
+                            <h:outputText value="#{contasReceber.numeroParcela}" style="margin-left:10%; font-size:12px;"/>
                         </p:column>  
-                        <p:column headerText="Unidade" sortBy="#{contasReceber.cliente.nomeFantasia}"   style="width:200px; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter" >
-                             <h:outputText  value="#{contasReceber.cliente.nomeFantasia}" style="margin-right:35%;"/>
+                        <p:column headerText="Unidade" sortBy="#{contasReceber.cliente.nomeFantasia}"   style="width:150px; background:white; color:black; border:none;" styleClass="alinharCenter" >
+                             <h:outputText  value="#{contasReceber.cliente.nomeFantasia}" style="margin-right:35%; font-size:12px;"/>
                         </p:column> 
-                        <p:column headerText="Data Recebimento" sortBy="#{contasReceber.dataPagamento}" style="width:70px; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{contasReceber.dataPagamento}" >
+                        <p:column headerText="Data Recebimento" sortBy="#{contasReceber.dataPagamento}" style="width:70px; background:white; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{contasReceber.dataPagamento}" style="font-size:12px;">
                                 <f:convertDateTime parent="dd/MM/yyy"/>
                             </h:outputText>                                    
                         </p:column>
-                        <p:column headerText="Valor Recebido" style=" background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="R$ #{contasReceber.valorPago}" >
+                        <p:column headerText="Valor Recebido" style=" background:white; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="R$ #{contasReceber.valorPago}" style="font-size:12px;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                     
                         </p:column>
-                        <p:column headerText="N° Venda" style="width:5%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
-                             <h:outputText  value="#{contasReceber.vendas.idvendas}"/>                                    
+                        <p:column headerText="N° Venda" style="width:4%; background:white; color:black; border:none;" styleClass="alinharCenter">
+                             <h:outputText  value="#{contasReceber.vendas.idvendas}" style="font-size:12px;"/>                                    
                         </p:column>
-                        <p:column headerText="Cob" style="width:4%; background:#E7EBEB; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{contasReceber.cobranca.historicocobrancaList.size()}" />                                    
+                        <p:column headerText="Cob" style="width:4%; background:white; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{contasReceber.cobranca.historicocobrancaList.size()}" style="font-size:12px;"/>                                    
                         </p:column> 
-                        <p:column style="width:28px; background:#E7EBEB; color:black; border:none;">
-                            <p:selectBooleanCheckbox value="#{contasReceber.selecionado}"/>
+                        <p:column style="width:28px; background:white; color:black; border:none;">
+                            <p:selectBooleanCheckbox value="#{contasReceber.selecionado}" style="background:white"/>
                         </p:column>
                     </p:dataTable>
                     <br />
-                    <h:panelGrid  style="width:18%; margin-left: 35%; background-color:white; border-radius:5px; border-left:solid; border-left-color:red;">
+                    <h:panelGrid  style="width:18%; margin-left: 35%; background-color:white; border-radius:5px; border:solid; border-left-color:red; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 	                	<br />
 			            <tt style="margin-left:10%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
 			            <br />
 			              <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{calculosContasMB.crVencidas}"  readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:green;">
+	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -7%; background-color:white; border-radius:5px; border:solid; border-left-color:green; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Vencer</tt>
 			            <br/>
 			            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{calculosContasMB.crVencer}" readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid  style="width:20%;  margin-left:77%; margin-top: -7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:blue;">
+	        		<h:panelGrid  style="width:20%;  margin-left:77%; margin-top: -7%; background-color:white; border-radius:5px; border:solid; border-left-color:blue; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Receber</tt> 
 			            <br/>
