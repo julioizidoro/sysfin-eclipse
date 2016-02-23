@@ -415,7 +415,7 @@ public class ContasPagarMB implements Serializable{
         if (contaspagar.getDataVencimento().after(data)) {
             return "../../resources/img/bolaVerde.png";
         } else {
-            if (!contaspagar.getDataVencimento().before(data)) {
+            if (contaspagar.getDataVencimento().before(data)) {
                 return "../../resources/img/bolaVermelha.png";
             } else {
                 if (contaspagar.equals(data)) {
@@ -715,8 +715,15 @@ public class ContasPagarMB implements Serializable{
 		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 
-	 
-	
+	 public String operacoesUsuario(Contaspagar contaspagar){
+		 if (contaspagar!=null){
+			 FacesContext fc = FacesContext.getCurrentInstance();
+			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			 session.setAttribute("contapagar", contaspagar);
+			 RequestContext.getCurrentInstance().openDialog("operacoesUsuario");
+		 }
+		 return "";
+	 } 
 	 
 	 
 	 

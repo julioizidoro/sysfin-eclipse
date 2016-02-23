@@ -12,8 +12,8 @@
         <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
     </h:head>
 
- <h:body > 
-        <h:form id="idFrmCadContasPagar" class="body2" style="font-size: 12px; background-color: #E7EBEB;" enctype="multipart/form-data">
+ <h:body style="background:white;"> 
+        <h:form id="idFrmCadContasPagar" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
@@ -143,34 +143,34 @@
 	             
 	             <br />
 	             <h:panelGrid style="margin-left:1%;">
-	             	<h:outputLabel value="Banco" class="left5"/>
+	             	<p:outputLabel value="Banco" class="left2"/>
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:7%; margin-top:-5%;">
+	             <h:panelGrid style="margin-left:8%; margin-top:-5%;">
 	             	<p:inputText id="banco" value="#{cadContasPagarMB.cptransferencia.banco}" size="12"/>
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:40%; margin-top:-5.5%;">
-	             	<h:outputLabel value="Agência" />
+	             <h:panelGrid style="margin-left:40%; margin-top:-6%;">
+	             	<p:outputLabel value="Agência" />
 	             </h:panelGrid> 
-	             <h:panelGrid style="margin-left:48%; margin-top:-7.3%;">
+	             <h:panelGrid style="margin-left:49%; margin-top:-7.5%;">
 	             	<p:inputText id="agencia" value="#{cadContasPagarMB.cptransferencia.agencia}" size="11"/>
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:78%; margin-top:-7%;">
-	             	<h:outputLabel value="Conta" />
+	             <h:panelGrid style="margin-left:78%; margin-top:-7.5%;">
+	             	<p:outputLabel value="Conta" />
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:84.5%; margin-top:-8.9%;">
 	             	<p:inputText id="conta" value="#{cadContasPagarMB.cptransferencia.conta}" size="9"/>
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:1%;">
-	             	<h:outputLabel value="Beneficiário" />
+	             	<p:outputLabel value="Beneficiário" />
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:11.5%; margin-top:-5.5%;">
+	             <h:panelGrid style="margin-left:13%; margin-top:-5.5%;">
 	             	<p:inputText id="beneficiario" value="#{cadContasPagarMB.cptransferencia.beneficiario}" size="36"/>
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:57%; margin-top:-5.5%;">
-	             	<h:outputLabel value="CPF/CNPJ" />
+	             	<p:outputLabel value="CPF/CNPJ" />
 	             </h:panelGrid> 
-	             <h:panelGrid style="margin-left:66.5%; margin-top:-7.5%;">
-	             	<p:inputText id="cpfcnpj" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}" size="27"/>
+	             <h:panelGrid style="margin-left:67.2%; margin-top:-7%;">
+	             	<p:inputText id="cpfcnpj" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}" size="26"/>
 	             </h:panelGrid>
 	             <hr /> 
 	         </h:panelGrid>

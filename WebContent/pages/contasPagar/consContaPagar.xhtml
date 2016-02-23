@@ -33,41 +33,42 @@
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="idTabelaContaPagar"/>
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update="idTabelaContaPagar"/>
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
-                    </p:contextMenu> 
+                    	<p:menuitem value="Operações Usuário"  icon=" ui-icon-pencil"  action="#" update="idTabelaContaPagar" /> 
+                    	</p:contextMenu> 
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
                         
-                        <p:column headerText="Status"  style="width:30px; background:white; color:black; border:none;" styleClass="alinharCenter">
+                        <p:column headerText="Status"  style="width:30px; font-size:12px; background:white; color:black; border:none;" styleClass="alinharCenter">
                             <p:commandLink style="margin-left:-2%;">
                                 <img src="#{contasPagarMB.verStatus(contasPagar)}" style="margin-right:25%; font-size:12px;"/>
                             </p:commandLink>
                         </p:column>  
-                        <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; background:white; color:black; border:none;">
+                        <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; font-size:12px; background:white; color:black; border:none;">
                             <h:outputText  value="#{contasPagar.dataVencimento}" style="margin-left:33%; font-size:12px;" > 
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText> 
                         </p:column> 
-                        <p:column headerText="Unidade" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; background:white; color:black; border:#fff;">
+                        <p:column headerText="Unidade" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;">
                             <h:outputText value="#{contasPagar.cliente.nomeFantasia}" style="margin-left:25%; font-size:12px;"/>
                         </p:column> 
-                        <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%; background:white; color:black; border:none;" >
+                        <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{contasPagar.descricao}" style="font-size:12px;"/>
                         </p:column>
-                        <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; background:white; color:black; border:none;" >
+                        <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{contasPagar.fornecedor}" style="margin-left:30%; font-size:12px;"/>
                         </p:column>  
-                        <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; background:white; color:black; border:none;" styleClass="alinharCenter" >
+                        <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; font-size:12px; background:white; color:black; border:none;" styleClass="alinharCenter" >
                             <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="margin-right:50%; width:18%; font-size:12px;"/>
                         </p:column>
-                        <p:column headerText="Valor Conta" style="width:5%; background:white; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{contasPagar.valor}" style="font-size:12px;">
+                        <p:column headerText="Valor Conta" style="width:6%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{contasPagar.valor}" style="font-size:12px; color:red;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
                         </p:column>
                         <p:column  style="width:28px; background:white; color:black; border:none;">
-                            <p:selectBooleanCheckbox value="#{contasPagar.selecionado}"/>
+                            <p:selectBooleanCheckbox value="#{contasPagar.selecionado}" style="background:white !important; color:white !important;"/>
                         </p:column>
-                    </p:dataTable>
+                    </p:dataTable> 
                     <br />
                     <h:panelGrid  style="width:18%; margin-left: 35%; background-color:white; border-radius:5px; border-left:solid; border-left-color:red;">
 	                	<br />

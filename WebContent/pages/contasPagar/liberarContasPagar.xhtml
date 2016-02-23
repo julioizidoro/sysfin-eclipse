@@ -13,7 +13,7 @@
     </h:head>
 
  <h:body > 
-        <h:form id="idFrmCadContasPagar" class="body2" style="font-size: 12px; background-color: #E7EBEB;">
+        <h:form id="idFrmCadContasPagar" class="body2" style="font-size: 12px; background-color: white;">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
@@ -24,15 +24,15 @@
             <br />
             <p:dataTable id="idLiberacaoConta" var="contasPagar"  rowStyleClass="tabela" class="tabelaselecionar" value="#{liberarContasPagarMB.listaContasSelecionadas}" 
                           scrollRows="10"  scrollable="true" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
-                <p:column headerText="Data Vencimento" style="background:#E7EBEB; color:black; border:none;">
+                <p:column headerText="Data Vencimento" style="background:white; color:black; border:none;">
                     <h:outputText  value="#{contasPagar.dataVencimento}" style="margin-left:25%;">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
-                <p:column headerText="Descrição" style="width: 300px; background:#E7EBEB; color:black; border:none;">
+                <p:column headerText="Descrição" style="width: 300px; background:white; color:black; border:none;">
                     <h:outputText value="#{contasPagar.descricao}" /> 
                 </p:column>
-                <p:column headerText="Valor da Conta"   style="background:#E7EBEB; color:black; border:none;">
+                <p:column headerText="Valor da Conta"   style="background:white; color:black; border:none;">
                     <h:outputText value="#{contasPagar.valor}" style="margin-left:20%;">
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>

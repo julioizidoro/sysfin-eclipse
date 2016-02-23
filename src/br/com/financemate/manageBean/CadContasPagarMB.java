@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
@@ -46,6 +47,7 @@ public class CadContasPagarMB implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Contaspagar contaPagar;
+	@Inject
     private UsuarioLogadoMB usuarioLogadoMB;
     private List<Planocontas> listaPlanoContas;
     private List<Cliente> listaCliente;
@@ -59,6 +61,7 @@ public class CadContasPagarMB implements Serializable{
 	private String nomeAnexo = "Anexar"; 
 	private String nomeAquivoFTP;
 	private Date dataEnvio;
+	private Boolean tipoAcesso;
 	
 
 	@PostConstruct
@@ -84,6 +87,18 @@ public class CadContasPagarMB implements Serializable{
 	
 	
 	
+	public Boolean getTipoAcesso() {
+		return tipoAcesso;
+	}
+
+
+
+	public void setTipoAcesso(Boolean tipoAcesso) {
+		this.tipoAcesso = tipoAcesso;
+	}
+
+
+
 	public Date getDataEnvio() {
 		return dataEnvio;
 	}
@@ -147,13 +162,19 @@ public class CadContasPagarMB implements Serializable{
 		this.contaPagar = contaPagar;
 	}
 
+	
+
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
 		return usuarioLogadoMB;
 	}
 
+
+
 	public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
 		this.usuarioLogadoMB = usuarioLogadoMB;
 	}
+
+
 
 	public List<Planocontas> getListaPlanoContas() {
 		return listaPlanoContas;
@@ -229,7 +250,7 @@ public class CadContasPagarMB implements Serializable{
         try {
             listaCliente = clienteFacade.listar("");
             if (listaCliente == null) {
-                listaCliente = new ArrayList<Cliente>();
+                listaCliente = new ArrayList<Cliente>(); 
             }
         } catch (SQLException ex) {
             Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
@@ -456,6 +477,15 @@ public class CadContasPagarMB implements Serializable{
 		dataEnvio = new Date();
 		contaPagar.setDataEnvio(dataEnvio);
 		return dataEnvio;
+	}
+	
+	
+	public Boolean tipoAcesso(){
+		if (usuarioLogadoMB.getCliente()!=null) {
+			cliente.setNomeFantasia(usuarioLogadoMB.getCliente().getNomeFantasia());
+			return tipoAcesso = true;
+		}
+		return tipoAcesso = false;
 	}
 	
 }

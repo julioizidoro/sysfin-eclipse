@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="frmcobranca" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bb3a7b20-b5e1-40d8-beca-57b7601e3e55">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="134"/>
 	<parameter name="logo" class="java.lang.String"/>
 	<parameter name="sql" class="java.lang.String"/>
 	<parameter name="unidade" class="java.lang.String"/>
@@ -14,54 +14,41 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="208" splitType="Stretch">
+			<staticText>
+				<reportElement x="8" y="120" width="542" height="15" uuid="d24e268f-4561-4e38-b5b2-643e628093f9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RELATÒRIO DE COBRANÇA]]></text>
+			</staticText>
 			<image>
-				<reportElement x="0" y="0" width="255" height="79" uuid="a024a17e-509b-495f-a22a-62221c3a4720"/>
+				<reportElement x="8" y="15" width="255" height="94" uuid="b2d0f001-455d-4f1c-8d3a-4c0552e97fc8"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="205" splitType="Stretch">
-			<textField>
-				<reportElement x="10" y="10" width="71" height="20" uuid="0909de3a-3ccc-453b-8376-87eed43dc132"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Unidade : "]]></textFieldExpression>
-			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="81" y="10" width="246" height="20" uuid="aa70d87d-3f2d-4b1c-b4fb-8d54252b8f54"/>
+				<reportElement x="79" y="176" width="246" height="20" uuid="e9dc61fd-dae8-4ba0-b3e2-8f5577021bd4"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{unidade}]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="10" y="37" width="473" height="20" uuid="a71e936f-1f14-4f66-9c82-64f6aa0dabf8"/>
+			<textField>
+				<reportElement x="8" y="176" width="71" height="20" uuid="d29947ef-da00-44d8-b789-077a98adc08f"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{periodo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Unidade : "]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="3" y="56" width="546" height="5" uuid="d497dba8-8ab1-4b2b-b92f-98116b0b7a30"/>
-			</line>
 		</band>
-	</columnHeader>
+	</title>
 	<detail>
 		<band height="125" splitType="Stretch"/>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
+	<lastPageFooter>
+		<band height="50"/>
+	</lastPageFooter>
 </jasperReport>

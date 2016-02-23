@@ -51,6 +51,18 @@ h1 {
     transition: all 0.4s ease 0s;
 }
 
+
+
+.ui-chkbox{
+	background: white !important; 
+	color:white;
+}
+
+.ui-chkbox-box{
+	background: white !important; 
+	color:white;
+}
+ 
 .menu2 a{
     color:#fff; 
     display:block;
@@ -608,7 +620,7 @@ button.pesquisaroutros {
     margin-left:4px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
-    color: #3E7D62;
+    color: #3E7D62; 
     padding: 1px 1px;
     background: -moz-linear-gradient(
         top,
