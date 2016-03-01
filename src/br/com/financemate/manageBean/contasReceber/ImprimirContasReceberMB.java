@@ -18,6 +18,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 
@@ -25,7 +26,9 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.manageBean.ImprimirRelatorioMB;
+import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Usuario;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
 import net.sf.jasperreports.engine.JRException;
@@ -39,6 +42,8 @@ public class ImprimirContasReceberMB implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private UsuarioLogadoMB usuarioLogadoMB;
 	private Cliente cliente;
 	private List<Cliente> listaCliente;
 	private Date dataInicial;
@@ -48,15 +53,48 @@ public class ImprimirContasReceberMB implements Serializable{
 	private Boolean contasRecebidas;
 	private Boolean todas;
 	private Boolean selecionado = false;
+	private Boolean habilitarUnidade = false;
 
 	
 	@PostConstruct
 	public void init(){
-		
+		gerarListaCliente();
+		if (usuarioLogadoMB.getCliente() != null) {
+			cliente = usuarioLogadoMB.getCliente();
+		}
+		desabilitarUnidade();
 	}
 	
 	
 	
+
+	public UsuarioLogadoMB getUsuarioLogadoMB() {
+		return usuarioLogadoMB;
+	}
+
+
+
+
+	public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
+		this.usuarioLogadoMB = usuarioLogadoMB;
+	}
+
+
+
+
+	public Boolean getHabilitarUnidade() {
+		return habilitarUnidade;
+	}
+
+
+
+
+	public void setHabilitarUnidade(Boolean habilitarUnidade) {
+		this.habilitarUnidade = habilitarUnidade;
+	}
+
+
+
 
 	public Boolean getSelecionado() {
 		return selecionado;
@@ -285,6 +323,15 @@ public class ImprimirContasReceberMB implements Serializable{
 		}
 		return selecionado;
 	}
+	
+	 public void desabilitarUnidade(){
+		 if (usuarioLogadoMB.getCliente() != null) {
+			 habilitarUnidade = true;
+		 }else{
+			 habilitarUnidade = false;
+		 }
+		 
+	 }
 	
 }
 

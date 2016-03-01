@@ -68,6 +68,7 @@ public class ContasPagarMB implements Serializable{
 		private List<Cptransferencia> listaTransferencia;
 		@Inject
 		private CalculosContasMB calculosContasMB;
+		private Boolean habilitarUnidade = false;
 		
 	
 	@PostConstruct
@@ -76,9 +77,24 @@ public class ContasPagarMB implements Serializable{
 		criarConsultaContasPagarInicial();
 		gerarListaContas();
 		gerarListaPlanoContas();
+		
 	}
 	
 	
+
+
+	public Boolean getHabilitarUnidade() {
+		return habilitarUnidade;
+	}
+
+
+
+
+	public void setHabilitarUnidade(Boolean habilitarUnidade) {
+		this.habilitarUnidade = habilitarUnidade;
+	}
+
+
 
 
 	public CalculosContasMB getCalculosContasMB() {
@@ -561,7 +577,9 @@ public class ContasPagarMB implements Serializable{
         contaspagar.setAutorizarPagamento("S");
         ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
         contaspagar = contasPagarFacade.salvar(contaspagar);
-    }
+        mensagem mensagem = new mensagem();
+        mensagem.autorizar();
+    } 
 	
 	public void novoFiltro() {
         Map<String, Object> options = new HashMap<String, Object>();
@@ -718,10 +736,12 @@ public class ContasPagarMB implements Serializable{
 	 
 	 public String operacoesUsuario(Contaspagar contaspagar){
 		 if (contaspagar!=null){
+			 Map<String, Object> options = new HashMap<String, Object>();
+			 options.put("contentWidth", 600);
 			 FacesContext fc = FacesContext.getCurrentInstance();
 			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 			 session.setAttribute("contapagar", contaspagar);
-			 RequestContext.getCurrentInstance().openDialog("operacoesUsuario");
+			 RequestContext.getCurrentInstance().openDialog("operacoesUsuario", options, null);
 		 }
 		 return "";
 	 }
@@ -747,7 +767,5 @@ public class ContasPagarMB implements Serializable{
 	        setTotalVencer(Formatacao.foramtarFloatString(vencer));
 	        setTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
 	    }
-	 
-	 
 	 
 }

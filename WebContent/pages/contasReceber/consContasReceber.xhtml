@@ -59,7 +59,7 @@
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Parcela" sortBy="#{contasReceber.numeroParcela}" style="width:5%; font-size:11.5px; background:white; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{contasReceber.numeroParcela}" style="margin-right:25%; font-size:12px;"/> 
+                            <h:outputText value="#{contasReceber.numeroParcela}" style="margin-right:20px; font-size:12px;"/> 
                         </p:column>  
                         <p:column headerText="Unidade" sortBy="#{contasReceber.cliente.nomeFantasia}"   style="width:140px; font-size:12px; background:white; color:black; border:none;" styleClass="alinharCenter" >
                              <h:outputText  value="#{contasReceber.cliente.nomeFantasia}" style="margin-right:30%; font-size:12px; text-align:center;"/>
@@ -75,10 +75,10 @@
                             </h:outputText>                                     
                         </p:column>
                         <p:column headerText="N° Venda" style="width:7%; background:white; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
-                             <h:outputText  value="#{contasReceber.vendas.idvendas}" style="font-size:12px; margin-right:10%;"/>                                    
+                             <h:outputText  value="#{contasReceber.vendas.idvendas}" style="font-size:12px; margin-right:30px;"/>                                     
                         </p:column>
                         <p:column headerText="Cob" style="width:3%; background:white; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{contasReceber.cobranca.historicocobrancaList.size()}" style="font-size:12px; margin-right:10%;"/>                                    
+                            <h:outputText value="#{contasReceber.cobranca.historicocobrancaList.size()}" style="font-size:12px; margin-right:15px;"/>                                     
                         </p:column>  
                         <p:column style="width:28px; background:white; color:black; border:none;">
                             <p:selectBooleanCheckbox value="#{contasReceber.selecionado}" style="background:white"/>

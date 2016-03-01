@@ -18,6 +18,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 
@@ -38,17 +39,49 @@ public class ImprimirRelatorioMB implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private UsuarioLogadoMB usuarioLogadoMB;
 	private Cliente cliente;
 	private List<Cliente> listaCliente;
 	private Date dataInicial;
 	private Date dataFinal;
 	private String relatorio;
+	private Boolean habilitarUnidade = false;
 	
 	@PostConstruct
 	public void init(){
+		gerarListaCliente();
+		if (usuarioLogadoMB.getCliente() != null) {
+			cliente = usuarioLogadoMB.getCliente();
+		}
+		desabilitarUnidade();
 	}
 	
 	
+
+	public UsuarioLogadoMB getUsuarioLogadoMB() {
+		return usuarioLogadoMB;
+	}
+
+
+
+	public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
+		this.usuarioLogadoMB = usuarioLogadoMB;
+	}
+
+
+
+	public Boolean getHabilitarUnidade() {
+		return habilitarUnidade;
+	}
+
+
+
+	public void setHabilitarUnidade(Boolean habilitarUnidade) {
+		this.habilitarUnidade = habilitarUnidade;
+	}
+
+
 
 	public String getRelatorio() {
 		return relatorio;
@@ -203,6 +236,15 @@ public class ImprimirRelatorioMB implements Serializable{
 	 public String fechar(){
 		 RequestContext.getCurrentInstance().closeDialog(null);
 		 return "";
-	    }
+	 }
+	 
+	 public void desabilitarUnidade(){
+		 if (usuarioLogadoMB.getCliente() != null) {
+			 habilitarUnidade = true;
+		 }else{
+			 habilitarUnidade = false;
+		 }
+		 
+	 }
 
 }

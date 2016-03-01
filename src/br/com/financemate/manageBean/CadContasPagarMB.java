@@ -62,6 +62,7 @@ public class CadContasPagarMB implements Serializable{
 	private String nomeAquivoFTP;
 	private Date dataEnvio;
 	private Boolean tipoAcesso;
+	private Boolean habilitarUnidade = false;
 	
 
 	@PostConstruct
@@ -75,18 +76,39 @@ public class CadContasPagarMB implements Serializable{
         gerarListaPlanoContas();
         if (contaPagar == null) { 
 			contaPagar = new Contaspagar();
-			cliente = new Cliente();
+			if (usuarioLogadoMB.getCliente() != null) {
+				cliente = usuarioLogadoMB.getCliente();
+			}else{
+				cliente = new Cliente();
+			}
 			cptransferencia = new Cptransferencia();
 		}else{
             cliente = contaPagar.getCliente();
             planoContas = contaPagar.getPlanocontas();
             banco = contaPagar.getBanco();
             gerarListaBanco();
+            transferenciaBancaria();
         }
+        desabilitarUnidade();
 	}
 	
 	
 	
+	
+	public Boolean getHabilitarUnidade() {
+		return habilitarUnidade;
+	}
+
+
+
+
+	public void setHabilitarUnidade(Boolean habilitarUnidade) {
+		this.habilitarUnidade = habilitarUnidade;
+	}
+
+
+
+
 	public Boolean getTipoAcesso() {
 		return tipoAcesso;
 	}
@@ -291,6 +313,15 @@ public class CadContasPagarMB implements Serializable{
 		contaPagar.setPlanocontas(planoContas);
 		contaPagar.setCliente(cliente);
 		contaPagar.setContaPaga("N");
+		if (contaPagar.getCompetencia() == null) {
+			contaPagar.setCompetencia("");
+		}
+		if (contaPagar.getDataAgendamento() == null) {
+			contaPagar.setDataAgendamento(null);
+		}
+		if (contaPagar.getDataCompensacao() == null) {
+			contaPagar.setDataCompensacao(null);
+		}
 		String mensagem = validarDados();
 		if (mensagem!=null) {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
@@ -319,6 +350,15 @@ public class CadContasPagarMB implements Serializable{
         contaPagar.setPlanocontas(planoContas);
         contaPagar.setCliente(cliente);
         contaPagar.setContaPaga("N");
+        if (contaPagar.getCompetencia() == null) {
+			contaPagar.setCompetencia("");
+		}
+		if (contaPagar.getDataAgendamento() == null) {
+			contaPagar.setDataAgendamento(null);
+		}
+		if (contaPagar.getDataCompensacao() == null) {
+			contaPagar.setDataCompensacao(null);
+		}
 		String mensagem = validarDados();
 		if (mensagem!=null) {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
@@ -405,11 +445,18 @@ public class CadContasPagarMB implements Serializable{
 		if (contaPagar.getFormaPagamento()!=null){
 			if (contaPagar.getFormaPagamento().equalsIgnoreCase("transferencia")){
 				selecionada=true;
+				CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
+				try {
+					cptransferencia = cpTransferenciaFacade.tranferencia("SELECT c FROM cptransferencia c where c.contasPagar_idcontasPagar=" + contaPagar.getIdcontasPagar());
+				} catch (SQLException ex) {
+					Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+					mostrarMensagem(ex, "Erro ao consulta cptransferencia", "Erro");
+				}
 				if (cptransferencia == null) {
 				    cptransferencia = new Cptransferencia();
 				}
 			}else {
-				cptransferencia = null;
+				cptransferencia = null; 
 			}
 		}
 		return selecionada;
@@ -486,6 +533,15 @@ public class CadContasPagarMB implements Serializable{
 			return tipoAcesso = true;
 		}
 		return tipoAcesso = false;
+	}
+	
+	public void desabilitarUnidade(){
+		if (usuarioLogadoMB.getCliente() != null) {
+			habilitarUnidade = true;
+		}else{
+			habilitarUnidade = false;
+		}
+		 
 	}
 	
 }

@@ -61,28 +61,54 @@ public class CadContasReceberMB implements Serializable {
 		private String frequencia;
 		private Cobranca cobranca;
 		private Vendas vendas;
+		private Boolean habilitarUnidade = false;
 	    
 	    @PostConstruct
 	    public void init(){
 	    	FacesContext fc = FacesContext.getCurrentInstance();
 	        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 	        contasReceber = (Contasreceber) session.getAttribute("contareceber");
+	        session.removeAttribute("contareceber");
 	    	gerarListaCliente();
 	    	gerarListaPlanoContas();
 	    	if (contasReceber == null){
 	            contasReceber = new Contasreceber();
 	            cobranca = new Cobranca();
 	            vendas = new Vendas();
+	            if (usuarioLogadoMB.getCliente() != null) {
+					cliente = usuarioLogadoMB.getCliente();
+					gerarListaBanco(); 
+				}else{
+					cliente = new Cliente();
+				}
 	        }else{
 	            cliente = contasReceber.getCliente();
+	            gerarListaBanco(); 
 	            planoContas = contasReceber.getPlanocontas();
 	            banco = contasReceber.getBanco();
 	        }
+	    	desabilitarUnidade();
 	    }
 
 	    
 	    
 	    
+
+		public Boolean getHabilitarUnidade() {
+			return habilitarUnidade;
+		}
+
+
+
+
+
+		public void setHabilitarUnidade(Boolean habilitarUnidade) {
+			this.habilitarUnidade = habilitarUnidade;
+		}
+
+
+
+
 
 		public Vendas getVendas() {
 			return vendas;
@@ -315,7 +341,7 @@ public class CadContasReceberMB implements Serializable {
 		public String salvar(){
 			if (vezes != null) {
 				int numeroVezes = Integer.parseInt(vezes);
-				for (int i = 1; i < numeroVezes; i++) {
+				for (int i = 1; i <= numeroVezes; i++) {
 					ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 			        contasReceber.setBanco(banco);
 			        contasReceber.setPlanocontas(planoContas);
@@ -326,7 +352,7 @@ public class CadContasReceberMB implements Serializable {
 			        contasReceber.setNumeroParcela(i/numeroVezes);
 			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
 			        String mensagem = validarDados();
-			        if (mensagem!=null) {
+			        if (mensagem!=null) { 
 			        	contasReceber = contasReceberFacade.salvar(contasReceber);
 					}
 				}
@@ -398,5 +424,16 @@ public class CadContasReceberMB implements Serializable {
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
 	    }
+	    
+	    
+	    public void desabilitarUnidade(){
+			if (usuarioLogadoMB.getCliente() != null) {
+				habilitarUnidade = true;
+			}else{
+				habilitarUnidade = false;
+			}
+			 
+		}
+	    
 	    
 }

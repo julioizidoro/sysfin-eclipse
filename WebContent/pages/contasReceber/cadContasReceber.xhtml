@@ -29,7 +29,7 @@
                 </h:panelGrid>
                 <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
                 <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadContasReceberMB.cliente}" converter="ClienteConverter"
-                             filter="true" filterMatchMode="startsWith" panelStyle="width:180px">
+                             filter="true" filterMatchMode="startsWith" panelStyle="width:180px" disabled="#{cadContasReceberMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems  value="#{cadContasReceberMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{cadContasReceberMB.listaCliente}"/>
@@ -143,7 +143,7 @@
             </h:panelGrid>
             <h:panelGrid style="margin-left: 90%; margin-top:-7%;">
             	<p:commandLink title=" Visualizar Parcelas" style="text-decoration: none"   action="#{cadContasReceberMB.abrirParcelamento()}" >
-               		<img src="../../resources/img/iconelupaS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+               		<img src="../../resources/img/iconelupaSS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
             	</p:commandLink>
             </h:panelGrid>
             

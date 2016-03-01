@@ -43,4 +43,9 @@ CpTransferenciaDao cpTransferenciaDao;
         cpTransferenciaDao = new CpTransferenciaDao();
         return cpTransferenciaDao.listarTransferencias(sql);
     }
+    
+    public Cptransferencia tranferencia(String sql) throws SQLException{
+        cpTransferenciaDao = new CpTransferenciaDao();
+        return cpTransferenciaDao.transferencias(sql);
+    }
 }

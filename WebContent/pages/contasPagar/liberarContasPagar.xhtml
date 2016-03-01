@@ -54,7 +54,7 @@
             <br />
             <hr />
             <br />
-            <p:commandLink title="Salvar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{liberarContasPagarMB.salvarContasLiberadas(contasPagar)}" >
+            <p:commandLink title="Salvar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{liberarContasPagarMB.salvarContasLiberadas(contasPagar)}" actionListener="#{mensagem.liberar()}" >
                  <img src="../../resources/img/confirmarS.png" width="50" height="50"/> 
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{liberarContasPagarMB.cancelar()}" >

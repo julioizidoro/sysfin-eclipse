@@ -29,7 +29,7 @@
                 </h:panelGrid>
                 <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
                 <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadContasPagarMB.cliente}" converter="ClienteConverter"
-                             filter="true" filterMatchMode="startsWith" panelStyle="width:180px">
+                             filter="true" filterMatchMode="startsWith" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems  value="#{cadContasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{cadContasPagarMB.listaCliente}"/>
@@ -63,7 +63,7 @@
             	 <p:outputLabel value="Valor " for="valor" class="leftvalor"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:7%; margin-top:-4.5%;">
-             	<p:inputText id="valor" size="12"  class="valorr"  value="#{cadContasPagarMB.contaPagar.valor}"/>
+             	<p:inputMask mask="999999999999" id="valor" size="12"  class="valorr"  value="#{cadContasPagarMB.contaPagar.valor}"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 26%; margin-top:-5%;"> 
             	<p:outputLabel value="Descrição" for="descricao" class="left3" style="margin-left: 9%;"/> 
@@ -103,7 +103,7 @@
                     <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
                     <f:selectItem itemLabel="Depósito" itemValue="Depósito" />
                     <f:selectItem itemLabel="Transferencia" itemValue="Transferencia"/> 
-                    <p:ajax event="change" listener="#{cadContasPagarMB.transferenciaBancaria()}" update="@all"/>  
+                    <p:ajax event="change" listener="#{cadContasPagarMB.transferenciaBancaria()}" update="idFrmCadContasPagar"/>  
                 </p:selectOneMenu>
              </h:panelGrid>
              <br />    

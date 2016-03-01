@@ -33,7 +33,7 @@
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="idTabelaContaPagar"/>
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update="idTabelaContaPagar"/>
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
-                    	<p:menuitem value="Operações Usuário"  icon=" ui-icon-pencil"  action="#" update="idTabelaContaPagar" /> 
+                    	<p:menuitem value="Operações Usuário"  icon=" ui-icon-person"  action="#{contasPagarMB.operacoesUsuario(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
                     	</p:contextMenu> 
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
@@ -70,19 +70,19 @@
                         </p:column>
                     </p:dataTable> 
                     <br />
-                    <h:panelGrid  style="width:18%; margin-left: 35%; background-color:white; border-radius:5px; border-left:solid; border-left-color:red;">
+                    <h:panelGrid  style="width:18%; margin-left: 35%; background-color:white; border-radius:5px; border:solid; border-left-color:red; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 	                	<br />
 			            <tt style="margin-left:10%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
 			            <br />
 			              <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasPagarMB.totalVencidas}"  readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:green;">
+	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -7%; background-color:white; border-radius:5px; border:solid; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:green;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Vencer</tt>
 			            <br/>
 			            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasPagarMB.totalVencer}" readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid  style="width:20%;  margin-left:77%; margin-top: -7%; background-color:white; border-radius:5px; border-left:solid; border-left-color:blue;">
+	        		<h:panelGrid  style="width:20%;  margin-left:77%; margin-top: -7%; background-color:white; border-radius:5px; border:solid; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:blue;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Pagar</tt>
 			            <br/>

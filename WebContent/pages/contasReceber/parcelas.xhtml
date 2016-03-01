@@ -14,7 +14,7 @@
 
     <h:body >
 
-        <h:form id="frmidRecebimentoContaHistorico" class="body2" style="font-size: 12px;background: white">
+        <h:form id="frmidParcelas" class="body2" style="font-size: 12px;background: white">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
@@ -23,42 +23,34 @@
             
             <h2  >Parcelamento</h2>
             <br />
-            <p:dataTable id="idFrmTabelaParcelas" var="car" value="#" editable="true" editMode="cell" widgetVar="cellCars"
-            			 scrollRows="10"  scrollable="true" scrollHeight="110" selection="#" 
-            			 selectionMode="single" rowKey="#"  rows="10" style="margin-bottom:20px;">
-		       <f:facet name="header">
-		          Edição de tabela
-		       </f:facet>
-		 
-		       <p:ajax event="cellEdit" listener="#{cadContasReceberMB.onCellEdit}"  />
-		 
-		       <p:column headerText="Parcela">
-		              <p:cellEditor>
-		                  <f:facet name="output"><h:outputText value="#" /></f:facet>
-		                  <f:facet name="input"><p:inputText id="modelInput" value="#" style="width:96%"/></f:facet>
-		              </p:cellEditor>
-		       </p:column>
-		 
-		       <p:column headerText="Vencimento">
-		           <p:cellEditor>
-		               <f:facet name="output"><h:outputText value="#" /></f:facet>
-		               <f:facet name="input"><p:inputText value="#" style="width:96%" label="vencimento"/></f:facet>
-		           </p:cellEditor>
-		       </p:column>
-		       
-		       <p:column headerText="Valor">
-		           <p:cellEditor>
-		               <f:facet name="output"><h:outputText value="#" /></f:facet>
-		               <f:facet name="input"><p:inputText value="#" style="width:96%" label="valor"/></f:facet>
-		           </p:cellEditor>
-		       </p:column>
-		 
-		   </p:dataTable>
+             <p:dataTable id="idparcelas" var="contasReceber"  rowStyleClass="tabela" class="tabelaselecionar" value="#{parcelasMB.contasreceber}" 
+                          scrollRows="10"  scrollable="true" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
+                <p:column headerText="Parcela" style=" background:white; color:black; border:none;">
+                    <h:outputText value="#{contasReceber.numeroParcela}" style="margin-left:50%;"/> 
+                </p:column>
+                <p:column headerText="Vencimento" style="background:white; color:black; border:none;">
+                    <h:outputText  value="#{contasReceber.dataVencimento}" style="margin-left:35%;">
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </h:outputText> 
+                </p:column>
+                <p:column headerText="Valor"   style="background:white; color:black; border:none;">
+                    <h:outputText value="#{contasReceber.valorParcela}" style="margin-left:40%;" styleClass="alinharCenter">
+                        <f:convertNumber currencySymbol="" type="currency"/>
+                    </h:outputText>
+                </p:column>
+                
+            </p:dataTable>
 		   <br />
-		   <h:panelGrid columns="2">
-		   		<p:outputLabel value="Total"/>
-		   		<p:outputLabel style="margin-left:5%;" value="R$"/>
+		   <h:panelGrid columns="2" style="margin-left:70%; font-size:12px;">
+		   		<p:outputLabel value="Total" style="font-size:16px;"/>
+		   		<p:outputLabel  value="R$ #{parcelasMB.total}" style="font-size:16px;"/>
 		   </h:panelGrid>
+		   <br />
+            <hr />
+            <br />
+            <p:commandLink title="Voltar" style="margin-left: 45%;text-decoration: none" action="#{parcelasMB.voltar()}" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
        </h:form>
     </h:body>
 </html>

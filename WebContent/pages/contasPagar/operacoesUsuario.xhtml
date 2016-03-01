@@ -23,10 +23,47 @@
             <title  >Operações por Usuário</title>
             <br />
             
-            <h:panelGrid columns="2" style="margin-left:1%;">
+            <h:panelGrid columns="2"  style="margin-left:1%;">
             	<p:outputLabel value="Usuário Cadastrou"/>
-            	<p:inputText value="#"/>
+            	<p:inputText value="#{contasReceberMB.contasReceber.usuario.nome}" size="31"/>
             </h:panelGrid>
+            <h:panelGrid columns="2"  style="margin-left:69%; margin-top:-6.2%;">
+            	<p:outputLabel value="Data e Hora"/>
+            	<p:inputMask mask="99/99/9999" value="" size="10"/>
+            </h:panelGrid>
+            <br />
+             <h:panelGrid columns="2"  style="margin-left:2%;">
+            	<p:outputLabel value="Usuário Agendou"/>
+            	<p:inputText value="#" size="31"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2"  style="margin-left:69%; margin-top:-6.2%;">
+            	<p:outputLabel value="Data e Hora"/>
+            	<p:inputMask mask="99/99/9999" value="" size="10"/>
+            </h:panelGrid>
+            <br />
+             <h:panelGrid columns="2"  style="margin-left:3.2%;">
+            	<p:outputLabel value="Usuário Liberou"/>
+            	<p:inputText value="#" size="31"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2"  style="margin-left:69%; margin-top:-6.2%;">
+            	<p:outputLabel value="Data e Hora"/>
+            	<p:inputMask mask="99/99/9999" value="" size="10"/>
+            </h:panelGrid>
+             <br />
+             <h:panelGrid columns="2"  style="margin-left:1%;">
+            	<p:outputLabel value="Usuário Autorizou"/>
+            	<p:inputText value="#" size="31"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2"  style="margin-left:69%; margin-top:-6.2%;">
+            	<p:outputLabel value="Data e Hora"/>
+            	<p:inputMask mask="99/99/9999" value="" size="10"/>
+            </h:panelGrid>
+            <br />
+            <hr />
+            <br />
+            <p:commandLink title="Voltar" style="margin-left: 45%;text-decoration: none" action="#" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
         </h:form>
  </h:body>
 </html>

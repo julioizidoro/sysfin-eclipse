@@ -47,4 +47,13 @@ public class CpTransferenciaDao {
         manager.getTransaction().commit();
         return listaTransferenfia;
     }
+	
+	public Cptransferencia transferencias(String sql) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery(sql);
+        Cptransferencia cptransferencia = (Cptransferencia) q.getResultList();
+        manager.getTransaction().commit();
+        return cptransferencia;
+    }
 }
