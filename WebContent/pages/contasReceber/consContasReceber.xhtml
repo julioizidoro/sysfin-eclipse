@@ -31,7 +31,7 @@
             <br /><br /> 
             
             		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick"> 
-                        <p:menuitem value="Cancelar"   icon=" ui-icon-trash"  action="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
+                        <p:menuitem value="Cancelar"   icon=" ui-icon-trash"  action="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="@all"/>
                         <p:menuitem value="Editar"  icon="ui-icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Receber"  icon="ui-icon-tag"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}"/> 
@@ -74,12 +74,12 @@
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                     
                         </p:column>
-                        <p:column headerText="N° Venda" style="width:4%; background:white; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
-                             <h:outputText  value="#{contasReceber.vendas.idvendas}" style="font-size:12px;"/>                                    
+                        <p:column headerText="N° Venda" style="width:7%; background:white; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
+                             <h:outputText  value="#{contasReceber.vendas.idvendas}" style="font-size:12px; margin-right:10%;"/>                                    
                         </p:column>
-                        <p:column headerText="Cob" style="width:4%; background:white; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{contasReceber.cobranca.historicocobrancaList.size()}" style="font-size:12px;"/>                                    
-                        </p:column> 
+                        <p:column headerText="Cob" style="width:3%; background:white; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{contasReceber.cobranca.historicocobrancaList.size()}" style="font-size:12px; margin-right:10%;"/>                                    
+                        </p:column>  
                         <p:column style="width:28px; background:white; color:black; border:none;">
                             <p:selectBooleanCheckbox value="#{contasReceber.selecionado}" style="background:white"/>
                         </p:column>

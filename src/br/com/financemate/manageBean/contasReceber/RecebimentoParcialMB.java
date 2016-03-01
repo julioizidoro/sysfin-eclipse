@@ -37,7 +37,7 @@ public class RecebimentoParcialMB implements Serializable {
 		valorPagoParcial = (Float) session.getAttribute("valorPagoParcial");
 		if (valorPagoParcial > 0f) {
 			listaRecebimentoParcial = new ArrayList<Contasreceber>();
-			listaRecebimentoParcial = contasReceber.getRecebimentoParcialList();
+			//listaRecebimentoParcial = contasReceber.getRecebimentoParcialList();
 			}else{
 			listaRecebimentoParcial = new ArrayList<Contasreceber>();
 		}
