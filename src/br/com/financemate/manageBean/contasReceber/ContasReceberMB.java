@@ -636,8 +636,9 @@ public class ContasReceberMB implements Serializable {
 			 Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
 			 mostrarMensagem(ex, "Erro Listar Contas", "Erro");
 		 }
-		 //gerarTotalContas();
-		 calculosContasMB.calcularTotaisContasReceber();
+		 calcularTotal();
+		 gerarTotalContas();
+		 //calculosContasMB.calcularTotaisContasReceber();
 	 }
 	 
 	 public void gerarTotalContas(){
@@ -652,7 +653,29 @@ public class ContasReceberMB implements Serializable {
 			 totalDescontosReceber = totalDescontosReceber + listaContasReceber.get(i).getDesagio();
 			 valorTotalRecebido = valorTotalRecebido + listaContasReceber.get(i).getValorPago();
 		 }
+		 
 	 }
+	 
+	 public void calcularTotal(){
+	        float vencida = 0.0f;
+	        float vencendo = 0.0f;
+	        float vencer = 0.0f;
+	        Date data = new Date();
+	        String diaData = Formatacao.ConvercaoDataPadrao(data);
+	        for(int i=0;i<listaContasReceber.size();i++){
+	            String vencData = Formatacao.ConvercaoDataPadrao(listaContasReceber.get(i).getDataVencimento());
+	            if (diaData.equalsIgnoreCase(vencData)){
+	                vencendo = vencendo + listaContasReceber.get(i).getValorParcela();
+	            }else if (listaContasReceber.get(i).getDataVencimento().before(data)){
+	                vencida = vencida + listaContasReceber.get(i).getValorParcela();
+	            }else if (listaContasReceber.get(i).getDataVencimento().after(data)){
+	                vencer = vencer + listaContasReceber.get(i).getValorParcela();
+	            }
+	        }
+	        setTotalVencidas(Formatacao.foramtarFloatString(vencida));
+	        setTotalVencer(Formatacao.foramtarFloatString(vencer));
+	        setTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
+	    }
 	 
 	 public String verStatus(Contasreceber contasreceber) {
 	        Date data = new Date();
@@ -661,7 +684,7 @@ public class ContasReceberMB implements Serializable {
 	        if (contasreceber.getDataVencimento().after(data)) {
 	            return "../../resources/img/bolaVerde.png";
 	        } else {
-	            if (!contasreceber.getDataVencimento().before(data)) {
+	            if (contasreceber.getDataVencimento().before(data)) {
 	                return "../../resources/img/bolaVermelha.png";
 	            } else {
 	                if (contasreceber.equals(data)) {

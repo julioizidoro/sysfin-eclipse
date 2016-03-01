@@ -14,7 +14,7 @@
 
     <h:body >
 
-        <h:form id="frmidCadconReceber" class="body2" style="font-size: 12px;background: #E7EBEB">
+        <h:form id="frmidCadconReceber" class="body2" style="font-size: 12px;background: white">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
@@ -121,10 +121,10 @@
 	            <h:panelGrid style="margin-left: 2%;"> 
 	            	<p:selectOneMenu id="frequencia" style="width:194px;" disabled="#{cadContasReceberMB.disabilitar}" value="#{cadContasReceberMB.frequencia}">
 	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
-	                    <f:selectItem itemLabel="Mensal" itemValue="Mensal" />  
+	                    <f:selectItem itemLabel="Mensal" itemValue="mensal" />  
 	                    <f:selectItem itemLabel="Semanal" itemValue="Semanal" /> 
 	                    <f:selectItem itemLabel="Diária" itemValue="Diaria" />  
-	                    <f:selectItem itemLabel="Anual" itemValue="Anual" />
+	                    <f:selectItem itemLabel="Anual" itemValue="anual" />
 	                </p:selectOneMenu>
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left: 30%;"> 

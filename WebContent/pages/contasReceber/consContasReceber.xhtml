@@ -32,52 +32,52 @@
             
             		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick"> 
                         <p:menuitem value="Cancelar"   icon=" ui-icon-trash"  action="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
-                        <p:menuitem value="Editar"  icon=" icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
-                        <p:menuitem value="Receber"  icon=" ui-icon-check"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
-                        <p:menuitem value="Cobrança"  icon=" ui-icon-pencil"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}"/> 
-                       <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-pencil"  action="#{contasReceberMB.gerarListaContas()}" actionListener="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
+                        <p:menuitem value="Editar"  icon="ui-icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
+                        <p:menuitem value="Receber"  icon="ui-icon-tag"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
+                        <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}"/> 
+                       <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-cancel"  action="#{contasReceberMB.gerarListaContas()}" actionListener="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaContaReceber"  var="contasReceber"  value="#{contasReceberMB.listaContasReceber}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">
                         
-                        <p:column headerText="Status"  style="width:20px; background:white; color:black; border:none;" styleClass="alinharCenter">
+                        <p:column headerText="Status"  style="width:25px; background:white; color:black; border:none; font-size:12px;" styleClass="alinharCenter">
                             <p:commandLink>
                                 <img src="#{contasReceberMB.verStatus(contasReceber)}" />
                             </p:commandLink>
                         </p:column>  
-                        <p:column headerText=" Data Vencimento" sortBy="#{contasReceber.dataVencimento}" style="width:70px;  background:white; color:black; border:none;">
-                            <h:outputText  value="#{contasReceber.dataVencimento}" style="margin-left:33%; font-size:12px;" > 
+                        <p:column headerText=" Data Vencimento" sortBy="#{contasReceber.dataVencimento}" style="width:70px; font-size:12px; margin-left:10px; background:white; color:black; border:none;">
+                            <h:outputText  value="#{contasReceber.dataVencimento}" style="margin-left:20%; font-size:12px;" > 
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText> 
                         </p:column> 
-                        <p:column headerText="Cliente" sortBy="#{contasReceber.nomeCliente}" style="width:250px; background:white; color:black; border:#fff;">
-                            <h:outputText value="#{contasReceber.nomeCliente}" style="margin-left:20%; font-size:12px;"/> 
+                        <p:column headerText="Cliente" sortBy="#{contasReceber.nomeCliente}" style="width:20%; background:white; font-size:12px; color:black; border:#fff;">
+                            <h:outputText value="#{contasReceber.nomeCliente}" style="margin-left:2%; font-size:12px;"/> 
                         </p:column> 
-                        <p:column headerText="Valor" sortBy="#{contasReceber.valorParcela}" style="width:8%; background:white; color:black; border:none;" >
-                            <h:outputText value="R$ #{contasReceber.valorParcela}" style="font-size:12px;">
+                        <p:column headerText="Valor" sortBy="#{contasReceber.valorParcela}" style="width:8%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="R$ #{contasReceber.valorParcela}" style="margin-right:20%; font-size:12px;"> 
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Parcela" sortBy="#{contasReceber.numeroParcela}" style="width:26px; background:white; color:black; border:none;" >
-                            <h:outputText value="#{contasReceber.numeroParcela}" style="margin-left:10%; font-size:12px;"/>
+                        <p:column headerText="Parcela" sortBy="#{contasReceber.numeroParcela}" style="width:5%; font-size:11.5px; background:white; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{contasReceber.numeroParcela}" style="margin-right:25%; font-size:12px;"/> 
                         </p:column>  
-                        <p:column headerText="Unidade" sortBy="#{contasReceber.cliente.nomeFantasia}"   style="width:150px; background:white; color:black; border:none;" styleClass="alinharCenter" >
-                             <h:outputText  value="#{contasReceber.cliente.nomeFantasia}" style="margin-right:35%; font-size:12px;"/>
+                        <p:column headerText="Unidade" sortBy="#{contasReceber.cliente.nomeFantasia}"   style="width:140px; font-size:12px; background:white; color:black; border:none;" styleClass="alinharCenter" >
+                             <h:outputText  value="#{contasReceber.cliente.nomeFantasia}" style="margin-right:30%; font-size:12px; text-align:center;"/>
                         </p:column> 
-                        <p:column headerText="Data Recebimento" sortBy="#{contasReceber.dataPagamento}" style="width:70px; background:white; color:black; border:none;" styleClass="alinharCenter">
+                        <p:column headerText="Data Recebimento" sortBy="#{contasReceber.dataPagamento}" style="width:70px; font-size:12px; background:white; color:black; border:none;" styleClass="alinharCenter">
                             <h:outputText value="#{contasReceber.dataPagamento}" style="font-size:12px;">
                                 <f:convertDateTime parent="dd/MM/yyy"/>
                             </h:outputText>                                    
                         </p:column>
-                        <p:column headerText="Valor Recebido" style=" background:white; color:black; border:none;" styleClass="alinharCenter">
+                        <p:column headerText="Valor Recebido" style=" background:white; color:black; border:none; font-size:12px;" styleClass="alinharCenter">
                             <h:outputText value="R$ #{contasReceber.valorPago}" style="font-size:12px;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                     
                         </p:column>
-                        <p:column headerText="N° Venda" style="width:4%; background:white; color:black; border:none;" styleClass="alinharCenter">
+                        <p:column headerText="N° Venda" style="width:4%; background:white; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
                              <h:outputText  value="#{contasReceber.vendas.idvendas}" style="font-size:12px;"/>                                    
                         </p:column>
-                        <p:column headerText="Cob" style="width:4%; background:white; color:black; border:none;" styleClass="alinharCenter">
+                        <p:column headerText="Cob" style="width:4%; background:white; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
                             <h:outputText value="#{contasReceber.cobranca.historicocobrancaList.size()}" style="font-size:12px;"/>                                    
                         </p:column> 
                         <p:column style="width:28px; background:white; color:black; border:none;">
@@ -89,19 +89,19 @@
 	                	<br />
 			            <tt style="margin-left:10%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
 			            <br />
-			              <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{calculosContasMB.crVencidas}"  readonly="true"/>
+			              <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.totalVencidas}"  readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -7%; background-color:white; border-radius:5px; border:solid; border-left-color:green; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
+	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -7.2%; background-color:white; border-radius:5px; border:solid; border-left-color:green; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Vencer</tt>
 			            <br/>
-			            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{calculosContasMB.crVencer}" readonly="true"/>
+			            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.totalVencer}" readonly="true"/>
 	        		</h:panelGrid>
 	        		<h:panelGrid  style="width:20%;  margin-left:77%; margin-top: -7%; background-color:white; border-radius:5px; border:solid; border-left-color:blue; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 	        			<br />
 			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Receber</tt> 
 			            <br/>
-			            <h:outputText id="contasReceber" size="20" maxlength="100" class="totallancamentos" value="R$ #{calculosContasMB.crTotal}"  readonly="true"/>
+			            <h:outputText id="contasReceber" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.total}"  readonly="true"/>
 			             
 	        		</h:panelGrid>
 		</h:form>

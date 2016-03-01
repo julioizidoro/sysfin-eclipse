@@ -31,8 +31,11 @@ import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Cobranca;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Vendas;
+import br.com.financemate.util.Formatacao;
 
 @Named
 @ViewScoped
@@ -56,6 +59,8 @@ public class CadContasReceberMB implements Serializable {
 		private Boolean disabilitar = true;
 		private String vezes;
 		private String frequencia;
+		private Cobranca cobranca;
+		private Vendas vendas;
 	    
 	    @PostConstruct
 	    public void init(){
@@ -66,6 +71,8 @@ public class CadContasReceberMB implements Serializable {
 	    	gerarListaPlanoContas();
 	    	if (contasReceber == null){
 	            contasReceber = new Contasreceber();
+	            cobranca = new Cobranca();
+	            vendas = new Vendas();
 	        }else{
 	            cliente = contasReceber.getCliente();
 	            planoContas = contasReceber.getPlanocontas();
@@ -76,6 +83,38 @@ public class CadContasReceberMB implements Serializable {
 	    
 	    
 	    
+
+		public Vendas getVendas() {
+			return vendas;
+		}
+
+
+
+
+
+		public void setVendas(Vendas vendas) {
+			this.vendas = vendas;
+		}
+
+
+
+
+
+		public Cobranca getCobranca() {
+			return cobranca;
+		}
+
+
+
+
+
+		public void setCobranca(Cobranca cobranca) {
+			this.cobranca = cobranca;
+		}
+
+
+
+
 
 		public String getVezes() {
 			return vezes;
@@ -274,7 +313,7 @@ public class CadContasReceberMB implements Serializable {
 		}
 		
 		public String salvar(){
-			if (!frequencia.equalsIgnoreCase(null) && vezes.equalsIgnoreCase(null)) {
+			if (vezes != null) {
 				int numeroVezes = Integer.parseInt(vezes);
 				for (int i = 1; i < numeroVezes; i++) {
 					ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
@@ -290,27 +329,31 @@ public class CadContasReceberMB implements Serializable {
 			        if (mensagem!=null) {
 			        	contasReceber = contasReceberFacade.salvar(contasReceber);
 					}
-			        RequestContext.getCurrentInstance().closeDialog(contasReceber);
-			        return "";
 				}
 			}else{
-				 	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-			        contasReceber.setBanco(banco);
-			        contasReceber.setPlanocontas(planoContas);
-			        contasReceber.setCliente(cliente);
-			        contasReceber.setValorPago(0.0f);
-			        contasReceber.setDesagio(0.0f);
-			        contasReceber.setJuros(0.0f);
-			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-			        String mensagem = validarDados();
-			        if (mensagem!=null) {
-			        	contasReceber = contasReceberFacade.salvar(contasReceber);
-					}
-			        RequestContext.getCurrentInstance().closeDialog(contasReceber);
-			        return "";
+				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+				contasReceber.setBanco(banco);
+				contasReceber.setPlanocontas(planoContas);
+				contasReceber.setCliente(cliente);
+				contasReceber.setValorPago(0.0f);
+				contasReceber.setDesagio(0.0f);
+				contasReceber.setJuros(0.0f);
+				contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+				if (contasReceber.getCobranca()== null) {
+					contasReceber.setCobranca(cobranca);
+				}
+				if (contasReceber.getVendas()== null) {
+					contasReceber.setVendas(vendas);
+				}
+				String mensagem = validarDados();
+				if (mensagem!=null) {
+					contasReceber = contasReceberFacade.salvar(contasReceber);
+					
+				}
 			}
-			return"";
-	    }
+			RequestContext.getCurrentInstance().closeDialog(contasReceber);
+			return "";
+		}
 	    
 	    public String cancelar(){
 	        RequestContext.getCurrentInstance().closeDialog(null);

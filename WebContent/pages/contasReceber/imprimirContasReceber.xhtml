@@ -14,7 +14,7 @@
 
  <h:body > 
  		
-        <h:form id="idImprimir" class="body2" style="font-size: 12px; background-color: #E7EBEB;">
+        <h:form id="idImprimir" class="body2" style="font-size: 12px; background-color: white;">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
@@ -31,6 +31,7 @@
 	            					filter="true" filterMatchMode="startsWith" panelStyle="width:100px">
 	                <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
 	                <f:selectItem itemLabel="Contas a receber" itemValue="contas a receber" />
+	                <f:selectItem itemLabel="Cobranças" itemValue="Cobranca" />
 	                <p:ajax event="change" listener="#{imprimirContasReceberMB.gerarListaCliente()}" update="cliente"/>
 	                <p:ajax event="change" listener="#{imprimirContasReceberMB.habilitarTipoRelatorio()}" update="@all"/>
 	            </p:selectOneMenu>  
