@@ -47,9 +47,9 @@
         		<h:outputText value="Área do cliente" style="font-size:16px; margin-left:5%;"/>
     		 </p:commandLink>
     		 <br />
-        	 <p:panelMenu styleClass="ui-panelmenu"> 
-        		<p:submenu  style="background:transparent; font-size:16px; color:white;  margin-top=-30%; font:normal;" label="Contas a Pagar">
-        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaContaTelaPrincipal()}" update="growl"/> 
+        	 <p:panelMenu styleClass="ui-panelmenu">  
+        		<p:submenu icon="ui-icon-heart" style="background:transparent;  font-size:16px; color:white;  margin-top=-30%; font:normal;" label="Contas a Pagar">
+        			<p:menuitem  value="Novo Lançamento" action="#{contasPagarMB.novaContaTelaPrincipal()}" update="growl"/> 
             		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" update="growl"/>
             		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressaoPrincipal()}"/>
         		</p:submenu>

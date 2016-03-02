@@ -310,9 +310,14 @@ public class CadContasPagarMB implements Serializable{
 	
 	public void salvar(){
 		contaPagar.setBanco(banco);
-		contaPagar.setPlanocontas(planoContas);
 		contaPagar.setCliente(cliente);
 		contaPagar.setContaPaga("N");
+		if (planoContas != null) {
+			contaPagar.setPlanocontas(planoContas);
+		}else{
+			planoContas = null;
+			contaPagar.setPlanocontas(planoContas);
+		}
 		if (contaPagar.getCompetencia() == null) {
 			contaPagar.setCompetencia("");
 		}
@@ -445,13 +450,6 @@ public class CadContasPagarMB implements Serializable{
 		if (contaPagar.getFormaPagamento()!=null){
 			if (contaPagar.getFormaPagamento().equalsIgnoreCase("transferencia")){
 				selecionada=true;
-				CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
-				try {
-					cptransferencia = cpTransferenciaFacade.tranferencia("SELECT c FROM cptransferencia c where c.contasPagar_idcontasPagar=" + contaPagar.getIdcontasPagar());
-				} catch (SQLException ex) {
-					Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-					mostrarMensagem(ex, "Erro ao consulta cptransferencia", "Erro");
-				}
 				if (cptransferencia == null) {
 				    cptransferencia = new Cptransferencia();
 				}

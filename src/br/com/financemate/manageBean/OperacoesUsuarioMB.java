@@ -60,6 +60,10 @@ public class OperacoesUsuarioMB implements Serializable {
 		}
 	}
 	
+	public String voltar(){
+		return "consContaPagar";
+	}
+	
 	
 
 }
