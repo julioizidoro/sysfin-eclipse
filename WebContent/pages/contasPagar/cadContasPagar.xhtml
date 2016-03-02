@@ -14,6 +14,7 @@
 
  <h:body style="background:white;"> 
         <h:form id="idFrmCadContasPagar" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
+            <p:growl id="growl" showDetail="true" sticky="true" />  
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
@@ -179,10 +180,10 @@
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                 </p:commandLink>
                 <p:menuButton value="" style="background:transparent; border:none; margin-left:-80%; margin-top:100%; font-size:51%;"> 
-        			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}"  icon="ui-icon-disk" />
-        			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-arrowrefresh-1-w" />
+        			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}"  icon="ui-icon-disk" actionListener="#{mensagem.saveMessagem()}" update="growl"/>
+        			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-arrowrefresh-1-w" actionListener="#{mensagem.saveMessagem()}" update="growl"/>
     			</p:menuButton>
-                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" actionListener="#{contasPagarMB.coresFiltrar()}" action="#{cadContasPagarMB.cancelar()}" >
+                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" actionListener="#{contasPagarMB.coresFiltrar()}"  action="#{cadContasPagarMB.cancelar()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
              </h:panelGrid>      

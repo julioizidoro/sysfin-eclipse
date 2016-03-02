@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.context.RequestContext;
+
 import br.com.financemate.facade.UsuarioFacade;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
@@ -61,7 +63,8 @@ public class OperacoesUsuarioMB implements Serializable {
 	}
 	
 	public String voltar(){
-		return "consContaPagar";
+		 RequestContext.getCurrentInstance().closeDialog(null);
+	     return null;
 	}
 	
 	

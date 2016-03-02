@@ -18,20 +18,20 @@
         </p:dialog>
         <h:form class="login">
             <div id="tudo">
-            	<img src="resources/img/loginSysFiin.jpg" width="80%" />
-            	<h:panelGrid style="margin-top:-46%; margin-left:85%;"> 
+            	<img src="resources/img/loginSysfiiin.jpg" width="80%" />
+            	<h:panelGrid style="margin-top:-46%; margin-left:80%;"> 
                     <p:outputLabel value="Nome do usuário" for="nome"  class="meio"/>
                 </h:panelGrid>
-                <h:panelGrid style=" margin-left:85%;"> 
+                <h:panelGrid style=" margin-left:80%;"> 
                     <p:inputText id="nome" size="27"  class="meio" value="#{usuarioLogadoMB.usuario.login}"  required="required" requiredMessage="Campo Obrigatorio"/>
                 </h:panelGrid>
-                <h:panelGrid style=" margin-left:85%;">
+                <h:panelGrid style=" margin-left:80%;">
                     <p:outputLabel value="Senha" for="senha"  class="meio"/>
                 </h:panelGrid>
-                <h:panelGrid style=" margin-left:85%;">
+                <h:panelGrid style=" margin-left:80%;">
                     <p:password id="senha" size="27"  class="meio" value="#{usuarioLogadoMB.usuario.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
                 </h:panelGrid> 
-                <h:panelGrid columns="2" style="margin-left:92.5%; margin-top:1%;">
+                <h:panelGrid columns="2" style="margin-left:87.5%; margin-top:1%;">
                 	<p:commandLink title="Entra" style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" >
                 		<img src="resources/img/botaoEntra.png" width="33" height="33"/>
             		</p:commandLink>
