@@ -23,7 +23,7 @@ public class mensagem {
 
     public void excluiMessagem() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Exclu�do com Sucesso", ""));
+        context.addMessage(null, new FacesMessage("Exclu�do com Sucesso", ""));
     }
 
     public void autorizar() {
@@ -36,9 +36,19 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Liberado com Sucesso", ""));
     }
     
+    public void naoLiberar() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Você esta tentando liberar uma conta não autorizada", ""));
+    }
+    
     public void recebido() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Recebido com Sucesso", ""));
+    }
+    
+    public void cancelado() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Cancelado com Sucesso", ""));
     }
     
     public void editado() {

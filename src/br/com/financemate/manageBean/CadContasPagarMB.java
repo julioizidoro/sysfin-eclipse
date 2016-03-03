@@ -327,6 +327,7 @@ public class CadContasPagarMB implements Serializable{
 		if (contaPagar.getDataCompensacao() == null) {
 			contaPagar.setDataCompensacao(null);
 		}
+		contaPagar.setAutorizarPagamento("N");
 		String mensagem = validarDados();
 		if (mensagem!=null) {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
@@ -414,22 +415,22 @@ public class CadContasPagarMB implements Serializable{
 	public String validarDados(){
 		String mensagem = "";
 		if (contaPagar.getFornecedor().equalsIgnoreCase("")) {
-			mensagem = mensagem + "Fornecedor não informado \r\n";
+			mensagem = mensagem + "Fornecedor nï¿½o informado \r\n";
 		}
 		if (contaPagar.getValor().equals("")) {
-			mensagem = mensagem + "Valor não informado \r\n";
+			mensagem = mensagem + "Valor nï¿½o informado \r\n";
 		}
 		if (contaPagar.getDescricao().equalsIgnoreCase("")) {
-			mensagem = mensagem + "Descrição não informado \r\n";
+			mensagem = mensagem + "Descriï¿½ï¿½o nï¿½o informado \r\n";
 		}
 		if (contaPagar.getBanco().equals(null)) {
-			mensagem = mensagem + "Conta não selecionada \r\n";
+			mensagem = mensagem + "Conta nï¿½o selecionada \r\n";
 		}
 		if (contaPagar.getDataVencimento().equals(null)) {
-			mensagem = mensagem + "Data de Vencimento não informada \r\n";
+			mensagem = mensagem + "Data de Vencimento nï¿½o informada \r\n";
 		}
 		if (contaPagar.getFormaPagamento().equalsIgnoreCase("")) {
-			mensagem = mensagem + "Forma de Pagamento não selecionada \r\n";
+			mensagem = mensagem + "Forma de Pagamento nï¿½o selecionada \r\n";
 		}
 		
 		

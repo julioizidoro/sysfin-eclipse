@@ -212,6 +212,7 @@ public class CobrancaMB implements Serializable {
 	
 	public String salvarDadosCobranca(){
         CobrancaFacade cobrancaFacade = new CobrancaFacade();
+        cobranca.setVencimentooriginal(contasReceber.getDataVencimento());
         cobranca = cobrancaFacade.salvar(cobranca);
         ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
         contasReceber.setCobranca(cobranca);
@@ -232,7 +233,7 @@ public class CobrancaMB implements Serializable {
         historico.setUsuario(usuarioLogadoMB.getUsuario());
         historico = cobrancaFacade.salvar(historico);
         cobranca.getHistoricocobrancaList().add(historico);
-        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobrança Salvo.");
+        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobranï¿½a Salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
         return "cobranca";
     }

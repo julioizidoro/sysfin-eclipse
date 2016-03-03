@@ -1,6 +1,7 @@
 package br.com.financemate.manageBean.contasReceber;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,13 +48,16 @@ public class RecebimentoLoteMB implements Serializable {
 		listaContasSelecionadas =  (List<Contasreceber>) session.getAttribute("listaContasSelecionadas");
 		totalReceberLote = (String) session.getAttribute("totalReceberLote");
 		contasReceber = (Contasreceber) session.getAttribute("contasReceber");
-		contasReceber.setDataPagamento(new Date());
 		session.removeAttribute("totalReceberLote");
 		session.removeAttribute("listaContasSelecionadas");
 		session.removeAttribute("contasReceber");
 		if (contasReceber == null) {
             contasReceber = new Contasreceber();
         }
+		contasReceber.setDataPagamento(new Date());
+		if (listaContasSelecionadas == null) {
+			listaContasSelecionadas = new  ArrayList<Contasreceber>();
+		}
 	}
 	
 

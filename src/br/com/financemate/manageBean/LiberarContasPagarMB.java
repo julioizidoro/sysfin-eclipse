@@ -126,12 +126,21 @@ public class LiberarContasPagarMB implements Serializable {
 	}
 	
 	public String salvarContasLiberadas(Contaspagar conta) {
+		mensagem msg = new mensagem();
 		String mensagem = validarDados();
 		if (mensagem != null) {
 			for (int i = 0; i < listaContasSelecionadas.size(); i++) {
-	            salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
+				if (contasPagar.getAutorizarPagamento().equals("S")) {
+				
+				salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
+				msg.liberar();
+				
+				}else{
+					msg.naoLiberar();
+				}
 	        }
 			calculosContasMB.calcularTotalContasPagar();
+			
 	        RequestContext.getCurrentInstance().closeDialog(contasPagar);
 	        return "";
 		}
@@ -165,7 +174,7 @@ public class LiberarContasPagarMB implements Serializable {
             movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
         } catch (SQLException ex) {
             Logger.getLogger(LiberarContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro ao salvar liberação", "Erro");
+            mostrarMensagem(ex, "Erro ao salvar liberaï¿½ï¿½o", "Erro");
         }
         
     }
@@ -185,7 +194,7 @@ public class LiberarContasPagarMB implements Serializable {
     public String validarDados(){
     	String mensagem = "";
     	if (contasPagar.getCompetencia().equalsIgnoreCase("")){
-			mensagem = mensagem + "Competência não informada \r\n";
+			mensagem = mensagem + "Competï¿½ncia nï¿½o informada \r\n";
 		}
     	return mensagem;
     }

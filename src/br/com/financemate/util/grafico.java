@@ -36,7 +36,7 @@ package br.com.financemate.util;
 	 
 	    private void createAnimatedModels() {
 	        animatedModel1 = initLinearModel();
-	        animatedModel1.setTitle("Fluxo de Caixa diário");
+	        animatedModel1.setTitle("Fluxo de Caixa diÃ¡rio");
 	        animatedModel1.setAnimate(true);
 	        animatedModel1.setLegendPosition("ne");
 	        Axis yAxis = animatedModel1.getAxis(AxisType.Y);
@@ -57,7 +57,7 @@ package br.com.financemate.util;
 	    private BarChartModel initBarModel() {
 	        BarChartModel model = new BarChartModel();
 	        ChartSeries mes = new ChartSeries();
-	        mes.setLabel("Mês, Quantidade");
+	        mes.setLabel("MÃªs, Quantidade");
 	        mes.set("Jan", 100);
 	        mes.set("Fev", 60);
 	        mes.set("Mar", 110);

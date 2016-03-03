@@ -957,6 +957,7 @@ public class ContasReceberMB implements Serializable {
 				Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
 				 mostrarMensagem(ex, "Erro ao salvar venda cancelada", "Erro");
 			}
+			gerarListaContas();
 		} 
 	 }
 	 

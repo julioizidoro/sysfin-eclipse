@@ -8,6 +8,7 @@
 <ui:composition template="/pages/templates/default.xhtml">
 	<ui:define name="corpo">
 		<h:form id="frmConsultaReceber">
+		<p:growl id="growl" showDetail="true" sticky="true" />
 		<br/>  
 			<p:commandLink   action="#{contasReceberMB.novaConta()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
@@ -30,8 +31,8 @@
             </p:commandLink>   
             <br /><br /> 
             
-            		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick"> 
-                        <p:menuitem value="Cancelar"   icon=" ui-icon-trash"  action="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="@all"/>
+            		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick">  
+                        <p:menuitem value="Cancelar"   icon=" ui-icon-trash"  action="#{mensagem.cancelado()}" actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber"/> 
                         <p:menuitem value="Editar"  icon="ui-icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Receber"  icon="ui-icon-tag"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}"/> 
@@ -54,7 +55,7 @@
                             <h:outputText value="#{contasReceber.nomeCliente}" style="margin-left:2%; font-size:12px;"/> 
                         </p:column> 
                         <p:column headerText="Valor" sortBy="#{contasReceber.valorParcela}" style="width:8%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="R$ #{contasReceber.valorParcela}" style="margin-right:20%; font-size:12px;"> 
+                            <h:outputText value="#{contasReceber.valorParcela}" style="margin-right:20%; font-size:12px;"> 
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>
                         </p:column>
@@ -70,7 +71,7 @@
                             </h:outputText>                                    
                         </p:column>
                         <p:column headerText="Valor Recebido" style=" background:white; color:black; border:none; font-size:12px;" styleClass="alinharCenter">
-                            <h:outputText value="R$ #{contasReceber.valorPago}" style="font-size:12px;">
+                            <h:outputText value="#{contasReceber.valorPago}" style="font-size:12px;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                     
                         </p:column>
