@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,16 +13,16 @@
         <link href="resources/css/cssteste.css" rel="stylesheet" type="text/css" />
     </h:head>
 
- <h:body > 
+ <h:body style="background:white;" > 
         <h:form id="idFrmCadContasPagar" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
-                <img src="resources/img/ajax-carregando.gif" />
+                <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Novo Pagamento</title>
-
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
              
 				<h:panelGrid>
 				<br></br>
@@ -29,7 +30,7 @@
                 </h:panelGrid>
                 <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
                 <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadContasPagarMB.cliente}" converter="ClienteConverter"
-                             filter="true" filterMatchMode="startsWith" panelStyle="width:180px">
+                             filter="true" filterMatchMode="startsWith" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems  value="#{cadContasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{cadContasPagarMB.listaCliente}"/>
@@ -39,7 +40,7 @@
              <h:panelGrid columns="2" style="margin-left:68.5%; margin-top:-6.2%;"> 
 	            <p:outputLabel value="Data Envio" for="dataEnv" class="left3" /> 
 	            
-	            <p:inputMask id="dataEnv" mask="99/99/9999" size="13"  class="left3" value="#{cadContasPagarMB.contaPagar.dataEnvio}"   style="margin-left: 2%;">
+	            <p:inputMask id="dataEnv" mask="99/99/9999" size="13"  class="left3" value="#{cadContasPagarMB.dataEnvio()}"   style="margin-left: 2%;" readonly="true">
 	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	            </p:inputMask>
             </h:panelGrid> 
@@ -58,12 +59,14 @@
             <h:panelGrid style="margin-left:54%; margin-top:-4.5%;">     
                 <p:inputText id="nDocumento" size="13"  class="left4" value="#{cadContasPagarMB.contaPagar.numeroDocumento}" style="margin-left: 5px;"/>
             </h:panelGrid>
-            <br />	
+            <br />	 
             <h:panelGrid style="margin-left:1%;">
             	 <p:outputLabel value="Valor " for="valor" class="leftvalor"/>
             </h:panelGrid>
-            <h:panelGrid style="margin-left:7%; margin-top:-4.5%;">
-             	<p:inputText id="valor" size="12"  class="valorr"  value="#{cadContasPagarMB.contaPagar.valor}"/>
+            <h:panelGrid style="margin-left:7%; margin-top:-4.5%;"> 
+             	<p:inputText  id="valor" size="12"  class="valorr"  value="#{cadContasPagarMB.contaPagar.valor}">
+             		<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
+             	</p:inputText>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 26%; margin-top:-5%;"> 
             	<p:outputLabel value="Descrição" for="descricao" class="left3" style="margin-left: 9%;"/> 
@@ -103,7 +106,7 @@
                     <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
                     <f:selectItem itemLabel="Depósito" itemValue="Depósito" />
                     <f:selectItem itemLabel="Transferencia" itemValue="Transferencia"/> 
-                    <p:ajax event="change" listener="#{cadContasPagarMB.transferenciaBancaria()}" update="@all"/>  
+                    <p:ajax event="change" listener="#{cadContasPagarMB.transferenciaBancaria()}"  update="idFrmTransferencia"/>  
                 </p:selectOneMenu>
              </h:panelGrid>
              <br />    
@@ -138,39 +141,41 @@
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
              </h:panelGrid>
-             <hr />
+             <hr /> 
+             </h:form>
+             <h:form id="idFrmTransferencia" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
              <h:panelGrid id="idtransferencia"  rendered="#{cadContasPagarMB.selecionada}">
 	             
 	             <br />
 	             <h:panelGrid style="margin-left:1%;">
-	             	<h:outputLabel value="Banco" class="left5"/>
+	             	<p:outputLabel value="Banco" class="left2"/>
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:7%; margin-top:-5%;">
+	             <h:panelGrid style="margin-left:8%; margin-top:-5%;">
 	             	<p:inputText id="banco" value="#{cadContasPagarMB.cptransferencia.banco}" size="12"/>
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:40%; margin-top:-5.5%;">
-	             	<h:outputLabel value="Agência" />
+	             <h:panelGrid style="margin-left:40%; margin-top:-6%;">
+	             	<p:outputLabel value="Agência" />
 	             </h:panelGrid> 
-	             <h:panelGrid style="margin-left:48%; margin-top:-7.3%;">
+	             <h:panelGrid style="margin-left:49%; margin-top:-7.5%;">
 	             	<p:inputText id="agencia" value="#{cadContasPagarMB.cptransferencia.agencia}" size="11"/>
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:78%; margin-top:-7%;">
-	             	<h:outputLabel value="Conta" />
+	             <h:panelGrid style="margin-left:78%; margin-top:-7.5%;">
+	             	<p:outputLabel value="Conta" />
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:84.5%; margin-top:-8.9%;">
 	             	<p:inputText id="conta" value="#{cadContasPagarMB.cptransferencia.conta}" size="9"/>
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:1%;">
-	             	<h:outputLabel value="Beneficiário" />
+	             	<p:outputLabel value="Beneficiário" />
 	             </h:panelGrid>
-	             <h:panelGrid style="margin-left:11.5%; margin-top:-5.5%;">
+	             <h:panelGrid style="margin-left:13%; margin-top:-5.5%;">
 	             	<p:inputText id="beneficiario" value="#{cadContasPagarMB.cptransferencia.beneficiario}" size="36"/>
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:57%; margin-top:-5.5%;">
-	             	<h:outputLabel value="CPF/CNPJ" />
+	             	<p:outputLabel value="CPF/CNPJ" />
 	             </h:panelGrid> 
-	             <h:panelGrid style="margin-left:66.5%; margin-top:-7.5%;">
-	             	<p:inputText id="cpfcnpj" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}" size="27"/>
+	             <h:panelGrid style="margin-left:67.2%; margin-top:-7%;">
+	             	<p:inputText id="cpfcnpj" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}" size="26"/>
 	             </h:panelGrid>
 	             <hr /> 
 	         </h:panelGrid>
@@ -179,10 +184,10 @@
                     <img src="resources/img/confirmarS.png" width="50" height="50"/>
                 </p:commandLink>
                 <p:menuButton value="" style="background:transparent; border:none; margin-left:-80%; margin-top:100%; font-size:51%;"> 
-        			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}"  icon="ui-icon-disk" />
-        			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-arrowrefresh-1-w" />
+        			<p:menuitem value="Salvar" action="#{cadContasPagarMB.salvar()}"  icon="ui-icon-disk"/>
+        			<p:menuitem value="Salvar e repetir"  action="#{cadContasPagarMB.salvarRepetir()}" ajax="false" icon="ui-icon-arrowrefresh-1-w" actionListener="#{mensagem.saveMessagem()}" update="growl"/>
     			</p:menuButton>
-                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadContasPagarMB.cancelar()}" >
+                <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" actionListener="#{contasPagarMB.coresFiltrar()}"  action="#{cadContasPagarMB.cancelar()}" >
                     <img src="resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
              </h:panelGrid>      

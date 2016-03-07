@@ -61,7 +61,7 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Contasreceber> contasreceberList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Movimentobanco> movimentobancoList;
+    private List<Outroslancamentos> movimentobancoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Vendas> vendasList;
 
@@ -144,11 +144,11 @@ public class Usuario implements Serializable {
         this.contasreceberList = contasreceberList;
     }
 
-    public List<Movimentobanco> getMovimentobancoList() {
+    public List<Outroslancamentos> getMovimentobancoList() {
         return movimentobancoList;
     }
 
-    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
+    public void setMovimentobancoList(List<Outroslancamentos> movimentobancoList) {
         this.movimentobancoList = movimentobancoList;
     }
 

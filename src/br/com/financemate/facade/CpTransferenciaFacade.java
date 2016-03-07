@@ -38,6 +38,7 @@ CpTransferenciaDao cpTransferenciaDao;
         cpTransferenciaDao = new CpTransferenciaDao();
         return cpTransferenciaDao.consultar(idTransferencia);
     }
+ 
     
     public List<Cptransferencia> listarTranferencia(String sql) throws SQLException{
         cpTransferenciaDao = new CpTransferenciaDao();

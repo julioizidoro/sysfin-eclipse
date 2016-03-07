@@ -2,6 +2,7 @@ package br.com.financemate.manageBean.contasReceber;
 
 
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasReceberFacade;
@@ -237,13 +238,20 @@ public class RecebimentoContaMB implements  Serializable{
     }
     
     public String salvar(){
-        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-        contasReceber.setBanco(banco);
-        contasReceber.setCliente(cliente);
-        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-        contasReceber = contasReceberFacade.salvar(contasReceber);
-        RequestContext.getCurrentInstance().closeDialog(contasReceber);
-        return "consContasReceber";
+    	if (valorParcial > 0f) {
+			RequestContext.getCurrentInstance().closeDialog(contasReceber);
+			return "";
+		}else{
+			
+		
+	        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+	        contasReceber.setBanco(banco);
+	        contasReceber.setCliente(cliente);
+	        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+	        contasReceber = contasReceberFacade.salvar(contasReceber);
+	        RequestContext.getCurrentInstance().closeDialog(contasReceber);
+	        return "";
+		}
     }
     
     public String cancelar(){
@@ -281,7 +289,8 @@ public class RecebimentoContaMB implements  Serializable{
         contasReceber.setDataPagamento(dataRecebimentoParcial);
         listaRecebimentoParial.add(contasReceber);
         contasReceber.setRecebimentoParcialList(listaRecebimentoParial);
-        RequestContext.getCurrentInstance().closeDialog(contasReceber);
+        mensagem mensagem = new mensagem();
+        mensagem.recebidoParcial();
         return "";
     }
     

@@ -21,6 +21,7 @@ import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.CobrancaFacade;
 import br.com.financemate.facade.HistoricoCobrancaFacade;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobranca;
 import br.com.financemate.model.Contasreceber;
@@ -154,7 +155,7 @@ public class HistoricoMB implements Serializable {
         historicaCobranca.setUsuario(usuarioLogadoMB.getUsuario());
         historicaCobranca = cobrancaFacade.salvar(historicaCobranca);
         cobranca.getHistoricocobrancaList().add(historicaCobranca);
-        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobrança Salvo.");
+        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobranï¿½a Salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
         return "cobranca";
     }
@@ -166,9 +167,8 @@ public class HistoricoMB implements Serializable {
 	public String salvarEdicao(){ 
         HistoricoCobrancaFacade historicoCobrancaFacade = new HistoricoCobrancaFacade();
         historicoCobrancaFacade.salvar(historicaCobranca);
-        RequestContext.getCurrentInstance().closeDialog(null);
-        FacesMessage mensagem = new FacesMessage("Alterado com Sucesso! ", "Historico de Cobrança alterado.");
-        FacesContext.getCurrentInstance().addMessage(null, mensagem);
+        mensagem mensagem = new  mensagem();
+        mensagem.historico();
         return "cobranca";
     }
 

@@ -27,6 +27,7 @@ import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.PlanoContasFacade;
+import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
@@ -62,13 +63,12 @@ public class CadContasReceberMB implements Serializable {
 		private Cobranca cobranca;
 		private Vendas vendas;
 		private Boolean habilitarUnidade = false;
-	    
+		
 	    @PostConstruct
 	    public void init(){
 	    	FacesContext fc = FacesContext.getCurrentInstance();
 	        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 	        contasReceber = (Contasreceber) session.getAttribute("contareceber");
-	        session.removeAttribute("contareceber");
 	    	gerarListaCliente();
 	    	gerarListaPlanoContas();
 	    	if (contasReceber == null){
@@ -351,9 +351,22 @@ public class CadContasReceberMB implements Serializable {
 			        contasReceber.setJuros(0.0f);
 			        contasReceber.setNumeroParcela(i/numeroVezes);
 			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+			        if (contasReceber.getVendas() == null) {
+			        	VendasFacade vendasFacade = new VendasFacade();
+			        	try {
+							vendas = vendasFacade.consultar(1);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						contasReceber.setVendas(vendas);
+					}
 			        String mensagem = validarDados();
-			        if (mensagem!=null) { 
+			        if (mensagem=="") { 
 			        	contasReceber = contasReceberFacade.salvar(contasReceber);
+					}else{
+						FacesContext context = FacesContext.getCurrentInstance();
+			            context.addMessage(null, new FacesMessage(mensagem, ""));
 					}
 				}
 			}else{
@@ -365,16 +378,27 @@ public class CadContasReceberMB implements Serializable {
 				contasReceber.setDesagio(0.0f);
 				contasReceber.setJuros(0.0f);
 				contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+				contasReceber.setNumeroParcela(1/1);
 				if (contasReceber.getCobranca()== null) {
 					contasReceber.setCobranca(cobranca);
 				}
-				if (contasReceber.getVendas()== null) {
+				if (contasReceber.getVendas() == null) {
+		        	VendasFacade vendasFacade = new VendasFacade();
+		        	try {
+						vendas = vendasFacade.consultar(1);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					contasReceber.setVendas(vendas);
 				}
 				String mensagem = validarDados();
-				if (mensagem!=null) {
+				if (mensagem=="") {
 					contasReceber = contasReceberFacade.salvar(contasReceber);
 					
+				}else{
+					FacesContext context = FacesContext.getCurrentInstance();
+		            context.addMessage(null, new FacesMessage(mensagem, ""));
 				}
 			}
 			RequestContext.getCurrentInstance().closeDialog(contasReceber);
@@ -389,19 +413,19 @@ public class CadContasReceberMB implements Serializable {
 	    public String validarDados(){
 	    	String mensagem = "";
 	    	if (contasReceber.getCliente().equals("")) {
-				mensagem = mensagem + "Unidade não selecionada \r\n";
+				mensagem = mensagem + "Unidade nï¿½o selecionada \r\n";
 			}
 	    	if (contasReceber.getNomeCliente().equals("")) {
-				mensagem = mensagem + "Nome do Cliente não informado \r\n";
+				mensagem = mensagem + "Nome do Cliente nï¿½o informado \r\n";
 			}
 	    	if (contasReceber.getDataVencimento().equals(null)) {
-				mensagem = mensagem + "Data de vencimento não informado \r\n";
+				mensagem = mensagem + "Data de vencimento nï¿½o informado \r\n";
 			}
 	    	if (contasReceber.getValorParcela().equals("")) {
-				mensagem = mensagem + "Valor não informado \r\n";
+				mensagem = mensagem + "Valor nï¿½o informado \r\n";
 			}
 	    	if (contasReceber.getBanco().equals(null)) {
-				mensagem = mensagem + "Banco não selecionado";
+				mensagem = mensagem + "Banco nï¿½o selecionado";
 			}
 	    	return mensagem;
 	    }

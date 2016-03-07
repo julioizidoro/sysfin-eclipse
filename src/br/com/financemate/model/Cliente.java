@@ -96,7 +96,7 @@ public class Cliente implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Contasreceber> contasreceberList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Movimentobanco> movimentobancoList;
+    private List<Outroslancamentos> movimentobancoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Contaspagar> contaspagarList;
     @JoinColumn(name = "tipoplanocontas_idtipoplanocontas", referencedColumnName = "idtipoplanocontas")
@@ -294,11 +294,11 @@ public class Cliente implements Serializable {
         this.contasreceberList = contasreceberList;
     }
 
-    public List<Movimentobanco> getMovimentobancoList() {
+    public List<Outroslancamentos> getMovimentobancoList() {
         return movimentobancoList;
     }
 
-    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
+    public void setMovimentobancoList(List<Outroslancamentos> movimentobancoList) {
         this.movimentobancoList = movimentobancoList;
     }
 

@@ -98,6 +98,15 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
+			<from-outcome>consOutrosLancamentos</from-outcome>
+			<to-view-id>/pages/outroslancamentos/consOutrosLancamentos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
 			<from-outcome>FinanceMate</from-outcome>
 			<to-view-id>http://www.financemate.com.br/</to-view-id>
 			<redirect />

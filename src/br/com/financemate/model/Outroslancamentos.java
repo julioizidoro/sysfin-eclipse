@@ -21,14 +21,14 @@ import javax.validation.constraints.Size;
  * @author Greici
  */
 @Entity
-@Table(name = "movimentobanco")
-public class Movimentobanco implements Serializable {
+@Table(name = "outroslancamentos")
+public class Outroslancamentos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idmovimentoBanco")
-    private Integer idmovimentoBanco;
+    @Column(name = "idoutroslancamentos")
+    private Integer idoutroslancamentos;
     @Column(name = "dataVencimento")
     @Temporal(TemporalType.DATE)
     private Date dataVencimento;
@@ -70,24 +70,28 @@ public class Movimentobanco implements Serializable {
     private int idcontasreceber;
     @Transient
     private boolean selecionado;
+    @Column(name = "saldo")
+    private Float saldo;
     
 
-    public Movimentobanco() {
+    public Outroslancamentos() {
     }
 
-    public Movimentobanco(Integer idmovimentoBanco) {
-        this.idmovimentoBanco = idmovimentoBanco;
+    public Outroslancamentos(Integer idoutroslancamentos) {
+        this.idoutroslancamentos = idoutroslancamentos;
     }
 
-    public Integer getIdmovimentoBanco() {
-        return idmovimentoBanco;
-    }
+   
 
-    public void setIdmovimentoBanco(Integer idmovimentoBanco) {
-        this.idmovimentoBanco = idmovimentoBanco;
-    }
+    public Integer getIdoutroslancamentos() {
+		return idoutroslancamentos;
+	}
 
-    public Date getDataVencimento() {
+	public void setIdoutroslancamentos(Integer idoutroslancamentos) {
+		this.idoutroslancamentos = idoutroslancamentos;
+	}
+
+	public Date getDataVencimento() {
         return dataVencimento;
     }
 
@@ -206,22 +210,32 @@ public class Movimentobanco implements Serializable {
     public void setIdcontasreceber(int idcontasreceber) {
         this.idcontasreceber = idcontasreceber;
     }
+    
+    
 
-    @Override
+    public Float getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(Float saldo) {
+		this.saldo = saldo;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
-        hash += (idmovimentoBanco != null ? idmovimentoBanco.hashCode() : 0);
+        hash += (idoutroslancamentos != null ? idoutroslancamentos.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // 
-        if (!(object instanceof Movimentobanco)) {
+        if (!(object instanceof Outroslancamentos)) {
             return false;
         }
-        Movimentobanco other = (Movimentobanco) object;
-        if ((this.idmovimentoBanco == null && other.idmovimentoBanco != null) || (this.idmovimentoBanco != null && !this.idmovimentoBanco.equals(other.idmovimentoBanco))) {
+        Outroslancamentos other = (Outroslancamentos) object;
+        if ((this.idoutroslancamentos == null && other.idoutroslancamentos != null) || (this.idoutroslancamentos != null && !this.idoutroslancamentos.equals(other.idoutroslancamentos))) {
             return false;
         }
         return true;
@@ -229,7 +243,7 @@ public class Movimentobanco implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.financemate.model.Movimentobanco[ idmovimentoBanco=" + idmovimentoBanco + " ]";
+        return "br.com.financemate.model.Movimentobanco[ idmovimentoBanco=" + idoutroslancamentos + " ]";
     }
     
 }

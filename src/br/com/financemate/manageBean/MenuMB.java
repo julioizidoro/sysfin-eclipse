@@ -52,5 +52,9 @@ public class MenuMB implements Serializable{
 	public String consTipoPlanoConta(){
 		return "consTipoPlanoConta";
 	}
+	
+	public String consOutrosLancamentos(){
+		return "consOutrosLancamentos";
+	}
 
 }

@@ -32,13 +32,12 @@
                     <img src="resources/img/adicionarmenu.png" width="32" height="32" /> 
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
-        
-        </div>
+        	
+        </div> 
         <br />
-        <h:panelGrid class="menu2" columns="2" style="background:#1A1A1A;font-family: 'Economica', sans-serif; margin-left:0.4%;margin-top:0.3%;" responsive="true">
-        
-        	 <p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;">
-           		<img src="resources/img/iconeHome.png" style="width: 10%;"/>
+        <h:panelGrid  class="menu2" columns="2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:0.2%;" responsive="true">
+        	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;">
+           		<img src="resources/img/iconeHome.png" style="width: 10%;"/> 
         		<h:outputText value="Visão Geral" style="font-size:16px; margin-left:5%;"/>
     		 </p:commandLink>
     		 <br />
@@ -46,34 +45,78 @@
            		<img src="resources/img/iconeclientes.png" style="width: 10%;"/>
         		<h:outputText value="Área do cliente" style="font-size:16px; margin-left:5%;"/>
     		 </p:commandLink>
-    		 <br />
-        	 <p:panelMenu styleClass="ui-panelmenu">  
-        		<p:submenu icon="ui-icon-heart" style="background:transparent;  font-size:16px; color:white;  margin-top=-30%; font:normal;" label="Contas a Pagar">
-        			<p:menuitem  value="Novo Lançamento" action="#{contasPagarMB.novaContaTelaPrincipal()}" update="growl"/> 
-            		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" update="growl"/>
-            		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressaoPrincipal()}"/>
-        		</p:submenu>
-        		<p:submenu  label="Contas a Receber" style="font-size:16px;">
-        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" update="growl"/> 
-            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}"/>
-            		<p:menuitem value="Relatório" actionListener="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}"/>
-        		</p:submenu>
-        		<p:separator /> 
-        		<p:submenu label="Vendas" style="font-size:16px;">
-        		</p:submenu>
-        		<p:submenu  label="Cadastro" style="font-size:16px;">
-                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}"/>
-                    <p:menuitem value="Banco" action="#{menuMB.consBanco()}"/>
-                    <p:menuitem value="Tipo de plano de conta" action="#{menuMB.consTipoPlanoConta()}"/>
-                    <p:menuitem value="Plano de conta" />
-            	</p:submenu>
-            	<p:submenu label="Outros Lançamentos" style="font-size:16px;">
-                    
-            	</p:submenu>
-            	<p:submenu label="Relatórios" style="font-size:16px;">
-                    <p:menuitem value="Alterações" action="#"/>
-            	</p:submenu>
-    		</p:panelMenu>
+    		<br />
+    		
+        	 <h:panelGrid>
+        	 <h:panelGrid style="margin-left:-2%;">
+        	 	<img src="resources/img/financeiro.png" style="width: 50%;"/>
+        	 </h:panelGrid>
+        	 <h:panelGrid style="margin-left:10%; margin-top:-24%;"> 
+	        	 <p:panelMenu styleClass="ui-panelmenu">
+	        		<p:submenu  style="background:transparent;  font-size:16px; color:white; font:normal;" label="Contas a Pagar">
+	        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaContaTelaPrincipal()}" style="margin-left:-13%;"/> 
+	            		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressaoPrincipal()}" style="margin-left:-13%;"/> 
+	        		</p:submenu> 
+        		</p:panelMenu>
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:-2%;">
+        	 	<img src="resources/img/financeiro.png" style="width: 50%;"/>
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
+	        	<p:panelMenu styleClass="ui-panelmenu">
+	        		<p:submenu label="Contas a Receber" style="font-size:16px;">
+	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" style="margin-left:-13%;"/> 
+	            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
+	        		</p:submenu>
+	        	</p:panelMenu>
+	        </h:panelGrid> 
+	        <h:panelGrid style="margin-left:-2%;">
+        	 	<img src="resources/img/vendas.png" style="width: 25%;"/>
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
+		        <p:panelMenu styleClass="ui-panelmenu">
+	        		<p:submenu label="Vendas" style="font-size:16px;">
+	        		</p:submenu>
+	        	</p:panelMenu>
+	        </h:panelGrid>
+	        <h:panelGrid style="margin-left:-2%;">
+        	 	<img src="resources/img/cadastro.png" style="width: 50%;"/>
+        	</h:panelGrid>
+	        <h:panelGrid style="margin-left:10%; margin-top:-24%;">
+	        	<p:panelMenu>
+	        		<p:submenu label="Cadastro" style="font-size:16px;">
+	                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}" style="margin-left:-13%;"/>
+	                    <p:menuitem value="Banco" action="#{menuMB.consBanco()}" style="margin-left:-13%;"/>
+	                    <p:menuitem value="Tipo plano de conta" action="#{menuMB.consTipoPlanoConta()}" style="margin-left:-13%;"/> 
+	                    <p:menuitem value="Plano de conta"  style="margin-left:-13%;"/>
+	            	</p:submenu>
+	            </p:panelMenu>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:-2%;"> 
+        	 	<img src="resources/img/outroslancamento.png" style="width: 12%;"/> 
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:10%; margin-top:-23%;">
+            	<p:panelMenu>
+	            	<p:submenu label="Outros Lançamentos" style="font-size:16px;">
+	                    <p:menuitem value="Novo Lançamento" action="#" style="margin-left:-13%;"/> 
+	            		<p:menuitem value="Lançamentos" action="#{menuMB.consOutrosLancamentos()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
+	            	</p:submenu>
+            	</p:panelMenu>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left:-2%;"> 
+        	 	<img src="resources/img/relatorio.png" style="width: 15%;"/> 
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
+	            <p:panelMenu>
+		            	<p:submenu label="Relatórios" style="font-size:16px;">
+		                    <p:menuitem value="Alterações" action="#" style="margin-left:-20%;"/>
+		            	</p:submenu> 
+	    		</p:panelMenu>
+    		</h:panelGrid>
+    		</h:panelGrid>
     		<br />
     		<p:link id="ajaxx"  target="_blank" style="text-decoration:none; margin-bottom:130%;" href="http://www.financemate.com.br/"  ajax="false">
            		<img src="resources/img/iconeinfo.png" style="width: 10%;"/> 

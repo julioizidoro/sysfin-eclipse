@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,6 +20,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
+import org.apache.catalina.startup.HomesUserDatabase;
+import org.hibernate.sql.Update;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -28,13 +31,16 @@ import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.facade.FtpDadosFacade;
+import br.com.financemate.facade.OperacaoUsuarioFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Ftpdados;
+import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.Ftp;
 
 @Named
@@ -63,6 +69,7 @@ public class CadContasPagarMB implements Serializable{
 	private Date dataEnvio;
 	private Boolean tipoAcesso;
 	private Boolean habilitarUnidade = false;
+	private Operacaousuairo operacaousuairo;
 	
 
 	@PostConstruct
@@ -88,6 +95,7 @@ public class CadContasPagarMB implements Serializable{
             banco = contaPagar.getBanco();
             gerarListaBanco();
             transferenciaBancaria();
+            
         }
         desabilitarUnidade();
 	}
@@ -95,6 +103,20 @@ public class CadContasPagarMB implements Serializable{
 	
 	
 	
+	public Operacaousuairo getOperacaousuairo() {
+		return operacaousuairo;
+	}
+
+
+
+
+	public void setOperacaousuairo(Operacaousuairo operacaousuairo) {
+		this.operacaousuairo = operacaousuairo;
+	}
+
+
+
+
 	public Boolean getHabilitarUnidade() {
 		return habilitarUnidade;
 	}
@@ -315,7 +337,13 @@ public class CadContasPagarMB implements Serializable{
 		if (planoContas != null) {
 			contaPagar.setPlanocontas(planoContas);
 		}else{
-			planoContas = null;
+			PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+			try {
+				planoContas = planoContasFacade.consultar(1);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			contaPagar.setPlanocontas(planoContas);
 		}
 		if (contaPagar.getCompetencia() == null) {
@@ -329,9 +357,10 @@ public class CadContasPagarMB implements Serializable{
 		}
 		contaPagar.setAutorizarPagamento("N");
 		String mensagem = validarDados();
-		if (mensagem!=null) {
+		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 			contaPagar = contasPagarFacade.salvar(contaPagar);
+			
 			if (cptransferencia!=null){
 				
 		    	salvarTransferencia();
@@ -346,9 +375,7 @@ public class CadContasPagarMB implements Serializable{
 			FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(mensagem, ""));
 		}
-		
     }
-	
 
 	
 	public void salvarRepetir(){
@@ -366,7 +393,7 @@ public class CadContasPagarMB implements Serializable{
 			contaPagar.setDataCompensacao(null);
 		}
 		String mensagem = validarDados();
-		if (mensagem!=null) {
+		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 	        contaPagar = contasPagarFacade.salvar(contaPagar);
 	        if (cptransferencia!=null){
@@ -415,22 +442,22 @@ public class CadContasPagarMB implements Serializable{
 	public String validarDados(){
 		String mensagem = "";
 		if (contaPagar.getFornecedor().equalsIgnoreCase("")) {
-			mensagem = mensagem + "Fornecedor n�o informado \r\n";
+			mensagem = mensagem + "Fornecedor não informado \r\n";
 		}
-		if (contaPagar.getValor().equals("")) {
-			mensagem = mensagem + "Valor n�o informado \r\n";
+		if (contaPagar.getValor().equals(0f)) {
+			mensagem = mensagem + "Valor não informado \n";
 		}
 		if (contaPagar.getDescricao().equalsIgnoreCase("")) {
-			mensagem = mensagem + "Descri��o n�o informado \r\n";
+			mensagem = mensagem + "Descrição não informado \r\n";
 		}
 		if (contaPagar.getBanco().equals(null)) {
-			mensagem = mensagem + "Conta n�o selecionada \r\n";
+			mensagem = mensagem + "Conta não selecionada \r\n";
 		}
 		if (contaPagar.getDataVencimento().equals(null)) {
-			mensagem = mensagem + "Data de Vencimento n�o informada \r\n";
+			mensagem = mensagem + "Data de Vencimento não informada \r\n";
 		}
 		if (contaPagar.getFormaPagamento().equalsIgnoreCase("")) {
-			mensagem = mensagem + "Forma de Pagamento n�o selecionada \r\n";
+			mensagem = mensagem + "Forma de Pagamento não selecionada \r\n";
 		}
 		
 		
@@ -542,5 +569,9 @@ public class CadContasPagarMB implements Serializable{
 		}
 		 
 	}
+	
+
+	
+
 	
 }

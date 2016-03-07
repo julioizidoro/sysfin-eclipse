@@ -74,9 +74,12 @@ package br.com.financemate.util;
 	         
 	        return model;
 	    }
+	    
+	    
 	     
 	    private LineChartModel initLinearModel() {
 	        LineChartModel model = new LineChartModel();
+	        
 	        
 	        LineChartSeries recebimentos = new LineChartSeries();
 	        recebimentos.setLabel("Recebimentos");
@@ -103,7 +106,7 @@ package br.com.financemate.util;
 	        saldo.set(3, 5);
 	        saldo.set(4, 6);
 	        saldo.set(5, 4);
-	 
+	        
 	        model.addSeries(recebimentos);
 	        model.addSeries(pagamentos);
 	        model.addSeries(saldo);

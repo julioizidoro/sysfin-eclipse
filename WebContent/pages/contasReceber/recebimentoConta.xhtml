@@ -15,6 +15,7 @@
     <h:body >
 
         <h:form id="frmidRecebimentoConta" class="body2" style="font-size: 12px;background: white">
+        <p:growl id="growl" showDetail="true" sticky="true" />
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
@@ -135,7 +136,7 @@
 	            </h:panelGrid> 
 	        </h:panelGrid>
 	        <br />
-	        <p:commandLink   action="#{recebimentoContaMB.salvarRecebimentoParcial()}" style="margin-left:40%;text-decoration:none;" title="Adicionar">
+	        <p:commandLink   action="#{recebimentoContaMB.salvarRecebimentoParcial()}" update="growl, frmidRecebimentoConta" style="margin-left:40%;text-decoration:none;" title="Adicionar">
 				<img src="../../resources/img/iconeplus.png"/>
 			</p:commandLink> 
 			<p:commandLink title="Visualizar Parciais" style="text-decoration: none; margin-left:6%;"   action="#{recebimentoContaMB.recebimentoContaParcial(recebimentoContaMB.contasReceber)}" >

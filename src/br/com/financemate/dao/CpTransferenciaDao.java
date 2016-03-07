@@ -38,8 +38,9 @@ public class CpTransferenciaDao {
         return transferencia;
     }
 	
-	public List<Cptransferencia> listarTransferencias(String sql) throws SQLException{
-		sql = "SELECT c FROM Cptransferencia c";
+
+	
+	public List<Cptransferencia> listarTransferencias(String sql) throws SQLException{ 
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery(sql);

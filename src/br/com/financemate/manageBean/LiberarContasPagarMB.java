@@ -18,9 +18,9 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.ContasPagarFacade;
-import br.com.financemate.facade.MovimentoBancoFacade;
+import br.com.financemate.facade.OutrosLancamentosFacade;
 import br.com.financemate.model.Contaspagar;
-import br.com.financemate.model.Movimentobanco;
+import br.com.financemate.model.Outroslancamentos;
 
 @Named
 @ViewScoped
@@ -128,7 +128,7 @@ public class LiberarContasPagarMB implements Serializable {
 	public String salvarContasLiberadas(Contaspagar conta) {
 		mensagem msg = new mensagem();
 		String mensagem = validarDados();
-		if (mensagem != null) {
+		if (mensagem == "") { 
 			for (int i = 0; i < listaContasSelecionadas.size(); i++) {
 				if (contasPagar.getAutorizarPagamento().equals("S")) {
 				
@@ -143,6 +143,8 @@ public class LiberarContasPagarMB implements Serializable {
 			
 	        RequestContext.getCurrentInstance().closeDialog(contasPagar);
 	        return "";
+		}else{
+			msg.competencia();
 		}
 		
 		return "";
@@ -152,7 +154,7 @@ public class LiberarContasPagarMB implements Serializable {
     public void salvarContaLiberadasMovimentoBanco(Contaspagar conta) {
         conta.setDataLiberacao(dataLiberacao);
         conta.setContaPaga("S");
-        Movimentobanco movimentoBanco = new Movimentobanco();
+        Outroslancamentos movimentoBanco = new Outroslancamentos();
         movimentoBanco.setBanco(conta.getBanco());
         movimentoBanco.setCliente(conta.getCliente());
         movimentoBanco.setDataVencimento(conta.getDataVencimento());
@@ -166,7 +168,7 @@ public class LiberarContasPagarMB implements Serializable {
         movimentoBanco.setTipoDocumento(conta.getTipoDocumento());
         movimentoBanco.setDescricao(conta.getDescricao());
         movimentoBanco.setCompentencia(conta.getCompetencia());
-        MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
+        OutrosLancamentosFacade movimentoBancoFacade = new OutrosLancamentosFacade();
         ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
         conta = contasPagarFacade.salvar(conta);
         try {
@@ -194,7 +196,7 @@ public class LiberarContasPagarMB implements Serializable {
     public String validarDados(){
     	String mensagem = "";
     	if (contasPagar.getCompetencia().equalsIgnoreCase("")){
-			mensagem = mensagem + "Compet�ncia n�o informada \r\n";
+			mensagem = mensagem + "Competência não informada \r\n";
 		}
     	return mensagem;
     }

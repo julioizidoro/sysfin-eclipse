@@ -15,6 +15,7 @@
     <h:body >
 
         <h:form id="frmidCobranca" class="body2" style="font-size: 12px;background: white">
+        	<p:growl id="growl" showDetail="true" sticky="true" />
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
@@ -129,10 +130,10 @@
 			</p:commandLink>
             <hr />
             <br />
-            <p:commandLink title="Confirmar" style="margin-left: 37%;text-decoration: none"   action="#{cobrancaMB.salvarDadosCobranca()}" >
+            <p:commandLink title="Salvar Cobrança" style="margin-left: 37%;text-decoration: none"   action="#{cobrancaMB.salvarDadosCobranca()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-            <p:commandLink title="Cancelar" style="margin-left: 9%;text-decoration: none" action="#{cobrancaMB.cancelar()}" >
+            <p:commandLink title="Fechar" style="margin-left: 9%;text-decoration: none" action="#{cobrancaMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
             </p:commandLink>
             <br/>

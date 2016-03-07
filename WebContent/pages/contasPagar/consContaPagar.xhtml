@@ -33,7 +33,7 @@
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="idTabelaContaPagar"/>
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update=" growl, idTabelaContaPagar"/>
-                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{contasPagarMB.editar(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
+                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  actionListener="#{contasPagarMB.editar(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
                     	<p:menuitem value="Operações Usuário"  icon=" ui-icon-person"  action="#{contasPagarMB.operacoesUsuario(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
                     	</p:contextMenu> 
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" 

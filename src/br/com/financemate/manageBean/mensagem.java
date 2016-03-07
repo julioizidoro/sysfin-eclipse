@@ -18,12 +18,12 @@ public class mensagem {
 
     public void saveMessagem() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Confirmado com Sucesso", ""));
+        context.addMessage(null, new FacesMessage("Salvo com Sucesso", ""));
     }
 
     public void excluiMessagem() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Exclu�do com Sucesso", ""));
+        context.addMessage(null, new FacesMessage("Excluido com Sucesso", ""));
     }
 
     public void autorizar() {
@@ -46,6 +46,11 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Recebido com Sucesso", ""));
     }
     
+    public void recebidoParcial() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Recebimento Parcial com Sucesso", ""));
+    }
+    
     public void cancelado() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Cancelado com Sucesso", ""));
@@ -56,8 +61,22 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Editado com Sucesso", ""));
     }
     
+    public void historico() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Histórico Salvo com Sucesso", ""));
+    }
+    
     public void acesso() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Acesso Negado", ""));
+    }
+    
+    public void competencia() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Competência não informada", ""));
+    }
+    
+    public void warn() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }
 }

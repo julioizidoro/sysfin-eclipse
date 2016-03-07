@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/pages/templates/default.xhtml">
+	<ui:define name="corpo">
+	<h:form id="frmConsultaOutrosLancamentos"> 
+		<p:growl id="growl" showDetail="true" sticky="true" /> 
+			<br/>  
+			
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <img src="../../resources/img/ajax-carregando.gif" />
+            </p:dialog>
+			<br /><br />
+			<h:panelGrid columns="1"  style="margin-left:17%;  margin-top: -4%;">
+                <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 30%"/> 
+              <p:selectOneMenu id="cliente" class="left3" style="width:200px;"  value="#{outrosLancamentosMB.cliente}"   converter="ClienteConverter"
+	                                 filter="true" filterMatchMode="startsWith" panelStyle="width:150px" disabled="#{cadContasPagarMB.habilitarUnidade}">
+	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+	                    <f:selectItems value="#{outrosLancamentosMB.listaClientes}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+	                     <f:attribute name="listaCliente" value="#{outrosLancamentosMB.listaClientes}"/>
+	                    <p:ajax event="change" listener="#{outrosLancamentosMB.gerarListaBanco()}" update="idconta"/>
+	          </p:selectOneMenu>  
+           </h:panelGrid>  
+           <h:panelGrid columns="2"  style="margin-left: 38.5%; margin-top:-4.5%;">   
+           		<p:outputLabel value="Peridodo" class="left3" style="margin-left:90%;"/>
+           		<br />	
+           		<p:inputMask id="dataIni" mask="99/99/9999" style="color:gray;"  size="15" maxlength="15" value="#{outrosLancamentosMB.dataInical}" class="tabelaRecebimento"  placeholder="Data Inicial" >
+                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask>
+                <p:inputMask id="dataFinal"  mask="99/99/9999" style="color:gray;" size="15" maxlength="15" class="left6" value="#{outrosLancamentosMB.dataFinal}"  placeholder="Data Final">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask> 
+           </h:panelGrid>
+           
+            <h:panelGrid columns="1" style="margin-left:65%; margin-top:-4.3%;">
+             	<p:outputLabel value="Conta" for="idconta" class="left3" style="margin-left:40%;"/>
+	              <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{outrosLancamentosMB.banco}"  converter="BancoConverter"
+	                                 filter="true" filterMatchMode="startsWith" panelStyle="width:150px">
+	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+	                    <f:selectItems value="#{outrosLancamentosMB.listaBancos}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+	                    <f:attribute name="listaBanco" value="#{outrosLancamentosMB.listaBancos}" />
+	                    <p:ajax event="change" listener="#{outrosLancamentosMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos"/>
+	                </p:selectOneMenu>  
+             </h:panelGrid> 
+             <h:panelGrid style="margin-left: 88.5%; margin-top:-3%;">  
+			 
+				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:2%;text-decoration:none;" title="Novo Lançamento">
+					<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
+				</p:commandLink>
+			 </h:panelGrid>
+			 <h:panelGrid  style="margin-left: 91%; margin-top:-3.4%;"> 
+	            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
+					<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+					<p:dataExporter type="xls" target="idTabelaOutrosLancamentos" fileName="outrosLancamentos" />
+	            </p:commandLink>
+	         </h:panelGrid> 
+	         <h:panelGrid style="margin-left:93.52%; margin-top:-3.35%;">
+	            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
+					<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
+	            </p:commandLink>   
+	         </h:panelGrid> 
+	            <br /><br /> 
+	            
+	            
+	             <p:contextMenu for="idTabelaOutrosLancamentos" style="background:white;">
+                        <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{outrosLancamentosMB.excluir()}" update="growl, idTabelaOutrosLancamentos" />
+                        <p:menuitem value="Editar"  icon=" ui-icon-pencil"  actionListener="#" /> 
+                    	</p:contextMenu> 
+                    <p:dataTable id="idTabelaOutrosLancamentos"  var="outrosLancamentos"  value="#{outrosLancamentosMB.listaOutrosLancamentos}" style="border:none;" class="tabelacontas" 
+                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{outrosLancamentosMB.outrosLancamentos}" selectionMode="single" rowKey="#{outrosLancamentos.idoutroslancamentos}">
+                         
+                        <p:column headerText="Data" sortBy="#{outrosLancamentos.dataVencimento}" style="width:17%; font-size:12px; background:white; color:black; border:none;">
+                            <h:outputText  value="#{outrosLancamentos.dataVencimento}" style="margin-left:29%; font-size:12px; color:gray;" > 
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </h:outputText> 
+                        </p:column> 
+                        <p:column headerText="Historico" sortBy="#{outrosLancamentos.descricao}" style=" font-size:12px; background:white; color:black; border:#fff;">
+                            <h:outputText value="#{outrosLancamentos.descricao}" style="font-size:12px; color:gray;"/>
+                        </p:column> 
+                        <p:column headerText="Valor Entrada" sortBy="#{outrosLancamentos.valorEntrada}" style="width:8%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{outrosLancamentos.valorEntrada}" style="font-size:12px; color:#{outrosLancamentosMB.coresValoresEntrada(outrosLancamentos)}; margin-right:10%;">
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                            </h:outputText>                                     
+                        </p:column>
+                        <p:column headerText="Valor Saida" sortBy="#{outrosLancamentos.valorSaida}" style="width:8%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{outrosLancamentos.valorSaida}" style="font-size:12px; color:#{outrosLancamentosMB.coresValoresSaida(outrosLancamentos)}; margin-right:10%;">
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                            </h:outputText>                                    
+                        </p:column>
+                        <p:column headerText="Saldo" sortBy="#{outrosLancamentos.saldo}" style="width:8%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{outrosLancamentos.saldo}" style="font-size:12px; color:gray; margin-right:10%;">
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                            </h:outputText>                                    
+                        </p:column>
+                        
+                    </p:dataTable> 
+                    <br />
+                    <h:panelGrid  style="width:18%; margin-left: 35%; background-color:white; border-radius:5px; border:solid; border-left-color:red; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
+	                	<br />
+			            <tt style="margin-left:10%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total de Saídas</tt>
+			            <br />
+			              <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #"  readonly="true"/>
+	        		</h:panelGrid>
+	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -7%; background-color:white; border-radius:5px; border:solid; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:green;">
+	        			<br />
+			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total de Entradas</tt>
+			            <br/>
+			            <h:outputText id="contasVencendo" size="20" maxlength="100" class="totallancamentos" value="R$ #" readonly="true"/>
+	        		</h:panelGrid>
+	        		<h:panelGrid  style="width:20%;  margin-left:77%; margin-top: -7%; background-color:white; border-radius:5px; border:solid; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB; border-left-color:blue;">
+	        			<br /> 
+			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Saldo Total</tt>
+			            <br/>
+			            <h:outputText id="contasPagar" size="20" maxlength="100" class="totallancamentos" value="R$ #"  readonly="true"/>
+			             
+	        		</h:panelGrid>
+	        		<br />
+   </h:form>
+</ui:define>
+</ui:composition>
+   
+</html>

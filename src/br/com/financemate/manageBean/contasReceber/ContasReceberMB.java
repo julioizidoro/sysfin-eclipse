@@ -29,6 +29,7 @@ import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.CalculosContasMB;
 import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
@@ -729,6 +730,8 @@ public class ContasReceberMB implements Serializable {
 	 public void retornoDialogNovo(SelectEvent event) {
 		 Contasreceber contasreceber = (Contasreceber) event.getObject();
 		 gerarListaContas();
+		 mensagem mensagem = new mensagem();
+	     mensagem.saveMessagem();
 		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 
@@ -912,6 +915,8 @@ public class ContasReceberMB implements Serializable {
 	 
 	 public void retornoDialogRecebimentoLote(SelectEvent event) {
 		 gerarListaContas();
+		 mensagem mensagem = new mensagem();
+		 mensagem.recebido();
 		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 
