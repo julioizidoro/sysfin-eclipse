@@ -782,7 +782,7 @@ public class ContasReceberMB implements Serializable {
 		 }
 		 
 		 if (nomeCliente!="") {
-			 sql = sql + " v.nomeCliente=" + nomeCliente + " and ";
+			 sql = sql + " v.nomeCliente like '%" + nomeCliente + "%' and ";
 		 }
 		
 		if (valorParcela!=0f) {

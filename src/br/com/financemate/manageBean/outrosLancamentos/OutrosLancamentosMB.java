@@ -16,8 +16,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
@@ -26,7 +28,9 @@ import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.util.Formatacao;
 
 @Named
 @ViewScoped
@@ -38,27 +42,94 @@ public class OutrosLancamentosMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-    private UsuarioLogadoMB usuarioLogadoBean;
+    private UsuarioLogadoMB usuarioLogadoMB;
     private List<Outroslancamentos> listaOutrosLancamentos;
     private Banco banco;
     private Cliente cliente;
     private List<Cliente> listaClientes;
-    private Date dataInical;
+    private Date dataInical; 
     private Date dataFinal;
     private String sql;
     private List<Banco> listaBancos;
     private boolean verCliente=false;
     private Outroslancamentos outrosLancamentos;
+    private String valorEntrada;
+    private String valorSaida;
+    private String valorTotal;
+    private Boolean habilitarUnidade;
 	
 	@PostConstruct
 	public void init(){
 		listaOutrosLancamentos = new ArrayList<Outroslancamentos>();
 		gerarListaCliente();
-		getUsuarioLogadoBean();
+		getUsuarioLogadoMB();
 		verificarCliente();
+		if (usuarioLogadoMB.getCliente() != null) {
+			cliente = usuarioLogadoMB.getCliente();
+			gerarListaBanco();
+		}
+		desabilitarUnidade();
 	}
+	 
 	
 	
+
+	public Boolean getHabilitarUnidade() {
+		return habilitarUnidade;
+	}
+
+
+
+
+	public void setHabilitarUnidade(Boolean habilitarUnidade) {
+		this.habilitarUnidade = habilitarUnidade;
+	}
+
+
+
+
+	public UsuarioLogadoMB getUsuarioLogadoMB() {
+		return usuarioLogadoMB;
+	}
+
+
+
+
+	public String getValorEntrada() {
+		return valorEntrada;
+	}
+
+
+
+	public void setValorEntrada(String valorEntrada) {
+		this.valorEntrada = valorEntrada;
+	}
+
+
+
+	public String getValorSaida() {
+		return valorSaida;
+	}
+
+
+
+	public void setValorSaida(String valorSaida) {
+		this.valorSaida = valorSaida;
+	}
+
+
+
+	public String getValorTotal() {
+		return valorTotal;
+	}
+
+
+
+	public void setValorTotal(String valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+
 
 	public Outroslancamentos getOutrosLancamentos() {
 		return outrosLancamentos;
@@ -71,14 +142,6 @@ public class OutrosLancamentosMB implements Serializable {
 	}
 
 
-
-	public UsuarioLogadoMB getUsuarioLogadoBean() {
-		return usuarioLogadoBean;
-	}
-
-	public void setUsuarioLogadoBean(UsuarioLogadoMB usuarioLogadoBean) {
-		this.usuarioLogadoBean = usuarioLogadoBean;
-	}
 
 	public List<Outroslancamentos> getListaOutrosLancamentos() {
 		return listaOutrosLancamentos;
@@ -163,14 +226,17 @@ public class OutrosLancamentosMB implements Serializable {
         if ((banco != null) && 
                  (cliente != null)) {
             sql = "Select o from Outroslancamentos o where o.banco.idbanco=" + banco.getIdbanco()
-                    +" and o.cliente.idcliente=" + cliente.getIdcliente();
+            		+ "  and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInical)
+            		+ "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                    +"' and o.cliente.idcliente=" + cliente.getIdcliente();
             sql = sql + " order by o.dataCompensacao";  
             OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
             try {
                 listaOutrosLancamentos = outrosLancamentosFacade.listaOutrosLancamentos(sql);
                 if (listaOutrosLancamentos==null){
                     listaOutrosLancamentos = new ArrayList<Outroslancamentos>();
-                } 
+                }
+                calcularTotal();
             } catch (SQLException ex) {
                 Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
                 mostrarMensagem(ex, "Erro Listar Outros Lançamentos", "Erro");
@@ -191,10 +257,10 @@ public class OutrosLancamentosMB implements Serializable {
     }
     
     public void verificarCliente(){
-        if (usuarioLogadoBean.getUsuario().getCliente()>0){
+        if (usuarioLogadoMB.getUsuario().getCliente()>0){
             ClienteFacade clienteFacade = new ClienteFacade();
             try {
-                cliente = clienteFacade.consultar(usuarioLogadoBean.getUsuario().getCliente());
+                cliente = clienteFacade.consultar(usuarioLogadoMB.getUsuario().getCliente());
                 verCliente = true;
                 if(cliente==null){
                     verCliente=false;
@@ -256,5 +322,51 @@ public class OutrosLancamentosMB implements Serializable {
         RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentos");
         return "";
     }
+    
+    public String editar(Outroslancamentos outroslancamentos){
+    	if (outroslancamentos!=null){
+    		FacesContext fc = FacesContext.getCurrentInstance();
+    		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("outroslancamentos", outroslancamentos);
+            RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentos");
+    	}
+    	return "";
+    }
+    
+    public void retornoDialogNovo(SelectEvent event) {
+        Outroslancamentos outroslancamentos = (Outroslancamentos) event.getObject();
+        gerarPesquisa();
+    }
+    
+    public void calcularTotal(){
+        float entrada = 0.0f;
+        float saida = 0.0f;
+        float saldo = 0.0f;
+        for(int i=0;i<listaOutrosLancamentos.size();i++){
+            if (listaOutrosLancamentos.get(i).getValorEntrada() > 0){
+                entrada = entrada + listaOutrosLancamentos.get(i).getValorEntrada();
+                saldo = saldo + (listaOutrosLancamentos.get(i).getValorEntrada() - listaOutrosLancamentos.get(i).getValorSaida());
+                listaOutrosLancamentos.get(i).setSaldo(saldo);
+            }else if (listaOutrosLancamentos.get(i).getValorSaida() > 0){
+                saida = saida + listaOutrosLancamentos.get(i).getValorSaida();
+                saldo = saldo + (listaOutrosLancamentos.get(i).getValorEntrada() - listaOutrosLancamentos.get(i).getValorSaida());
+                listaOutrosLancamentos.get(i).setSaldo(saldo);
+            }
+        }
+        
+        setValorEntrada(Formatacao.foramtarFloatString(entrada));
+        setValorSaida(Formatacao.foramtarFloatString(saida));
+        setValorTotal(Formatacao.foramtarFloatString(saldo)); 
+    }
+    
+    public void desabilitarUnidade(){
+    	if (usuarioLogadoMB.getCliente() != null) {
+    		habilitarUnidade = true;
+    	}else{
+    		habilitarUnidade = false;
+    	}
+    	
+    }
+	
 
 }
