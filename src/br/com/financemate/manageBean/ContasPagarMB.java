@@ -715,7 +715,7 @@ public class ContasPagarMB implements Serializable{
 			imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
 		}
 		return "";
-	 } 
+	 }
 	  
 	 public String limparConsulta(){
 		 try {

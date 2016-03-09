@@ -68,7 +68,7 @@
              	<p:inputText maxlength="10"  id="valor" size="12"  class="valorr"  value="#{cadContasPagarMB.contaPagar.valor}">
              		<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
              	</p:inputText>
-            </h:panelGrid>
+            </h:panelGrid> 
             <h:panelGrid style="margin-left: 26%; margin-top:-5%;"> 
             	<p:outputLabel value="Descrição" for="descricao" class="left3" style="margin-left: 9%;"/> 
             </h:panelGrid>
@@ -106,8 +106,8 @@
                     <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
                     <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
                     <f:selectItem itemLabel="Depósito" itemValue="Depósito" />
-                    <f:selectItem itemLabel="Transferencia" itemValue="Transferencia"/> 
-                    <p:ajax event="change" listener="#{cadContasPagarMB.transferenciaBancaria()}"  update="idFrmTransferencia"/>  
+                    <f:selectItem itemLabel="Transferencia" itemValue="Transferencia"/>
+                    <p:ajax event="change" listener="#{cadContasPagarMB.transferenciaBancaria()}"  update="idtransferencia"/>   
                 </p:selectOneMenu>
              </h:panelGrid>
              <br />    
@@ -130,7 +130,7 @@
              	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadContasPagarMB.contaPagar.competencia}" size="8" mask="99/9999"  class="left1"/>
              </h:panelGrid>
              <br />
-             <h:panelGrid columns="2" style="margin-left:1%;">
+             <h:panelGrid columns="2" style="margin-left:1%;"> 
                 <p:outputLabel value="Agendamento" for="dataAgen" class="left4"/>
                 <p:inputMask id="dataAgen"   mask="99/99/9999" size="12" maxlength="15" class="left4" value="#{cadContasPagarMB.contaPagar.dataAgendamento}" style="margin-left: 2%;">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
@@ -143,8 +143,6 @@
                 </p:inputMask>
              </h:panelGrid>
              <hr /> 
-             </h:form>
-             <h:form id="idFrmTransferencia" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
              <h:panelGrid id="idtransferencia"  rendered="#{cadContasPagarMB.selecionada}">
 	             
 	             <br />
@@ -180,8 +178,7 @@
 	             </h:panelGrid>
 	             <hr /> 
 	         </h:panelGrid>
-	         
-	         <h:panelGrid columns="3" style="margin-left:40%;"> 
+	         <h:panelGrid columns="3" style="margin-left:40%;" > 
                 <p:commandLink title="Confirmar" style="text-decoration: none"   action="#{cadContasPagarMB.salvar()}" >
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                 </p:commandLink>
@@ -192,7 +189,7 @@
                 <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" actionListener="#{contasPagarMB.coresFiltrar()}"  action="#{cadContasPagarMB.cancelar()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
-             </h:panelGrid>      
-        </h:form>
+             </h:panelGrid>
+             </h:form>
     </h:body>
 </html>

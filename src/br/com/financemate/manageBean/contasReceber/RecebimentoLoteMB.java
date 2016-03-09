@@ -21,6 +21,7 @@ import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.util.Formatacao;
 
 @Named
 @ViewScoped
@@ -40,6 +41,7 @@ public class RecebimentoLoteMB implements Serializable {
     private UsuarioLogadoMB usuarioLogadoMB;
     private Banco banco;
     private Cliente cliente;
+    private Date dataPagamento;
     
 	@PostConstruct
 	public void init(){
@@ -49,12 +51,11 @@ public class RecebimentoLoteMB implements Serializable {
 		totalReceberLote = (String) session.getAttribute("totalReceberLote");
 		contasReceber = (Contasreceber) session.getAttribute("contasReceber");
 		session.removeAttribute("totalReceberLote");
-		session.removeAttribute("listaContasSelecionadas");
 		session.removeAttribute("contasReceber");
 		if (contasReceber == null) {
             contasReceber = new Contasreceber();
         }
-		contasReceber.setDataPagamento(new Date());
+		dataPagamento = new Date(); 
 		if (listaContasSelecionadas == null) {
 			listaContasSelecionadas = new  ArrayList<Contasreceber>();
 		}
@@ -62,6 +63,20 @@ public class RecebimentoLoteMB implements Serializable {
 	
 
 	
+
+	public Date getDataPagamento() {
+		return dataPagamento;
+	}
+
+
+
+
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+
+
 
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
 		return usuarioLogadoMB;
@@ -146,6 +161,8 @@ public class RecebimentoLoteMB implements Serializable {
 	public String salvarContasReceberLote() {
 		for (int i = 0; i < listaContasSelecionadas.size(); i++) {
 			contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+			listaContasSelecionadas.get(i).setUsuario(usuarioLogadoMB.getUsuario());
+			listaContasSelecionadas.get(i).setDataPagamento(dataPagamento);
 			ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 			contasReceber = contasReceberFacade.salvar(listaContasSelecionadas.get(i));
 		}

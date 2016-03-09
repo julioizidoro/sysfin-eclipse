@@ -155,7 +155,7 @@ public class HistoricoMB implements Serializable {
         historicaCobranca.setUsuario(usuarioLogadoMB.getUsuario());
         historicaCobranca = cobrancaFacade.salvar(historicaCobranca);
         cobranca.getHistoricocobrancaList().add(historicaCobranca);
-        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Historico de Cobran�a Salvo.");
+        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Histórico de Cobrança Salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
         return "cobranca";
     }

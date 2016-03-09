@@ -28,7 +28,6 @@ import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.util.Formatacao;
 
@@ -47,8 +46,6 @@ public class OutrosLancamentosMB implements Serializable {
     private Banco banco;
     private Cliente cliente;
     private List<Cliente> listaClientes;
-    private Date dataInical; 
-    private Date dataFinal;
     private String sql;
     private List<Banco> listaBancos;
     private boolean verCliente=false;
@@ -57,6 +54,8 @@ public class OutrosLancamentosMB implements Serializable {
     private String valorSaida;
     private String valorTotal;
     private Boolean habilitarUnidade;
+    private Date dataInicial;
+    private Date dataFinal;
 	
 	@PostConstruct
 	public void init(){
@@ -73,6 +72,27 @@ public class OutrosLancamentosMB implements Serializable {
 	 
 	
 	
+
+	public Date getDataInicial() {
+		return dataInicial;
+	}
+
+
+
+
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+
+
+
+	public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
+		this.usuarioLogadoMB = usuarioLogadoMB;
+	}
+
+
+
 
 	public Boolean getHabilitarUnidade() {
 		return habilitarUnidade;
@@ -175,13 +195,6 @@ public class OutrosLancamentosMB implements Serializable {
 		this.listaClientes = listaClientes;
 	}
 
-	public Date getDataInical() {
-		return dataInical;
-	}
-
-	public void setDataInical(Date dataInical) {
-		this.dataInical = dataInical;
-	}
 
 	public Date getDataFinal() {
 		return dataFinal;
@@ -226,7 +239,7 @@ public class OutrosLancamentosMB implements Serializable {
         if ((banco != null) && 
                  (cliente != null)) {
             sql = "Select o from Outroslancamentos o where o.banco.idbanco=" + banco.getIdbanco()
-            		+ "  and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInical)
+            		+ "  and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
             		+ "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
                     +"' and o.cliente.idcliente=" + cliente.getIdcliente();
             sql = sql + " order by o.dataCompensacao";  
@@ -320,6 +333,13 @@ public class OutrosLancamentosMB implements Serializable {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 600);
         RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentos");
+        return "";
+    }
+    
+    public String novoLancamentoPrincipal() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 600);
+        RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentosPrincipal");
         return "";
     }
     

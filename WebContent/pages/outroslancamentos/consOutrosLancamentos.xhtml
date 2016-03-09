@@ -22,19 +22,23 @@
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
 	                    <f:selectItems value="#{outrosLancamentosMB.listaClientes}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
 	                     <f:attribute name="listaCliente" value="#{outrosLancamentosMB.listaClientes}"/>
+	                     
 	                    <p:ajax event="change" listener="#{outrosLancamentosMB.gerarListaBanco()}" update="idconta"/>
 	          </p:selectOneMenu>  
            </h:panelGrid>  
            <h:panelGrid columns="2"  style="margin-left: 38.5%; margin-top:-4.5%;">   
            		<p:outputLabel value="Peridodo" class="left3" style="margin-left:90%;"/>
            		<br />	
-           		<p:inputMask id="dataIni" mask="99/99/9999" style="color:gray;"  size="15" maxlength="15" value="#{outrosLancamentosMB.dataInical}"  class="tabelaRecebimento"  placeholder="Data Inicial" >
+           		<p:inputMask mask="99/99/9999" id="dataIni" style="color:gray;"  size="15" maxlength="15" value="#{outrosLancamentosMB.dataInicial}"  class="tabelaRecebimento"  placeholder="Data Inicial" >
                 	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                	<p:ajax event="blur" />
                 </p:inputMask>
                 <p:inputMask id="dataFinal"  mask="99/99/9999" style="color:gray;" size="15" maxlength="15" class="left6" value="#{outrosLancamentosMB.dataFinal}"  placeholder="Data Final">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                </p:inputMask> 
+                    <p:ajax event="blur" /> 
+                </p:inputMask>  
            </h:panelGrid>
+           
            
             <h:panelGrid columns="1" style="margin-left:65%; margin-top:-4.3%;">
              	<p:outputLabel value="Conta" for="idconta" class="left3" style="margin-left:40%;"/>
@@ -46,7 +50,7 @@
 	                    <p:ajax event="change" listener="#{outrosLancamentosMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos, idsaida, identrada, idtotal"/>
 	                </p:selectOneMenu>  
              </h:panelGrid> 
-             <h:panelGrid style="margin-left: 89%; margin-top:-3%;">  
+             <h:panelGrid style="margin-left: 89%; margin-top:-3%;">   
 			 
 				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:2%;text-decoration:none;" title="Novo Lançamento">
 					<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>

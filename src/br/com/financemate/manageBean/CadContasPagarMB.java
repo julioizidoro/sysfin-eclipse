@@ -283,6 +283,7 @@ public class CadContasPagarMB implements Serializable{
         return null;
     }
 	
+	
 	public void mostrarMensagem(Exception ex, String erro, String titulo){
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
@@ -383,6 +384,18 @@ public class CadContasPagarMB implements Serializable{
         contaPagar.setPlanocontas(planoContas);
         contaPagar.setCliente(cliente);
         contaPagar.setContaPaga("N");
+        if (planoContas != null) {
+			contaPagar.setPlanocontas(planoContas);
+		}else{
+			PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+			try {
+				planoContas = planoContasFacade.consultar(1);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			contaPagar.setPlanocontas(planoContas);
+		}
         if (contaPagar.getCompetencia() == null) {
 			contaPagar.setCompetencia("");
 		}
@@ -441,7 +454,7 @@ public class CadContasPagarMB implements Serializable{
 	
 	public String validarDados(){
 		String mensagem = "";
-		if (contaPagar.getFornecedor().equalsIgnoreCase("")) {
+		if (contaPagar.getFornecedor() == null) {
 			mensagem = mensagem + "Fornecedor não informado \r\n";
 		}
 		if (contaPagar.getValor().equals(0f)) {
@@ -450,13 +463,13 @@ public class CadContasPagarMB implements Serializable{
 		if (contaPagar.getDescricao().equalsIgnoreCase("")) {
 			mensagem = mensagem + "Descrição não informado \r\n";
 		}
-		if (contaPagar.getBanco().equals(null)) {
+		if (contaPagar.getBanco() == null) {
 			mensagem = mensagem + "Conta não selecionada \r\n";
 		}
-		if (contaPagar.getDataVencimento().equals(null)) {
+		if (contaPagar.getDataVencimento() == null) {
 			mensagem = mensagem + "Data de Vencimento não informada \r\n";
 		}
-		if (contaPagar.getFormaPagamento().equalsIgnoreCase("")) {
+		if (contaPagar.getFormaPagamento() == null) {
 			mensagem = mensagem + "Forma de Pagamento não selecionada \r\n";
 		}
 		
