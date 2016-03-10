@@ -22,7 +22,6 @@
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
 	                    <f:selectItems value="#{outrosLancamentosMB.listaClientes}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
 	                     <f:attribute name="listaCliente" value="#{outrosLancamentosMB.listaClientes}"/>
-	                     
 	                    <p:ajax event="change" listener="#{outrosLancamentosMB.gerarListaBanco()}" update="idconta"/>
 	          </p:selectOneMenu>  
            </h:panelGrid>  
@@ -40,17 +39,22 @@
            </h:panelGrid>
            
            
-            <h:panelGrid columns="1" style="margin-left:65%; margin-top:-4.3%;">
+            <h:panelGrid columns="1" style="margin-left:61%; margin-top:-4.3%;">
              	<p:outputLabel value="Conta" for="idconta" class="left3" style="margin-left:40%;"/>
 	              <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{outrosLancamentosMB.banco}"  converter="BancoConverter"
 	                                 filter="true" filterMatchMode="startsWith" panelStyle="width:150px">
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
 	                    <f:selectItems value="#{outrosLancamentosMB.listaBancos}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
 	                    <f:attribute name="listaBanco" value="#{outrosLancamentosMB.listaBancos}" />
-	                    <p:ajax event="change" listener="#{outrosLancamentosMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos, idsaida, identrada, idtotal"/>
-	                </p:selectOneMenu>  
-             </h:panelGrid> 
-             <h:panelGrid style="margin-left: 89%; margin-top:-3%;">   
+	             </p:selectOneMenu>  
+             </h:panelGrid>
+             
+              <h:panelGrid style="margin-left:77%; margin-top:-2.7%;" > 
+	                <p:commandLink title="Pesquisar" style="text-decoration: none"   action="#{outrosLancamentosMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos, idsaida, identrada, idtotal">
+	                    <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
+	                </p:commandLink>
+	          </h:panelGrid> 
+             <h:panelGrid style="margin-left: 89%; margin-top:-3.2%;">   
 			 
 				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:2%;text-decoration:none;" title="Novo Lançamento">
 					<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
@@ -64,7 +68,7 @@
 	            </p:commandLink>
 	         </h:panelGrid> 
 	         <h:panelGrid style="margin-left:94%; margin-top:-3.35%;">
-	            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
+	            <p:commandLink   action="#{imprimirOutrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 					<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
 	            </p:commandLink>   
 	         </h:panelGrid> 

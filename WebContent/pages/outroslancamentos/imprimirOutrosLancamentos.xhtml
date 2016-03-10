@@ -23,6 +23,40 @@
 
             <title>Imprimir</title>
             <br />
+            
+            	<h:panelGrid>
+					<br></br>
+                	<p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%"/>
+                </h:panelGrid>
+                <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
+	                <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{imprimirOutrosLancamentosMB.cliente}" converter="ClienteConverter"
+	                             filter="true" filterMatchMode="startsWith" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
+	                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+	                    <f:selectItems  value="#{imprimirOutrosLancamentosMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+	                    <f:attribute name="listaCliente" value="#{imprimirOutrosLancamentosMB.listaCliente}"/>
+	                    <p:ajax event="change" listener="#{imprimirOutrosLancamentosMB.gerarListaBanco()}" update="idconta"/>
+	                </p:selectOneMenu> 
+                </h:panelGrid>
+            	<h:panelGrid columns="2" style="margin-left:65%; margin-top:-6%;"> 
+            		<p:outputLabel value="Conta" for="idconta" class="left3"/> 
+	              	<p:selectOneMenu id="idconta" class="left3" style="width:155px;"  value="#{imprimirOutrosLancamentosMB.banco}"  converter="BancoConverter"
+	                                 filter="true" filterMatchMode="startsWith" panelStyle="width:150px">
+	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+	                    <f:selectItems value="#{imprimirOutrosLancamentosMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
+	                    <f:attribute name="listaBanco" value="#{imprimirOutrosLancamentosMB.listaBanco}" />
+	                </p:selectOneMenu>  
+             	</h:panelGrid> 
+             	<br />
+             	<h:panelGrid columns="3"  style="margin-left: 1%;">   
+	           		<p:outputLabel value="Data Incial" class="left3"/>
+	           		<p:inputMask mask="99/99/9999" id="dataIni" style="margin-left:1%;"  size="15" maxlength="15" value="#{imprimirOutrosLancamentosMB.dataIncial}"  class="tabelaRecebimento"  placeholder="Data Inicial" >
+	                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+	                	</p:inputMask>
+	                <p:outputLabel value="Data Final" style="margin-left:10%;"/>
+	                <p:inputMask id="dataFinal"  mask="99/99/9999" style="color:gray;" size="15" maxlength="15" class="left6" value="#{imprimirOutrosLancamentosMB.dataFinal}"  placeholder="Data Final">
+	                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+	                    </p:inputMask>  
+           		</h:panelGrid>
         </h:form>
 </h:body>
 </html>

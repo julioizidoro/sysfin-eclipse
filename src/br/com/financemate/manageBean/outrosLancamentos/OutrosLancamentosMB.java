@@ -237,7 +237,7 @@ public class OutrosLancamentosMB implements Serializable {
     
     public void gerarPesquisa() {
         if ((banco != null) && 
-                 (cliente != null)) {
+                 (cliente != null) && (dataInicial != null) && (dataFinal != null)) {
             sql = "Select o from Outroslancamentos o where o.banco.idbanco=" + banco.getIdbanco()
             		+ "  and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
             		+ "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
