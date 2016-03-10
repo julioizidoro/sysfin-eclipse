@@ -47,16 +47,29 @@
 	                </p:selectOneMenu>  
              	</h:panelGrid> 
              	<br />
-             	<h:panelGrid columns="3"  style="margin-left: 1%;">   
+             	<h:panelGrid columns="2"  style="margin-left: 1%;">   
 	           		<p:outputLabel value="Data Incial" class="left3"/>
 	           		<p:inputMask mask="99/99/9999" id="dataIni" style="margin-left:1%;"  size="15" maxlength="15" value="#{imprimirOutrosLancamentosMB.dataIncial}"  class="tabelaRecebimento"  placeholder="Data Inicial" >
 	                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-	                	</p:inputMask>
-	                <p:outputLabel value="Data Final" style="margin-left:10%;"/>
+	                </p:inputMask>
+	            </h:panelGrid>
+	            <h:panelGrid columns="2" style="margin-left: 35%; margin-top:-5.7%;">
+	                <p:outputLabel value="Data Final" />
 	                <p:inputMask id="dataFinal"  mask="99/99/9999" style="color:gray;" size="15" maxlength="15" class="left6" value="#{imprimirOutrosLancamentosMB.dataFinal}"  placeholder="Data Final">
 	                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	                    </p:inputMask>  
            		</h:panelGrid>
+           		<br />
+           		<br /><br /><br /><br />
+           		<hr />
+           		<br />
+	                <p:commandLink title="Confirmar" style="text-decoration: none; margin-left:40%;"  action="#" >
+	                    <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+	                </p:commandLink>
+	                <p:commandLink title="Cancelar" style="margin-left: 5%;text-decoration: none"   action="#" >
+	                    <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+	                </p:commandLink>
+             	
         </h:form>
 </h:body>
 </html>

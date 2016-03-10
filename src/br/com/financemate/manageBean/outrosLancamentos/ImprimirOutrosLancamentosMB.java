@@ -224,5 +224,6 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentos");
         return "";
     }
+	
 
 }

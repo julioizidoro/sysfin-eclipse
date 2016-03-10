@@ -1,13 +1,20 @@
 package br.com.financemate.manageBean.contasReceber;
 
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.model.Contasreceber;
 
 @Named
@@ -21,6 +28,7 @@ public class ParcelasMB implements Serializable {
 	
 	private Contasreceber contasreceber;
 	private Float total;
+	private List<Contasreceber> listaParcela;
 	
 	
 	@PostConstruct
@@ -28,10 +36,26 @@ public class ParcelasMB implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasreceber = (Contasreceber) session.getAttribute("contasReceber");
-        totalParcela();
+        if (contasreceber != null) {
+			gerarListaParcelas(); 
+		}
 	} 
 	
 	
+	
+
+	public List<Contasreceber> getListaParcela() {
+		return listaParcela;
+	}
+
+
+
+
+	public void setListaParcela(List<Contasreceber> listaParcela) {
+		this.listaParcela = listaParcela;
+	}
+
+
 
 
 	public Float getTotal() {
@@ -66,6 +90,29 @@ public class ParcelasMB implements Serializable {
 	public String voltar(){
 		return "cadContasReceber";
 	}
+	
+	
+	public void gerarListaParcelas(){
+		String sql = "SELECT c FROM Contasreceber c  JOIN Vendas v on c.vendas.idvendas=v.idvendas WHERE v.idvendas=" + contasreceber.getVendas().getIdvendas();
+		try {
+			 ContasReceberFacade contasReceberFacadece = new ContasReceberFacade();
+			 
+			 listaParcela = contasReceberFacadece.listar(sql);
+			 if (listaParcela == null) {
+				 listaParcela = new ArrayList<Contasreceber>();
+			 }
+		 } catch (SQLException ex) {
+			 Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+			 mostrarMensagem(ex, "Erro Listar Contas", "Erro");
+		 }
+		totalParcela();
+	}
+	
+	public void mostrarMensagem(Exception ex, String erro, String titulo){
+        FacesContext context = FacesContext.getCurrentInstance();
+        erro = erro + " - " + ex;
+        context.addMessage(null, new FacesMessage(titulo, erro));
+    }
 	
 	
 }

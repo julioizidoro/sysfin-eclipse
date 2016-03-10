@@ -70,6 +70,7 @@ public class CadContasPagarMB implements Serializable{
 	private Boolean tipoAcesso;
 	private Boolean habilitarUnidade = false;
 	private Operacaousuairo operacaousuairo;
+	private List<Cptransferencia> listaCptransferencia;
 	
 
 	@PostConstruct
@@ -103,6 +104,20 @@ public class CadContasPagarMB implements Serializable{
 	
 	
 	
+	public List<Cptransferencia> getListaCptransferencia() {
+		return listaCptransferencia;
+	}
+
+
+
+
+	public void setListaCptransferencia(List<Cptransferencia> listaCptransferencia) {
+		this.listaCptransferencia = listaCptransferencia;
+	}
+
+
+
+
 	public Operacaousuairo getOperacaousuairo() {
 		return operacaousuairo;
 	}

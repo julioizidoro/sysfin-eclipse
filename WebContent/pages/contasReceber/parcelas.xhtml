@@ -23,8 +23,8 @@
             
             <h2  >Parcelamento</h2>
             <br />
-             <p:dataTable id="idparcelas" var="contasReceber"  rowStyleClass="tabela" class="tabelaselecionar" value="#{parcelasMB.contasreceber}" 
-                          scrollRows="10"  scrollable="true" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
+             <p:dataTable id="idparcelas" var="contasReceber"  rowStyleClass="tabela" class="tabelaselecionar" value="#{parcelasMB.listaParcela}" 
+                          scrollRows="10"  scrollable="true" selection="{#{parcelasMB.contasreceber}" rowKey="{#{contasReceber.idcontasReceber}" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
                 <p:column headerText="Parcela" style=" background:white; color:black; border:none;">
                     <h:outputText value="#{contasReceber.numeroParcela}" style="margin-left:50%;"/> 
                 </p:column>
