@@ -1,6 +1,7 @@
 package br.com.financemate.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -38,5 +39,14 @@ public class OperacaoUsuarioDao {
 		 Operacaousuairo operacaousuairoo = (Operacaousuairo) q.getResultList();
 		 manager.getTransaction().commit();
 		 return operacaousuairoo;
+	 }
+	 
+	 public List<Operacaousuairo> listar(String sql) throws SQLException{
+		 EntityManager manager = ConectionFactory.getConnection();
+		 manager.getTransaction().begin();
+		 Query q = manager.createQuery(sql);
+		 List<Operacaousuairo> listaContas = q.getResultList();
+		 manager.getTransaction().commit();
+		 return listaContas;
 	 }
 }

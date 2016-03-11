@@ -67,6 +67,9 @@
         	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
 		        <p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu label="Vendas" style="font-size:16px;">
+	        			<p:menuitem value="Novo Lançamento" action="#" style="margin-left:-13%;"/> 
+	            		<p:menuitem value="Lançamentos" action="#{menuMB.consVendas()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
 	        		</p:submenu>
 	        	</p:panelMenu>
 	        </h:panelGrid>
@@ -79,7 +82,7 @@
 	                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}" style="margin-left:-13%;"/>
 	                    <p:menuitem value="Banco" action="#{menuMB.consBanco()}" style="margin-left:-13%;"/>
 	                    <p:menuitem value="Tipo plano de conta" action="#{menuMB.consTipoPlanoConta()}" style="margin-left:-13%;"/> 
-	                    <p:menuitem value="Plano de conta"  style="margin-left:-13%;"/>
+	                    <p:menuitem value="Plano de conta" action="#{menuMB.consPlanoConta()}" style="margin-left:-13%;"/>
 	            	</p:submenu>
 	            </p:panelMenu>
             </h:panelGrid>

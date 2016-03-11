@@ -1,8 +1,11 @@
 package br.com.financemate.facade;
 
 import java.sql.SQLException;
+import java.util.List;
 
+import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.OperacaoUsuarioDao;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Operacaousuairo;
 
 
@@ -23,5 +26,10 @@ public class OperacaoUsuarioFacade {
 	public Operacaousuairo operacaousuairo(String sql) throws SQLException{
         operacaoUsuarioDao = new OperacaoUsuarioDao();
         return operacaoUsuarioDao.operacaousuairo(sql);
+    }
+	
+	public List<Operacaousuairo> listar(String sql) throws SQLException{
+        operacaoUsuarioDao = new OperacaoUsuarioDao();
+        return operacaoUsuarioDao.listar(sql);
     }
 }

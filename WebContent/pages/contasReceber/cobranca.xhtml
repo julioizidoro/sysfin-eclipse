@@ -25,6 +25,13 @@
             <title  >Cobrança</title>
             
             <br />
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Cobrança&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="background:#E8E8E8;font-size:16px;color:#696969;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Cobrança">
+			</p:commandLink>  
+            <p:commandLink id="listacontas" value="&nbsp;&nbsp;&nbsp;&nbsp;Lista de Contas&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.listaContasCobranca()}" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Lista de contas">
+			</p:commandLink>
+			<p:commandLink id="historicoCobranca" value="&nbsp;&nbsp;&nbsp;&nbsp;Histórico de Cobrança&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cobrancaMB.historicoCobranca()}" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Histórico de Cobrança">
+			</p:commandLink>
+			<br /><br /><br />
             <h:panelGrid style="margin-left: 1%">
             	<p:outputLabel value="Unidade" />
             </h:panelGrid>
@@ -99,44 +106,12 @@
             <br />
             <hr />
             <br />
-            <p:contextMenu  style="background:white;">
-                <p:menuitem value="Visualizar"  icon=" ui-icon-pencil"   action="#{cobrancaMB.editarHistorico()}"/>
-            </p:contextMenu>   
-            <p:dataTable id="idHistoricoCobranca" var="historicoCobranca"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cobrancaMB.listaHistorico}" 
-                          scrollRows="10"  scrollable="true" scrollHeight="110" selection="#{cobrancaMB.historico}" selectionMode="single" rowKey="#{historicoCobranca.idhistoricocobranca}"  rows="10" style="margin-bottom:20px;"> 
-                <p:column headerText="Data" style="background:white; color:black; border:none; width:70px;">
-                    <h:outputText  value="#{historicoCobranca.data}" style="margin-left:10%;">
-                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                    </h:outputText> 
-                </p:column>
-                <p:column headerText="Contato" style="width: 80px; background:white; color:black; border:none;">
-                    <h:outputText value="#{historicoCobranca.contato}" /> 
-                </p:column>
-                <p:column headerText="Descrição" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{historicoCobranca.descricao}" /> 
-                </p:column> 
-                <p:column headerText="Usuário"   style="background:white; color:black; width: 80px; border:none;">
-                    <h:outputText value="#{historicoCobranca.usuario.nome}" style="margin-left:20%;"/>
-                </p:column>
-                
-            </p:dataTable>
-            <br />
-            <p:commandLink   action="#{cobrancaMB.novoHistorico()}" style="margin-left:40%;text-decoration:none;" title="Adicionar">
-				<img src="../../resources/img/iconeplus.png"/>
-			
-			<h:panelGrid style="margin-left:45%; margin-top:-5%;">
-				<p:outputLabel style="color:black;" value="Novo Histórico"/>
-			</h:panelGrid>
-			</p:commandLink>
-            <hr />
-            <br />
             <p:commandLink title="Salvar Cobrança" style="margin-left: 37%;text-decoration: none"   action="#{cobrancaMB.salvarDadosCobranca()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Fechar" style="margin-left: 9%;text-decoration: none" action="#{cobrancaMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
             </p:commandLink>
-            <br/>
         </h:form> 
         
     </h:body>

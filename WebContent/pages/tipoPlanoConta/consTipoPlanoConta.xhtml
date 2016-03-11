@@ -16,13 +16,12 @@
             <br /><br /> 
                     <p:contextMenu for="idTabelaTipoPlanoConta" style="background:white;">
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{tipoPlanoContaMB.editar(tipoPlanoContaMB.tipoplanocontas)}" update="idTabelaTipoPlanoConta" /> 
-                    	<p:menuitem value="Excluir"  icon=" ui-icon-pencil"  action="#" update="idTabelaTipoPlanoConta" /> 
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaTipoPlanoConta"  var="tipoPlanoConta"  value="#{tipoPlanoContaMB.listarTipoPlanoContas}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{tipoPlanoContaMB.tipoplanocontas}" selectionMode="single" rowKey="#{tipoPlanoConta.idtipoplanocontas}">
-                    		
-                    	<p:column headerText="Descrição"  sortBy="#{tipoPlanoConta.descricao}" style="width:95%; background:white; color:black; border:none;">
-                            <h:outputText value="#{tipoplanoconta.descricao}" style="color:black;"/> 
+                    		 
+                    	<p:column headerText="Descrição"  sortBy="#{tipoPlanoConta.descricao}" style="width:95%; font-size:12px; background:white; color:black; border:none;">
+                            <h:outputText value="#{tipoPlanoConta.descricao}" style="color:black;"/> 
                         </p:column>
                         <p:column  style=" background:white; color:black; border:none;">
                             <p:selectBooleanCheckbox value="#{tipoPlanoConta.selecionado}"/>

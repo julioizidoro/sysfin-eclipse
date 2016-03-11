@@ -10,7 +10,7 @@
 		<h:form id="frmConsultaCliente">
 		<br/> 
 			<p:commandLink   action="#{clienteMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
-				<img src="../../resources/img/iconeplusS.ico" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{clienteMB.retornoDialogNovo}" update="idTabelaCliente"/>
             </p:commandLink>
             <br /><br /> 
@@ -20,16 +20,16 @@
                     <p:dataTable id="idTabelaCliente"  var="cliente"  value="#{clienteMB.listaClientes}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{clienteMB.cliente}" selectionMode="single" rowKey="#{cliente.idcliente}">
                        
-                        <p:column headerText="Nome" sortBy="#{cliente.nomeFantasia}" style="width:17%; background:#E7EBEB; color:black; border:none;">
+                        <p:column headerText="Nome" sortBy="#{cliente.nomeFantasia}" style="width:17%; font-size:12px; background:white; color:black; border:none;">
                             <h:outputText  value="#{cliente.nomeFantasia}" style="margin-left:33%;" />
                         </p:column> 
-                        <p:column headerText="Fone Fixo" sortBy="#{cliente.foneFixo}" style="width:15%; background:#E7EBEB; color:black; border:#fff;">
+                        <p:column headerText="Fone Fixo" sortBy="#{cliente.foneFixo}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;">
                             <h:outputText value="#{cliente.foneFixo}" style="margin-left:25%;"/>
                         </p:column> 
-                        <p:column headerText="Email" sortBy="#{cliente.email}" style="widht:55%; background:#E7EBEB; color:black; border:none;" >
+                        <p:column headerText="Email" sortBy="#{cliente.email}" style="widht:55%; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{cliente.email}"/>
                         </p:column>
-                        <p:column  style="width:28px; background:#E7EBEB; color:black; border:none;">
+                        <p:column  style="width:28px; background:white; color:black; border:none;">
                             <p:selectBooleanCheckbox value="#{cliente.selecionado}"/>
                         </p:column>
                     </p:dataTable> 

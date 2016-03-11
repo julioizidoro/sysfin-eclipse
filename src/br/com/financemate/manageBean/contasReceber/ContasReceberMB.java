@@ -617,11 +617,11 @@ public class ContasReceberMB implements Serializable {
 		 if (usuarioLogadoMB.getUsuario().getCliente()>0){
 			 sql = " Select v from Contasreceber v where v.dataVencimento<='" + dataFinal + 
 					 "' and v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
-					 " and v.dataPagamento=null and v.vendas.situacao<>" + "'CANCELADA'" + " order by v.dataVencimento";
+					 " and v.dataPagamento=null" + " order by v.dataVencimento";
 		 }else { 
 			 sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and "
 					 + "v.dataVencimento<='" + dataFinal + 
-					 "'  and v.dataPagamento=null and v.vendas.situacao<>" + "'CANCELADA'" + " order by v.dataVencimento";
+					 "'  and v.dataPagamento=null" + " order by v.dataVencimento";
 	        }   
 		 
 	 }
@@ -841,15 +841,20 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public String novaCobranca(Contasreceber contasreceber) {
-		 if (contasreceber!=null) {
+		 listaContasSelecionadas = new ArrayList<Contasreceber>();
+		 for (int i = 0; i < listaContasReceber.size(); i++) {
+			 if (listaContasReceber.get(i).isSelecionado()) {
+				listaContasSelecionadas.add(listaContasReceber.get(i));
+			 }
+		 }
 			 Map<String, Object> options = new HashMap<String, Object>();
 			 options.put("contentWidth", 600);
 			 FacesContext fc = FacesContext.getCurrentInstance();
 		     HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		     session.setAttribute("contasReceber", contasReceber);
-		     session.setAttribute("vendas", contasReceber.getVendas());
+		     session.setAttribute("listaContasSelecionadas", listaContasSelecionadas);
 			 RequestContext.getCurrentInstance().openDialog("cobranca");
-		}
+		
 		 return "";
 	 }
 	 
@@ -952,9 +957,7 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public void cancelar(Contasreceber contasreceber){
-		if (contasreceber.getVendas() != null) {
-			vendas = contasreceber.getVendas();
-			vendas.setSituacao("CANCELADA");
+		 	vendas.setSituacao("CANCELADA");
 			VendasFacade vendasFacade = new VendasFacade();
 			try {
 				vendasFacade.salvar(vendas);
@@ -963,7 +966,6 @@ public class ContasReceberMB implements Serializable {
 				 mostrarMensagem(ex, "Erro ao salvar venda cancelada", "Erro");
 			}
 			gerarListaContas();
-		} 
 	 }
 	 
 }

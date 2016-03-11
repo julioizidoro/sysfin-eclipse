@@ -90,8 +90,8 @@ public class TipoPlanoContaMB implements Serializable {
 	  
 	  public void retornoDialogNovo(SelectEvent event){
 	        Tipoplanocontas tipoplanocontas = (Tipoplanocontas) event.getObject();
-	       listarTipoPlanoContas.add(tipoplanocontas);
-	   }
+	        gerarListaTipoPlanoConta();
+	   } 
 	    
 	    public void mostrarMensagem(Exception ex, String erro, String titulo){
 	        FacesContext context = FacesContext.getCurrentInstance();

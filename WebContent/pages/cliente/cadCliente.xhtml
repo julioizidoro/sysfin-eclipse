@@ -13,7 +13,7 @@
     </h:head>
 
  <h:body > 
-        <h:form id="idFrmCadCliente" class="body2" style="font-size: 12px; background-color: #E7EBEB;" enctype="multipart/form-data">
+        <h:form id="idFrmCadCliente" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
@@ -129,14 +129,14 @@
                 	<p:selectOneMenu id="tipoplanoconta" class="left" style="width:300px"  value="#{cadClienteMB.tipoplanocontas}" 
                 			filter="true" filterMatchMode="startsWith" panelStyle="width:180px">
                     	<f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    	<f:selectItems  value="#{cadClienteMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado}"/>
+                    	<f:selectItems value="#{cadClienteMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado}"/>
                     	<f:attribute name="listaTipoPlanoContas" value="#{cadClienteMB.listarTipoPlanoContas}"/>
                     </p:selectOneMenu> 
                </h:panelGrid>
                 <br /><br /><br /><br /><br /><br />
                 <hr />
                 <br />
-                    <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"  action="#{cadClienteMB.salvar()}" >
+                    <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadClienteMB.salvar()}" > 
                         <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                     </p:commandLink>
                     <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{cadClienteMB.cancelar()}" >

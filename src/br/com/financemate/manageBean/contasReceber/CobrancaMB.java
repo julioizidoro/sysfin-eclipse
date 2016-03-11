@@ -23,6 +23,7 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.CobrancaFacade;
+import br.com.financemate.facade.CobrancaParcelasFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.HistoricoCobrancaFacade;
@@ -30,6 +31,7 @@ import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobranca;
+import br.com.financemate.model.Cobrancaparcelas;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Historicocobranca;
@@ -53,27 +55,33 @@ public class CobrancaMB implements Serializable {
     private List<Historicocobranca> listaHistorico;
     private Historicocobranca historico;
     private Vendas venda;
+    private List<Contasreceber> listaContasSelecionadas;
+    private Cobrancaparcelas cobrancaParcela;
     
     @PostConstruct
     public void init(){
     	FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasReceber = (Contasreceber) session.getAttribute("contasReceber");
+        listaContasSelecionadas = (List<Contasreceber>) session.getAttribute("listaContasSelecionadas");
+        if (listaContasSelecionadas == null) {
+			listaContasSelecionadas = new ArrayList<Contasreceber>();
+		}
     	gerarListaCliente();
         cliente = contasReceber.getCliente();
-        if (contasReceber.getCobranca() == null) {
+  //      if (contasReceber.getCobranca() == null) {
 			cobranca = new Cobranca();
 			listaHistorico = new ArrayList<Historicocobranca>();
-		}else{
-			if (contasReceber.getCobranca().getIdcobranca() > 0) {
-				cobranca = (Cobranca) contasReceber.getCobranca();
-				listaHistorico = cobranca.getHistoricocobrancaList();
-			} 
+	//	}else{
+//			if (contasReceber.getCobranca().getIdcobranca() > 0) {
+//				cobranca = (Cobranca) contasReceber.getCobranca();
+//				listaHistorico = cobranca.getHistoricocobrancaList();
+//			} 
 			
 		}
-        historico = new Historicocobranca();
+//        historico = new Historicocobranca();
         //gerarListaHistorico();
-    }
+//    }
     
     public void gerarListaHistorico(){
     	HistoricoCobrancaFacade historicoCobrancaFacade = new HistoricoCobrancaFacade();
@@ -83,6 +91,24 @@ public class CobrancaMB implements Serializable {
 		}
     }
     
+    
+    
+
+	public Cobrancaparcelas getCobrancaParcela() {
+		return cobrancaParcela;
+	}
+
+	public void setCobrancaParcela(Cobrancaparcelas cobrancaParcela) {
+		this.cobrancaParcela = cobrancaParcela;
+	}
+
+	public List<Contasreceber> getListaContasSelecionadas() {
+		return listaContasSelecionadas;
+	}
+
+	public void setListaContasSelecionadas(List<Contasreceber> listaContasSelecionadas) {
+		this.listaContasSelecionadas = listaContasSelecionadas;
+	}
 
 	public Vendas getVenda() {
 		return venda;
@@ -215,7 +241,6 @@ public class CobrancaMB implements Serializable {
         cobranca.setVencimentooriginal(contasReceber.getDataVencimento());
         cobranca = cobrancaFacade.salvar(cobranca);
         ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-        contasReceber.setCobranca(cobranca);
         contasReceberFacade.salvar(contasReceber);
         FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Dados  salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
@@ -252,5 +277,54 @@ public class CobrancaMB implements Serializable {
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
     }
+	
+	public String listaContasCobranca(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("cobranca", cobranca);
+		return "listaContaCobranca";
+	}
+	
+	public String cobranca(){
+		return "cobranca";
+	}
+	
+	public String historicoCobranca(){
+		return "historicoCobranca";
+	}
+	
+	
+	public void salvarCobrancasParcelas(){
+		List<Cobrancaparcelas> listaCobrancaParcelas;
+		CobrancaParcelasFacade cobrancaParcelasFacade = new CobrancaParcelasFacade();
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		cobranca = (Cobranca) session.getAttribute("cobranca");
+		contasReceber = (Contasreceber) session.getAttribute("contasReceber");
+		session.removeAttribute("contasReceber");
+		session.removeAttribute("cobranca");
+		try {
+			String sql = "Select cp From Cobrancaparcelas cp Join Contasreceber c on  cp.contasreceber.idcontasReceber=c.idcontasReceber";
+			sql = sql + " Join Cobranca co on cp.cobranca.idcobranca=co.idcobranca Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber();
+			sql = sql + " and cp.cobranca.idcobranca=" + cobranca.getIdcobranca();
+			listaCobrancaParcelas = cobrancaParcelasFacade.listarCobranca(sql);
+			if (listaCobrancaParcelas.size() == 0) {
+				for (int i = 0; i < listaContasSelecionadas.size(); i++) {
+					if (cobranca != null && contasReceber != null) {
+						cobrancaParcela = new Cobrancaparcelas();
+						cobrancaParcela.setCobranca(cobranca);
+						cobrancaParcela.setContasreceber(listaContasSelecionadas.get(i));
+						cobrancaParcelasFacade.salvar(cobrancaParcela);
+						session.removeAttribute("listaContasSelecionadas");
+					}
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 }

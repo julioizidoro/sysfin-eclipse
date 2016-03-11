@@ -351,16 +351,6 @@ public class CadContasReceberMB implements Serializable {
 			        contasReceber.setJuros(0.0f);
 			        contasReceber.setNumeroParcela(i/numeroVezes);
 			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-			        if (contasReceber.getVendas() == null) {
-			        	VendasFacade vendasFacade = new VendasFacade();
-			        	try {
-							vendas = vendasFacade.consultar(1);
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						contasReceber.setVendas(vendas);
-					}
 			        String mensagem = validarDados();
 			        if (mensagem=="") { 
 			        	contasReceber = contasReceberFacade.salvar(contasReceber);
@@ -379,19 +369,6 @@ public class CadContasReceberMB implements Serializable {
 				contasReceber.setJuros(0.0f);
 				contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
 				contasReceber.setNumeroParcela(1/1);
-				if (contasReceber.getCobranca()== null) {
-					contasReceber.setCobranca(cobranca);
-				}
-				if (contasReceber.getVendas() == null) {
-		        	VendasFacade vendasFacade = new VendasFacade();
-		        	try {
-						vendas = vendasFacade.consultar(1);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					contasReceber.setVendas(vendas);
-				}
 				String mensagem = validarDados();
 				if (mensagem=="") {
 					contasReceber = contasReceberFacade.salvar(contasReceber);

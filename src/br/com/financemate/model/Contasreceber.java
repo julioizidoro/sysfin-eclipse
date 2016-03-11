@@ -85,14 +85,8 @@ public class Contasreceber implements Serializable {
     @JoinColumn(name = "banco_idbanco", referencedColumnName = "idbanco")
     @ManyToOne(optional = false)
     private Banco banco;
-     @JoinColumn(name = "vendas_idvendas", referencedColumnName = "idvendas")
-    @ManyToOne(optional = false)
-    private Vendas vendas;
     @Transient
     private boolean selecionado;
-    @JoinColumn(name = "cobranca_idcobranca", referencedColumnName = "idcobranca")
-    @ManyToOne(optional = false)
-    private Cobranca cobranca;
     private List<Contasreceber> recebimentoParcialList;
 
     public Contasreceber() {
@@ -256,27 +250,7 @@ public class Contasreceber implements Serializable {
         this.selecionado = selecionado;
     }
 
-    public Vendas getVendas() {
-        return vendas;
-    }
-
-    public void setVendas(Vendas vendas) {
-        this.vendas = vendas;
-    }
-    
-    
-
-    public Cobranca getCobranca() {
-		return cobranca;
-	}
-
-
-
-	public void setCobranca(Cobranca cobranca) {
-		this.cobranca = cobranca;
-	}
-	
-    
+  
     public List<Contasreceber> getRecebimentoParcialList() {
 		return recebimentoParcialList;
 	}

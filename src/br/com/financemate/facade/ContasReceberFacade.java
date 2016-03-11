@@ -7,7 +7,6 @@
 package br.com.financemate.facade;
 
 
-import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.model.Contasreceber;
 import java.sql.SQLException;
