@@ -23,16 +23,73 @@
             
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			  
-			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="font-size:16px;color:gray;margin-left:8%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
+			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="font-size:16px;color:gray;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
 			</p:commandLink>  
             <p:commandLink id="backoffice" value="&nbsp;&nbsp;&nbsp;&nbsp;Back Office&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.backOffice()}" update="@all" style="background:#E8E8E8;font-size:16px;color:#696969;text-decoration:none;border: 2px solid; border-color:#696969;" title="Back Office">
 			</p:commandLink>
-            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Recebimento&nbsp;&nbsp;&nbsp;&nbsp;"   action="#" style=" font-size:16px;color:gray;border: 2px solid; text-decoration:none; border-color:#696969;" title="Recebimento" ajax="false">
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Recebimento&nbsp;&nbsp;&nbsp;&nbsp;"   action="#{cadVendasMB.recebimento()}" style=" font-size:16px;color:gray;border: 2px solid; text-decoration:none; border-color:#696969;" title="Recebimento" ajax="false">
 			</p:commandLink>
-            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
 			</p:commandLink>
             <br /><br /><br />
-             
+            <h:panelGrid columns="1" style="margin-left:1%;">
+           		<p:outputLabel value="Comissão" style="margin-left:17%;"/>
+           		<p:inputText value="#{cadVendasMB.vendas.comissaoLiquidaTotal}" size="12"/>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
+           		<p:outputLabel value="Desp. Financeiras" />
+           		<p:inputText value="#{cadVendasMB.vendas.despesasFinanceiras}" size="12"/>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
+           		<p:outputLabel value="Comis. Vendedor"/> 
+           		<p:inputText value="#{cadVendasMB.vendas.comissaoFuncionarios}" size="12"/>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;"> 
+           		<p:outputLabel value="Comis. Terceiros" />
+           		<p:inputText value="#{cadVendasMB.vendas.comissaoTerceiros}" size="12"/>
+           </h:panelGrid>
+           <br />
+           <h:panelGrid columns="1" style="margin-left:1%;">
+           		<p:outputLabel value="Líquido da Venda"/>
+           		<p:inputText value="#{cadVendasMB.vendas.liquidoVendas}" size="12" disabled="true"/>
+           </h:panelGrid>
+            <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
+           		<p:outputLabel value="Observação" />
+           		<p:inputText value="#{cadVendasMB.vendas.observacao}" size="67"/>
+           </h:panelGrid>
+           <br />
+           <h:panelGrid columns="1" style="margin-left:1%;">
+           		<p:outputLabel value="Fornecedor" />
+           		<p:inputText value="#{cadVendasMB.vendas.nomeFornecedor}" size="67"/>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;">
+           		<p:outputLabel value="Pago Fornecedor"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorPagoFornecedor}" size="12"/>
+           </h:panelGrid>
+           <br />
+           <h:panelGrid columns="1" style="margin-left:1%;">
+           		<p:outputLabel value="Pagar/Receber" style="margin-left:12%;" />
+           		<p:inputText value="#{cadVendasMB.vendas.valorLiquido}" disabled="true" size="12"/>
+           </h:panelGrid>
+           <h:panelGrid columns="1" style="margin-left:35.5%; margin-top:-9%;"> 
+	            <p:outputLabel value="Data Pgto/Rcbto Fornecedor" for="dataPgRb" class="left3" />  
+	            
+	            <p:inputMask id="dataPgRb" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataPagamentoFornecedor}"  style="margin-left: 18%;">
+	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+	            </p:inputMask>
+            </h:panelGrid>
+            <h:panelGrid style="margin-left: 85%; margin-top:-7.5%;"> 
+            	<p:commandLink title="Adicionar uma conta" style="text-decoration: none"   action="#{cadVendasMB.adicionarConta()}" >
+                	<img src="../../resources/img/iconeplus.png" width="40" height="40"/>
+            	</p:commandLink>
+            </h:panelGrid>
+             <br /> 
+           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
         </h:form>
     </h:body>
 </html>

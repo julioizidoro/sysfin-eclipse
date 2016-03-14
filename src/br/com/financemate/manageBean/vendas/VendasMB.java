@@ -331,12 +331,12 @@ public class VendasMB implements Serializable {
     
     public String verStatus(Vendas vendas) {
         if (vendas.getSituacao().equalsIgnoreCase("vermelho")) {
-            return "resources/img/bolaVermelha.png";
+            return "../../resources/img/bolaVermelha.png";
         } else if (vendas.getSituacao().equalsIgnoreCase("amarelo")) {
-            return "resources/img/bolaAmarela.png";
+            return "../../resources/img/bolaAmarela.png";
         } else {
-            return "resources/img/bolaVerde.png";
-        }
+            return "../../resources/img/bolaVerde.png";
+        } 
     }
     
     public String coresFiltrar(){
@@ -360,6 +360,13 @@ public class VendasMB implements Serializable {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 600);
         RequestContext.getCurrentInstance().openDialog("cadVendas");
+        return "";
+    }
+    
+    public String gerarParcela() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 600);
+        RequestContext.getCurrentInstance().openDialog("gerarParcelas");
         return "";
     }
 

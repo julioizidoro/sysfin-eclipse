@@ -25,13 +25,13 @@
             <title  >Nova Venda</title>
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			  
-			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="background:#E8E8E8;font-size:16px;color:#696969;margin-left:8%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
+			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="background:#E8E8E8;font-size:16px;color:#696969;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
 			</p:commandLink>  
             <p:commandLink id="backoffice" value="&nbsp;&nbsp;&nbsp;&nbsp;Back Office&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.backOffice()}" update="@all" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Back Office">
 			</p:commandLink>
-            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Recebimento&nbsp;&nbsp;&nbsp;&nbsp;"   action="#" style=" font-size:16px;color:gray;border: 2px solid; text-decoration:none; border-color:#696969;" title="Recebimento" ajax="false">
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Recebimento&nbsp;&nbsp;&nbsp;&nbsp;"   action="#{cadVendasMB.recebimento()}" style=" font-size:16px;color:gray;border: 2px solid; text-decoration:none; border-color:#696969;" title="Recebimento" ajax="false">
 			</p:commandLink>
-            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
+            <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
 			</p:commandLink>
             <br /><br /><br />
             
