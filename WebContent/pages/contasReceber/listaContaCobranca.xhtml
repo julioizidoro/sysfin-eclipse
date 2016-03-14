@@ -31,11 +31,11 @@
 			<br /><br /><br />
              <p:dataTable id="idListaConta" var="contasReceber"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cobrancaMB.listaContasSelecionadas}" 
                           scrollRows="10"  scrollable="true" selection="#{cobrancaMB.contasReceber}" rowKey="#{contasReceber.idcontasReceber}" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
-                <p:column headerText="Parcela" style=" background:white; color:black; border:none;">
+                <p:column headerText="Parcelas" style=" background:white; color:black; border:none;">
                     <h:outputText value="#{contasReceber.numeroParcela}" style="margin-left:50%;"/> 
                 </p:column>
                 <p:column headerText="Vencimento" style="background:white; color:black; border:none;">
-                    <h:outputText  value="#{contasReceber.dataVencimento}" style="margin-left:35%;">
+                    <h:outputText  value="#{contasReceber.dataVencimento}" style="margin-left:32%;">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
@@ -48,10 +48,10 @@
             </p:dataTable>
             <hr />
             <br />
-            <p:commandLink title="Importar Contas" style="margin-left: 37%;text-decoration: none"   action="#{cobrancaMB.salvarCobrancasParcelas()}"  update=":frmidListaContaCobranca:idListaConta">
-                <img src="../../resources/img/importar.png" width="40" height="40" style="margin-top:-15%;"/>
+            <p:commandLink title="Salvar" style="margin-left: 37%;text-decoration: none"   action="#{cobrancaMB.salvarCobrancasParcelas()}"  update=":frmidListaContaCobranca:idListaConta">
+                <img src="../../resources/img/confirmarS.png" width="50" height="50" style="margin-top:-15%;"/>
             </p:commandLink>
-            <p:commandLink title="Fechar" style="margin-left: 9%;text-decoration: none" action="#" >
+            <p:commandLink title="Fechar" style="margin-left: 9%;text-decoration: none" action="#{cobrancaMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
             </p:commandLink> 
         </h:form>

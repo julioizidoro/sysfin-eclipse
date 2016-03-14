@@ -93,7 +93,7 @@ public class ParcelasMB implements Serializable {
 	
 	
 	public void gerarListaParcelas(){
-		String sql = "SELECT c FROM Contasreceber c  JOIN Vendas v on c.vendas.idvendas=v.idvendas WHERE v.idvendas=";
+		String sql = "SELECT c FROM Contasreceber c  WHERE c.venda=" + contasreceber.getVenda();
 		try {
 			 ContasReceberFacade contasReceberFacadece = new ContasReceberFacade();
 			 

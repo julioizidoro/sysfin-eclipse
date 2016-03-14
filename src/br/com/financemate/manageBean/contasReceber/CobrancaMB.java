@@ -69,27 +69,25 @@ public class CobrancaMB implements Serializable {
 		}
     	gerarListaCliente();
         cliente = contasReceber.getCliente();
-  //      if (contasReceber.getCobranca() == null) {
-			cobranca = new Cobranca();
-			listaHistorico = new ArrayList<Historicocobranca>();
-	//	}else{
-//			if (contasReceber.getCobranca().getIdcobranca() > 0) {
-//				cobranca = (Cobranca) contasReceber.getCobranca();
-//				listaHistorico = cobranca.getHistoricocobrancaList();
-//			} 
-			
+        cobranca = (Cobranca) session.getAttribute("cobranca");
+        if (cobranca == null) {
+			CobrancaFacade cobrancaFacade = new CobrancaFacade();
+			cobranca = cobrancaFacade.consultar("Select c From Cobranca c Join Cobrancaparcelas cp on"
+					+ " c.idcobranca=cp.cobranca.idcobranca Join Contasreceber co on cp.contasreceber.idcontasReceber=co.idcontasReceber"
+					+ " Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber() );
 		}
-//        historico = new Historicocobranca();
-        //gerarListaHistorico();
-//    }
-    
-    public void gerarListaHistorico(){
-    	HistoricoCobrancaFacade historicoCobrancaFacade = new HistoricoCobrancaFacade();
-        listaHistorico = historicoCobrancaFacade.listar("Select h from Historicocobranca h");
-		if (listaHistorico == null) {
-			listaHistorico = new ArrayList<Historicocobranca>();
-		}
+        if (cobranca == null) {
+        	cobranca = new Cobranca();
+        	listaHistorico = new ArrayList<Historicocobranca>();
+        }else{
+        	gerarListaHistorico(); 
+        	if (listaHistorico == null) {
+				listaHistorico = new ArrayList<Historicocobranca>();
+			}
+        }
     }
+    
+    
     
     
     
@@ -274,6 +272,9 @@ public class CobrancaMB implements Serializable {
     }
 	
 	public String cancelar(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("cobranca");
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
     }
@@ -286,12 +287,32 @@ public class CobrancaMB implements Serializable {
 	}
 	
 	public String cobranca(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.getAttribute("listaHistorico");
 		return "cobranca";
 	}
 	
 	public String historicoCobranca(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("cobranca", cobranca);
+        gerarListaHistorico();
 		return "historicoCobranca";
 	}
+	
+	public void gerarListaHistorico(){
+    	FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false); 
+    	HistoricoCobrancaFacade historicoCobrancaFacade = new HistoricoCobrancaFacade();
+    	if (cobranca == null) {
+    		cobranca = (Cobranca) session.getAttribute("cobranca");
+		}
+        listaHistorico = historicoCobrancaFacade.listar("Select h from Historicocobranca h Where h.cobranca.idcobranca=" + cobranca.getIdcobranca());
+		if (listaHistorico == null) {
+			listaHistorico = new ArrayList<Historicocobranca>();
+		}
+    }
 	
 	
 	public void salvarCobrancasParcelas(){

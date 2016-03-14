@@ -23,6 +23,7 @@ import org.primefaces.event.SelectEvent;
 
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.CobrancaParcelasFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.VendasFacade;
@@ -32,6 +33,7 @@ import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Cobrancaparcelas;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Vendas;
@@ -80,6 +82,10 @@ public class ContasReceberMB implements Serializable {
     private Integer nVenda;
     private String status;
     private Float valorPagoParcial;
+    private Integer totalParcela;
+    private List<Contasreceber> listaTotalParcela;
+    private Integer cob;
+    private List<Cobrancaparcelas> listaCob;
 	
     @PostConstruct
 	public void init(){
@@ -90,6 +96,62 @@ public class ContasReceberMB implements Serializable {
 		gerarListaContas();
 	}
     
+
+
+
+	public List<Cobrancaparcelas> getListaCob() {
+		return listaCob;
+	}
+
+
+
+
+	public void setListaCob(List<Cobrancaparcelas> listaCob) {
+		this.listaCob = listaCob;
+	}
+
+
+
+
+	public Integer getCob() {
+		return cob;
+	}
+
+
+
+
+	public void setCob(Integer cob) {
+		this.cob = cob;
+	}
+
+
+
+
+	public List<Contasreceber> getListaTotalParcela() {
+		return listaTotalParcela;
+	}
+
+
+
+
+	public void setListaTotalParcela(List<Contasreceber> listaTotalParcela) {
+		this.listaTotalParcela = listaTotalParcela;
+	}
+
+
+
+
+	public Integer getTotalParcela() {
+		return totalParcela;
+	}
+
+
+
+
+	public void setTotalParcela(Integer totalParcela) {
+		this.totalParcela = totalParcela;
+	}
+
 
 
 
@@ -672,6 +734,7 @@ public class ContasReceberMB implements Serializable {
 	            }else if (listaContasReceber.get(i).getDataVencimento().after(data)){
 	                vencer = vencer + listaContasReceber.get(i).getValorParcela();
 	            }
+	            
 	        }
 	        setTotalVencidas(Formatacao.foramtarFloatString(vencida));
 	        setTotalVencer(Formatacao.foramtarFloatString(vencer));
@@ -966,6 +1029,43 @@ public class ContasReceberMB implements Serializable {
 				 mostrarMensagem(ex, "Erro ao salvar venda cancelada", "Erro");
 			}
 			gerarListaContas();
+	 }
+	 
+	 
+	 public Integer numeroCob(int contasreceber){
+			String sql = "Select cp From Cobrancaparcelas cp Join Contasreceber c on cp.contasreceber.idcontasReceber=c.idcontasReceber Where cp.contasreceber.idcontasReceber=" + contasreceber;
+			CobrancaParcelasFacade cobrancaParcelasFacade = new CobrancaParcelasFacade();
+			try { 
+				listaCob = cobrancaParcelasFacade.listar(sql);
+				if (listaCob.size() > 0) {
+					cob = listaCob.size();
+				}else{
+					cob = 0;
+				}
+				
+				return cob;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 
+		 return null;
+	 }
+	 
+	 public Integer numeroTotalParcela(int contasreceber){
+			 String sql = "SELECT c FROM Contasreceber c  WHERE c.venda=" + contasreceber;
+			 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+			 try {
+				listaTotalParcela = contasReceberFacade.listar(sql);
+				if (listaTotalParcela != null) {
+					totalParcela = listaTotalParcela.size();
+					return totalParcela;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 return null;
 	 }
 	 
 }

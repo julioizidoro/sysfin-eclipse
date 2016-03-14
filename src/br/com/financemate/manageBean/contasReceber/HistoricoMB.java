@@ -57,7 +57,6 @@ public class HistoricoMB implements Serializable {
     	if (historicaCobranca == null) {
     		historicaCobranca = new Historicocobranca();
     		historicaCobranca.setCobranca(cobranca);
-    		session.removeAttribute("cobranca");
 		}
     	
     }
