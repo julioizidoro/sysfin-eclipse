@@ -258,10 +258,16 @@ public class CadVendasMB implements Serializable {
     }
 	
 	public String backOffice(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
 		return "cadBackOffice";
 	}
 	
 	public String dadosVenda(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
 		return "cadVendas";
 	}
 	

@@ -18,10 +18,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
+import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.ClienteMB;
+import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
 
@@ -48,6 +54,11 @@ public class VendasMB implements Serializable {
 	 private String numeroVenda;
 	 private String situacao;
 	 private String imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+	 private Cliente cliente;
+	 private List<Cliente> listaCliente;
+	 private Boolean habilitarUnidade;
+	 private String nomeCliente;
+	 private Integer nVenda;
 
 	
 	@PostConstruct
@@ -56,7 +67,80 @@ public class VendasMB implements Serializable {
 			 gerarDataInicial();
 			 gerarListaVendas();
 		 }
+		 gerarListaCliente();
+		 desabilitarUnidade();
 	}
+
+	
+
+
+
+	public Integer getnVenda() {
+		return nVenda;
+	}
+
+
+
+
+
+	public void setnVenda(Integer nVenda) {
+		this.nVenda = nVenda;
+	}
+
+
+
+
+
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+
+
+
+
+
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
+	}
+
+
+
+
+
+	public Boolean getHabilitarUnidade() {
+		return habilitarUnidade;
+	}
+
+
+
+	public void setHabilitarUnidade(Boolean habilitarUnidade) {
+		this.habilitarUnidade = habilitarUnidade;
+	}
+
+
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+
+
+	public List<Cliente> getListaCliente() {
+		return listaCliente;
+	}
+
+
+
+	public void setListaCliente(List<Cliente> listaCliente) {
+		this.listaCliente = listaCliente;
+	}
+
 
 
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
@@ -193,8 +277,9 @@ public class VendasMB implements Serializable {
         }
     }
     
-    public String cancelar(){
-        return "consVendas";
+	public String cancelar(){
+        RequestContext.getCurrentInstance().closeDialog(null);
+        return null;
     }
     
     public void gerarListaVendas(){
@@ -341,20 +426,15 @@ public class VendasMB implements Serializable {
     
     public String coresFiltrar(){
 		 if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVerde.ico")) {
-			 novoFiltro();
+			 filtro();
 			 imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
 		 }else if(imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")){
+			 gerarDataInicial();
 			 gerarListaVendas();
 			 imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
 		 }
 		 return "";
-	 } 
-    
-    public void novoFiltro() {
-    	Map<String, Object> options = new HashMap<String, Object>();
-    	options.put("contentWidth", 500);
-    	RequestContext.getCurrentInstance().openDialog("");
-    }
+	 }
     
     public String novaVenda() {
         Map<String, Object> options = new HashMap<String, Object>();
@@ -363,11 +443,95 @@ public class VendasMB implements Serializable {
         return "";
     }
     
+    public String filtro() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 600);
+        RequestContext.getCurrentInstance().openDialog("filtrarVenda");
+        return "";
+    }
+    
     public String gerarParcela() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 600);
         RequestContext.getCurrentInstance().openDialog("gerarParcelas");
         return "";
+    }
+    
+    public void gerarListaCliente() {
+        ClienteFacade clienteFacade = new ClienteFacade();
+        try {
+            listaCliente = clienteFacade.listar("");
+            if (listaCliente == null) {
+                listaCliente = new ArrayList<Cliente>();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VendasMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro ao listar o cliente:", "Erro");
+        }
+
+    }
+    
+    
+    public void mostrarMensagem(Exception ex, String erro, String titulo){
+        FacesContext context = FacesContext.getCurrentInstance();
+        erro = erro + " - " + ex;
+        context.addMessage(null, new FacesMessage(titulo, erro));
+    }
+    
+    public void desabilitarUnidade(){
+		if (usuarioLogadoMB.getCliente() != null) {
+			habilitarUnidade = true;
+		}else{
+			habilitarUnidade = false;
+		}
+		 
+	}
+    
+    public void filtrar(){		 
+		 sql = "Select v from Vendas v where ";
+		 if (cliente!=null){
+			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
+		 }else {
+			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
+		 }
+		 if (nomeCliente!="") {
+			 sql = sql + " v.nomeCliente like '%" + nomeCliente + "%' and ";
+		 }
+		 if (nVenda != null) {
+			sql = sql + " v.idvendas="  + nVenda + " and "; 
+		 }
+		 if (situacao != null) {
+			 if (situacao.equalsIgnoreCase("amarelo") || situacao.equalsIgnoreCase("verde") || situacao.equalsIgnoreCase("vermelho")) {
+				 sql = sql + " v.situacao='" + situacao + "' and "; 
+			}
+		}
+		
+		 if ((dataInicial!=null) && (dataFinal!=null)){
+				 sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
+						 "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+						 "' order by v.dataVencimento";
+		 } 
+		 RequestContext.getCurrentInstance().closeDialog(sql);
+	 }
+    
+    public void retornoDialogFiltrar(SelectEvent event) {
+        String sql = (String) event.getObject();
+        gerarListaVendaas(sql);
+ }
+ 
+    public void gerarListaVendaas(String sql){
+        sql = sql + order;
+        VendasFacade vendasFacade = new VendasFacade();
+        try {
+            listaVendas = vendasFacade.listar(sql);
+            if (listaVendas == null) {
+                listaVendas = new ArrayList<Vendas>();
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(VendasMB.class.getName()).log(Level.SEVERE, null, ex);
+             FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Erro!" + ex));
+        }
     }
 
 }
