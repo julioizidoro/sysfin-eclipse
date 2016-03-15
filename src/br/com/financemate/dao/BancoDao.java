@@ -52,7 +52,7 @@ public class BancoDao {
     public Banco consultar(int idCliente, String nome) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("Select b from Banco b where b.cliente=" + idCliente +
+        Query q = manager.createQuery("Select b from Banco b where b.cliente.idcliente=" + idCliente +
                 " and b.nome='" + nome + "'");
         Banco banco = null;
         if (q.getResultList().size()>0){

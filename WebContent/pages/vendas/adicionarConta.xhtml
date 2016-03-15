@@ -27,13 +27,13 @@
             <h:panelGrid columns="1" style="margin-left:1%;"> 
 	            <p:outputLabel value="Data" for="dataPgRb" class="left3" style="margin-left:35%;" />  
 	            
-	            <p:inputMask id="dataPgRb" mask="99/99/9999" size="13"  class="left3" value="14/03/2016" >
+	            <p:inputMask id="dataPgRb" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataVenda}" >
 	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	            </p:inputMask>
             </h:panelGrid>
             <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;"> 
            		<p:outputLabel value="Valor" />
-           		<p:inputText value="#" size="12"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorLiquido}" size="12" disabled="true"/>
            </h:panelGrid>
            <br />
            <h:panelGrid style="margin-left:1%;" columns="1">
@@ -47,19 +47,26 @@
 	              </p:selectOneMenu> 
              </h:panelGrid>
              <br />
-             <h:panelGrid columns="1" style="margin-left:1%;">  
-            	<p:outputLabel value="Tipo Documento" for="tipoDocumento"  class="left3" style="margin-left:10%;"/>
-                <p:inputText id="tipoDocumento" size="20"  class="left3" value="#{cadOutrosLancamentosMB.outrosLancamentos.tipoDocumento}"/>       
-            	 
+             <h:panelGrid style="margin-left:1;">   
+                <p:outputLabel value="Tipo de Documento" for="tipoDoc" class="left2"/>
+                <p:selectOneMenu id="tipoDoc" class="left5" style="width:156px"  value="#{cadVendasMB.tipoDocumento}">
+                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                    <f:selectItem itemLabel="Cartão" itemValue="Cartão" />  
+                    <f:selectItem itemLabel="Débito em Conta" itemValue="debito em conta" /> 
+                    <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
+                    <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
+                    <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
+                    <f:selectItem itemLabel="Depósito" itemValue="Depósito" />
+                </p:selectOneMenu>
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9%;">
              	<p:outputLabel value="Competência" for="competencia" class="left5"/> 
-             	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="03/2016" size="12" mask="99/9999"  class="left1"/>
+             	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadVendasMB.competencia}" size="12" mask="99/9999"  class="left1"/>
              </h:panelGrid>
               <br />
               <hr />
               <br />
-             <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none"   action="#" >
+             <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none"   action="#{cadVendasMB.salvarConta()}" >
                   <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                   <p:outputLabel style="color:black" value="#{cadVendasMB.nomeConta()}"/>
              </p:commandLink>

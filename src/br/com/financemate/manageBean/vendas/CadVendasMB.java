@@ -3,6 +3,7 @@ package br.com.financemate.manageBean.vendas;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,14 +16,20 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.context.RequestContext;
+
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.facade.ProdutoFacade;
 import br.com.financemate.manageBean.CadContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Formapagamento;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Produto;
@@ -50,13 +57,15 @@ public class CadVendasMB implements Serializable {
 	private String TipoDocumento;
 	private Formapagamento formapagamento;
 	private Boolean habilitarCampos = true;
+	private Float valorAddConta;
+	private String competencia;
+	private Banco banco;
 	
 	@PostConstruct
 	public void init(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         vendas = (Vendas) session.getAttribute("vendas");
-        session.removeAttribute("vendas");
 		gerarListaCliente();
 		if (vendas == null) {
 			vendas = new Vendas();
@@ -66,6 +75,45 @@ public class CadVendasMB implements Serializable {
 	
 	
 	
+	
+	public Banco getBanco() {
+		return banco;
+	}
+
+
+
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
+	}
+
+
+
+
+	public String getCompetencia() {
+		return competencia;
+	}
+
+
+
+	public void setCompetencia(String competencia) {
+		this.competencia = competencia;
+	}
+
+
+
+	public Float getValorAddConta() {
+		return valorAddConta;
+	}
+
+
+
+	public void setValorAddConta(Float valorAddConta) {
+		this.valorAddConta = valorAddConta;
+	}
+
+
+
 	public Boolean getHabilitarCampos() {
 		return habilitarCampos;
 	}
@@ -272,10 +320,16 @@ public class CadVendasMB implements Serializable {
 	}
 	
 	public String adicionarConta(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
 		return "adicionarConta";
 	}
 	
 	public String recebimento(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
 		return "cadRecebimento";
 	}
 	
@@ -294,13 +348,13 @@ public class CadVendasMB implements Serializable {
     }
 	
 	public String nomeConta(){
-	//	if (vendas.getValorLiquido() > 0) {
-//			return "Lançar Conta a Pagar";
-	//	}else if (vendas.getValorLiquido() < 0){
-	//		return "Lançar Conta a Receber";
-	//	}else{
-			return "oi";
-	//	}
+		if (vendas.getValorLiquido() > 0) {
+			return "Lançar Conta a Pagar";
+		}else if (vendas.getValorLiquido() < 0){
+			return "Lançar Conta a Receber";
+		}else{
+			return "Valor Zerado";
+		}
 	}
 	
 	public String voltarCadastro(){
@@ -320,6 +374,118 @@ public class CadVendasMB implements Serializable {
 			return habilitarCampos = false;
 		}
 		return habilitarCampos;
+	}
+	
+	public void calculoTotalVenda(){
+		if (vendas.getValorBruto() == null) {
+			vendas.setValorBruto(0f);
+		}
+		if (vendas.getValorDesconto() == null) {
+			vendas.setValorDesconto(0f);
+		}
+		if (vendas.getValorJuros() == null) {
+			vendas.setValorJuros(0f);
+		}
+		vendas.setValorLiquido((vendas.getValorBruto() - vendas.getValorDesconto()) + vendas.getValorJuros());
+	}
+	
+	
+	public void calculoValoresBackOffice(){
+		if (vendas.getValorBruto() == null) {
+			vendas.setValorBruto(0f);
+		}
+		if (vendas.getComissaoLiquidaTotal() == null) {
+			vendas.setComissaoLiquidaTotal(0f);
+		}
+		if (vendas.getComissaoFuncionarios() == null) {
+			vendas.setComissaoFuncionarios(0f);
+		}
+		if (vendas.getComissaoTerceiros() == null) {
+			vendas.setComissaoTerceiros(0f);
+		}
+		if (vendas.getValorPagoFornecedor() == null) {
+			vendas.setValorPagoFornecedor(0f);
+		}
+		
+		vendas.setLiquidoVendas(vendas.getComissaoLiquidaTotal() - (vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros()));
+		vendas.setValorLiquido(vendas.getValorBruto() - (vendas.getComissaoLiquidaTotal() + vendas.getValorPagoFornecedor()));
+		
+	}
+	
+	
+	public String salvarConta(){
+		if (vendas.getValorLiquido() > 0) {
+			Contaspagar contaspagar = new Contaspagar();
+			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+			BancoFacade bancoFacade = new BancoFacade();
+			ClienteFacade clienteFacade = new ClienteFacade();
+			contaspagar.setDataEnvio(vendas.getDataVenda());
+			contaspagar.setValor(vendas.getValorLiquido());
+			contaspagar.setPlanocontas(planocontas);
+			contaspagar.setTipoDocumento(TipoDocumento);
+			contaspagar.setCompetencia(competencia);
+			if (usuarioLogadoMB.getCliente() != null) {
+				try {
+					banco = bancoFacade.consultar(usuarioLogadoMB.getCliente().getIdcliente(), "Nenhum");
+					contaspagar.setBanco(banco);
+					contaspagar.setCliente(usuarioLogadoMB.getCliente());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else{
+				try {
+					banco = bancoFacade.consultar(8, "Nenhum");
+					contaspagar.setBanco(banco);
+					cliente = clienteFacade.consultar(8);
+					contaspagar.setCliente(cliente);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			contaspagar = contasPagarFacade.salvar(contaspagar);
+		}else if(vendas.getValorLiquido() < 0 ){
+			Contasreceber contasreceber = new Contasreceber();
+			ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+			ClienteFacade clienteFacade = new ClienteFacade();
+			BancoFacade bancoFacade = new BancoFacade();
+			contasreceber.setDataVencimento(vendas.getDataVenda());
+			contasreceber.setValorParcela(vendas.getValorLiquido() * (-1));
+			contasreceber.setPlanocontas(planocontas);
+			contasreceber.setTipodocumento(TipoDocumento);
+			contasreceber.setUsuario(usuarioLogadoMB.getUsuario());
+			contasreceber.setNomeCliente(vendas.getNomeCliente());
+			contasreceber.setJuros(0f);
+			contasreceber.setDesagio(0f);
+			contasreceber.setValorPago(0f);
+			
+			if (usuarioLogadoMB.getCliente() != null) { 
+				try {
+					banco = bancoFacade.consultar(usuarioLogadoMB.getCliente().getIdcliente(), "Nenhum");
+					contasreceber.setBanco(banco);
+					contasreceber.setCliente(usuarioLogadoMB.getCliente());
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else{
+				try {
+					banco = bancoFacade.consultar(8, "Nenhum");
+					contasreceber.setBanco(banco);
+					cliente = clienteFacade.consultar(8);
+					contasreceber.setCliente(cliente);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			contasreceber = contasReceberFacade.salvar(contasreceber);
+		}
+		return "cadBackOffice";
 	}
 	
 

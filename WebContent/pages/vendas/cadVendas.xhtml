@@ -50,7 +50,7 @@
              <h:panelGrid columns="2" style="margin-left:68.5%; margin-top:-6.2%;"> 
 	            <p:outputLabel value="Data Venda" for="dataVen" class="left3" /> 
 	            
-	            <p:inputMask id="dataVen" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataVenda}"   style="margin-left: 2%;" readonly="true">
+	            <p:inputMask id="dataVen" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataVenda}"   style="margin-left: 2%;">
 	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	            </p:inputMask>
             </h:panelGrid>
@@ -84,19 +84,27 @@
            <br />
            <h:panelGrid columns="1" style="margin-left:1%;">
            		<p:outputLabel value="Valor Bruto" style="margin-left:17%;"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorBruto}" size="12"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorBruto}" size="12">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
+           		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
            		<p:outputLabel value="Desconto" style="margin-left:18%;"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorDesconto}" size="12"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorDesconto}" size="12">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
+           		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
            		<p:outputLabel value="Juros" style="margin-left:28%;"/> 
-           		<p:inputText value="#{cadVendasMB.vendas.valorJuros}" size="12"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorJuros}" size="12">
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
+           		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;"> 
            		<p:outputLabel value="Total" style="margin-left:28%;"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorLiquido}" size="12" disabled="true"/>
+           		<p:inputText id="total" value="#{cadVendasMB.vendas.valorLiquido}" size="12" disabled="true">
+           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
+           		</p:inputText>
            </h:panelGrid>
            <br />
            <hr />
