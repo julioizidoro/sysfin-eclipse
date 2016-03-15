@@ -26,6 +26,7 @@ import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.ClienteMB;
 import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Vendas;
@@ -532,6 +533,12 @@ public class VendasMB implements Serializable {
              FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Erro!" + ex));
         }
+    }
+    
+    public void retornoDialogNovo(SelectEvent event) {
+        Vendas vendas = (Vendas) event.getObject();
+        gerarDataInicial();
+        gerarListaVendas();
     }
 
 }

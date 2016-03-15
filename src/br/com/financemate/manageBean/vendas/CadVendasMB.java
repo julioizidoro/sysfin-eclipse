@@ -24,6 +24,7 @@ import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.facade.ProdutoFacade;
+import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.CadContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
@@ -60,6 +61,7 @@ public class CadVendasMB implements Serializable {
 	private Float valorAddConta;
 	private String competencia;
 	private Banco banco;
+	private Float saldoRestante;
 	
 	@PostConstruct
 	public void init(){
@@ -76,6 +78,20 @@ public class CadVendasMB implements Serializable {
 	
 	
 	
+	public Float getSaldoRestante() {
+		return saldoRestante;
+	}
+
+
+
+
+	public void setSaldoRestante(Float saldoRestante) {
+		this.saldoRestante = saldoRestante;
+	}
+
+
+
+
 	public Banco getBanco() {
 		return banco;
 	}
@@ -309,6 +325,8 @@ public class CadVendasMB implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
+        session.setAttribute("planocontas", planocontas);
+        session.setAttribute("produto", produto);
 		return "cadBackOffice";
 	}
 	
@@ -485,8 +503,79 @@ public class CadVendasMB implements Serializable {
 			}
 			contasreceber = contasReceberFacade.salvar(contasreceber);
 		}
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("planocontas", planocontas);
 		return "cadBackOffice";
 	}
 	
+	
+	public Float saldoRestante(){
+		//saldoRestante = vendas.getValorLiquido() - 
+		return saldoRestante;
+	}
+	
+	public void salvarVenda(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		planocontas = (Planocontas) session.getAttribute("planocontas");
+		produto = (Produto) session.getAttribute("produto");
+		VendasFacade vendasFacade = new VendasFacade();
+		ClienteFacade clienteFacade = new ClienteFacade();
+		vendas.setUsuario(usuarioLogadoMB.getUsuario());
+		vendas.setProduto(produto);
+		vendas.setPlanocontas(planocontas);
+		if (vendas.getValorLiquido() < 0) {
+			vendas.setValorLiquido(vendas.getValorLiquido() * (-1));
+		}
+		if (vendas.getFormapagamentoList() == null) {
+			vendas.setSituacao("vermelho");
+		}else{
+			vendas.setSituacao("amarelo");
+		}
+		if (usuarioLogadoMB.getCliente() != null) {
+			vendas.setCliente(usuarioLogadoMB.getCliente());
+		}else{
+			try {
+				cliente = clienteFacade.consultar(8);
+				vendas.setCliente(cliente);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		try {
+			String mensagem = validarDados();
+			if (mensagem == "") {
+				vendas = vendasFacade.salvar(vendas);
+		        session.removeAttribute("vendas");
+		        session.removeAttribute("planocontas");
+		        session.removeAttribute("produto");
+				RequestContext.getCurrentInstance().closeDialog(vendas);
+			}else{
+				FacesContext context = FacesContext.getCurrentInstance();
+	            context.addMessage(null, new FacesMessage(mensagem, ""));
+			}
+			 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	
+	public String validarDados(){
+		String mensagem = "";
+		if (vendas.getNomeCliente() == null) {
+			mensagem = mensagem + "Cliente não informado \r\n";
+		}
+		if (vendas.getProduto().getIdproduto() == null) {
+			mensagem = mensagem + " Produto não informado \r\n";
+		}
+		if (vendas.getValorBruto() == null) {
+			mensagem = mensagem + " Valor bruto não informado \r\n";
+		}
+		return mensagem;
+	}
+	 
 
 }
