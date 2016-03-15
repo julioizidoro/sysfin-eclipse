@@ -26,6 +26,7 @@ public class VendasDao {
         manager.getTransaction().begin();
         venda = manager.merge(venda);
         manager.getTransaction().commit();
+        manager.close();
         return venda;
     }
     
@@ -35,6 +36,7 @@ public class VendasDao {
         Query q = manager.createQuery(sql);
         List<Vendas> lista = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return lista;
     }
     
@@ -43,6 +45,7 @@ public class VendasDao {
         manager.getTransaction().begin();
         Vendas venda = manager.find(Vendas.class, idVenda);
         manager.getTransaction().commit();
+        manager.close();
         return venda;
     }
     
@@ -54,6 +57,7 @@ public class VendasDao {
             manager.remove(venda);
         }
         manager.getTransaction().commit();
+        manager.close();
     }
     
     
@@ -62,6 +66,7 @@ public class VendasDao {
         manager.getTransaction().begin();
         emissaonota = manager.merge(emissaonota);
         manager.getTransaction().commit();
+        manager.close();
         return emissaonota;
     }
     
@@ -70,12 +75,12 @@ public class VendasDao {
         manager.getTransaction().begin();
         Query q = manager.createQuery("select e from Emissaonota e where e.vendas=" + idVendas);
         manager.getTransaction().commit();
+        Emissaonota emissor = null;
         if (q.getResultList().size()>0){
-            Emissaonota emissor = (Emissaonota) q.getResultList().get(0);
-            return emissor;
+            emissor = (Emissaonota) q.getResultList().get(0);
         }
-        
-        return null;
+        manager.close();
+        return emissor;
     }
     
 }

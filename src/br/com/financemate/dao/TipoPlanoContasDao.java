@@ -23,6 +23,7 @@ public class TipoPlanoContasDao {
         manager.getTransaction().begin();
         tipoplano = manager.merge(tipoplano);
         manager.getTransaction().commit();
+        manager.close();
         return tipoplano;
     }
     public List<Tipoplanocontas> listar() throws SQLException{
@@ -31,6 +32,7 @@ public class TipoPlanoContasDao {
         Query q = manager.createQuery("select t from Tipoplanocontas t order by t.descricao");
         List<Tipoplanocontas> lista = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return lista;
     }
      public Tipoplanocontas consultar(int idTipoPlanoContas) throws SQLException{
@@ -38,6 +40,7 @@ public class TipoPlanoContasDao {
         manager.getTransaction().begin();
         Tipoplanocontas tipoplano = manager.find(Tipoplanocontas.class, idTipoPlanoContas);
         manager.getTransaction().commit();
+        manager.close();
         return tipoplano;
     }
 

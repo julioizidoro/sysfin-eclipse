@@ -29,6 +29,7 @@ public class ProdutoDao {
         Query q = manager.createQuery("Select p from Produto p where p.cliente.idcliente=" + idCliente);
         List<Produto> lista = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return lista;
     }
     
@@ -37,6 +38,7 @@ public class ProdutoDao {
         manager.getTransaction().begin();
         Produto produto = manager.find(Produto.class, idProduto);
         manager.getTransaction().commit();
+        manager.close();
         return produto;
     }
     
@@ -45,6 +47,7 @@ public class ProdutoDao {
         manager.getTransaction().begin();
         manager.merge(produto);
         manager.getTransaction().commit();
+        manager.close();
         return produto;
     }
     

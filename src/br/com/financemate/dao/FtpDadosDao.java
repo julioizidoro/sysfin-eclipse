@@ -18,6 +18,7 @@ public class FtpDadosDao {
         Query q = manager.createQuery("select f from Ftpdados f");
         Ftpdados ftpDados = (Ftpdados) q.getSingleResult();
         manager.getTransaction().commit();
+        manager.close();
         return ftpDados;
     }
     

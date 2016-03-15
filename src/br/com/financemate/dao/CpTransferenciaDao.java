@@ -14,11 +14,10 @@ public class CpTransferenciaDao {
 	
 	public Cptransferencia salvar(Cptransferencia cptransferencia) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
-        //abrindo uma transação
         manager.getTransaction().begin();
         cptransferencia = manager.merge(cptransferencia);
-        //fechando uma transação
         manager.getTransaction().commit();
+        manager.close();
         return cptransferencia;
     }
 	
@@ -28,6 +27,7 @@ public class CpTransferenciaDao {
         Contaspagar transferencia = manager.find(Contaspagar.class, idcpTranferencia);
         manager.remove(transferencia);
         manager.getTransaction().commit();
+        manager.close();
     }
 	
 	public Cptransferencia consultar(int idTransferencia) throws SQLException{
@@ -35,6 +35,7 @@ public class CpTransferenciaDao {
         manager.getTransaction().begin();
         Cptransferencia transferencia = manager.find(Cptransferencia.class, idTransferencia);
         manager.getTransaction().commit();
+        manager.close();
         return transferencia;
     }
 	
@@ -46,6 +47,7 @@ public class CpTransferenciaDao {
         Query q = manager.createQuery(sql);
         List<Cptransferencia> listaTransferenfia = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return listaTransferenfia;
     }
 	
@@ -55,6 +57,7 @@ public class CpTransferenciaDao {
         Query q = manager.createQuery(sql);
         Cptransferencia cptransferencia = (Cptransferencia) q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return cptransferencia;
     }
 }

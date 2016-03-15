@@ -26,6 +26,7 @@ public class DadosMunicipaisDao {
         manager.getTransaction().begin();
         dados = manager.merge(dados);
         manager.getTransaction().commit();
+        manager.close();
         return dados;
     }
     
@@ -38,6 +39,7 @@ public class DadosMunicipaisDao {
             dadosmunicipais = (Dadosmunicipais) q.getResultList().get(0);
         }
         manager.getTransaction().commit();
+        manager.close();
         return dadosmunicipais;
     }
 }

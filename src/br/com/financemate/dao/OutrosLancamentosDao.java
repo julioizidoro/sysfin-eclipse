@@ -26,6 +26,7 @@ public class OutrosLancamentosDao {
         manager.getTransaction().begin();
         outroslancamentos = manager.merge(outroslancamentos);
         manager.getTransaction().commit();
+        manager.close();
         return outroslancamentos;
     }
     
@@ -35,6 +36,7 @@ public class OutrosLancamentosDao {
         Query q = manager.createQuery(sql);
         List<Outroslancamentos> lista = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return lista;
     }
     
@@ -45,6 +47,7 @@ public class OutrosLancamentosDao {
         Outroslancamentos outroslancamentos = manager.find(Outroslancamentos.class, idOutrosLancamentos);
         manager.remove(outroslancamentos);
         manager.getTransaction().commit();
+        manager.close();
     }
     
     

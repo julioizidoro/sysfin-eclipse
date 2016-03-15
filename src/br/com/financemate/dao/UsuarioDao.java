@@ -24,11 +24,10 @@ public class UsuarioDao {
     
     public Usuario salvar(Usuario usuario) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
-        //abrindo uma transação
         manager.getTransaction().begin();
         usuario = manager.merge(usuario);
-        //fechando uma transação
         manager.getTransaction().commit();
+        manager.close();
         return usuario;
     }
     
@@ -41,6 +40,7 @@ public class UsuarioDao {
             usuario = (Usuario) q.getResultList().get(0);
         }
         manager.getTransaction().commit();
+        manager.close();
         return usuario;
     }
     
@@ -50,6 +50,7 @@ public class UsuarioDao {
         Query q = manager.createQuery("select u from Usuario u where u.nome like'" + nome + "%'  order by u.nome");
         List<Usuario> lista = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return  lista;
     }
     
@@ -58,6 +59,7 @@ public class UsuarioDao {
         manager.getTransaction().begin();
         Usuario usuario = manager.find(Usuario.class, idUsuario);
         manager.getTransaction().commit();
+        manager.close();
         return usuario;
     }
     

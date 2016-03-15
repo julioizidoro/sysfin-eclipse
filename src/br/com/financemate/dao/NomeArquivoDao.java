@@ -19,11 +19,10 @@ public class NomeArquivoDao {
     
     public Nomearquivo salvar(Nomearquivo nomeArquivo) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
-        //abrindo uma transação
         manager.getTransaction().begin();
         nomeArquivo = manager.merge(nomeArquivo);
-        //fechando uma transação
         manager.getTransaction().commit();
+        manager.close();
         return nomeArquivo;
     }
     
@@ -31,12 +30,13 @@ public class NomeArquivoDao {
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery("SELECT n FROM Nomearquivo n where n.contaspagar.idcontasPagar=" + idConta);
+        Nomearquivo nomearquivo = null;
         if (q.getResultList().size()>0){
-            manager.getTransaction().commit();
-            return (Nomearquivo) q.getResultList().get(0);
+            nomearquivo =  (Nomearquivo) q.getResultList().get(0);
         }
         manager.getTransaction().commit();
-        return null;
+        manager.close();
+        return nomearquivo;
     }
     
     

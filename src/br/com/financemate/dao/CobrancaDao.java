@@ -18,6 +18,7 @@ public class CobrancaDao {
         manager.getTransaction().begin();
         cobranca = manager.merge(cobranca);
         manager.getTransaction().commit();
+        manager.close();
         return cobranca;
     }
     
@@ -26,6 +27,7 @@ public class CobrancaDao {
         manager.getTransaction().begin();
         historicocobranca = manager.merge(historicocobranca);
         manager.getTransaction().commit();
+        manager.close();
         return historicocobranca;
     }
     
@@ -33,11 +35,13 @@ public class CobrancaDao {
         manager = ConectionFactory.getConnection();
          manager.getTransaction().begin();
         Query q = manager.createQuery(sql);
-          manager.getTransaction().commit();
+        Cobranca cobranca = null;
         if (q.getResultList().size()>0){
-            return (Cobranca) q.getSingleResult();
+            cobranca = (Cobranca) q.getSingleResult();
         } 
-        return null;
+        manager.getTransaction().commit();
+        manager.close();
+        return cobranca;
     }
     
     

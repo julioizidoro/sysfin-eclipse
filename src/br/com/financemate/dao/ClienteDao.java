@@ -28,6 +28,7 @@ public class ClienteDao {
         manager.getTransaction().begin();
         cliente = manager.merge(cliente);
         manager.getTransaction().commit();
+        manager.close();
         return cliente;
     }
     
@@ -40,6 +41,7 @@ public class ClienteDao {
             cliente = (Cliente) q.getResultList().get(0);
         }
         manager.getTransaction().commit();
+        manager.close();
         return cliente;
     }
     
@@ -49,6 +51,7 @@ public class ClienteDao {
         Query q = manager.createQuery("select c from Cliente c where c.nomeFantasia like '%" + nome + "%' order by c.razaoSocial");
         List<Cliente> lista = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return lista;
     }
     

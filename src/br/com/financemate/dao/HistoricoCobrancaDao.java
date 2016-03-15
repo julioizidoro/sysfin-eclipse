@@ -18,6 +18,7 @@ public class HistoricoCobrancaDao {
        manager.getTransaction().begin();
        historicocobranca = manager.merge(historicocobranca);
        manager.getTransaction().commit();
+       manager.close();
        return historicocobranca;
    }
    
@@ -26,18 +27,23 @@ public class HistoricoCobrancaDao {
        manager = ConectionFactory.getConnection();
        manager.getTransaction().begin();
        Query q = manager.createQuery(sql);
+       List<Historicocobranca> lista = q.getResultList();
        manager.getTransaction().commit();
-       return q.getResultList();
+       manager.close();
+       return lista;
    }
    
    public Historicocobranca consultar(String sql)throws SQLException{
        manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
        Query q = manager.createQuery(sql);
-         manager.getTransaction().commit();
+       
+       Historicocobranca historicocobranca = null;
        if (q.getResultList().size()>0){
-           return (Historicocobranca) q.getSingleResult();
-       } 
-       return null;
+           historicocobranca =(Historicocobranca) q.getSingleResult();
+       }
+       manager.getTransaction().commit();
+       manager.close();
+       return historicocobranca;
    }
 }

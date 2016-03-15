@@ -29,13 +29,17 @@ public class ContasReceberDao {
         manager.getTransaction().begin();
         conta = manager.merge(conta);
         manager.getTransaction().commit();
+        manager.close();
         return conta;
     }
     
     public List<Contasreceber> listar(String sql) throws SQLException{
         manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
         Query q = manager.createQuery(sql);
         List<Contasreceber> lista = q.getResultList();
+        manager.getTransaction().commit();
+        manager.close();
         return lista;
     }
     
@@ -44,6 +48,7 @@ public class ContasReceberDao {
         manager.getTransaction().begin();
         Contasreceber conta = manager.find(Contasreceber.class, idConta);
         manager.getTransaction().commit();
+        manager.close();
         return conta;
     }
     
@@ -56,6 +61,7 @@ public class ContasReceberDao {
             manager.remove(contasreceber);
         }
         manager.getTransaction().commit();
+        manager.close();
     }
     
     public Contasreceber consultarVendaFornecedor(int idVenda) throws SQLException{
@@ -67,6 +73,7 @@ public class ContasReceberDao {
             conta =  (Contasreceber) q.getResultList().get(0);
         }
         manager.getTransaction().commit();
+        manager.close();
         return conta;
     }
     
@@ -94,7 +101,7 @@ public class ContasReceberDao {
             valor =  (Double) query.getSingleResult();
             totalContas.add(valor.doubleValue());
         }else totalContas.add(0.0);
-        
+        manager.close();
         return totalContas;
     }
 }

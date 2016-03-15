@@ -27,6 +27,7 @@ public class FormaPagamentoDao {
         manager.getTransaction().begin();
         formaPagamento = manager.merge(formaPagamento);
         manager.getTransaction().commit();
+        manager.close();
         return formaPagamento;
     }
     
@@ -36,6 +37,7 @@ public class FormaPagamentoDao {
         Formapagamento formaPagamento = manager.find(Formapagamento.class, idFormaPagamento);
         manager.remove(formaPagamento);
         manager.getTransaction().commit();
+        manager.close();
     }
     
     public List<Formapagamento> listar(int idVenda) throws SQLException{
@@ -44,6 +46,7 @@ public class FormaPagamentoDao {
         Query q = manager.createQuery("select f from Formapagamento f where f.vendas=" + idVenda) ;
         List<Formapagamento> lista = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return lista;
     }    
 }

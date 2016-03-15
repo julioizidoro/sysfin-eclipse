@@ -26,6 +26,7 @@ public class BancoDao {
         manager.getTransaction().begin();
         banco = manager.merge(banco);
         manager.getTransaction().commit();
+        manager.close();
         return banco;
     }
     
@@ -33,12 +34,10 @@ public class BancoDao {
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery(sql);
-        if (q.getResultList().size()>0){
-            manager.getTransaction().commit();
-            return q.getResultList();
-        }
+        List<Banco> lista = q.getResultList();
         manager.getTransaction().commit();
-        return null;
+        manager.close();
+        return lista;
     }
     
     public Banco consultar(int idBanco) throws SQLException{
@@ -46,6 +45,7 @@ public class BancoDao {
         manager.getTransaction().begin();
         Banco banco = manager.find(Banco.class, idBanco);
         manager.getTransaction().commit();
+        manager.close();
         return banco;
     }
     
@@ -59,6 +59,7 @@ public class BancoDao {
             banco= (Banco) q.getResultList().get(0);
         }
         manager.getTransaction().commit();
+        manager.close();
         return banco;
     }
     

@@ -26,6 +26,7 @@ public class PlanoContasDao {
         manager.getTransaction().begin();
         plano = manager.merge(plano);
         manager.getTransaction().commit();
+        manager.close();
         return plano;
     }
     
@@ -35,6 +36,7 @@ public class PlanoContasDao {
         Query q = manager.createQuery("Select p from Planocontas p where p.tipoplanocontas.idtipoplanocontas="+ idTipo  + " order by p.descricao");
         List<Planocontas> lista = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return lista;
     }
     
@@ -42,8 +44,10 @@ public class PlanoContasDao {
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery("select p from Planocontas p order by p.descricao" );
+        List<Planocontas> lista = q.getResultList();
         manager.getTransaction().commit();
-        return q.getResultList();
+        manager.close();
+        return lista;
     }
     
     public List<Planocontas> listar(String descricao, int idTipo) throws SQLException{
@@ -52,6 +56,7 @@ public class PlanoContasDao {
         Query q = manager.createQuery("Select p from Planocontas p where p.descricao like '%" + descricao + "%'  and p.tipoplanocontas.idtipoplanocontas="+ idTipo  + " order by p.descricao");
         List<Planocontas> lista = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return lista;
     }
     
@@ -60,6 +65,7 @@ public class PlanoContasDao {
         manager.getTransaction().begin();
         Planocontas plano = manager.find(Planocontas.class, idPlanoContas);
         manager.getTransaction().commit();
+        manager.close();
         return plano;
     }
     

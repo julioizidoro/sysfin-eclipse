@@ -27,11 +27,10 @@ public class ContasPagarDao {
     
     public Contaspagar salvar(Contaspagar conta) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
-        //abrindo uma transação
         manager.getTransaction().begin();
         conta = manager.merge(conta);
-        //fechando uma transação
         manager.getTransaction().commit();
+        manager.close();
         return conta;
     }
     
@@ -44,6 +43,7 @@ public class ContasPagarDao {
         Query q = manager.createQuery(sql);
 		List<Contaspagar> listaContas = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return listaContas;
     }
 
@@ -54,6 +54,7 @@ public class ContasPagarDao {
         Query q = manager.createQuery(sql);
         List<Contaspagar> listaContas = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return listaContas;
     }
 

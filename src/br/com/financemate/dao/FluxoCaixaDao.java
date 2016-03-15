@@ -25,6 +25,7 @@ public class FluxoCaixaDao {
         manager.getTransaction().begin();
         fluxo = manager.merge(fluxo);
         manager.getTransaction().commit();
+        manager.close();
         return fluxo;
     }
     
@@ -34,6 +35,7 @@ public class FluxoCaixaDao {
         Query q = manager.createQuery("select f from Fluxocaixa f where f.cliente.idcliente=" + idCliente);
         List<Fluxocaixa> listaFluxo = q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return listaFluxo;
     }
     
@@ -43,6 +45,7 @@ public class FluxoCaixaDao {
         Query q = manager.createNativeQuery("Delete from fluxocaixa where cliente_idcliente=" + idCliente);
         q.executeUpdate();
         manager.getTransaction().commit();
+        manager.close();
     }
     
 }

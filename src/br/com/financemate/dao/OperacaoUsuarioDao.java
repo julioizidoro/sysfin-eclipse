@@ -16,11 +16,10 @@ public class OperacaoUsuarioDao {
 	
 	 public Operacaousuairo salvar(Operacaousuairo operacaousuairo) throws SQLException{
 		 EntityManager manager = ConectionFactory.getConnection();
-		 //abrindo uma transação
 		 manager.getTransaction().begin();
 		 operacaousuairo = manager.merge(operacaousuairo);
-		 //fechando uma transação
 		 manager.getTransaction().commit();
+		 manager.close();
 		 return operacaousuairo;
 	 }
 	 
@@ -29,6 +28,7 @@ public class OperacaoUsuarioDao {
 		 manager.getTransaction().begin();
 		 Operacaousuairo operacaousuairo = manager.find(Operacaousuairo.class, idOperacaousuairo);
 		 manager.getTransaction().commit();
+		 manager.close();
 		 return operacaousuairo;
 	 }	
 	 
@@ -38,6 +38,7 @@ public class OperacaoUsuarioDao {
 		 Query q = manager.createQuery(sql);
 		 Operacaousuairo operacaousuairoo = (Operacaousuairo) q.getResultList();
 		 manager.getTransaction().commit();
+		 manager.close();
 		 return operacaousuairoo;
 	 }
 	 
@@ -47,6 +48,7 @@ public class OperacaoUsuarioDao {
 		 Query q = manager.createQuery(sql);
 		 List<Operacaousuairo> listaContas = q.getResultList();
 		 manager.getTransaction().commit();
+		 manager.close();
 		 return listaContas;
 	 }
 }
