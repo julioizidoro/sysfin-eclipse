@@ -86,16 +86,30 @@ public class ContasReceberMB implements Serializable {
     private List<Contasreceber> listaTotalParcela;
     private Integer cob;
     private List<Cobrancaparcelas> listaCob;
+	private Boolean habilitarUnidade = false;
 	
     @PostConstruct
 	public void init(){
 		gerarListaCliente();
 		getUsuarioLogadoMB();
 		verificarCliente();
-		criarConsultaContaReceber();
-		gerarListaContas();
+		
 	}
     
+
+
+
+	public Boolean getHabilitarUnidade() {
+		return habilitarUnidade;
+	}
+
+
+
+
+	public void setHabilitarUnidade(Boolean habilitarUnidade) {
+		this.habilitarUnidade = habilitarUnidade;
+	}
+
 
 
 
@@ -681,12 +695,12 @@ public class ContasReceberMB implements Serializable {
 					 "' and v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
 					 " and v.dataPagamento=null" + " order by v.dataVencimento";
 		 }else { 
-			 sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and "
-					 + "v.dataVencimento<='" + dataFinal + 
+			 sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and v.cliente.idcliente=" + cliente.getIdcliente()  
+					 + " and v.dataVencimento<='" + dataFinal + 
 					 "'  and v.dataPagamento=null" + " order by v.dataVencimento";
-	        }   
-		 
-	 }
+	        } 
+		 gerarListaContas();
+	 } 
 	 
 	 public void gerarListaContas() {
 		 try {
@@ -770,7 +784,7 @@ public class ContasReceberMB implements Serializable {
 	            Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
 	            mostrarMensagem(ex, "Erro Listar Clientes", "Erro");
 	        }
-	    }
+	 }
 	 
 	 public void verificarCliente(){
 	        if (usuarioLogadoMB.getUsuario().getCliente()>0){
@@ -837,14 +851,14 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public void filtrar(){		 
-		 sql = "Select v from Contasreceber v where ";
+		 sql = "Select v from Contasreceber v Join Vendas c on v.venda=c.idvendas where ";
 		 if (cliente!=null){
 			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
 		 }else {
 			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
 		 }
 		 
-		 if (nomeCliente!="") {
+		 if (nomeCliente!="") { 
 			 sql = sql + " v.nomeCliente like '%" + nomeCliente + "%' and ";
 		 }
 		
@@ -853,12 +867,12 @@ public class ContasReceberMB implements Serializable {
 		}
 		
 		if (nVenda!=0) {
-			sql = sql + " v.vendas_idvendas=" + nVenda + " and ";
+			sql = sql + " v.venda=" + nVenda + " and ";
 		}
 		
-		//if (banco!=null) {
-		//	sql = sql + " v.banco_idbanco=" + banco.getIdbanco() + " and ";
-		//}
+		if (banco!=null) {
+			sql = sql + " v.banco.idbanco=" + banco.getIdbanco() + " and ";
+		}
 		
 		if (status.equalsIgnoreCase("Recebidas")) {
 			sql = sql + " v.valorPago>0 and "; 
@@ -867,7 +881,7 @@ public class ContasReceberMB implements Serializable {
 		}else if(status.equalsIgnoreCase("A vencer")){
 			sql = sql + " v.dataVencimento>'" + Formatacao.ConvercaoDataSql(new Date()) + "' and ";
 		}else if (status.equalsIgnoreCase("Canceladas")){
-			sql = sql + " v.vendas.situacao=" + "'CANCELADA' and "; 
+			sql = sql + " c.situacao=" + "'CANCELADA' and "; 
 		} 
 		 
 		if ((dataInicial!=null) && (dataFinal!=null)){
@@ -884,8 +898,7 @@ public class ContasReceberMB implements Serializable {
 			 novoFiltro();
 			 imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
 		 }else if(imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")){
-			 criarConsultaContaReceber();
-			 gerarListaContas();
+			 listaContasReceber = null;
 			 imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
 		 }
 		 return "";
@@ -1058,7 +1071,11 @@ public class ContasReceberMB implements Serializable {
 			 try {
 				listaTotalParcela = contasReceberFacade.listar(sql);
 				if (listaTotalParcela != null) {
-					totalParcela = listaTotalParcela.size();
+					if (listaTotalParcela.size() <=0) {
+						totalParcela = 1;
+					}else{
+						totalParcela = listaTotalParcela.size();
+					}
 					return totalParcela;
 				}
 			} catch (SQLException e) {
@@ -1066,6 +1083,15 @@ public class ContasReceberMB implements Serializable {
 				e.printStackTrace();
 			}
 		 return null;
+	 }
+	 
+	 public void desabilitarUnidade(){
+		 if (usuarioLogadoMB.getCliente() != null) {
+			 habilitarUnidade = true;
+		 }else{
+				habilitarUnidade = false;
+		 }
+		 
 	 }
 	 
 }

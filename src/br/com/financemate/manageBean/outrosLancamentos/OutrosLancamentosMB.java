@@ -56,6 +56,8 @@ public class OutrosLancamentosMB implements Serializable {
     private Boolean habilitarUnidade;
     private Date dataInicial;
     private Date dataFinal;
+    private String todosBanco;
+    private String nomeComboBanco = "Selecione";
 	
 	@PostConstruct
 	public void init(){
@@ -72,6 +74,34 @@ public class OutrosLancamentosMB implements Serializable {
 	 
 	
 	
+
+	public String getNomeComboBanco() {
+		return nomeComboBanco;
+	}
+
+
+
+
+	public void setNomeComboBanco(String nomeComboBanco) {
+		this.nomeComboBanco = nomeComboBanco;
+	}
+
+
+
+
+	public String getTodosBanco() {
+		return todosBanco;
+	}
+
+
+
+
+	public void setTodosBanco(String todosBanco) {
+		this.todosBanco = todosBanco;
+	}
+
+
+
 
 	public Date getDataInicial() {
 		return dataInicial;
@@ -236,13 +266,20 @@ public class OutrosLancamentosMB implements Serializable {
     }
     
     public void gerarPesquisa() {
-        if ((banco != null) && 
-                 (cliente != null) && (dataInicial != null) && (dataFinal != null)) {
-            sql = "Select o from Outroslancamentos o where o.banco.idbanco=" + banco.getIdbanco()
-            		+ "  and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
-            		+ "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
-                    +"' and o.cliente.idcliente=" + cliente.getIdcliente();
-            sql = sql + " order by o.dataCompensacao";  
+        if ((cliente != null) && (dataInicial != null) && (dataFinal != null)) {
+        	if (banco.getIdbanco() != null) { 
+	            sql = "Select o from Outroslancamentos o where o.banco.idbanco=" + banco.getIdbanco()
+	            		+ "  and o.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+	            		+ "'  and o.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+	                    +"' and o.cliente.idcliente=" + cliente.getIdcliente();
+	            sql = sql + " order by o.dataVencimento";
+        	}else{
+        		 sql = "Select o from Outroslancamentos o where"
+         				+ " o.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+         				+ "'  and o.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+         				+"' and o.cliente.idcliente=" + cliente.getIdcliente();
+        		 sql = sql + " order by o.dataVencimento";
+        	}
             OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
             try {
                 listaOutrosLancamentos = outrosLancamentosFacade.listaOutrosLancamentos(sql);
@@ -386,6 +423,19 @@ public class OutrosLancamentosMB implements Serializable {
     		habilitarUnidade = false;
     	}
     	
+    }
+    
+    public String nomeComboConta(){
+    	if (listaBancos == null) {
+			return nomeComboBanco;
+		}else{
+			return nomeComboBanco = "Todas";
+		}
+    }
+    
+    public void excluirConfirmacao() {
+    	mensagem mensagem = new mensagem();
+        mensagem.excluirConfirmacao();
     }
 	
 

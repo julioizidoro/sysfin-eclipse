@@ -9,27 +9,39 @@
 	<ui:define name="corpo">
 		<h:form id="frmConsultaReceber">
 		<p:growl id="growl" showDetail="true" sticky="true" />
-		<br/>  
-			<p:commandLink   action="#{contasReceberMB.novaConta()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
-				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
-				<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update="growl, idTabelaContaReceber"/>
+		<br /><br /><br /> 
+			<h:panelGrid columns="1"  style="margin-left:17%;  margin-top: -4%;">
+                <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 30%"/> 
+              <p:selectOneMenu id="cliente" class="left3" style="width:200px;"  value="#{contasReceberMB.cliente}"   converter="ClienteConverter"
+	                                 filter="true" filterMatchMode="startsWith" panelStyle="width:150px" disabled="#{contasReceberMB.habilitarUnidade}">
+	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+	                    <f:selectItems value="#{contasReceberMB.listaCliente}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+	                     <f:attribute name="listaCliente" value="#{contasReceberMB.listaCliente}"/>
+	                    <p:ajax event="change" listener="#{contasReceberMB.criarConsultaContaReceber()}" update="idTabelaContaReceber, contasVenc, contasVencer, contasReceber"/>
+	          </p:selectOneMenu>  
+           </h:panelGrid>
+           <h:panelGrid columns="5" style="margin-left:84%; margin-top:-3%;"> 
+			<p:commandLink   action="#{contasReceberMB.novaConta()}" style="text-decoration:none;" title="Novo Lançamento">
+				<img src="../../resources/img/iconeplus.png" style="margin-left:15%;border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
+				<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update="growl, idTabelaContaReceber, contasVenc, contasVencer, contasReceber"/>
             </p:commandLink>  
-            <p:commandLink id="idImagemFiltro"  action="#{contasReceberMB.coresFiltrar()}" update="@all" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
-				<img  src="#{contasReceberMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+            <p:commandLink id="idImagemFiltro"  action="#{contasReceberMB.coresFiltrar()}" update="@all" style="margin-left:-16%; text-decoration:none;" title="Filtros">
+				<img  src="#{contasReceberMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/> 
            		<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogFiltrar}" update="idTabelaContaReceber"/>
             </p:commandLink>
-            <p:commandLink id="idImagemReceber"  action="#{contasReceberMB.novoRecebimentoLote()}" update="idImagemFiltro" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Recebimento em lote">
+            <p:commandLink id="idImagemReceber"  action="#{contasReceberMB.novoRecebimentoLote()}" update="idImagemFiltro" style="margin-left:-30%; text-decoration:none;" title="Recebimento em lote">
 				<img  src="../../resources/img/iconeReceber.jpg" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 				<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogRecebimentoLote}" update="growl, idTabelaContaReceber"/>
            	</p:commandLink>
-            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
+            <p:commandLink   action="#" style="margin-left:-44%; text-decoration:none;" title="Importa para excel" ajax="false">
 				<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 				<p:dataExporter type="xls" target="idTabelaContaReceber" fileName="contasReceber" />
             </p:commandLink>
-            <p:commandLink   action="#{contasReceberMB.novaImpressao()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
+            <p:commandLink   action="#{contasReceberMB.novaImpressao()}" style="margin-left:-60%; text-decoration:none;" title="Imprimir">
 				<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
-            </p:commandLink>   
-            <br /><br /> 
+            </p:commandLink>
+            </h:panelGrid>     
+            <br />
             
             		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick">  
                         <p:menuitem value="Cancelar"   icon=" ui-icon-trash"  action="#{mensagem.cancelado()}" actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber"/> 

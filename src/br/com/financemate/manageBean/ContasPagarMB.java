@@ -734,11 +734,6 @@ public class ContasPagarMB implements Serializable{
 	 public void retornoDialogLiberar(SelectEvent event) {
 		 mensagem mensagem = new mensagem();
 		 gerarListaContas();
-		 if (contasPagar.getContaPaga().equals("S")) {
-				mensagem.liberar();
-			}else{
-				mensagem.naoLiberar();
-			}
 		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 

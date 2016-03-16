@@ -385,7 +385,10 @@ public class CadContasPagarMB implements Serializable{
 		if (contaPagar.getDataCompensacao() == null) {
 			contaPagar.setDataCompensacao(null);
 		}
-		contaPagar.setAutorizarPagamento("N");
+		if (contaPagar.getAutorizarPagamento() == null || contaPagar.getAutorizarPagamento().equalsIgnoreCase("N")) {
+			contaPagar.setAutorizarPagamento("N");
+		}  
+		
 		String mensagem = validarDados();
 		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();

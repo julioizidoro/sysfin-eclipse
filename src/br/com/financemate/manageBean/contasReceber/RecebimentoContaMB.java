@@ -1,14 +1,20 @@
 package br.com.financemate.manageBean.contasReceber;
 
 
+import br.com.financemate.manageBean.LiberarContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.facade.OutrosLancamentosFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Outroslancamentos;
+
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -238,7 +244,10 @@ public class RecebimentoContaMB implements  Serializable{
     }
     
     public String salvar(){
+    	FacesContext fc = FacesContext.getCurrentInstance();
+    	HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
     	if (valorParcial > 0f) {
+    		session.removeAttribute("contareceber");
 			RequestContext.getCurrentInstance().closeDialog(contasReceber);
 			return "";
 		}else{
@@ -249,6 +258,8 @@ public class RecebimentoContaMB implements  Serializable{
 	        contasReceber.setCliente(cliente);
 	        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
 	        contasReceber = contasReceberFacade.salvar(contasReceber);
+	        lancaOutrosLancamentos(contasReceber);
+	        session.removeAttribute("contareceber");
 	        RequestContext.getCurrentInstance().closeDialog(contasReceber);
 	        return "";
 		}
@@ -302,5 +313,28 @@ public class RecebimentoContaMB implements  Serializable{
 			 return "visualizarRecebimentoParcial";
 		 }
 		 return "";
-	 }
+    }
+    
+    public void lancaOutrosLancamentos(Contasreceber conta) {
+       Outroslancamentos movimentoBanco = new Outroslancamentos();
+       movimentoBanco.setBanco(conta.getBanco());
+       movimentoBanco.setCliente(conta.getCliente());
+       movimentoBanco.setDataVencimento(conta.getDataVencimento());
+       movimentoBanco.setDataRegistro(new Date());
+       movimentoBanco.setPlanocontas(conta.getPlanocontas());
+       movimentoBanco.setUsuario(usuarioLogadoMB.getUsuario());
+       movimentoBanco.setValorEntrada(conta.getValorPago());
+       movimentoBanco.setValorSaida(0f);
+       movimentoBanco.setDataRegistro(new Date());
+       movimentoBanco.setDescricao("Recebimento contas a receber");
+       OutrosLancamentosFacade movimentoBancoFacade = new OutrosLancamentosFacade();
+       try {
+           movimentoBanco.setIdcontasreceber(conta.getIdcontasReceber());
+           movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
+       } catch (SQLException ex) {
+           Logger.getLogger(LiberarContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+           mostrarMensagem(ex, "Erro ao salvar libera��o", "Erro");
+       }
+       
+   }
 }

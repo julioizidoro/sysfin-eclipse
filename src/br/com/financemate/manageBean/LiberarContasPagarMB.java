@@ -50,7 +50,6 @@ public class LiberarContasPagarMB implements Serializable {
 		totalLiberadas = (String) session.getAttribute("totalLiberadas");
 		contasPagar = (Contaspagar) session.getAttribute("contasPagar");
 		session.removeAttribute("totalLiberadas");
-		session.removeAttribute("listaContasSelecionadas");
 		session.removeAttribute("contasPagar");
         if (contasPagar == null) {
             contasPagar = new Contaspagar();
@@ -127,10 +126,12 @@ public class LiberarContasPagarMB implements Serializable {
 	
 	public String salvarContasLiberadas(Contaspagar conta) {
 		mensagem msg = new mensagem();
-		String mensagem = validarDados();
-		if (mensagem == "") { 
+		
+		 
 			for (int i = 0; i < listaContasSelecionadas.size(); i++) {
-				if (contasPagar.getAutorizarPagamento().equals("S")) {
+				String mensagem = validarDados(listaContasSelecionadas.get(i));
+				if (mensagem == "") {
+				if (listaContasSelecionadas.get(i).getAutorizarPagamento().equals("S")) {
 				
 				salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
 				msg.liberar();
@@ -138,13 +139,13 @@ public class LiberarContasPagarMB implements Serializable {
 				}else{
 					msg.naoLiberar();
 				}
-	        }
+	        }else{
+				msg.competencia();
+			}
 			calculosContasMB.calcularTotalContasPagar();
 			
 	        RequestContext.getCurrentInstance().closeDialog(contasPagar);
 	        return "";
-		}else{
-			msg.competencia();
 		}
 		
 		return "";
@@ -174,6 +175,10 @@ public class LiberarContasPagarMB implements Serializable {
         try {
             movimentoBanco.setIdcontaspagar(conta.getIdcontasPagar());
             movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
+            FacesContext fc = FacesContext.getCurrentInstance();
+    		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+    		session.removeAttribute("listaSelecionadas");
+            
         } catch (SQLException ex) {
             Logger.getLogger(LiberarContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro ao salvar libera��o", "Erro");
@@ -193,11 +198,19 @@ public class LiberarContasPagarMB implements Serializable {
         context.addMessage(null, new FacesMessage(titulo, erro));
     }
 	
-    public String validarDados(){
+    public String validarDados(Contaspagar contaspagar){
     	String mensagem = "";
-    	if (contasPagar.getCompetencia().equalsIgnoreCase("")){
+    	if (contaspagar.getCompetencia().equalsIgnoreCase("")){
 			mensagem = mensagem + "Competência não informada \r\n";
 		}
     	return mensagem;
+    }
+    
+    
+    public String editarBanco(Contaspagar conta){
+	    	FacesContext fc = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			session.setAttribute("conta", conta);
+	    	return "editarBanco"; 
     }
 }

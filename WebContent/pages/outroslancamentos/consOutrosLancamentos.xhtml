@@ -23,6 +23,7 @@
 	                    <f:selectItems value="#{outrosLancamentosMB.listaClientes}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
 	                     <f:attribute name="listaCliente" value="#{outrosLancamentosMB.listaClientes}"/>
 	                    <p:ajax event="change" listener="#{outrosLancamentosMB.gerarListaBanco()}" update="idconta"/>
+	          			<p:ajax event="change" listener="#{outrosLancamentosMB.nomeComboConta()}" update="idconta"/>
 	          </p:selectOneMenu>  
            </h:panelGrid>  
            <h:panelGrid columns="2"  style="margin-left: 38.5%; margin-top:-4.5%;">   
@@ -43,7 +44,7 @@
              	<p:outputLabel value="Conta" for="idconta" class="left3" style="margin-left:40%;"/>
 	              <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{outrosLancamentosMB.banco}"  converter="BancoConverter"
 	                                 filter="true" filterMatchMode="startsWith" panelStyle="width:150px">
-	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
+	                    <f:selectItem itemLabel="#{outrosLancamentosMB.nomeComboBanco}" itemValue="0" noSelectionOption="true" /> 
 	                    <f:selectItems value="#{outrosLancamentosMB.listaBancos}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
 	                    <f:attribute name="listaBanco" value="#{outrosLancamentosMB.listaBancos}" />
 	             </p:selectOneMenu>  
@@ -54,29 +55,35 @@
 	                    <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
 	                </p:commandLink>
 	          </h:panelGrid> 
-             <h:panelGrid style="margin-left: 89%; margin-top:-3.2%;">   
-			 
+	          <h:panelGrid columns="3" style="margin-left:90%; margin-top:-3.3%;">
+             <h:panelGrid>   
+			  
 				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:2%;text-decoration:none;" title="Novo Lançamento">
 					<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 					<p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update="growl, idTabelaOutrosLancamentos, idsaida, identrada, idtotal"/>
             	</p:commandLink>
 			 </h:panelGrid>
-			 <h:panelGrid  style="margin-left: 91.5%; margin-top:-3.3%;"> 
+			 <h:panelGrid  style="margin-left:-30%; "> 
 	            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
 					<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 					<p:dataExporter type="xls" target="idTabelaOutrosLancamentos" fileName="outrosLancamentos" />
 	            </p:commandLink>
 	         </h:panelGrid> 
-	         <h:panelGrid style="margin-left:94%; margin-top:-3.35%;">
+	         <h:panelGrid style="margin-left:-60%; ">
 	            <p:commandLink   action="#{imprimirOutrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 					<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
 	            </p:commandLink>   
 	         </h:panelGrid> 
+	         </h:panelGrid>
 	            <br /><br /> 
-	            
-	            
+	            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        				<p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir()}" type="button" styleClass="ui-confirmdialog-yes"  />
+        				<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    			</p:confirmDialog>
 	             <p:contextMenu for="idTabelaOutrosLancamentos" style="background:white;">
-                        <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{outrosLancamentosMB.excluir()}" update="growl, idTabelaOutrosLancamentos" />
+                        <p:menuitem value="Excluir"   icon=" ui-icon-trash" action="#{outrosLancamentosMB.excluir()}"  update="growl, idTabelaOutrosLancamentos" >
+                        	<p:confirm header="Confirmação" message="Tem certeza que deseja excluir esse lançamento?" icon="ui-icon-alert" />
+                        </p:menuitem>
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  actionListener="#{outrosLancamentosMB.editar(outrosLancamentosMB.outrosLancamentos)}" /> 
                     	</p:contextMenu> 
                     <p:dataTable id="idTabelaOutrosLancamentos"  var="outrosLancamentos"  value="#{outrosLancamentosMB.listaOutrosLancamentos}" style="border:none;" class="tabelacontas" 

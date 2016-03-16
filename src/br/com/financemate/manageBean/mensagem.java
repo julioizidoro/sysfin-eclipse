@@ -76,6 +76,11 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Competência não informada", ""));
     }
     
+    public void excluirConfirmacao() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Excluido com sucesso", ""));
+    }
+    
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }
