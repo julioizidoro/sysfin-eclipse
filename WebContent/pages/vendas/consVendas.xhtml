@@ -9,10 +9,10 @@
 	<ui:define name="corpo">
 		<h:form id="frmConsultaReceber">
 		<p:growl id="growl" showDetail="true" sticky="true" />
-		<br/>  
+		<br/>   
 			<p:commandLink   action="#{vendasMB.novaVenda()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
-				<p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogNovo}" update="idTabelaVendas"/>
+				<p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogNovo}" update="growl, idTabelaVendas"/>
 			</p:commandLink>  
             <p:commandLink id="idImagemFiltro"  action="#{vendasMB.coresFiltrar()}" update="@all" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
 				<img  src="#{vendasMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
@@ -27,7 +27,8 @@
             <br /><br /> 
             
             		<p:contextMenu for="idTabelaVendas" style="background:white;" ajax="onclick">  
-                        <p:menuitem value="Gerar Parcela"   icon=" ui-icon-plus"  action="#{vendasMB.gerarParcela()}" /> 
+                        <p:menuitem value="Gerar Parcela"   icon=" ui-icon-plus"  action="#{vendasMB.gerarParcela()}" />
+                        <p:menuitem value="Cancelar"   icon=" ui-icon-close" action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendasMB.venda)}" update="growl, idTabelaVendas"/>  
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaVendas"  var="vendas"  value="#{vendasMB.listaVendas}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{vendasMB.venda}" selectionMode="single" rowKey="#{vendas.idvendas}">
@@ -44,12 +45,12 @@
                             <h:outputText  value="#{vendas.dataVenda}" style="margin-left:20%; font-size:12px;" > 
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/> 
                             </h:outputText> 
-                        </p:column>
-                        <p:column headerText="Unidade" sortBy="#{vendas.cliente.nomeFantasia}"   style=" font-size:12px; background:white; color:black; border:none;" styleClass="alinharCenter" >
-                             <h:outputText  value="#{vendas.cliente.nomeFantasia}" style="margin-right:30%; font-size:12px; text-align:center;"/>
-                        </p:column>
+                        </p:column> 
+                        <p:column headerText="Unidade" sortBy="#{vendas.cliente.nomeFantasia}"   style=" font-size:12px; background:white; color:black; border:none;" styleClass="alinhar" >
+                             <h:outputText  value="#{vendas.cliente.nomeFantasia}" style="margin-right:10%; font-size:12px; text-align:center;"/>
+                        </p:column> 
                         <p:column headerText="Cliente" sortBy="#{vendas.nomeCliente}"   style=" font-size:12px; background:white; color:black; border:none;" >
-                             <h:outputText  value="#{vendas.nomeCliente}" style="margin-right:30%; font-size:12px; text-align:center;"/>
+                             <h:outputText  value="#{vendas.nomeCliente}" style=" font-size:12px; text-align:center;"/>
                         </p:column>
                         <p:column headerText="Valor" sortBy="#{vendas.valorBruto}" style=" background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
                             <h:outputText value="#{vendas.valorBruto}" style="margin-right:40%; font-size:12px;"> 

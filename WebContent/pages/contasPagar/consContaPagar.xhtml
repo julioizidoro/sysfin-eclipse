@@ -49,8 +49,8 @@
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText> 
                         </p:column> 
-                        <p:column headerText="Unidade" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;">
-                            <h:outputText value="#{contasPagar.cliente.nomeFantasia}" style="margin-left:25%; font-size:12px;"/>
+                        <p:column headerText="Unidade" styleClass="alinhar" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;">
+                            <h:outputText value="#{contasPagar.cliente.nomeFantasia}" style=" font-size:12px;"/>
                         </p:column> 
                         <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{contasPagar.descricao}" style="font-size:12px;"/>

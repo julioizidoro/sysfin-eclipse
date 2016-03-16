@@ -27,6 +27,7 @@ import br.com.financemate.facade.ProdutoFacade;
 import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.CadContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
@@ -519,12 +520,25 @@ public class CadVendasMB implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		planocontas = (Planocontas) session.getAttribute("planocontas");
-		produto = (Produto) session.getAttribute("produto");
+		if (produto == null) { 
+			produto = (Produto) session.getAttribute("produto");
+		}
 		VendasFacade vendasFacade = new VendasFacade();
 		ClienteFacade clienteFacade = new ClienteFacade();
 		vendas.setUsuario(usuarioLogadoMB.getUsuario());
 		vendas.setProduto(produto);
-		vendas.setPlanocontas(planocontas);
+		if (planocontas == null) {
+			PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+			try {
+				planocontas = planoContasFacade.consultar(1);
+				vendas.setPlanocontas(planocontas);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			vendas.setPlanocontas(planocontas);
+		}
 		if (vendas.getValorLiquido() < 0) {
 			vendas.setValorLiquido(vendas.getValorLiquido() * (-1));
 		}

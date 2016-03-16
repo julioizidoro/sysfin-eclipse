@@ -27,8 +27,10 @@ import br.com.financemate.manageBean.ClienteMB;
 import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
+import br.com.financemate.manageBean.contasReceber.ContasReceberMB;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
 
@@ -65,7 +67,6 @@ public class VendasMB implements Serializable {
 	@PostConstruct
 	public void init(){
 		 if (listaVendas==null){
-			 gerarDataInicial();
 			 gerarListaVendas();
 		 }
 		 gerarListaCliente();
@@ -284,7 +285,13 @@ public class VendasMB implements Serializable {
     }
     
     public void gerarListaVendas(){
-        sql = sql + order;
+    	if (usuarioLogadoMB.getUsuario().getCliente()>0){
+    		sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA'  and v.cliente.idcliente=" + 
+    				usuarioLogadoMB.getUsuario().getCliente() + " order by v.dataVenda";
+    	}else {
+    		sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
+    				+ " v.situacao<>'verde' and v.situacao<>'CANCELADA' order by v.dataVenda";
+    	}
         VendasFacade vendasFacade = new VendasFacade();
         try {
             listaVendas = vendasFacade.listar(sql);
@@ -537,8 +544,21 @@ public class VendasMB implements Serializable {
     
     public void retornoDialogNovo(SelectEvent event) {
         Vendas vendas = (Vendas) event.getObject();
-        gerarDataInicial();
+        mensagem msg = new mensagem();
+        msg.saveMessagem();
         gerarListaVendas();
+    }
+    
+    public void cancelarVenda(Vendas vendas){
+    	vendas.setSituacao("CANCELADA");
+		VendasFacade vendasFacade = new VendasFacade();
+		try {
+			vendasFacade.salvar(vendas);
+		} catch (SQLException ex) {
+			Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+			 mostrarMensagem(ex, "Erro ao salvar venda cancelada", "Erro");
+		}
+		gerarListaVendas();
     }
 
 }
