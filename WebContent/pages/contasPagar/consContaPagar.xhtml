@@ -12,7 +12,7 @@
 		<br/> 
 			<p:commandLink   action="#{contasPagarMB.novaConta()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
-				<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar"/>
+				<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
             </p:commandLink>  
             <p:commandLink id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="@all" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
 				<img  src="#{contasPagarMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
@@ -20,7 +20,7 @@
             </p:commandLink>
             <p:commandLink id="idImagemLiberar"  action="#{contasPagarMB.novaLiberacao()}" update="idImagemFiltro" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Liberar">
 				<img  src="../../resources/img/iconeLibera.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
-				<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogLiberar}"  update="growl, idTabelaContaPagar"/>
+				<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogLiberar}"  update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
            	</p:commandLink> 
             <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
 				<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
@@ -31,7 +31,7 @@
             </p:commandLink>   
             <br /><br /> 
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
-                        <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="idTabelaContaPagar"/>
+                        <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="growl, idTabelaContaPagar"/>
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update=" growl, idTabelaContaPagar"/>
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  actionListener="#{contasPagarMB.editar(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
                     	<p:menuitem value="Operações Usuário"  icon=" ui-icon-person"  action="#{contasPagarMB.operacoesUsuario(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 

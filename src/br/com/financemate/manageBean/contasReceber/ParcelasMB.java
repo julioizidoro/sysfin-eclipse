@@ -93,7 +93,7 @@ public class ParcelasMB implements Serializable {
 	
 	
 	public void gerarListaParcelas(){
-		String sql = "SELECT c FROM Contasreceber c  WHERE c.venda=" + contasreceber.getVenda();
+		String sql = "SELECT c FROM Contasreceber c  WHERE c.numeroDocumento=" + contasreceber.getNumeroDocumento();
 		try {
 			 ContasReceberFacade contasReceberFacadece = new ContasReceberFacade();
 			 

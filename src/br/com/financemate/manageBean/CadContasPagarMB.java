@@ -31,6 +31,7 @@ import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.facade.FtpDadosFacade;
+import br.com.financemate.facade.NomeArquivoFacade;
 import br.com.financemate.facade.OperacaoUsuarioFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
@@ -38,6 +39,7 @@ import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Ftpdados;
+import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
@@ -77,9 +79,11 @@ public class CadContasPagarMB implements Serializable{
 	public void init(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        file = (UploadedFile) session.getAttribute("file");
         contaPagar = (Contaspagar) session.getAttribute("contapagar");
         cptransferencia =  (Cptransferencia) session.getAttribute("cptransferencia");
         session.removeAttribute("contapagar");
+        session.removeAttribute("file");
         gerarListaCliente();
         gerarListaPlanoContas();
         if (contaPagar == null) { 
@@ -537,7 +541,14 @@ public class CadContasPagarMB implements Serializable{
 		if (file != null) {
 			nomeAnexo = "Anexado";
 		}
-		return nomeAnexo;
+		return nomeAnexo = "Anexar";
+	}
+	
+	public String corIconeClips(){
+		if (file != null) {
+			return "../../resources/img/iconeClipVerde.png";
+		}
+		return "../../resources/img/iconeClipsVermelho.png";
 	}
 
 	public boolean salvarArquivoFTP(){
@@ -563,8 +574,20 @@ public class CadContasPagarMB implements Serializable{
             mostrarMensagem(ex, "Erro conectar FTP", "Erro");
         }
         try {
-        	
+        	nomeAquivoFTP = nomeArquivo();
             String msg = ftp.enviarArquivo(file, nomeAquivoFTP);
+            if (contaPagar != null && contaPagar.getIdcontasPagar() != null) {
+				Nomearquivo nomearquivo = new Nomearquivo();
+				NomeArquivoFacade nomeArquivoFacade = new NomeArquivoFacade();
+				nomearquivo.setNomearquivo01(nomeAquivoFTP);
+				nomearquivo.setContaspagar(contaPagar);
+				try {
+					nomeArquivoFacade.salvar(nomearquivo);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
             mostrarMensagem(null, msg, "");
             return true;
         } catch (IOException ex) {
@@ -615,8 +638,21 @@ public class CadContasPagarMB implements Serializable{
 		 
 	}
 	
-
 	
+	public String anexarArquivo(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("contapagar", contaPagar);
+		return "anexarArquivo";
+	}
+
+	public String voltarCadContasPagar(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("contapagar", contaPagar);
+        session.setAttribute("file", file);
+		return "cadContasPagar";
+	}
 
 	
 }

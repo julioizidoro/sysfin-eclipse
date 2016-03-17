@@ -691,16 +691,15 @@ public class ContasReceberMB implements Serializable {
 		 setDataInicial(Formatacao.ConvercaoStringData(dataInicial));
 		 setDataFinal(Formatacao.ConvercaoStringData(dataFinal));
 		 if (usuarioLogadoMB.getUsuario().getCliente()>0){
-			 sql = " Select v from Contasreceber v where v.dataVencimento<='" + dataFinal + 
-					 "' and v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
-					 " and v.dataPagamento=null" + " order by v.dataVencimento";
+			 sql = " Select v from Contasreceber v where " +
+					 " v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
+					 " and v.dataPagamento=null and v.numeroDocumento<>'CANCELADA'" + " order by v.dataVencimento";
 		 }else { 
 			 sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and v.cliente.idcliente=" + cliente.getIdcliente()  
-					 + " and v.dataVencimento<='" + dataFinal + 
-					 "'  and v.dataPagamento=null" + " order by v.dataVencimento";
+					 + " and v.dataPagamento=null and v.numeroDocumento<>'CANCELADA'" + " order by v.dataVencimento";
 	        } 
 		 gerarListaContas();
-	 } 
+	 }  
 	 
 	 public void gerarListaContas() {
 		 try {
@@ -870,7 +869,7 @@ public class ContasReceberMB implements Serializable {
 			sql = sql + " v.venda=" + nVenda + " and ";
 		}
 		
-		if (banco!=null) {
+		if (banco!=null && banco.getIdbanco() != null) {
 			sql = sql + " v.banco.idbanco=" + banco.getIdbanco() + " and ";
 		}
 		
@@ -881,7 +880,7 @@ public class ContasReceberMB implements Serializable {
 		}else if(status.equalsIgnoreCase("A vencer")){
 			sql = sql + " v.dataVencimento>'" + Formatacao.ConvercaoDataSql(new Date()) + "' and ";
 		}else if (status.equalsIgnoreCase("Canceladas")){
-			sql = sql + " c.situacao=" + "'CANCELADA' and "; 
+			sql = sql + " c.numedoDocumento=" + "'CANCELADA'"; 
 		} 
 		 
 		if ((dataInicial!=null) && (dataFinal!=null)){
@@ -1033,14 +1032,11 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public void cancelar(Contasreceber contasreceber){
-		 	vendas.setSituacao("CANCELADA");
-			VendasFacade vendasFacade = new VendasFacade();
-			try {
-				vendasFacade.salvar(vendas);
-			} catch (SQLException ex) {
-				Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
-				 mostrarMensagem(ex, "Erro ao salvar venda cancelada", "Erro");
-			}
+		 	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+		 	contasreceber.setNumeroDocumento("CANCELADA");
+			contasReceberFacade.salvar(contasreceber);
+			mensagem msg = new mensagem();
+			msg.cancelado();
 			gerarListaContas();
 	 }
 	 
@@ -1065,8 +1061,8 @@ public class ContasReceberMB implements Serializable {
 		 return null;
 	 }
 	 
-	 public Integer numeroTotalParcela(int contasreceber){
-			 String sql = "SELECT c FROM Contasreceber c  WHERE c.venda=" + contasreceber;
+	 public Integer numeroTotalParcela(String contasreceber){
+			 String sql = "SELECT c FROM Contasreceber c  WHERE c.numeroDocumento=" + contasreceber;
 			 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 			 try {
 				listaTotalParcela = contasReceberFacade.listar(sql);

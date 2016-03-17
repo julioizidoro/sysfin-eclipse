@@ -49,7 +49,6 @@ public class LiberarContasPagarMB implements Serializable {
 		listaContasSelecionadas =  (List<Contaspagar>) session.getAttribute("listaContasSelecionadas");
 		totalLiberadas = (String) session.getAttribute("totalLiberadas");
 		contasPagar = (Contaspagar) session.getAttribute("contasPagar");
-		session.removeAttribute("totalLiberadas");
 		session.removeAttribute("contasPagar");
         if (contasPagar == null) {
             contasPagar = new Contaspagar();
@@ -126,30 +125,30 @@ public class LiberarContasPagarMB implements Serializable {
 	
 	public String salvarContasLiberadas(Contaspagar conta) {
 		mensagem msg = new mensagem();
-		
-		 
 			for (int i = 0; i < listaContasSelecionadas.size(); i++) {
 				String mensagem = validarDados(listaContasSelecionadas.get(i));
 				if (mensagem == "") {
-				if (listaContasSelecionadas.get(i).getAutorizarPagamento().equals("S")) {
+					if (listaContasSelecionadas.get(i).getAutorizarPagamento().equals("S")) {
 				
-				salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
-				msg.liberar();
-				
+						salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
+						msg.liberar();
+						FacesContext fc = FacesContext.getCurrentInstance();
+						HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+						session.removeAttribute("totalLiberadas");
+					}else{
+						msg.naoLiberar();
+						RequestContext.getCurrentInstance().closeDialog(contasPagar); 
+						return "";
+					}
 				}else{
-					msg.naoLiberar();
+					msg.competencia();
+					return ""; 
 				}
-	        }else{
-				msg.competencia();
+				calculosContasMB.calcularTotalContasPagar();
 			}
-			calculosContasMB.calcularTotalContasPagar();
-			
-	        RequestContext.getCurrentInstance().closeDialog(contasPagar);
-	        return "";
-		}
-		
-		return "";
-    }
+			RequestContext.getCurrentInstance().closeDialog(contasPagar);
+			return "";
+	}
     
     
     public void salvarContaLiberadasMovimentoBanco(Contaspagar conta) {
@@ -175,9 +174,7 @@ public class LiberarContasPagarMB implements Serializable {
         try {
             movimentoBanco.setIdcontaspagar(conta.getIdcontasPagar());
             movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
-            FacesContext fc = FacesContext.getCurrentInstance();
-    		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-    		session.removeAttribute("listaSelecionadas");
+            
             
         } catch (SQLException ex) {
             Logger.getLogger(LiberarContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);

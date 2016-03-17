@@ -35,15 +35,17 @@
                 </p:column>
                 <p:column headerText="Valor"   style="background:white; color:black; border:none;">
                     <h:outputText value="#{contasReceber.valorParcela}" style="margin-left:40%;" styleClass="alinharCenter">
-                        <f:convertNumber currencySymbol="" type="currency"/>
+                        <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
                     </h:outputText>
                 </p:column>
                 
             </p:dataTable>
 		   <br />
 		   <h:panelGrid columns="2" style="margin-left:70%; font-size:12px;">
-		   		<p:outputLabel value="Total" style="font-size:16px;"/>
-		   		<p:outputLabel  value="R$ #{parcelasMB.total}" style="font-size:16px;"/>
+		   		<p:outputLabel value="Total R$" style="font-size:16px;"/>
+		   		<p:outputLabel  value="#{parcelasMB.total}" style="font-size:16px;">
+		   			<f:convertNumber currencySymbol="" type="currency"/>
+		   		</p:outputLabel>
 		   </h:panelGrid>
 		   <br />
             <hr />

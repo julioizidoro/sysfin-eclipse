@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.UploadedFile;
 
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
@@ -79,8 +80,7 @@ public class ContasPagarMB implements Serializable{
 		gerarListaPlanoContas();
 		
 	}
-	
-	
+
 
 
 	public Boolean getHabilitarUnidade() {
@@ -570,8 +570,8 @@ public class ContasPagarMB implements Serializable{
 		}
         contasPagarFacade.excluir(contasPagar.getIdcontasPagar());
         gerarListaContas();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Excluido com Sucesso", ""));
+        mensagem msg = new mensagem();
+        msg.excluiMessagem();
         return "";
      }
 	
@@ -732,7 +732,18 @@ public class ContasPagarMB implements Serializable{
 	 }
 	 
 	 public void retornoDialogLiberar(SelectEvent event) {
-		 mensagem mensagem = new mensagem();
+		 mensagem msg = new mensagem();
+		 FacesContext fc = FacesContext.getCurrentInstance();
+ 		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+ 		 listaContasSelecionadas = (List<Contaspagar>) session.getAttribute("listaContasSelecionadas");
+ 		 session.removeAttribute("listaSelecionadas");
+ 		 for (int i = 0; i < listaContasSelecionadas.size(); i++) {
+			if (listaContasSelecionadas.get(i).getContaPaga().equalsIgnoreCase("S")) {
+				msg.liberar();
+			}else{
+				msg.naoLiberar();
+			}
+		}
 		 gerarListaContas();
 		 calculosContasMB.calcularTotalContasPagar();
 	 }

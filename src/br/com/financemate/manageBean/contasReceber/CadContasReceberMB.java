@@ -3,7 +3,9 @@ package br.com.financemate.manageBean.contasReceber;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -349,11 +351,44 @@ public class CadContasReceberMB implements Serializable {
 			        contasReceber.setValorPago(0.0f);
 			        contasReceber.setDesagio(0.0f);
 			        contasReceber.setJuros(0.0f);
-			        contasReceber.setNumeroParcela(i/numeroVezes);
+			        contasReceber.setNumeroParcela(i);
 			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
 			        String mensagem = validarDados();
-			        if (mensagem=="") { 
+			        if (mensagem=="") {
+			        	Contasreceber copia = new Contasreceber();
+						copia = contasReceber;
 			        	contasReceber = contasReceberFacade.salvar(contasReceber);
+			        	if (frequencia != null) {
+							if (frequencia.equalsIgnoreCase("mensal")) {
+								Calendar c = new GregorianCalendar();
+								c.setTime(copia.getDataVencimento());
+								c.add(Calendar.MONTH, 1);
+								Date data = c.getTime();
+								copia.setDataVencimento(data);
+							}else if (frequencia.equalsIgnoreCase("Diaria")){
+								Calendar c = new GregorianCalendar();
+								c.setTime(copia.getDataVencimento());
+								c.add(Calendar.DAY_OF_MONTH, 1);
+								Date data = c.getTime();
+								copia.setDataVencimento(data);
+							}else if(frequencia.equalsIgnoreCase("anual")){
+								Calendar c = new GregorianCalendar();
+								c.setTime(copia.getDataVencimento());
+								c.add(Calendar.YEAR, 1);
+								Date data = c.getTime();
+								copia.setDataVencimento(data);
+							}else if(frequencia.equalsIgnoreCase("Semanal")){
+								Calendar c = new GregorianCalendar();
+								c.setTime(copia.getDataVencimento());
+								c.add(Calendar.DAY_OF_MONTH, 7);
+								Date data = c.getTime();
+								copia.setDataVencimento(data);
+							}
+						}
+			        	if (i < numeroVezes) {
+							contasReceber = new Contasreceber();
+							contasReceber = copia;
+						}
 					}else{
 						FacesContext context = FacesContext.getCurrentInstance();
 			            context.addMessage(null, new FacesMessage(mensagem, ""));
@@ -390,19 +425,22 @@ public class CadContasReceberMB implements Serializable {
 	    public String validarDados(){
 	    	String mensagem = "";
 	    	if (contasReceber.getCliente().equals("")) {
-				mensagem = mensagem + "Unidade n�o selecionada \r\n";
+				mensagem = mensagem + "Unidade não selecionada \r\n";
 			}
 	    	if (contasReceber.getNomeCliente().equals("")) {
-				mensagem = mensagem + "Nome do Cliente n�o informado \r\n";
+				mensagem = mensagem + "Nome do Cliente não informado \r\n";
 			}
 	    	if (contasReceber.getDataVencimento().equals(null)) {
-				mensagem = mensagem + "Data de vencimento n�o informado \r\n";
+				mensagem = mensagem + "Data de vencimento não informado \r\n";
 			}
 	    	if (contasReceber.getValorParcela().equals("")) {
-				mensagem = mensagem + "Valor n�o informado \r\n";
+				mensagem = mensagem + "Valor não informado \r\n";
 			}
 	    	if (contasReceber.getBanco().equals(null)) {
-				mensagem = mensagem + "Banco n�o selecionado";
+				mensagem = mensagem + "Banco não selecionado";
+			}
+	    	if (contasReceber.getNumeroDocumento().equalsIgnoreCase("")) {
+				mensagem = mensagem + "Número de documento não informado \r\n";
 			}
 	    	return mensagem;
 	    }
@@ -414,16 +452,6 @@ public class CadContasReceberMB implements Serializable {
 		    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		    session.setAttribute("contasReceber", contasReceber);
 			return "parcelas";
-	    }
-	    
-	    public void onCellEdit(CellEditEvent event) {
-	        Object oldValue = event.getOldValue();
-	        Object newValue = event.getNewValue();
-	         
-	        if(newValue != null && !newValue.equals(oldValue)) {
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-	            FacesContext.getCurrentInstance().addMessage(null, msg);
-	        }
 	    }
 	    
 	    
