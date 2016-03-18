@@ -39,7 +39,7 @@
            <h:panelGrid style="margin-left:1%;" columns="1">
              	<p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
 	              <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadVendasMB.planocontas}" converter="PlanoContasConverter"
-	              					 filter="true" filterMatchMode="startsWith" panelStyle="width:200px">
+	              					 filter="true" filterMatchMode="contains" panelStyle="width:200px">
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
 	                    <f:selectItems value="#{cadVendasMB.listaPlanocontas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
 	                    <f:attribute name="listaPlanoConta" value="#{cadVendasMB.listaPlanocontas}"/>

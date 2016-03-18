@@ -9,7 +9,8 @@ package br.com.financemate.util;
 	import org.primefaces.model.chart.BarChartModel;
 	import org.primefaces.model.chart.LineChartModel;
 	import org.primefaces.model.chart.ChartSeries;
-	import org.primefaces.model.chart.LineChartSeries;
+import org.primefaces.model.chart.LegendPlacement;
+import org.primefaces.model.chart.LineChartSeries;
 	 
 	@ManagedBean
 	public class grafico implements Serializable {
@@ -39,6 +40,7 @@ package br.com.financemate.util;
 	        animatedModel1.setTitle("Fluxo de Caixa diário");
 	        animatedModel1.setAnimate(true);
 	        animatedModel1.setLegendPosition("ne");
+	        animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
 	        Axis yAxis = animatedModel1.getAxis(AxisType.Y);
 	        yAxis.setMin(0);
 	        yAxis.setMax(10);

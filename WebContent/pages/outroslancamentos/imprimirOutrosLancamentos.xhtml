@@ -30,7 +30,7 @@
                 </h:panelGrid>
                 <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
 	                <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{imprimirOutrosLancamentosMB.cliente}" converter="ClienteConverter"
-	                             filter="true" filterMatchMode="startsWith" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
+	                             filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
 	                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
 	                    <f:selectItems  value="#{imprimirOutrosLancamentosMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
 	                    <f:attribute name="listaCliente" value="#{imprimirOutrosLancamentosMB.listaCliente}"/>
@@ -40,7 +40,7 @@
             	<h:panelGrid columns="2" style="margin-left:65%; margin-top:-6%;"> 
             		<p:outputLabel value="Conta" for="idconta" class="left3"/> 
 	              	<p:selectOneMenu id="idconta" class="left3" style="width:155px;"  value="#{imprimirOutrosLancamentosMB.banco}"  converter="BancoConverter"
-	                                 filter="true" filterMatchMode="startsWith" panelStyle="width:150px">
+	                                 filter="true" filterMatchMode="contains" panelStyle="width:150px">
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
 	                    <f:selectItems value="#{imprimirOutrosLancamentosMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
 	                    <f:attribute name="listaBanco" value="#{imprimirOutrosLancamentosMB.listaBanco}" />

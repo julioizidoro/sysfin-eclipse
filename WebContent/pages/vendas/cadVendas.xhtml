@@ -40,7 +40,7 @@
             </h:panelGrid>
             <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
 	            <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadVendasMB.cliente}" converter="ClienteConverter"
-	                          filter="true" filterMatchMode="startsWith" panelStyle="width:180px" disabled="#{cadVendasMB.habilitarUnidade}">
+	                          filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadVendasMB.habilitarUnidade}">
 	                <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
 	                <f:selectItems  value="#{cadVendasMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
 	                <f:attribute name="listaCliente" value="#{cadVendasMB.listaCliente}"/>
@@ -69,7 +69,7 @@
            </h:panelGrid>
            <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
 	           <p:selectOneMenu  id="idproduto"  style="width: 200px;margin-left: 1%"  value="#{cadVendasMB.produto}" converter="ProdutoConverter"
-	                         filter="true" filterMatchMode="startsWith" panelStyle="width:180px">
+	                         filter="true" filterMatchMode="contains" panelStyle="width:180px">
 	               <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
 	               <f:selectItems  value="#{cadVendasMB.listaProduto}" var="produtoselecionado" itemLabel="#{produtoselecionado.descricao}" itemValue="#{produtoselecionado}"/>
 	               <f:attribute name="listaProduto" value="#{cadVendasMB.listaProduto}"/>

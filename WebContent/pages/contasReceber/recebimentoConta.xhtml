@@ -76,7 +76,7 @@
             </h:panelGrid>
             <h:panelGrid style="margin-left:67%; margin-top:-5%;">
             	<p:selectOneMenu id="idconta"  style="width:180px;"  value="#{recebimentoContaMB.banco}"
-                    converter="BancoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:150px" >
+                    converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
                     <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems value="#{recebimentoContaMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
                     <f:attribute name="listaBanco" value="#{recebimentoContaMB.listaBanco}"/>
@@ -134,7 +134,7 @@
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left:2%;">
 	            	<p:selectOneMenu id="idconta1"  style="width:164px;" disabled="#{recebimentoContaMB.disabilitar}"  value="#{recebimentoContaMB.banco}"
-	                    converter="BancoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:150px" >
+	                    converter="BancoConverter" filter="true" filterMatchMode="contains" panelStyle="width:150px" >
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
 	                    <f:selectItems value="#{recebimentoContaMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
 	                    <f:attribute name="listaBanco" value="#{recebimentoContaMB.listaBanco}"/>

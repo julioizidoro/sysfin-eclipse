@@ -127,7 +127,7 @@
                <h:panelGrid columns="2" style="margin-left:35.7%; margin-top:-5.3%;">
                		<p:outputLabel value="Tipo Plano de Conta" for="tipoplanoconta"  class="left"/>
                 	<p:selectOneMenu id="tipoplanoconta" class="left" style="width:300px"  value="#{cadClienteMB.tipoplanocontas}" 
-                			filter="true" filterMatchMode="startsWith" panelStyle="width:180px">
+                			filter="true" filterMatchMode="contains" panelStyle="width:180px">
                     	<f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     	<f:selectItems value="#{cadClienteMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado}"/>
                     	<f:attribute name="listaTipoPlanoContas" value="#{cadClienteMB.listarTipoPlanoContas}"/>

@@ -31,13 +31,13 @@
                 </h:panelGrid>
                 <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
                 <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadContasPagarMB.cliente}" converter="ClienteConverter"
-                             filter="true" filterMatchMode="startsWith" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadContasPagarMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems  value="#{cadContasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{cadContasPagarMB.listaCliente}"/>
                     <p:ajax event="change" listener="#{cadContasPagarMB.gerarListaBanco()}" update="idconta"/>
                 </p:selectOneMenu> 
-                </h:panelGrid> 
+                </h:panelGrid>  
              <h:panelGrid columns="2" style="margin-left:68.5%; margin-top:-6.2%;"> 
 	            <p:outputLabel value="Data Envio" for="dataEnv" class="left3" /> 
 	            
@@ -94,7 +94,7 @@
             </h:panelGrid>
             <h:panelGrid style="margin-left:38%; margin-top:-4.8%;">  
 	              <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{cadContasPagarMB.banco}"  converter="BancoConverter"
-	                                 filter="true" filterMatchMode="startsWith" panelStyle="width:150px">
+	                                 filter="true" filterMatchMode="contains" panelStyle="width:150px">
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
 	                    <f:selectItems value="#{cadContasPagarMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
 	                    <f:attribute name="listaBanco" value="#{cadContasPagarMB.listaBanco}" />
@@ -124,7 +124,7 @@
              </h:panelGrid>
              <h:panelGrid style="margin-left: 17%; margin-top:-4.5%;"> 
 	              <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadContasPagarMB.planoContas}" converter="PlanoContasConverter"
-	              					 filter="true" filterMatchMode="startsWith" panelStyle="width:200px">
+	              					 filter="true" filterMatchMode="contains" panelStyle="width:200px">
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
 	                    <f:selectItems value="#{cadContasPagarMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
 	                    <f:attribute name="listaPlanoConta" value="#{cadContasPagarMB.listaPlanoContas}"/>
