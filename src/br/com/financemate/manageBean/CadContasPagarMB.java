@@ -80,10 +80,12 @@ public class CadContasPagarMB implements Serializable{
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         file = (UploadedFile) session.getAttribute("file");
+        cliente = (Cliente) session.getAttribute("cliente");
         contaPagar = (Contaspagar) session.getAttribute("contapagar");
         cptransferencia =  (Cptransferencia) session.getAttribute("cptransferencia");
         session.removeAttribute("contapagar");
         session.removeAttribute("file");
+        session.removeAttribute("cliente");
         gerarListaCliente();
         gerarListaPlanoContas();
         if (contaPagar == null) { 
@@ -91,15 +93,20 @@ public class CadContasPagarMB implements Serializable{
 			if (usuarioLogadoMB.getCliente() != null) {
 				cliente = usuarioLogadoMB.getCliente();
 			}else{
-				cliente = new Cliente();
+				if (cliente == null) {
+					cliente = new Cliente();
+				}
+				
 			}
 			cptransferencia = new Cptransferencia();
 		}else{
-            cliente = contaPagar.getCliente();
+			if (cliente == null) {
+				cliente = contaPagar.getCliente();
+			}
             planoContas = contaPagar.getPlanocontas();
             banco = contaPagar.getBanco();
             gerarListaBanco();
-            transferenciaBancaria();
+            transferenciaBancaria(); 
             if (contaPagar.getFormaPagamento().equalsIgnoreCase("transferencia")) {
             	CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
             	try {
@@ -111,7 +118,6 @@ public class CadContasPagarMB implements Serializable{
 						cptransferencia = new Cptransferencia();
             		}
 				} catch (SQLException e) { 
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
             }
@@ -375,7 +381,6 @@ public class CadContasPagarMB implements Serializable{
 			try {
 				planoContas = planoContasFacade.consultar(1);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			contaPagar.setPlanocontas(planoContas);
@@ -427,7 +432,6 @@ public class CadContasPagarMB implements Serializable{
 			try {
 				planoContas = planoContasFacade.consultar(1);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			contaPagar.setPlanocontas(planoContas);
@@ -532,7 +536,7 @@ public class CadContasPagarMB implements Serializable{
 				}
 			}else {
 				cptransferencia = null; 
-			}
+			} 
 		}
 		return selecionada;
 	}
@@ -540,8 +544,17 @@ public class CadContasPagarMB implements Serializable{
 	public String nomeAnexo(){
 		if (file != null) {
 			nomeAnexo = "Anexado";
+			return nomeAnexo;
 		}
 		return nomeAnexo = "Anexar";
+	}
+	
+	public String AdicionarNomeAnexado(){
+		if (file !=null) {
+			return "" + file;
+		}else{ 
+			return "Anexar";
+		}
 	}
 	
 	public String corIconeClips(){
@@ -583,11 +596,11 @@ public class CadContasPagarMB implements Serializable{
 				nomearquivo.setContaspagar(contaPagar);
 				try {
 					nomeArquivoFacade.salvar(nomearquivo);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+		            mostrarMensagem(ex, "Erro ao salvar um arquivo", "Erro");
 				}
-			} 
+			}
             mostrarMensagem(null, msg, "");
             return true;
         } catch (IOException ex) {
@@ -602,6 +615,52 @@ public class CadContasPagarMB implements Serializable{
         }
         return false;
     }
+	
+	
+	public boolean salvarArquivoFTP(String nomeArquivoLocal, String nomeArquivoFTP){
+        FtpDadosFacade fpDadosFacade = new FtpDadosFacade();
+        Ftpdados dadosFTP = null;
+		try {
+			dadosFTP = fpDadosFacade.getFTPDados();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        if (dadosFTP==null){
+            return false;
+        }
+        Ftp ftp = new Ftp(dadosFTP.getHost(),dadosFTP.getUser(), dadosFTP.getPassword());
+        try {
+            if (!ftp.conectar()){
+                mostrarMensagem(null, "Erro conectar FTP", "Erro");
+                return false;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro conectar FTP", "Erro");
+        }
+        try {
+            ftp.receberArquivo(""+file, nomeAquivoFTP);
+        } catch (IOException ex) {
+            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro Salvar Arquivo", "Erro");
+            return false;
+        }
+        try {
+            ftp.desconectar();
+        } catch (IOException ex) {
+            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro desconectar FTP", "Erro");
+            return false;
+        }
+        return true;
+        
+    }
+	
+	public void baixarFile(){
+		nomeArquivo();
+		salvarArquivoFTP(""+ file, nomeAquivoFTP);
+	}
 	
 	public String nomeArquivo(){
 		nomeAquivoFTP = "" + contaPagar.getIdcontasPagar();
@@ -643,6 +702,7 @@ public class CadContasPagarMB implements Serializable{
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("contapagar", contaPagar);
+        session.setAttribute("cliente", cliente);
 		return "anexarArquivo";
 	}
 

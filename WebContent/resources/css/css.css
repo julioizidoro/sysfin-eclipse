@@ -38,7 +38,7 @@ h1 {
     background: #3D9446  !important;
     font-size: 12px;
     color:white;
-    position: fixed;
+    position: fixed !important;;
     display: block;
     font-family: "Pacifico",cursive;
 }

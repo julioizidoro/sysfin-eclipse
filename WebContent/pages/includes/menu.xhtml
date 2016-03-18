@@ -11,7 +11,7 @@
         <p:growl id="growl" showDetail="true" sticky="true" />
         <br></br>
         
-        <div class="menu">
+        <div class="menu" style="position: fixed !important;">
         
         	<img src="../../resources/img/usuariologado.png" style="width: 1.2%; margin-left:1%;"/>
         	<h:outputText value="Bem Vindo" style="font-size:16px; margin-left:0.5%;" />,
@@ -108,10 +108,22 @@
 		            	</p:submenu> 
 	    		</p:panelMenu>
     		</h:panelGrid>
+    		<h:panelGrid style="margin-left:-2%;"> 
+        	 	<img src="../../resources/img/receber.png" style="width: 25%;"/> 
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:10%; margin-top:-27%;"> 
+	            <p:panelMenu>
+		            	<p:submenu label="Cobrança" style="font-size:16px;">
+		                    <p:menuitem value="Novo Lançamento" action="#" style="margin-left:-13%;"/> 
+	            			<p:menuitem value="Lançamentos" action="#" style="margin-left:-13%;"/>
+	            			<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
+		            	</p:submenu> 
+	    		</p:panelMenu>
+    		</h:panelGrid> 
     		</h:panelGrid>
     		<br />
     		<p:link id="ajaxx" target="_blank" style="text-decoration:none; margin-bottom:130%;" href="http://www.financemate.com.br/"  ajax="false">
-           		<img src="../../resources/img/iconeinfo.png" style="width: 11%;"/>
+           		<img src="../../resources/img/iconeinfo.png" style="width: 10%;"/>
         		<h:outputText value="Sobre a Financemate" style="font-size:16px; margin-left:5%;"/>
     		</p:link>
     		<br /> 

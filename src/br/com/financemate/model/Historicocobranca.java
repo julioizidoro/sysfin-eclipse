@@ -26,7 +26,6 @@ public class Historicocobranca implements Serializable {
     @Size(max = 50)
     @Column(name = "contato")
     private String contato;
-    @Lob
     @Size(max = 16777215)
     @Column(name = "descricao")
     private String descricao;
@@ -36,7 +35,7 @@ public class Historicocobranca implements Serializable {
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
-
+ 
     public Historicocobranca() {
     }
 

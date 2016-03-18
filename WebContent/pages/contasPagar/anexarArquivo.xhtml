@@ -25,8 +25,15 @@
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			
 			<h:panelGrid style="margin-left:1%;">
-            	<p:fileUpload label="{#{cadContasPagarMB.nomeAnexo()}" fileUploadListener="#{cadContasPagarMB.fileUploadListener}"  value="#{cadContasPagarMB.file}" mode="advanced"
-                     update="messages" auto="true"  />
+            	<p:fileUpload  label="#{cadContasPagarMB.AdicionarNomeAnexado()}" fileUploadListener="#{cadContasPagarMB.fileUploadListener}"  value="#{cadContasPagarMB.file}" mode="advanced"
+                     update="messages" auto="true" >
+                </p:fileUpload>
+                
+            </h:panelGrid>
+            <h:panelGrid>
+            	<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+        			<p:fileDownload value="#{cadContasPagarMB.baixarFile()}" />
+    			</p:commandButton>
             </h:panelGrid>
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                 <p:commandLink title="Confirmar" style="text-decoration: none; margin-left:35%;"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >

@@ -49,16 +49,20 @@
             <hr />    
              <br />
              <h:panelGrid> 
-            	<p:outputLabel value="Fornecedor" for="fornecedor"  class="left3" style="margin-left: 9.5%;"/>
+            	<p:outputLabel value="Fornecedor"  for="fornecedor"  class="left3" style="margin-left: 9.5%;"/>
              </h:panelGrid>
             <h:panelGrid style="margin-left:5%; margin-top:-5%;">
-                <p:inputText id="fornecedor" size="20"  class="left3" value="#{cadContasPagarMB.contaPagar.fornecedor}" style="margin-left: 24%;"/>       
+                <p:inputText id="fornecedor" size="20"  class="left3" value="#{cadContasPagarMB.contaPagar.fornecedor}" style="margin-left: 24%;">
+                	<p:ajax event="blur"/>
+                </p:inputText>       
             </h:panelGrid> 
             <h:panelGrid style="margin-left:40%; margin-top:-5.5%;">
             	<p:outputLabel value="Nº Documento" for="nDocumento"  class="left2"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:54%; margin-top:-4.5%;">     
-                <p:inputText id="nDocumento" size="13"  class="left4" value="#{cadContasPagarMB.contaPagar.numeroDocumento}" style="margin-left: 5px;"/>
+                <p:inputText id="nDocumento" size="13"  class="left4" value="#{cadContasPagarMB.contaPagar.numeroDocumento}" style="margin-left: 5px;">
+                	<p:ajax event="blur"/>
+                </p:inputText>
             </h:panelGrid>
             <h:panelGrid columns="3" style="margin-left:80%; margin-top:-5.5%;">
              	<p:commandLink  title="Anexar arquivo" style="margin-left: 3%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
@@ -73,13 +77,16 @@
             <h:panelGrid style="margin-left:7%; margin-top:-4.5%;"> 
              	<p:inputText maxlength="10"  id="valor" size="12"  class="valorr"  value="#{cadContasPagarMB.contaPagar.valor}">
              		<f:convertNumber pattern="##,###,###,###.##"/>
+             		<p:ajax event="blur"/>
              	</p:inputText>
             </h:panelGrid> 
             <h:panelGrid style="margin-left: 26%; margin-top:-5%;"> 
             	<p:outputLabel value="Descrição" for="descricao" class="left3" style="margin-left: 9%;"/> 
             </h:panelGrid>
             <h:panelGrid style="margin-left:36.7%; margin-top:-4.5%;">   
-                <p:inputText rows="3" size="57" cols="68" id="descricao"  class="left3"  value="#{cadContasPagarMB.contaPagar.descricao}"/>
+                <p:inputText rows="3" size="57" cols="68" id="descricao"  class="left3"  value="#{cadContasPagarMB.contaPagar.descricao}">
+                	<p:ajax event="blur"/>
+                </p:inputText>
             </h:panelGrid>
             <br />
             <h:panelGrid columns="2" style="margin-left:1%;">
@@ -87,6 +94,7 @@
                 
                 <p:inputMask id="dataVenc"   mask="99/99/9999" size="11"  class="left3"  value="#{cadContasPagarMB.contaPagar.dataVencimento}" style="margin-left: 2%;">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    <p:ajax event="blur"/>
                 </p:inputMask>
             </h:panelGrid> 
             <h:panelGrid style="margin-left:31%; margin-top:-5%;">
@@ -98,6 +106,7 @@
 	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" /> 
 	                    <f:selectItems value="#{cadContasPagarMB.listaBanco}" var="bancoSelecionado"  itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
 	                    <f:attribute name="listaBanco" value="#{cadContasPagarMB.listaBanco}" />
+	                    <p:ajax event="change"/>
 	                </p:selectOneMenu>  
              </h:panelGrid>    
              <h:panelGrid style="margin-left:64.5%; margin-top:-5.5%;">   
@@ -133,19 +142,23 @@
              </h:panelGrid>
              <h:panelGrid columns="2" style="margin-left:71%; margin-top:-6%;">
              	<p:outputLabel value="Competência" for="competencia" class="left5"/> 
-             	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadContasPagarMB.contaPagar.competencia}" size="8" mask="99/9999"  class="left1"/>
+             	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadContasPagarMB.contaPagar.competencia}" size="8" mask="99/9999"  class="left1">
+             		<p:ajax event="blur"/>
+                </p:inputMask>
              </h:panelGrid>
              <br />
              <h:panelGrid columns="2" style="margin-left:1%;"> 
                 <p:outputLabel value="Agendamento" for="dataAgen" class="left4"/>
                 <p:inputMask id="dataAgen"   mask="99/99/9999" size="12" maxlength="15" class="left4" value="#{cadContasPagarMB.contaPagar.dataAgendamento}" style="margin-left: 2%;">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    <p:ajax event="blur"/>
                 </p:inputMask>
              </h:panelGrid>
              <h:panelGrid columns="2" style="margin-left:65.9%; margin-top:-6%;">
                 <p:outputLabel value="Compensação" for="dataComp" class="left1" style="margin-left: 2.5%;"/>
                 <p:inputMask style="margin-left:2%;" id="dataComp"  mask="99/99/9999" size="12" maxlength="15" class="left1" value="#{cadContasPagarMB.contaPagar.dataCompensacao}">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    <p:ajax event="blur"/>
                 </p:inputMask>
              </h:panelGrid>
              <hr /> 

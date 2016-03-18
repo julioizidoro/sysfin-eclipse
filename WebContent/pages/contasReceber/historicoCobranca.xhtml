@@ -30,7 +30,7 @@
 			</p:commandLink>
 			<br /><br /><br />
             <p:contextMenu  style="background:white;">
-                <p:menuitem value="Visualizar"  icon=" ui-icon-pencil"   action="#{cobrancaMB.editarHistorico()}"/>
+                <p:menuitem value="Visualizar"  icon=" ui-icon-pencil"   action="#{cobrancaMB.editarHistorico(cobrancaMB.historico)}"/>
             </p:contextMenu>   
             <p:dataTable id="idHistoricoCobranca" var="historicoCobranca"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cobrancaMB.listaHistorico}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80" selection="#{cobrancaMB.historico}" selectionMode="single" rowKey="#{historicoCobranca.idhistoricocobranca}"  rows="10" style="margin-bottom:20px;"> 
