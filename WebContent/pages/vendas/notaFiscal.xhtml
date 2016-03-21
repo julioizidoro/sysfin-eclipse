@@ -35,30 +35,30 @@
             
             <h:panelGrid columns="1" style="margin-left:1%;">
                  <p:outputLabel value="Nome Completo" for="nomeC" class="left"/>
-                 <p:inputText id="nomeC"  value="#"  size="93" class="left"/>
+                 <p:inputText id="nomeC"  value="#{cadVendasMB.emissaonota.nome}"  size="93" class="left"/>
              </h:panelGrid>
              <br />
              <h:panelGrid columns="1" style="margin-left:1%;">
                  <p:outputLabel value="Endereço" for="endereco" class="left"/>
-                 <p:inputText id="endereco"  value="#"  size="93" class="left"/>
+                 <p:inputText id="endereco"  value="#{cadVendasMB.emissaonota.endereco}"  size="93" class="left"/>
              </h:panelGrid>
              <br />
              <h:panelGrid columns="1" style="margin-left:1%;">
                  <p:outputLabel value="Complemento" for="complemento" class="left"/>
-                 <p:inputText id="complemento"  value="#"  size="40" class="left"/>
+                 <p:inputText id="complemento"  value="#{cadVendasMB.emissaonota.complemento}"  size="40" class="left"/>
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:52%; margin-top:-9.5%;">
                  <p:outputLabel value="Bairro" for="bairro" class="left"/>
-                 <p:inputText id="bairro"  value="#"  size="41" class="left"/>
+                 <p:inputText id="bairro"  value="#{cadVendasMB.emissaonota.bairro}"  size="41" class="left"/>
              </h:panelGrid>
              <br />
              <h:panelGrid columns="1" style="margin-left:1%;">
                  <p:outputLabel value="Cidade" for="cidade" class="left"/>
-                 <p:inputText id="cidade"  value="#"  size="40" class="left"/>
+                 <p:inputText id="cidade"  value="#{cadVendasMB.emissaonota.cidade}"  size="40" class="left"/>
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:48.5%; margin-top:-9.5%;">
                  <p:outputLabel value="Estado" class="usuario3"/>
-                 <p:selectOneMenu id="estado" value="#" class="" style="width:70px"> 
+                 <p:selectOneMenu id="estado" value="#{cadVendasMB.emissaonota.estado}" class="" style="width:70px"> 
                         <f:selectItem itemLabel="AC" itemValue="AC" /> 
                         <f:selectItem itemLabel="AL" itemValue="AL" /> 
                         <f:selectItem itemLabel="AP" itemValue="AP" />  
@@ -90,19 +90,21 @@
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:62.7%; margin-top:-9.5%;">
                 <p:outputLabel value="CEP" for="cep" class="left15"/>
-                <p:inputMask id="cep" size="30" maxlength="9" class="left1" value="#{cadVendasMB.formapagamento.cep}" mask="99999-999"/>     
+                <p:inputMask id="cep" size="30" maxlength="9" class="left1" value="#{cadVendasMB.emissaonota.cep}" mask="99999-999"/>     
              </h:panelGrid>
              <br />
              <h:panelGrid columns="1" style="margin-left:1%;">
                  <p:outputLabel value="CNPJ/CPF" for="cpf" class="left"/>
-                 <p:inputText id="cpf"  value="#"  size="40" class="left"/>
+                 <p:inputText id="cpf"  value="#{cadVendasMB.emissaonota.cpnj}"  size="40" class="left"/>
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:52%; margin-top:-9.5%;">
                  <p:outputLabel value="I.E" for="ie" class="left"/>
-                 <p:inputText id="ie"  value="#"  size="41" class="left"/>
+                 <p:inputText id="ie"  value="#{cadVendasMB.emissaonota.ie}"  size="41" class="left"/>
              </h:panelGrid>
              <br />
-           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#" >
+             <hr />
+             <br />
+           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
            </p:commandLink>
            <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#" >

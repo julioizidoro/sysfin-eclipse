@@ -32,6 +32,7 @@ import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Emissaonota;
 import br.com.financemate.model.Formapagamento;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Produto;
@@ -63,6 +64,7 @@ public class CadVendasMB implements Serializable {
 	private String competencia;
 	private Banco banco;
 	private Float saldoRestante;
+	private Emissaonota emissaonota;
 	
 	@PostConstruct
 	public void init(){
@@ -72,6 +74,10 @@ public class CadVendasMB implements Serializable {
 		gerarListaCliente();
 		if (vendas == null) {
 			vendas = new Vendas();
+			
+		}
+		if (emissaonota == null) {
+			emissaonota = new Emissaonota();
 		}
 		gerarListaPlanoContas();
 	}
@@ -79,6 +85,20 @@ public class CadVendasMB implements Serializable {
 	
 	
 	
+	public Emissaonota getEmissaonota() {
+		return emissaonota;
+	}
+
+
+
+
+	public void setEmissaonota(Emissaonota emissaonota) {
+		this.emissaonota = emissaonota;
+	}
+
+
+
+
 	public Float getSaldoRestante() {
 		return saldoRestante;
 	}
@@ -385,6 +405,9 @@ public class CadVendasMB implements Serializable {
 	}
 	
 	public String notaFiscal(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
 		return "notaFiscal";
 	}
 	
@@ -562,6 +585,10 @@ public class CadVendasMB implements Serializable {
 			String mensagem = validarDados();
 			if (mensagem == "") {
 				vendas = vendasFacade.salvar(vendas);
+				if (emissaonota != null) {
+					emissaonota.setVendas(vendas);
+					emissaonota = vendasFacade.salvar(emissaonota);
+				}
 		        session.removeAttribute("vendas");
 		        session.removeAttribute("planocontas");
 		        session.removeAttribute("produto");
@@ -590,6 +617,7 @@ public class CadVendasMB implements Serializable {
 		}
 		return mensagem;
 	}
-	 
+	
+
 
 }
