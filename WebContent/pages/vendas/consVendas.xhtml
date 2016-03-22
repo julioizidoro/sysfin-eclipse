@@ -16,18 +16,19 @@
 			</p:commandLink>  
             <p:commandLink id="idImagemFiltro"  action="#{vendasMB.coresFiltrar()}" update="@all" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
 				<img  src="#{vendasMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+           		<p:ajax event="dialogReturn" listener="#{vendasMB.retornoDialogFiltrar}" update="idTabelaVendas"/>
            	</p:commandLink>
             <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
 				<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 				<p:dataExporter type="xls" target="idTabelaVendas" fileName="vendas" />
             </p:commandLink>
-            <p:commandLink   action="#{contasReceberMB.novaImpressao()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
+            <p:commandLink   action="#{vendasMB.novaImpressao()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 				<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
             </p:commandLink>   
             <br /><br /> 
             
             		<p:contextMenu for="idTabelaVendas" style="background:white;" ajax="onclick">  
-                        <p:menuitem value="Gerar Parcela"   icon=" ui-icon-plus"  action="#{vendasMB.gerarParcela()}" />
+                        <p:menuitem value="Gerar Parcela"   icon=" ui-icon-plus"  action="#{vendasMB.gerarParcelas(vendasMB.venda)}" />
                         <p:menuitem value="Cancelar"   icon=" ui-icon-close" action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendasMB.venda)}" update="growl, idTabelaVendas"/>  
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaVendas"  var="vendas"  value="#{vendasMB.listaVendas}" style="border:none;" class="tabelacontas" 

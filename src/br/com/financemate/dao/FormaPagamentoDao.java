@@ -43,7 +43,7 @@ public class FormaPagamentoDao {
     public List<Formapagamento> listar(int idVenda) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("select f from Formapagamento f where f.vendas=" + idVenda) ;
+        Query q = manager.createQuery("select f from Formapagamento f where f.vendas.idvendas=" + idVenda) ;
         List<Formapagamento> lista = q.getResultList();
         manager.getTransaction().commit();
         manager.close();

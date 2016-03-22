@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -370,108 +371,102 @@ public class VendasMB implements Serializable {
          return "consVendas";
     }
      
-    private void gerarSqlPesquisa(){
-        boolean linha = false;
-        sql = " Select v from Vendas v where ";
-        if ((dataInicial != null) && (dataFinal != null)) {
-            if (!linha) {
-                sql = sql + "  v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial)
-                        + "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
-                linha = true;
-            }
-        }
-        if (!situacao.equalsIgnoreCase("Todas")){
-            if (!linha){
-                sql = sql + " v.situacao='" + situacao + "'";
-                linha = true;
-            }else{
-                sql = sql + " and v.situacao='" + situacao + "'";
-            }
-        }
-        if (clienteMB.getCliente().getIdcliente()!=null){
-            if (!linha){
-                sql = sql + " v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
-                linha = true;
-            }else {
-                sql = sql + " and v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
-            }
-        }else {
-            if (!linha){
-                sql = sql + " v.cliente.visualizacao='Operacional'";
-                linha=true;
-            }else {
-                sql = sql + " and v.cliente.visualizacao='Operacional'";
-            }
-        }
-        if (numeroVenda.length()>0){
-            int numero = Integer.parseInt(numeroVenda);
-            if (!linha){
-                sql = sql + " v.idvendas=" + numero;
-                linha = true;
-            }else {
-                sql = sql + " and v.idvendas=" + numero;
-            }
-        }
-        if (nomeClientePesquisa.length()>0){
-            if (!linha){
-                sql = sql + " v.nomeCliente like '%" + nomeClientePesquisa + "%'";
-            }else{
-                sql = sql + " and v.nomeCliente like '%" + nomeClientePesquisa + "%'";
-            }
-        }
-        order = " order by v.dataVenda";
-    }
+     private void gerarSqlPesquisa(){
+    	 boolean linha = false;
+    	 sql = " Select v from Vendas v where ";
+    	 if ((dataInicial != null) && (dataFinal != null)) {
+    		 if (!linha) {
+    			 sql = sql + "  v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial)
+    			 	+ "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
+    			 linha = true;
+    		 }
+    	 }
+    	 if (!situacao.equalsIgnoreCase("Todas")){
+    		 if (!linha){
+    			 sql = sql + " v.situacao='" + situacao + "'";
+    			 linha = true;
+    		 }else{
+    			 sql = sql + " and v.situacao='" + situacao + "'";
+    		 }
+    	 }
+    	 if (clienteMB.getCliente().getIdcliente()!=null){
+    		 if (!linha){
+    			 sql = sql + " v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
+    			 linha = true;
+    		 }else {
+    			 sql = sql + " and v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
+    		 }
+    	 }else {
+    		 if (!linha){
+    			 sql = sql + " v.cliente.visualizacao='Operacional'";
+    			 linha=true;
+    		 }else {
+    			 sql = sql + " and v.cliente.visualizacao='Operacional'";
+    		 }
+    	 }
+    	 if (numeroVenda.length()>0){
+    		 int numero = Integer.parseInt(numeroVenda);
+    		 if (!linha){
+    			 sql = sql + " v.idvendas=" + numero;
+    			 linha = true;
+    		 }else {
+    			 sql = sql + " and v.idvendas=" + numero;
+    		 }
+    	 }
+    	 if (nomeClientePesquisa.length()>0){
+    		 if (!linha){
+    			 sql = sql + " v.nomeCliente like '%" + nomeClientePesquisa + "%'";
+    		 }else{
+    			 sql = sql + " and v.nomeCliente like '%" + nomeClientePesquisa + "%'";
+    		 }
+    	 }
+    	 order = " order by v.dataVenda";
+     }
     
-    public String verStatus(Vendas vendas) {
-        if (vendas.getSituacao().equalsIgnoreCase("vermelho")) {
-            return "../../resources/img/bolaVermelha.png";
-        } else if (vendas.getSituacao().equalsIgnoreCase("amarelo")) {
-            return "../../resources/img/bolaAmarela.png";
-        } else {
-            return "../../resources/img/bolaVerde.png";
-        } 
-    }
-    
+     public String verStatus(Vendas vendas) {
+    	 if (vendas.getSituacao().equalsIgnoreCase("vermelho")) {
+    		 return "../../resources/img/bolaVermelha.png";
+    	 } else if (vendas.getSituacao().equalsIgnoreCase("amarelo")) {
+    		 return "../../resources/img/bolaAmarela.png";
+    	 } else {
+    		 return "../../resources/img/bolaVerde.png";
+    	 } 
+     }
+     
     public String coresFiltrar(){
-		 if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVerde.ico")) {
-			 filtro();
-			 imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
-		 }else if(imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")){
-			 gerarDataInicial();
-			 gerarListaVendas();
-			 imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
-		 }
-		 return "";
-	 }
+    	if (imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVerde.ico")) {
+    		filtro();
+    		imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
+    	}else if(imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")){
+    		gerarDataInicial();
+    		gerarListaVendas();
+    		imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+    	}
+    	return "";
+    }
     
     public String novaVenda() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("cadVendas");
-        return "";
+    	Map<String, Object> options = new HashMap<String, Object>();
+    	options.put("contentWidth", 600);
+    	RequestContext.getCurrentInstance().openDialog("cadVendas");
+    	return "";
     }
     
     public String filtro() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
+    	Map<String, Object> options = new HashMap<String, Object>();
+    	options.put("contentWidth", 600);
         RequestContext.getCurrentInstance().openDialog("filtrarVenda");
         return "";
     }
     
-    public String gerarParcela() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("gerarParcelas");
-        return "";
-    }
     
     public void gerarListaCliente() {
-        ClienteFacade clienteFacade = new ClienteFacade();
+    	ClienteFacade clienteFacade = new ClienteFacade();
         try {
-            listaCliente = clienteFacade.listar("");
-            if (listaCliente == null) {
-                listaCliente = new ArrayList<Cliente>();
-            }
+        	listaCliente = clienteFacade.listar("");
+        	if (listaCliente == null) {
+        		listaCliente = new ArrayList<Cliente>();
+        	}
         } catch (SQLException ex) {
             Logger.getLogger(VendasMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro ao listar o cliente:", "Erro");
@@ -496,36 +491,38 @@ public class VendasMB implements Serializable {
 	}
     
     public void filtrar(){		 
-		 sql = "Select v from Vendas v where ";
-		 if (cliente!=null){
-			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
-		 }else {
-			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
-		 }
-		 if (nomeCliente!="") {
-			 sql = sql + " v.nomeCliente like '%" + nomeCliente + "%' and ";
-		 }
-		 if (nVenda != null) {
-			sql = sql + " v.idvendas="  + nVenda + " and "; 
-		 }
-		 if (situacao != null) {
-			 if (situacao.equalsIgnoreCase("amarelo") || situacao.equalsIgnoreCase("verde") || situacao.equalsIgnoreCase("vermelho")) {
-				 sql = sql + " v.situacao='" + situacao + "' and "; 
-			}
-		}
+    	sql = "Select v from Vendas v Join Formapagamento f on v.idvendas=f.vendas.idvendas where ";
+    	if (cliente!=null){
+    		sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
+    	}else {
+    		sql = sql + " v.cliente.visualizacao='Operacional' and ";
+    	}
+    	if (nomeCliente!="") {
+    		sql = sql + " v.nomeCliente like '%" + nomeCliente + "%' and ";
+    	}
+    	if (nVenda != null) {
+    		sql = sql + " v.idvendas="  + nVenda + " and "; 
+    	}
+    	if (situacao != null) {
+    		if (situacao.equalsIgnoreCase("amarelo") || situacao.equalsIgnoreCase("vermelho")) {
+    			sql = sql + " v.situacao='" + situacao + "' and "; 
+    		}else if (situacao.equalsIgnoreCase("verde")){
+    			sql = sql + " v.situacao='" + situacao + "' and f.parcelaGerada='Sim'";
+    		}
+    	}
 		
-		 if ((dataInicial!=null) && (dataFinal!=null)){
-				 sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
-						 "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
-						 "' order by v.dataVencimento";
-		 } 
-		 RequestContext.getCurrentInstance().closeDialog(sql);
-	 }
+    	if ((dataInicial!=null) && (dataFinal!=null)){
+    		sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
+    				"' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+    				"' order by v.dataVencimento";
+    	} 
+    	RequestContext.getCurrentInstance().closeDialog(sql);
+    }
     
     public void retornoDialogFiltrar(SelectEvent event) {
-        String sql = (String) event.getObject();
-        gerarListaVendaas(sql);
- }
+    	String sql = (String) event.getObject();
+    	gerarListaVendaas(sql);
+    }
  
     public void gerarListaVendaas(String sql){
         sql = sql + order;
@@ -559,6 +556,23 @@ public class VendasMB implements Serializable {
 			 mostrarMensagem(ex, "Erro ao salvar venda cancelada", "Erro");
 		}
 		gerarListaVendas();
+    }
+    
+    public String gerarParcelas(Vendas vendas){
+    	if (vendas!=null){
+    		FacesContext fc = FacesContext.getCurrentInstance();
+    		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+    		session.setAttribute("vendas", vendas);
+    		RequestContext.getCurrentInstance().openDialog("gerarParcelas");
+    	}
+    	return "";
+    }
+    
+    public String novaImpressao() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("imprimirVendas"); 
+        return "";
     }
 
 }

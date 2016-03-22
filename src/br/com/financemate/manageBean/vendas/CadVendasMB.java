@@ -22,6 +22,8 @@ import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.facade.CpTransferenciaFacade;
+import br.com.financemate.facade.FormaPagamentoFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.facade.ProdutoFacade;
 import br.com.financemate.facade.VendasFacade;
@@ -65,12 +67,14 @@ public class CadVendasMB implements Serializable {
 	private Banco banco;
 	private Float saldoRestante;
 	private Emissaonota emissaonota;
+	private List<Formapagamento> listaFormaPagamento;
 	
 	@PostConstruct
 	public void init(){
 		FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        vendas = (Vendas) session.getAttribute("vendas");
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		vendas = (Vendas) session.getAttribute("vendas");
+		listaFormaPagamento = (List<Formapagamento>) session.getAttribute("listaFormaPagamento");
 		gerarListaCliente();
 		if (vendas == null) {
 			vendas = new Vendas();
@@ -79,12 +83,29 @@ public class CadVendasMB implements Serializable {
 		if (emissaonota == null) {
 			emissaonota = new Emissaonota();
 		}
+		if (formapagamento == null) {
+			formapagamento = new Formapagamento();
+		}
 		gerarListaPlanoContas();
 	}
 	
 	
 	
 	
+	public List<Formapagamento> getListaFormaPagamento() {
+		return listaFormaPagamento;
+	}
+
+
+
+
+	public void setListaFormaPagamento(List<Formapagamento> listaFormaPagamento) {
+		this.listaFormaPagamento = listaFormaPagamento;
+	}
+
+
+
+
 	public Emissaonota getEmissaonota() {
 		return emissaonota;
 	}
@@ -333,8 +354,8 @@ public class CadVendasMB implements Serializable {
 		        	listaProduto = new ArrayList<Produto>();
 		        }
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				 Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, e);
+		            mostrarMensagem(e, "Erro ao listar o produto:", "Erro");
 			}
 	        
 		}else {
@@ -369,6 +390,10 @@ public class CadVendasMB implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
+        if (listaFormaPagamento == null) {
+        	listaFormaPagamento = new ArrayList<Formapagamento>(); 
+        }
+        session.setAttribute("listaFormaPagamento", listaFormaPagamento);
 		return "cadRecebimento";
 	}
 	
@@ -401,6 +426,9 @@ public class CadVendasMB implements Serializable {
 	}
 	
 	public String formaPagamento(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
 		return "lancaFormaPagamento";
 	}
 	
@@ -471,9 +499,9 @@ public class CadVendasMB implements Serializable {
 					banco = bancoFacade.consultar(usuarioLogadoMB.getCliente().getIdcliente(), "Nenhum");
 					contaspagar.setBanco(banco);
 					contaspagar.setCliente(usuarioLogadoMB.getCliente());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+					mostrarMensagem(ex, "Erro ao salvar uma conta com cliente do usuario diferente de null:", "Erro");
 				}
 			}else{
 				try {
@@ -481,9 +509,9 @@ public class CadVendasMB implements Serializable {
 					contaspagar.setBanco(banco);
 					cliente = clienteFacade.consultar(8);
 					contaspagar.setCliente(cliente);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+					mostrarMensagem(ex, "Erro ao salvar uma conta com o cliente do usuario igual a null:", "Erro");
 				}
 				
 			}
@@ -509,9 +537,9 @@ public class CadVendasMB implements Serializable {
 					contasreceber.setBanco(banco);
 					contasreceber.setCliente(usuarioLogadoMB.getCliente());
 					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+					mostrarMensagem(ex, "Erro ao consultar banco e cliente  com cliente do usuario diferente de null:", "Erro");
 				}
 			}else{
 				try {
@@ -519,9 +547,9 @@ public class CadVendasMB implements Serializable {
 					contasreceber.setBanco(banco);
 					cliente = clienteFacade.consultar(8);
 					contasreceber.setCliente(cliente);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+					mostrarMensagem(ex, "Erro ao consultar banco e cliente com o cliente do usuario igual a null:", "Erro");
 				}
 				
 			}
@@ -535,7 +563,11 @@ public class CadVendasMB implements Serializable {
 	
 	
 	public Float saldoRestante(){
-		//saldoRestante = vendas.getValorLiquido() - 
+		float valorTotalForma = 0f;
+		for (int i = 0; i < listaFormaPagamento.size(); i++) {
+			valorTotalForma = valorTotalForma + listaFormaPagamento.get(i).getValor();
+		}
+		saldoRestante = vendas.getValorLiquido() - valorTotalForma;
 		return saldoRestante;
 	}
 	
@@ -555,9 +587,9 @@ public class CadVendasMB implements Serializable {
 			try {
 				planocontas = planoContasFacade.consultar(1);
 				vendas.setPlanocontas(planocontas);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (SQLException ex) {
+				Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+				mostrarMensagem(ex, "Erro ao consultar um plano de contas:", "Erro");
 			}
 		}else{
 			vendas.setPlanocontas(planocontas);
@@ -576,9 +608,9 @@ public class CadVendasMB implements Serializable {
 			try {
 				cliente = clienteFacade.consultar(8);
 				vendas.setCliente(cliente);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (SQLException ex) {
+				Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+				mostrarMensagem(ex, "Erro ao consultar um cliente:", "Erro");
 			}
 		}
 		try {
@@ -589,18 +621,26 @@ public class CadVendasMB implements Serializable {
 					emissaonota.setVendas(vendas);
 					emissaonota = vendasFacade.salvar(emissaonota);
 				}
+				if (listaFormaPagamento != null) {
+					for (int i = 0; i < listaFormaPagamento.size(); i++) {
+						listaFormaPagamento.get(i).setVendas(vendas);
+						FormaPagamentoFacade formaPagamentoFacade = new FormaPagamentoFacade();
+						formaPagamentoFacade.salvar(listaFormaPagamento.get(i));
+					}
+				}
 		        session.removeAttribute("vendas");
 		        session.removeAttribute("planocontas");
 		        session.removeAttribute("produto");
+		        session.removeAttribute("listaFormaPagamento");
 				RequestContext.getCurrentInstance().closeDialog(vendas);
 			}else{
 				FacesContext context = FacesContext.getCurrentInstance();
 	            context.addMessage(null, new FacesMessage(mensagem, ""));
 			}
 			 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+			mostrarMensagem(ex, "Erro ao salvar venda:", "Erro");
 		} 
 	}
 	
@@ -618,6 +658,49 @@ public class CadVendasMB implements Serializable {
 		return mensagem;
 	}
 	
-
+	public String cancelar(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("vendas");
+        session.removeAttribute("listaFormaPagamento");
+        session.removeAttribute("planocontas");
+        session.removeAttribute("produto");
+        RequestContext.getCurrentInstance().closeDialog(null);
+        return null;
+    }
+	
+	public String excluir(Formapagamento formapagamento){
+		FormaPagamentoFacade formaPagamentoFacade = new FormaPagamentoFacade();
+		try {
+			formaPagamentoFacade.Excluir(formapagamento.getIdformaPagamento());
+		} catch (SQLException ex) {
+			Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+			mostrarMensagem(ex, "Erro ao excluir forma de pagamento:", "Erro");
+		}
+        mensagem msg = new mensagem();
+        msg.excluiMessagem();
+        return "";
+	}
+	
+	public String SalvarFormaPagamento(){
+		FormaPagamentoFacade formaPagamentoFacade = new FormaPagamentoFacade();
+		VendasFacade vendasFacade = new VendasFacade();
+		Vendas nVenda;
+		try {
+			nVenda = vendasFacade.consultar(1);
+			formapagamento.setVendas(nVenda);
+			formapagamento = formaPagamentoFacade.salvar(formapagamento);
+			listaFormaPagamento.add(formapagamento);
+		} catch (SQLException ex) {
+			Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+			mostrarMensagem(ex, "Erro ao salvar uma forma de pagamento:", "Erro");
+		}
+		return "cadRecebimento";
+	}
+	
+	public String voltarRecebimento(){
+		return "cadRecebimento";
+	}
+	
 
 }

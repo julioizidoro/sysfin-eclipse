@@ -34,7 +34,10 @@
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
 			</p:commandLink>
             <br /><br /><br />
-            
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    		</p:confirmDialog>
             <h:panelGrid>
                 <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%"/>
             </h:panelGrid>
@@ -112,7 +115,7 @@
            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-            <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#" >
+            <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
             <br></br>

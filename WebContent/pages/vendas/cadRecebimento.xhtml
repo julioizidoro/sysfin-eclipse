@@ -14,7 +14,7 @@
 
     <h:body >
 
-        <h:form id="frmidCadBackOffice" class="body2" style="font-size: 12px;background: white">
+        <h:form id="frmIdCasRecebimento" class="body2" style="font-size: 12px;background: white">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
@@ -32,30 +32,38 @@
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Nota Fiscal&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.notaFiscal()}" style="font-size:16px;color:gray; border: 2px solid; border-color:#696969; text-decoration:none;" title="Nota Fiscal">
 			</p:commandLink>
             <br /><br /><br />
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    		</p:confirmDialog>
 			 <h:panelGrid columns="2" style="margin-left:1%;">
            		<p:outputLabel value="Valor"/>
            		<p:inputText value="#{cadVendasMB.vendas.valorLiquido}" size="12"  style="margin-left:17%;" disabled="true"/>
              </h:panelGrid>
              <h:panelGrid columns="2" style="margin-left:65%; margin-top:-5%;">
            		<p:outputLabel value="Saldo Restante"/>
-           		<p:inputText value="#" size="12"  style="margin-left:2%;" disabled="true"/>
+           		<p:inputText value="#{cadVendasMB.saldoRestante()}" size="12"  style="margin-left:2%;" disabled="true"/>
              </h:panelGrid>
              <br />
-              <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#" 
-                          scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" rowKey=""  rows="10" style="margin-bottom:20px;"> 
+             
+              <p:contextMenu for="idHistoricoRecebimento" style="background:white;" ajax="onclick">  
+                   <p:menuitem value="Excluir"   icon=" ui-icon-trash" action="#{mensagem.cancelado()}"  actionListener="#{cadVendasMB.excluir(cadVendasMB.formapagamento)}" update="growl"/>  
+              </p:contextMenu> 
+              <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadVendasMB.listaFormaPagamento}" 
+                          scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{cadVendasMB.formapagamento}" rowKey="#{recebimento.idformaPagamento}"  rows="10" style="margin-bottom:20px;"> 
                 <p:column headerText="Data" style="background:white; color:black; border:none; width:70px;">
-                    <h:outputText  value="" style="margin-left:10%;">
+                    <h:outputText  value="#{recebimento.dataVencimento}" style="margin-left:10%;">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
                 <p:column headerText="Tipo" style="width: 80px; background:white; color:black; border:none;">
-                    <h:outputText value="#" /> 
+                    <h:outputText value="#{recebimento.tipoDocumento}" /> 
                 </p:column>
                 <p:column headerText="N° Parcelas" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#" /> 
+                    <h:outputText value="#{recebimento.numeroParcelas}" /> 
                 </p:column> 
                 <p:column headerText="Valor"   style="background:white; color:black; width: 80px; border:none;">
-                    <h:outputText value="#" style="margin-left:20%;"/>
+                    <h:outputText value="#{recebimento.valor}" style="margin-left:20%;"/>
                 </p:column>
                 
             </p:dataTable>
@@ -69,10 +77,10 @@
 			</p:commandLink>  
 			<hr />
 			<br />
-			<p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#" >
+			<p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-			<p:commandLink title="Fechar" style="margin-left: 5%;text-decoration: none" action="#" >
+			<p:commandLink title="Fechar" style="margin-left: 5%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
             </p:commandLink>  
 	    </h:form>
