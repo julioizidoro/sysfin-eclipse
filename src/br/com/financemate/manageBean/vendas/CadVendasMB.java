@@ -673,6 +673,7 @@ public class CadVendasMB implements Serializable {
 		FormaPagamentoFacade formaPagamentoFacade = new FormaPagamentoFacade();
 		try {
 			formaPagamentoFacade.Excluir(formapagamento.getIdformaPagamento());
+			listaFormaPagamento.remove(formapagamento.getIdformaPagamento());
 		} catch (SQLException ex) {
 			Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
 			mostrarMensagem(ex, "Erro ao excluir forma de pagamento:", "Erro");
@@ -688,6 +689,7 @@ public class CadVendasMB implements Serializable {
 		Vendas nVenda;
 		try {
 			nVenda = vendasFacade.consultar(1);
+			formapagamento.setTipoDocumento(TipoDocumento);
 			formapagamento.setVendas(nVenda);
 			formapagamento = formaPagamentoFacade.salvar(formapagamento);
 			listaFormaPagamento.add(formapagamento);

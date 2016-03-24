@@ -51,12 +51,15 @@ public class GerarParcelaMB implements Serializable {
 	private List<Vendas> listaVendas;
 	private Formapagamento formapagamento;
 	private List<Formapagamento> listaFormapagamento;
-	private Contasreceber contasreceber;
+	private Contasreceber contasReceber;
 	private Banco banco;
 	private Cliente cliente;
 	private String tipoDocumento;
 	private String vezes;
 	private Planocontas planocontas;
+	private List<Contasreceber> listarContasreceber;
+	private Date dataVencimento;
+	private Float valorParcela;
 	
 	
 	@PostConstruct
@@ -64,14 +67,51 @@ public class GerarParcelaMB implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         vendas = (Vendas) session.getAttribute("vendas");
-        contasreceber = (Contasreceber) session.getAttribute("contasreceber");
+        contasReceber = (Contasreceber) session.getAttribute("contasreceber");
         session.removeAttribute("contasreceber");
-        if (contasreceber == null) {
-			contasreceber = new Contasreceber();
+        if (contasReceber == null) {
+			contasReceber = new Contasreceber();
 		}
-        gerarListaFormaPagamento();
+        //gerarListaFormaPagamento();
+        gerarListaParcelas();
 	}
 	 
+
+
+	public Date getDataVencimento() {
+		return dataVencimento;
+	}
+
+
+
+	public void setDataVencimento(Date dataVencimento) {
+		this.dataVencimento = dataVencimento;
+	}
+
+
+
+	public Float getValorParcela() {
+		return valorParcela;
+	}
+
+
+
+	public void setValorParcela(Float valorParcela) {
+		this.valorParcela = valorParcela;
+	}
+
+
+
+	public List<Contasreceber> getListarContasreceber() {
+		return listarContasreceber;
+	}
+
+
+
+	public void setListarContasreceber(List<Contasreceber> listarContasreceber) {
+		this.listarContasreceber = listarContasreceber;
+	}
+
 
 
 	public Planocontas getPlanocontas() {
@@ -134,14 +174,16 @@ public class GerarParcelaMB implements Serializable {
 
 
 
-	public Contasreceber getContasreceber() {
-		return contasreceber;
+
+
+	public Contasreceber getContasReceber() {
+		return contasReceber;
 	}
 
 
 
-	public void setContasreceber(Contasreceber contasreceber) {
-		this.contasreceber = contasreceber;
+	public void setContasReceber(Contasreceber contasReceber) {
+		this.contasReceber = contasReceber;
 	}
 
 
@@ -206,6 +248,7 @@ public class GerarParcelaMB implements Serializable {
 			FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("contasreceber", contasreceber);
+            session.setAttribute("vendas", vendas);
 		}
 		return "editarParcela";
 	}
@@ -225,21 +268,27 @@ public class GerarParcelaMB implements Serializable {
 	public void SalvarParcela(){
 		if (vezes != null) {
 			Integer numerovezes = Integer.parseInt(vezes);
+			Contasreceber contasreceber = new Contasreceber();
+			contasreceber.setDataVencimento(dataVencimento);
 			for (int i = 0; i < numerovezes; i++) {
-				Contasreceber contasreceber = new Contasreceber();
 				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 				ClienteFacade clienteFacade = new ClienteFacade();
 				BancoFacade bancoFacade = new BancoFacade();
 				PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-				contasreceber.setDataVencimento(vendas.getDataVenda());
-				contasreceber.setValorParcela(vendas.getValorLiquido() * (-1));
+				if (valorParcela < 0) {
+					contasreceber.setValorParcela(valorParcela * (-1));
+				}else{
+					contasreceber.setValorParcela(valorParcela);
+				}
 				contasreceber.setTipodocumento(tipoDocumento);
 				contasreceber.setUsuario(usuarioLogadoMB.getUsuario());
 				contasreceber.setNomeCliente(vendas.getNomeCliente());
 				contasreceber.setJuros(0f);
 				contasreceber.setDesagio(0f);
 				contasreceber.setValorPago(0f);
-				
+				contasreceber.setNumeroDocumento(""+vendas.getIdvendas());
+				contasreceber.setVenda(vendas.getIdvendas());
+				contasreceber.setNumeroParcela(i+1);
 				if (usuarioLogadoMB.getCliente() != null) { 
 					try {
 						banco = bancoFacade.consultar(usuarioLogadoMB.getCliente().getIdcliente(), "Nenhum");
@@ -279,15 +328,30 @@ public class GerarParcelaMB implements Serializable {
 					contasreceber = copia;
 				}
 			}
+			gerarListaParcelas();
+			valorParcela = null;
+			vezes = null;
+			tipoDocumento = null;
+			dataVencimento = null;
 		}
 	}
 	
 	public void SemParcela(){
-		FormaPagamentoFacade formaPagamentoFacade = new FormaPagamentoFacade();
-		for (int i = 0; i < listaFormapagamento.size(); i++) {
-			listaFormapagamento.get(i).setParcelaGerada("Sim");
+		VendasFacade vendasFacade = new VendasFacade();
+		List<Vendas> listaVendas = null;
+		try {
+			listaVendas = vendasFacade.listar("Select v from Vendas v where v.idvendas=" + vendas.getIdvendas());
+			if (listaVendas == null) {
+				listaVendas = new ArrayList<Vendas>();
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for (int i = 0; i < listaVendas.size(); i++) {
+			listaVendas.get(i).setSituacao("Sem Parcela");
 			try {
-				formaPagamentoFacade.salvar(listaFormapagamento.get(i));
+				vendasFacade.salvar(listaVendas.get(i));
 			} catch (SQLException e) {
 				Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
 	            mostrarMensagem(e, "Erro ao tentar salvar sem parcela", "Erro");
@@ -316,12 +380,26 @@ public class GerarParcelaMB implements Serializable {
 	
 	public Float saldoTotal(){
 		Float valortotal = 0f;
-		for (int i = 0; i < listaFormapagamento.size(); i++) {
-			valortotal =  valortotal + listaFormapagamento.get(i).getValor(); 
+		for (int i = 0; i < listarContasreceber.size(); i++) {
+			valortotal =  valortotal +  listarContasreceber.get(i).getValorParcela(); 
 		}
 		Float saldo = 0f;
 		saldo = vendas.getValorLiquido() - valortotal;
 		return saldo;
+	} 
+	
+	public void gerarListaParcelas(){
+		ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+		try {
+			listarContasreceber = contasReceberFacade.listar("Select c from Contasreceber c Join Vendas v on c.venda=v.idvendas"
+					+ " where c.venda=" + vendas.getIdvendas());
+			if (listarContasreceber == null) {
+				listarContasreceber = new ArrayList<Contasreceber>();
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
+            mostrarMensagem(e, "Erro ao listar Contas a receber", "Erro");
+		}
 	}
 	
 	

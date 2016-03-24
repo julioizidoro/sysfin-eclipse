@@ -38,16 +38,20 @@
     		</p:confirmDialog>
 			 <h:panelGrid columns="2" style="margin-left:1%;">
            		<p:outputLabel value="Valor"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorLiquido}" size="12"  style="margin-left:17%;" disabled="true"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorLiquido}" size="12"  style="margin-left:17%;" disabled="true">
+           			<f:convertNumber currencySymbol="" type="currency"/>
+           		</p:inputText>
              </h:panelGrid>
              <h:panelGrid columns="2" style="margin-left:65%; margin-top:-5%;">
            		<p:outputLabel value="Saldo Restante"/>
-           		<p:inputText value="#{cadVendasMB.saldoRestante()}" size="12"  style="margin-left:2%;" disabled="true"/>
+           		<p:inputText value="#{cadVendasMB.saldoRestante()}" size="12"  style="margin-left:2%;" disabled="true">
+           			<f:convertNumber currencySymbol="" type="currency"/>
+           		</p:inputText>
              </h:panelGrid>
              <br />
              
               <p:contextMenu for="idHistoricoRecebimento" style="background:white;" ajax="onclick">  
-                   <p:menuitem value="Excluir"   icon=" ui-icon-trash" action="#{mensagem.cancelado()}"  actionListener="#{cadVendasMB.excluir(cadVendasMB.formapagamento)}" update="growl"/>  
+                   <p:menuitem value="Excluir"   icon=" ui-icon-trash"  update="idHistoricoRecebimento" actionListener="#{cadVendasMB.excluir(cadVendasMB.formapagamento)}"/>   
               </p:contextMenu> 
               <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadVendasMB.listaFormaPagamento}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{cadVendasMB.formapagamento}" rowKey="#{recebimento.idformaPagamento}"  rows="10" style="margin-bottom:20px;"> 
@@ -56,14 +60,16 @@
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
-                <p:column headerText="Tipo" style="width: 80px; background:white; color:black; border:none;">
-                    <h:outputText value="#{recebimento.tipoDocumento}" /> 
+                <p:column headerText="Tipo" style=" background:white; color:black; border:none;">
+                    <h:outputText value="#{recebimento.tipoDocumento}" style="margin-left:40%;"/> 
                 </p:column>
                 <p:column headerText="N° Parcelas" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{recebimento.numeroParcelas}" /> 
+                    <h:outputText value="#{recebimento.numeroParcelas}" style="margin-left:45%;"/> 
                 </p:column> 
                 <p:column headerText="Valor"   style="background:white; color:black; width: 80px; border:none;">
-                    <h:outputText value="#{recebimento.valor}" style="margin-left:20%;"/>
+                    <h:outputText value="#{recebimento.valor}" style="margin-left:28%;">
+                    	<f:convertNumber currencySymbol="" type="currency"/>
+                    </h:outputText>
                 </p:column>
                 
             </p:dataTable>

@@ -491,7 +491,7 @@ public class VendasMB implements Serializable {
 	}
     
     public void filtrar(){		 
-    	sql = "Select v from Vendas v Join Formapagamento f on v.idvendas=f.vendas.idvendas where ";
+    	sql = "Select v from Vendas v where ";
     	if (cliente!=null){
     		sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
     	}else {
@@ -500,22 +500,22 @@ public class VendasMB implements Serializable {
     	if (nomeCliente!="") {
     		sql = sql + " v.nomeCliente like '%" + nomeCliente + "%' and ";
     	}
-    	if (nVenda != null) {
+    	if (nVenda != null && nVenda > 0) {
     		sql = sql + " v.idvendas="  + nVenda + " and "; 
     	}
     	if (situacao != null) {
     		if (situacao.equalsIgnoreCase("amarelo") || situacao.equalsIgnoreCase("vermelho")) {
     			sql = sql + " v.situacao='" + situacao + "' and "; 
     		}else if (situacao.equalsIgnoreCase("verde")){
-    			sql = sql + " v.situacao='" + situacao + "' and f.parcelaGerada='Sim'";
+    			sql = sql + " v.situacao='" + situacao + "' or v.situacao='Sem Parcela' and ";
     		}
     	}
 		
     	if ((dataInicial!=null) && (dataFinal!=null)){
-    		sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
-    				"' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
-    				"' order by v.dataVencimento";
-    	} 
+    		sql = sql + "v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
+    				"' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+    				"' order by v.dataVenda ";
+    	}  
     	RequestContext.getCurrentInstance().closeDialog(sql);
     }
     
@@ -525,7 +525,6 @@ public class VendasMB implements Serializable {
     }
  
     public void gerarListaVendaas(String sql){
-        sql = sql + order;
         VendasFacade vendasFacade = new VendasFacade();
         try {
             listaVendas = vendasFacade.listar(sql);
