@@ -22,7 +22,7 @@
             </p:dialog>
             
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			  
+			  <br />
 			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="font-size:16px;color:gray;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
 			</p:commandLink>  
             <p:commandLink id="backoffice" value="&nbsp;&nbsp;&nbsp;&nbsp;Back Office&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.backOffice()}" update="@all" style="background:#E8E8E8;font-size:16px;color:#696969;text-decoration:none;border: 2px solid; border-color:#696969;" title="Back Office">
@@ -41,24 +41,28 @@
            		<p:outputLabel value="Comissão" style="margin-left:17%;"/>
            		<p:inputText value="#{cadVendasMB.vendas.comissaoLiquidaTotal}" size="12">
            			<p:ajax event="blur"/>
+           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
            		<p:outputLabel value="Desp. Financeiras" />
            		<p:inputText value="#{cadVendasMB.vendas.despesasFinanceiras}" size="12">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
            		<p:outputLabel value="Comis. Vendedor"/> 
            		<p:inputText value="#{cadVendasMB.vendas.comissaoFuncionarios}" size="12">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;"> 
            		<p:outputLabel value="Comis. Terceiros" />
            		<p:inputText value="#{cadVendasMB.vendas.comissaoTerceiros}" size="12">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
+           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
            		</p:inputText>
            </h:panelGrid>
            <br />
@@ -70,7 +74,7 @@
            </h:panelGrid>
             <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
            		<p:outputLabel value="Observação" />
-           		<p:inputText value="#{cadVendasMB.vendas.observacao}" size="67"/>
+           		<p:inputText value="#{cadVendasMB.vendas.observacao}" size="66"/>
            </h:panelGrid>
            <br />
            <h:panelGrid columns="1" style="margin-left:1%;">
@@ -81,16 +85,17 @@
            		<p:outputLabel value="Pago Fornecedor"/>
            		<p:inputText value="#{cadVendasMB.vendas.valorPagoFornecedor}" size="12">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec"/>
+           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
            		</p:inputText>
            </h:panelGrid>
            <br />
            <h:panelGrid columns="1" style="margin-left:1%;">
-           		<p:outputLabel value="Pagar/Receber" style="margin-left:12%;" />
+           		<p:outputLabel value="Pagar/Receber" style="margin-left:9%;" /> 
            		<p:inputText id="idTotalPagRec" value="#{cadVendasMB.vendas.valorLiquido}" disabled="true" size="12">
-           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
+           			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText>
            </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:35.5%; margin-top:-9%;"> 
+           <h:panelGrid columns="1" style="margin-left:35.5%; margin-top:-9.1%;"> 
 	            <p:outputLabel value="Data Pgto/Rcbto Fornecedor" for="dataPgRb" class="left3" />  
 	            
 	            <p:inputMask id="dataPgRb" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.vendas.dataPagamentoFornecedor}"  style="margin-left: 18%;">
@@ -103,9 +108,14 @@
             	</p:commandLink>
             </h:panelGrid>
              <br /> 
+           <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    	   </p:confirmDialog>
            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-            </p:commandLink>
+                <p:confirm  header="Confirmação" message="#{cadVendasMB.salvarVendaSemFormaRecebimento()}" icon="ui-icon-alert" />
+           </p:commandLink>  
             <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink> 

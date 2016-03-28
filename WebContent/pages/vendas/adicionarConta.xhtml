@@ -68,11 +68,15 @@
               <br />
              <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none"   action="#{cadVendasMB.salvarConta()}" >
                   <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-                  <p:outputLabel style="color:black" value="#{cadVendasMB.nomeConta()}"/>
              </p:commandLink>
-             <p:commandLink title="Fechar" style="margin-left: 17%;text-decoration: none" action="#{cadVendasMB.voltarCadastro()}" >
-                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
-             </p:commandLink>
+             <h:panelGrid style="margin-top:-6.5%;margin-left:37%;">
+                  <p:outputLabel style="color:black;margin-top:-5%;" value="#{cadVendasMB.nomeConta()}"/>
+             </h:panelGrid>
+             <h:panelGrid style="margin-left:62%;margin-top:-6.8%;">
+             	<p:commandLink title="Fechar" style="margin-left: 2%;text-decoration: none" action="#{cadVendasMB.voltarCadastro()}" >
+                	 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+             	</p:commandLink>
+             </h:panelGrid>
 		</h:form>
 	</h:body>	  
 </html>

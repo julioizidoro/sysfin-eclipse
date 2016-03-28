@@ -42,14 +42,14 @@
 	                </p:inputMask>
 	                <p:inputMask id="dataFinal"  mask="99/99/9999" size="15" maxlength="15" class="left6" value="#{imprimirVendasMB.dataFinal}"  placeholder="Data Final">
 	                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-	                </p:inputMask> 
+	                </p:inputMask>
 	            </h:panelGrid>
-	            <br /><br /><br /><br /><br /> 
+	            <br /><br /><br /><br /><br /><br /><br /> <br /><br />  
 	             <hr />
 	             <p:commandLink title="Confirmar"  target="_blank"  style="margin-left: 40%;text-decoration: none"   action="#{imprimirVendasMB.gerarRelatorio()}" ajax="false">
 	                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
 	             </p:commandLink>
-	             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#" >
+	             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{cadVendasMB.fechar()}" >
 	             	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
 	             </p:commandLink>     
 	             <br />

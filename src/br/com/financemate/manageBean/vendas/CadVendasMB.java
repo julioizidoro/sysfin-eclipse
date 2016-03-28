@@ -78,7 +78,8 @@ public class CadVendasMB implements Serializable {
 		gerarListaCliente();
 		if (vendas == null) {
 			vendas = new Vendas();
-			
+		}else{
+			gerarListaFormaPagamento();
 		}
 		if (emissaonota == null) {
 			emissaonota = new Emissaonota();
@@ -669,8 +670,14 @@ public class CadVendasMB implements Serializable {
         return null;
     }
 	
-	public String excluir(Formapagamento formapagamento){
+	public String fechar(){
+        RequestContext.getCurrentInstance().closeDialog(null);
+        return null;
+    }
+	
+	public String excluir(){
 		FormaPagamentoFacade formaPagamentoFacade = new FormaPagamentoFacade();
+		Vendas nVenda = null;
 		try {
 			formaPagamentoFacade.Excluir(formapagamento.getIdformaPagamento());
 			listaFormaPagamento.remove(formapagamento.getIdformaPagamento());
@@ -680,6 +687,8 @@ public class CadVendasMB implements Serializable {
 		}
         mensagem msg = new mensagem();
         msg.excluiMessagem();
+        gerarListaFormaPagamento();
+        salvarVendaSemFormaRecebimento();
         return "";
 	}
 	
@@ -692,7 +701,7 @@ public class CadVendasMB implements Serializable {
 			formapagamento.setTipoDocumento(TipoDocumento);
 			formapagamento.setVendas(nVenda);
 			formapagamento = formaPagamentoFacade.salvar(formapagamento);
-			listaFormaPagamento.add(formapagamento);
+			gerarListaFormaPagamento();
 		} catch (SQLException ex) {
 			Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
 			mostrarMensagem(ex, "Erro ao salvar uma forma de pagamento:", "Erro");
@@ -702,6 +711,34 @@ public class CadVendasMB implements Serializable {
 	
 	public String voltarRecebimento(){
 		return "cadRecebimento";
+	}
+	
+	public void gerarListaFormaPagamento(){
+		FormaPagamentoFacade formaPagamentoFacade = new FormaPagamentoFacade();
+		Vendas nVenda = null;
+		try {
+        	if ( vendas.getIdvendas() == null) {
+    			VendasFacade vendasFacade = new VendasFacade();
+    			nVenda = vendasFacade.consultar(1);
+    		}else{
+    			nVenda = vendas;
+    		}
+			listaFormaPagamento = formaPagamentoFacade.listar(nVenda.getIdvendas());
+			if (listaFormaPagamento == null) {
+				listaFormaPagamento = new ArrayList<Formapagamento>();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public String salvarVendaSemFormaRecebimento(){
+		if (listaFormaPagamento == null || listaFormaPagamento.size() == 0) {
+			return "A forma de recebimento ainda não foi informada, deseja continuar?";
+		}else{
+			return "Deseja finalizar o cadastro de uma venda?";
+		}
 	}
 	
 

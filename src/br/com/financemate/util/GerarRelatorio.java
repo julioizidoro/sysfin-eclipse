@@ -56,8 +56,7 @@ public class GerarRelatorio {
     public void gerarRelatorioSqlPDF(String caminhoRelatorio, Map<String, Object> parameters, String nomeArquivo, String subDir ) throws JRException, IOException, SQLException{
         FacesContext facesContext = FacesContext.getCurrentInstance();  
         ServletContext servletContext = (ServletContext)facesContext.getExternalContext().getContext();
-        InputStream reportStream = facesContext.getExternalContext()  
-                .getResourceAsStream(caminhoRelatorio);  
+        InputStream reportStream = facesContext.getExternalContext().getResourceAsStream(caminhoRelatorio);  
         EntityManager mg = ConectionFactory.getConnection();
         mg.getTransaction().begin();
         EntityManagerImpl factory = (EntityManagerImpl) mg;

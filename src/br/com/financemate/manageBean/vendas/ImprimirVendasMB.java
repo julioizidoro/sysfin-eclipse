@@ -156,25 +156,41 @@ public class ImprimirVendasMB implements Serializable{
 	 public String gerarRelatorio() throws SQLException, IOException{
 		 ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 		 String caminhoRelatorio = "";
+		 String nomeRelatorio = null;
 		 Map<String, Object> parameters = new HashMap<String, Object>();
-		 caminhoRelatorio = "reports/Relatorios/reportVendas.jasper";
+		 caminhoRelatorio = "reports/Relatorios/vendas/reportVendas.jasper";
+		 nomeRelatorio = "Mapa de Vendas Gerencial";
 		 File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
 		 BufferedImage logo = ImageIO.read(f);
 		 if (cliente != null) {
 			 parameters.put("idcliente", cliente.getIdcliente());			
 		}
-		 parameters.put("dataInicial", Formatacao.ConvercaoDataPadrao(dataInicial));
-         parameters.put("dataFinal", Formatacao.ConvercaoDataPadrao(dataFinal));
+		 parameters.put("sql", gerarSql());
+		 parameters.put("sql2", gerarSql2());
+		 parameters.put("dataInicial", Formatacao.ConvercaoDataSql(dataInicial));
+         parameters.put("dataFinal", Formatacao.ConvercaoDataSql(dataFinal));
 		 parameters.put("logo", logo);
 		 GerarRelatorio gerarRelatorio = new GerarRelatorio();
 		 try{
-			 gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, "vendas", null);
+			 gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio, null);
 		 } catch (JRException ex) {
-			 Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
+			 Logger.getLogger(ImprimirVendasMB.class.getName()).log(Level.SEVERE, null, ex);
 		 } catch (IOException ex) {
-			 Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
+			 Logger.getLogger(ImprimirVendasMB.class.getName()).log(Level.SEVERE, null, ex);
 		 }
 		 return "";
 	 }
+	 
+	 public String gerarSql(){
+			String sql = "";
+				sql = " '" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
+	        return sql; 
+	    }
+	 
+	 public String gerarSql2(){
+			String sql2 = "";
+				sql2 = " '" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
+	        return sql2; 
+	    }
 
 }

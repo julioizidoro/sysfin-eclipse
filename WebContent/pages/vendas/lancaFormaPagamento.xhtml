@@ -58,7 +58,7 @@
 	                    <f:selectItem itemLabel="BR" itemValue="BR" />       
 	              </p:selectOneMenu>
              </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:29.5%; margin-top:-9.7%;">
+             <h:panelGrid columns="1" style="margin-left:29.5%; margin-top:-10.7%;">
                   <p:outputLabel value="Logradouro" for="logra" class="left"/>
                   <p:inputText id="logra"   disabled="#{cadVendasMB.habilitarCampos}" size="64"  class="" value="#{cadVendasMB.formapagamento.logradouro}"/>
              </h:panelGrid>
@@ -67,11 +67,11 @@
                  <p:outputLabel value="Número" for="numero"  class="cliente3"/>
                  <p:inputMask id="numero"   disabled="#{cadVendasMB.habilitarCampos}"  size="8"  class="" value="#{cadVendasMB.formapagamento.numero}" mask="?999999999"/>
              </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:19%; margin-top:-9.7%;">
+             <h:panelGrid columns="1" style="margin-left:19%; margin-top:-10.2%;">
                   <p:outputLabel value="Complemento" for="comple" class="left"/>
                   <p:inputText id="comple"  disabled="#{cadVendasMB.habilitarCampos}" size="55" class="left" value="#{cadVendasMB.formapagamento.complemento}"/>
              </h:panelGrid> 
-             <h:panelGrid columns="1" style="margin-left:80.7%; margin-top:-9.7%;">
+             <h:panelGrid columns="1" style="margin-left:80.7%; margin-top:-10.7%;">
                 <p:outputLabel value="CEP" for="cep" class="left15"/>
                 <p:inputMask id="cep"  disabled="#{cadVendasMB.habilitarCampos}" size="12" maxlength="9" class="left1" value="#{cadVendasMB.formapagamento.cep}" mask="99999-999"/>     
              </h:panelGrid>
@@ -80,11 +80,11 @@
                  <p:outputLabel value="Bairro" for="bairro" class="left30"/>
                  <p:inputText  disabled="#{cadVendasMB.habilitarCampos}" id="bairro" value="#{cadVendasMB.formapagamento.bairro}"  size="20" class=""/>
              </h:panelGrid> 
-             <h:panelGrid columns="1" style="margin-left:29.5%;margin-top:-9.7%;">
+             <h:panelGrid columns="1" style="margin-left:29.5%;margin-top:-10.2%;">
                  <p:outputLabel value="Cidade" for="cidade" class="left"/>
                  <p:inputText id="cidade"  disabled="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.cidade}"  size="30" class="left"/>
              </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:67.5%; margin-top:-9.7%;">
+             <h:panelGrid columns="1" style="margin-left:67.5%; margin-top:-10.7%;">
                  <p:outputLabel value="Estado" class="usuario3"/>
                  <p:selectOneMenu id="estado"  disabled="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.estado}" class="" style="width:182px">
                         <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
@@ -122,20 +122,20 @@
                  <p:outputLabel value="N° Parcelas" for="parcelas" class="left30"/>
                  <p:inputText id="parcelas"  disabled="#{cadVendasMB.habilitarCampos}" value="#{cadVendasMB.formapagamento.numeroParcelas}"  size="12" class=""/>
              </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:25.5%; margin-top:-9.7%;">  
+             <h:panelGrid columns="1" style="margin-left:25.5%; margin-top:-10.2%;">  
 	            <p:outputLabel value="Data Vencimento"  for="dataVenc" class="left3" /> 
 	            
 	            <p:inputMask id="dataVenc"  disabled="#{cadVendasMB.habilitarCampos}" mask="99/99/9999" size="13"  class="left3" value="#{cadVendasMB.formapagamento.dataVencimento}">
 	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	            </p:inputMask>
             </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:51%;margin-top:-9.7%;">
+             <h:panelGrid columns="1" style="margin-left:51%;margin-top:-10.7%;">
                  <p:outputLabel value="Valor R$" for="valorRS" class="left"/>
                  <p:inputText id="valorRS"  disabled="#{cadVendasMB.habilitarCampos}"  value="#{cadVendasMB.formapagamento.valor}"  size="15" class="left">
                  	<f:convertNumber pattern="##,###,###,###.##"/>
                  </p:inputText>
              </h:panelGrid>
-             <h:panelGrid columns="1" style="margin-left:78%;margin-top:-9.7%;">
+             <h:panelGrid columns="1" style="margin-left:78%;margin-top:-11.2%;">
                  <p:outputLabel value="Valor da Parcela" for="valorParcela" class="left"/>
                  <p:inputText id="valorParcela"  disabled="#{cadVendasMB.habilitarCampos}"  value="#{cadVendasMB.formapagamento.valorParcela}"  size="15" class="left">
                  	<f:convertNumber pattern="##,###,###,###.##"/>

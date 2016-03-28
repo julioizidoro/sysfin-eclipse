@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Mapa de Vendas Gerencial" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="320dd56b-4281-455e-becf-bdbfae77892b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="76"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -12,10 +12,11 @@
 	</parameter>
 	<parameter name="dataFinal" class="java.util.Date"/>
 	<parameter name="logo" class="java.awt.Image"/>
-	<parameter name="sql" class="java.lang.String">
+	<parameter name="idCliente" class="java.lang.Integer"/>
+	<parameter name="sql" class="java.lang.String"/>
+	<parameter name="sql2" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="idCliente" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT distinct vendas.dataVenda, vendas.valorBruto, vendas.valordesconto,
 vendas.comissaoLiquidaTotal, vendas.despesasFinanceiras, vendas.comissaoTerceiros,
@@ -25,7 +26,8 @@ cliente.nomeFantasia
 From
 	vendas join cliente on vendas.cliente_idcliente = cliente.idcliente
     join produto on vendas.produto_idproduto = produto.idproduto
-where vendas.dataVenda>=$P{dataInicial} and vendas.dataVenda<=$P{dataFinal} and cliente.idcliente=$P{idCliente}
+where vendas.dataVenda>=$P{sql} and vendas.dataVenda<=$P{sql2}
+and cliente.idcliente=$P{idCliente}
 order by vendas.dataVenda]]>
 	</queryString>
 	<field name="dataVenda" class="java.sql.Date">

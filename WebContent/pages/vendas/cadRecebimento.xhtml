@@ -22,7 +22,7 @@
             </p:dialog>
             
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			
+			<br />
 			<p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Dados da Venda&nbsp;&nbsp;&nbsp;&nbsp;" action="#{cadVendasMB.dadosVenda()}" style="font-size:16px;color:gray;margin-left:1%;border: 2px solid; text-decoration:none; border-color:#696969;" title="Dados da Venda">
 			</p:commandLink>  
             <p:commandLink id="backoffice" value="&nbsp;&nbsp;&nbsp;&nbsp;Back Office&nbsp;&nbsp;&nbsp;&nbsp;"  action="#{cadVendasMB.backOffice()}" update="@all" style="font-size:16px;color:gray;text-decoration:none;border: 2px solid; border-color:#696969;" title="Back Office">
@@ -44,14 +44,14 @@
              </h:panelGrid>
              <h:panelGrid columns="2" style="margin-left:65%; margin-top:-5%;">
            		<p:outputLabel value="Saldo Restante"/>
-           		<p:inputText value="#{cadVendasMB.saldoRestante()}" size="12"  style="margin-left:2%;" disabled="true">
+           		<p:inputText id="saldorestante" value="#{cadVendasMB.saldoRestante()}" size="12"  style="margin-left:2%;" disabled="true">
            			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText>
              </h:panelGrid>
              <br />
              
               <p:contextMenu for="idHistoricoRecebimento" style="background:white;" ajax="onclick">  
-                   <p:menuitem value="Excluir"   icon=" ui-icon-trash"  update="idHistoricoRecebimento" actionListener="#{cadVendasMB.excluir(cadVendasMB.formapagamento)}"/>   
+                   <p:menuitem value="Excluir"   icon=" ui-icon-trash"  update="idHistoricoRecebimento, saldorestante" action="#{cadVendasMB.excluir()}"/>   
               </p:contextMenu> 
               <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadVendasMB.listaFormaPagamento}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{cadVendasMB.formapagamento}" rowKey="#{recebimento.idformaPagamento}"  rows="10" style="margin-bottom:20px;"> 
@@ -83,9 +83,14 @@
 			</p:commandLink>  
 			<hr />
 			<br />
-			<p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadVendasMB.salvarVenda()}" >
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />
+        		<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    	   </p:confirmDialog>
+           <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" action="#{cadVendasMB.salvarVenda()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
-            </p:commandLink>
+                <p:confirm  header="Confirmação" message="#{cadVendasMB.salvarVendaSemFormaRecebimento()}" icon="ui-icon-alert" />
+           </p:commandLink> 
 			<p:commandLink title="Fechar" style="margin-left: 5%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
             </p:commandLink>  
