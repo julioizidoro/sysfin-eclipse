@@ -24,7 +24,7 @@ public class CpTransferenciaDao {
 	public void excluir(int idcpTranferencia) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Contaspagar transferencia = manager.find(Contaspagar.class, idcpTranferencia);
+        Cptransferencia transferencia = manager.find(Cptransferencia.class, idcpTranferencia);
         manager.remove(transferencia);
         manager.getTransaction().commit();
         manager.close();

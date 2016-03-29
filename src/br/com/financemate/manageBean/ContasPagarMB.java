@@ -566,7 +566,7 @@ public class ContasPagarMB implements Serializable{
 			}
 			if (listaTransferencia != null) {
 				for (int i = 0; i < listaTransferencia.size(); i++) {
-					cpTransferenciaFacade.excluir(cpTransferencia.getIdcptransferencia());
+					cpTransferenciaFacade.excluir(listaTransferencia.get(i).getIdcptransferencia());
 				}
 			}
 		}
