@@ -498,6 +498,7 @@ public class CadVendasMB implements Serializable {
 			contaspagar.setDescricao("Conta gerada pela venda");
 			contaspagar.setContaPaga("N");
 			contaspagar.setDataVencimento(vendas.getDataVenda());
+			contaspagar.setFornecedor(vendas.getNomeFornecedor());
 			if (usuarioLogadoMB.getCliente() != null) {
 				try {
 					banco = bancoFacade.consultar(usuarioLogadoMB.getCliente().getIdcliente(), "Nenhum");

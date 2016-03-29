@@ -18,20 +18,7 @@
 	<parameter name="idCliente" class="java.lang.Integer"/>
 	<parameter name="idBanco" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[Select distinct movimentobanco.dataCompensacao, movimentobanco.descricao,
-movimentobanco.valorEntrada, movimentobanco.valorSaida,
-banco.nome, cliente.nomeFantasia,
-planocontas.descricao as planoContas, movimentobanco.idmovimentobanco
-from
-	movimentobanco join cliente on movimentobanco.cliente_idcliente = cliente.idcliente
-	join banco on movimentobanco.banco_idbanco = banco.idbanco
-    join planocontas on movimentobanco.planoContas_idplanoContas = planocontas.idplanoContas
-where
-	movimentobanco.dataCompensacao>=$P{dataInicial} and
-	movimentobanco.dataCompensacao<=$P{dataFinal} and
-	cliente.idcliente =$P{idCliente} and
-	banco.idbanco = $P{idBanco}
-order by movimentobanco.dataCompensacao]]>
+		<![CDATA[$P!{sql}]]>
 	</queryString>
 	<field name="dataCompensacao" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -52,7 +39,7 @@ order by movimentobanco.dataCompensacao]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="planoContas" class="java.lang.String"/>
-	<field name="idmovimentobanco" class="java.lang.Integer">
+	<field name="idoutroslancamentos" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<variable name="totalEntrada" class="java.lang.Float" calculation="Sum">

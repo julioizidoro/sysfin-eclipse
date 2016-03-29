@@ -279,6 +279,19 @@ public class VendasMB implements Serializable {
             return "";
         }
     }
+	
+	public String novoPrincipal(){
+        if (usuarioLogadoMB.getUsuario().getTipoacesso().getAcesso().getIvendas()){
+        	Map<String, Object> options = new HashMap<String, Object>();
+            options.put("contentWidth", 600);
+            RequestContext.getCurrentInstance().openDialog("cadVendas");
+            return "";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
+    }
     
 	public String cancelar(){
         RequestContext.getCurrentInstance().closeDialog(null);
@@ -452,6 +465,8 @@ public class VendasMB implements Serializable {
     	return "";
     }
     
+   
+    
     public String filtro() {
     	Map<String, Object> options = new HashMap<String, Object>();
     	options.put("contentWidth", 600);
@@ -571,6 +586,13 @@ public class VendasMB implements Serializable {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 500);
         RequestContext.getCurrentInstance().openDialog("imprimirVendas"); 
+        return "";
+    }
+    
+    public String novaImpressaoPrincipal() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("imprimirVendasPrincipal"); 
         return "";
     }
 

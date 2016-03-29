@@ -67,9 +67,9 @@
         	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
 		        <p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu label="Vendas" style="font-size:16px;">
-	        			<p:menuitem value="Novo Lançamento" action="#" style="margin-left:-13%;"/> 
+	        			<p:menuitem value="Novo Lançamento" action="#{vendasMB.novaVenda()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consVendas()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{vendasMB.novaImpressao()}" style="margin-left:-13%;"/>
 	        		</p:submenu>
 	        	</p:panelMenu>
 	        </h:panelGrid>
@@ -94,7 +94,7 @@
 	            	<p:submenu label="Outros Lançamentos" style="font-size:16px;"> 
 	                    <p:menuitem value="Novo Lançamento" action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consOutrosLancamentos()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-13%;"/>
 	            	</p:submenu>
             	</p:panelMenu>
             </h:panelGrid>

@@ -437,6 +437,20 @@ public class OutrosLancamentosMB implements Serializable {
     	mensagem mensagem = new mensagem();
         mensagem.excluirConfirmacao();
     }
+    
+    public String impressaoOutrosLancamentos() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 600);
+        RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentos");
+        return "";
+    }
+    
+    public String impressaoOutrosLancamentosPrincipal() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 600);
+        RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentosPrincipal");
+        return "";
+    }
 	
 
 }

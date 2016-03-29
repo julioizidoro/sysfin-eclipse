@@ -557,16 +557,18 @@ public class ContasPagarMB implements Serializable{
 		ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 		if (contasPagar.getFormaPagamento().equalsIgnoreCase("Transferencia")) {
 			CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
-			String sql = "";
+			String sql = "Select c from Cptransferencia c join Contaspagar p on c.contaspagar.idcontasPagar= p.idcontasPagar"
+					+ " where c.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar();
 			try {
 				listaTransferencia = cpTransferenciaFacade.listarTranferencia(sql);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				e.printStackTrace(); 
 			}
-			for (int i = 0; i < listaTransferencia.size(); i++) {
-				cpTransferenciaFacade.excluir(cpTransferencia.getIdcptransferencia());
+			if (listaTransferencia != null) {
+				for (int i = 0; i < listaTransferencia.size(); i++) {
+					cpTransferenciaFacade.excluir(cpTransferencia.getIdcptransferencia());
+				}
 			}
-			
 		}
         contasPagarFacade.excluir(contasPagar.getIdcontasPagar());
         gerarListaContas();

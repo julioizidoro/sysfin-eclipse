@@ -10,7 +10,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/cssteste.css" rel="stylesheet" type="text/css" />
     </h:head>
     
 
@@ -19,7 +19,7 @@
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
-                <img src="../../resources/img/ajax-carregando.gif" />
+                <img src="resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Novo Lançamento</title>
@@ -111,14 +111,14 @@
              
              <h:panelGrid columns="3" style="margin-left:40%;"> 
                 <p:commandLink title="Confirmar" style="text-decoration: none"   action="#{cadOutrosLancamentosMB.salvar()}" >
-                    <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+                    <img src="resources/img/confirmarS.png" width="50" height="50"/>
                 </p:commandLink>
                 <p:menuButton value="" style="background:transparent; border:none; margin-left:-80%; margin-top:100%; font-size:51%;"> 
         			<p:menuitem value="Salvar" action="#{cadOutrosLancamentosMB.salvar()}"  icon="ui-icon-disk"/>
         			<p:menuitem value="Salvar e repetir"  action="#{cadOutrosLancamentosMB.salvarRepetir()}" ajax="false" icon="ui-icon-arrowrefresh-1-w" update="messages"/>
     			</p:menuButton>
                 <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none"  action="#{cadOutrosLancamentosMB.cancelar()}" >
-                    <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+                    <img src="resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
              </h:panelGrid>   
              
