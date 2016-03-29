@@ -89,15 +89,15 @@
 				<text><![CDATA[Data Vencimento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="470" y="3" width="76" height="14" uuid="f80638d3-8726-4c31-a593-89ae0faac252"/>
+				<reportElement x="478" y="4" width="76" height="14" uuid="f80638d3-8726-4c31-a593-89ae0faac252"/>
 				<text><![CDATA[Agendamento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="395" y="3" width="62" height="14" uuid="22c04091-2c6a-467f-bad6-f06bde6c78f3"/>
+				<reportElement x="397" y="3" width="62" height="14" uuid="22c04091-2c6a-467f-bad6-f06bde6c78f3"/>
 				<text><![CDATA[Valor Saída]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="106" y="4" width="278" height="15" uuid="7ef86535-7884-4360-86af-4bcfe34c019a"/>
+				<reportElement x="106" y="3" width="278" height="15" uuid="7ef86535-7884-4360-86af-4bcfe34c019a"/>
 				<text><![CDATA[Descrição]]></text>
 			</staticText>
 			<line>
@@ -111,25 +111,25 @@
 	<detail>
 		<band height="33" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="6" y="2" width="89" height="13" uuid="70db5651-a531-4147-b2f1-7201baf66f18"/>
+				<reportElement x="6" y="2" width="69" height="13" uuid="70db5651-a531-4147-b2f1-7201baf66f18"/>
 				<textFieldExpression><![CDATA[$F{dataVencimento}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="111" y="2" width="274" height="13" uuid="ee42823d-1d75-4624-b06d-c8e5a0bf95bd"/>
+				<reportElement x="106" y="2" width="278" height="13" uuid="ee42823d-1d75-4624-b06d-c8e5a0bf95bd"/>
 				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="396" y="2" width="75" height="13" uuid="65e603e4-1486-4f72-bdcf-c8c0639a36c7"/>
+				<reportElement x="395" y="2" width="64" height="13" uuid="65e603e4-1486-4f72-bdcf-c8c0639a36c7"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="486" y="2" width="61" height="13" uuid="4fec70f3-9cf8-4974-8b7e-a71fb8814f3d"/>
+				<reportElement x="478" y="2" width="61" height="13" uuid="4fec70f3-9cf8-4974-8b7e-a71fb8814f3d"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{dataAgendamento}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="75" y="19" width="274" height="13" uuid="e1b2c94e-3342-4f5a-99dc-5a485e484f5c"/>
+				<reportElement x="106" y="19" width="274" height="13" uuid="e1b2c94e-3342-4f5a-99dc-5a485e484f5c"/>
 				<textFieldExpression><![CDATA[$F{fornecedor}]]></textFieldExpression>
 			</textField>
 			<staticText>

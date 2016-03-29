@@ -495,6 +495,9 @@ public class CadVendasMB implements Serializable {
 			contaspagar.setPlanocontas(planocontas);
 			contaspagar.setTipoDocumento(TipoDocumento);
 			contaspagar.setCompetencia(competencia);
+			contaspagar.setDescricao("Conta gerada pela venda");
+			contaspagar.setContaPaga("N");
+			contaspagar.setDataVencimento(vendas.getDataVenda());
 			if (usuarioLogadoMB.getCliente() != null) {
 				try {
 					banco = bancoFacade.consultar(usuarioLogadoMB.getCliente().getIdcliente(), "Nenhum");
@@ -531,6 +534,7 @@ public class CadVendasMB implements Serializable {
 			contasreceber.setJuros(0f);
 			contasreceber.setDesagio(0f);
 			contasreceber.setValorPago(0f);
+			contasreceber.setNumeroParcela(1);
 			
 			if (usuarioLogadoMB.getCliente() != null) { 
 				try {
@@ -554,6 +558,8 @@ public class CadVendasMB implements Serializable {
 				}
 				
 			}
+			contasreceber = contasReceberFacade.salvar(contasreceber);
+			contasreceber.setNumeroDocumento(""+contasreceber.getIdcontasReceber());
 			contasreceber = contasReceberFacade.salvar(contasreceber);
 		}
 		FacesContext fc = FacesContext.getCurrentInstance();

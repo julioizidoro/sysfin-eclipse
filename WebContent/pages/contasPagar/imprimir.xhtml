@@ -33,7 +33,8 @@
 	                <f:selectItem itemLabel="Fluxo de Caixa" itemValue="fluxo de caixa" />  
 	                <f:selectItem itemLabel="Pagamentos" itemValue="Pagamentos" />
 	                <f:selectItem itemLabel="Pagamentos Vencidos" itemValue="pagamento vencidas" />
-	            </p:selectOneMenu>  
+	            	<p:ajax event="change" listener="#{imprimirRelatorioMB.habilitarCompetencia()}" update="competencia"/>
+	            </p:selectOneMenu>   
              </h:panelGrid> 
              <h:panelGrid style="margin-left:53%; margin-top:-5.3%"> 
                 	<p:outputLabel value="Unidade" for="cliente"  class="left3"/>
@@ -55,6 +56,11 @@
                 <p:inputMask id="dataFinal"  mask="99/99/9999" size="15" maxlength="15" class="left6" placeholder="Data Final" style="margin-left:1%;" value="#{imprimirRelatorioMB.dataFinal}">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask> 
+             </h:panelGrid>
+             <h:panelGrid columns="2" style="margin-left:71%; margin-top:-6%;">
+             	<p:outputLabel value="Competência" for="competencia" class="left5"/> 
+             	<p:inputMask style="margin-left:2%;" disabled="#{imprimirRelatorioMB.desabilitarCompetencia}" id="competencia" label="competencia" value="#{imprimirRelatorioMB.competencia}" size="8" mask="99/9999"  class="left1"/>
+             		
              </h:panelGrid>
              <br /><br /><br /><br /><br /> 
              <hr />

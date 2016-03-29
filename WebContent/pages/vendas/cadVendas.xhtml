@@ -89,21 +89,21 @@
            		<p:outputLabel value="Valor Bruto" style="margin-left:17%;"/>
            		<p:inputText value="#{cadVendasMB.vendas.valorBruto}" size="12">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
-           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
            		<p:outputLabel value="Desconto" style="margin-left:18%;"/>
            		<p:inputText value="#{cadVendasMB.vendas.valorDesconto}" size="12">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
-           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
            		<p:outputLabel value="Juros" style="margin-left:28%;"/> 
            		<p:inputText value="#{cadVendasMB.vendas.valorJuros}" size="12">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
-           			<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
+           			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:80%; margin-top:-9.3%;"> 

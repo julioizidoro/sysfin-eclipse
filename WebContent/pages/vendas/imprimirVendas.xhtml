@@ -44,7 +44,17 @@
 	                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	                </p:inputMask>
 	            </h:panelGrid>
-	            <br /><br /><br /><br /><br /><br /><br /> <br /><br />  
+	            <br />
+	            <h:panelGrid style="margin-left:1%;" columns="1">
+            		<p:outputLabel value="Relatório" class="left2"/>
+		            <p:selectOneMenu id="idRelatorio" class="left5" style="width:220px"  value="#{imprimirVendasMB.relatorio}" 
+		            					filter="true" filterMatchMode="contains" panelStyle="width:100px">
+		                <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+		                <f:selectItem itemLabel="Relatório de Vendas" itemValue="vendas" />  
+		                <f:selectItem itemLabel="Relatório de nota fiscal" itemValue="notaFiscal" />
+		            </p:selectOneMenu>  
+	            </h:panelGrid> 
+	            <br /><br /><br /><br /><br /><br /><br /> 
 	             <hr />
 	             <p:commandLink title="Confirmar"  target="_blank"  style="margin-left: 40%;text-decoration: none"   action="#{imprimirVendasMB.gerarRelatorio()}" ajax="false">
 	                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>

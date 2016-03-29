@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Mapa de Vendas Gerencial" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="320dd56b-4281-455e-becf-bdbfae77892b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="75"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -18,17 +18,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT distinct vendas.dataVenda, vendas.valorBruto, vendas.valordesconto,
-vendas.comissaoLiquidaTotal, vendas.despesasFinanceiras, vendas.comissaoTerceiros,
-vendas.comissaoFuncionarios, vendas.liquidoVendas, produto.descricao,
-vendas.nomeCliente, vendas.idvendas,
-cliente.nomeFantasia
-From
-	vendas join cliente on vendas.cliente_idcliente = cliente.idcliente
-    join produto on vendas.produto_idproduto = produto.idproduto
-where vendas.dataVenda>=$P{sql} and vendas.dataVenda<=$P{sql2}
-and cliente.idcliente=$P{idCliente}
-order by vendas.dataVenda]]>
+		<![CDATA[$P!{sql}]]>
 	</queryString>
 	<field name="dataVenda" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -134,11 +124,11 @@ order by vendas.dataVenda]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="6" y="3" width="42" height="15" uuid="20675a62-e27f-43d2-952c-43166abf1d2d"/>
+				<reportElement style="Column header" x="10" y="7" width="42" height="15" uuid="20675a62-e27f-43d2-952c-43166abf1d2d"/>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="90" y="3" width="147" height="15" uuid="315b305d-476b-41fd-9c5d-af8c628b570f"/>
+				<reportElement style="Column header" x="105" y="3" width="147" height="15" uuid="315b305d-476b-41fd-9c5d-af8c628b570f"/>
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
@@ -162,7 +152,7 @@ order by vendas.dataVenda]]>
 				<text><![CDATA[Com. Funcionários]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="6" y="22" width="84" height="15" uuid="02151ef9-c112-4814-ad43-0e58fd0b2215"/>
+				<reportElement style="Column header" x="3" y="22" width="84" height="15" uuid="02151ef9-c112-4814-ad43-0e58fd0b2215"/>
 				<text><![CDATA[Com. Líquida]]></text>
 			</staticText>
 			<staticText>
@@ -170,7 +160,7 @@ order by vendas.dataVenda]]>
 				<text><![CDATA[Valor Desconto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="10" y="40" width="84" height="15" uuid="02151ef9-c112-4814-ad43-0e58fd0b2215"/>
+				<reportElement style="Column header" x="3" y="37" width="76" height="15" uuid="02151ef9-c112-4814-ad43-0e58fd0b2215"/>
 				<text><![CDATA[Nº da Venda]]></text>
 			</staticText>
 			<staticText>
@@ -199,7 +189,7 @@ order by vendas.dataVenda]]>
 				<textFieldExpression><![CDATA[$F{dataVenda}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="Detail" x="90" y="2" width="244" height="15" uuid="e0df543e-f9a3-4983-8b5f-111cc992c08b"/>
+				<reportElement style="Detail" x="105" y="2" width="229" height="15" uuid="e0df543e-f9a3-4983-8b5f-111cc992c08b"/>
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
@@ -220,21 +210,21 @@ order by vendas.dataVenda]]>
 				<textFieldExpression><![CDATA[$F{comissaoTerceiros}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="222" y="17" width="114" height="15" uuid="292c73a8-45fe-48d9-b46b-e85bf4b09d50"/>
+				<reportElement style="Detail" x="222" y="17" width="90" height="15" uuid="292c73a8-45fe-48d9-b46b-e85bf4b09d50"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{comissaoFuncionarios}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="105" y="17" width="106" height="15" uuid="4f25490f-6782-4664-9fc9-8472a40c0501"/>
+				<reportElement style="Detail" x="105" y="16" width="90" height="15" uuid="4f25490f-6782-4664-9fc9-8472a40c0501"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{despesasFinanceiras}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="6" y="17" width="84" height="15" uuid="d4a48c9b-08cd-4724-aa30-3aef4d81019e"/>
+				<reportElement style="Detail" x="6" y="17" width="67" height="15" uuid="d4a48c9b-08cd-4724-aa30-3aef4d81019e"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
@@ -248,14 +238,14 @@ order by vendas.dataVenda]]>
 				<textFieldExpression><![CDATA[$F{valordesconto}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="109" y="36" width="334" height="15" uuid="4f25490f-6782-4664-9fc9-8472a40c0501"/>
+				<reportElement style="Detail" x="105" y="36" width="334" height="15" uuid="4f25490f-6782-4664-9fc9-8472a40c0501"/>
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement style="Detail" x="10" y="36" width="80" height="15" uuid="d4a48c9b-08cd-4724-aa30-3aef4d81019e"/>
+				<reportElement style="Detail" x="6" y="36" width="67" height="15" uuid="d4a48c9b-08cd-4724-aa30-3aef4d81019e"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>

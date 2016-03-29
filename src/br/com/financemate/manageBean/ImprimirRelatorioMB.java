@@ -47,6 +47,8 @@ public class ImprimirRelatorioMB implements Serializable{
 	private Date dataFinal;
 	private String relatorio;
 	private Boolean habilitarUnidade = false;
+	private String competencia;
+	private Boolean desabilitarCompetencia = true;
 	
 	@PostConstruct
 	public void init(){
@@ -58,6 +60,30 @@ public class ImprimirRelatorioMB implements Serializable{
 	}
 	
 	
+
+	public Boolean getDesabilitarCompetencia() {
+		return desabilitarCompetencia;
+	}
+
+
+
+	public void setDesabilitarCompetencia(Boolean desabilitarCompetencia) {
+		this.desabilitarCompetencia = desabilitarCompetencia;
+	}
+
+
+
+	public String getCompetencia() {
+		return competencia;
+	}
+
+
+
+	public void setCompetencia(String competencia) {
+		this.competencia = competencia;
+	}
+
+
 
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
 		return usuarioLogadoMB;
@@ -167,19 +193,30 @@ public class ImprimirRelatorioMB implements Serializable{
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		if (relatorio.equalsIgnoreCase("Fluxo de Caixa")) {
 			caminhoRelatorio = "reports/Relatorios/reportFluxoCaixa.jasper";
+	        parameters.put("nomeFantasia", cliente.getNomeFantasia());
 		}else if(relatorio.equalsIgnoreCase("Pagamentos")){
 			caminhoRelatorio = "reports/Relatorios/reportPagamentos01.jasper";
 		}else{
 			caminhoRelatorio = "reports/Relatorios/reportPagamentoVencidas.jasper";
 		}
-        parameters.put("sql",gerarSql());
+		parameters.put("sql",gerarSql());
 		File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
         BufferedImage logo = ImageIO.read(f);
-        parameters.put("nomeFantasia", cliente.getNomeFantasia());
         parameters.put("logo", logo);
         String periodo = null;
-        periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicial) 
-                    + "    " + Formatacao.ConvercaoDataPadrao(dataFinal);
+        if (relatorio.equalsIgnoreCase("Pagamentos")) {
+        	if (dataInicial != null && dataFinal != null) {
+        		periodo = "Periodo : " + Formatacao.ConvercaoDataPadrao(dataInicial) 
+                + "    " + Formatacao.ConvercaoDataPadrao(dataFinal);
+			}else{
+				periodo = "CompetÃªncia : " + competencia;
+			}
+        	
+		}else{
+			periodo = "Periodo : " + Formatacao.ConvercaoDataPadrao(dataInicial) 
+			+ "    " + Formatacao.ConvercaoDataPadrao(dataFinal);
+			
+		}
         parameters.put("periodo", periodo);
 		GerarRelatorio gerarRelatorio = new GerarRelatorio();
 		try{
@@ -200,22 +237,24 @@ public class ImprimirRelatorioMB implements Serializable{
 	                "' and fluxocaixa.data<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
 	                "' order by fluxocaixa.data";
 		}else if(relatorio.equalsIgnoreCase("Pagamentos")){
-			 sql = "Select distinct movimentobanco.dataCompensacao, movimentobanco.descricao, ";
-			 sql = sql + "movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, ";
-			 sql = sql + "planocontas.descricao as planoContas, movimentobanco.planoContas_idplanoContas as idPlanoContas, movimentobanco.compentencia ";
-			 sql = sql + "from movimentobanco join cliente on movimentobanco.cliente_idcliente = cliente.idcliente ";
-			 sql = sql + "join banco on movimentobanco.banco_idbanco = banco.idbanco ";
-			 sql = sql + "join planocontas on movimentobanco.planoContas_idplanoContas = planocontas.idplanoContas ";
+			 sql = "Select distinct outroslancamentos.dataCompensacao, outroslancamentos.descricao, ";
+			 sql = sql + "outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, ";
+			 sql = sql + "planocontas.descricao as planoContas, outroslancamentos.planoContas_idplanoContas as idPlanoContas, outroslancamentos.compentencia ";
+			 sql = sql + "from outroslancamentos join cliente on outroslancamentos.cliente_idcliente = cliente.idcliente ";
+			 sql = sql + "join banco on outroslancamentos.banco_idbanco = banco.idbanco ";
+			 sql = sql + "join planocontas on outroslancamentos.planoContas_idplanoContas = planocontas.idplanoContas ";
 			 sql = sql +"where ";
 			 if ((dataInicial !=null) && (dataFinal !=null)){
-				 sql = sql + "movimentobanco.dataCompensacao>='" +  Formatacao.ConvercaoDataSql(dataInicial) +
-						 "' and movimentobanco.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and ";
-			 }
+				 sql = sql + "outroslancamentos.dataCompensacao>='" +  Formatacao.ConvercaoDataSql(dataInicial) +
+						 "' and outroslancamentos.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and ";
+			 }else {
+		            sql = sql + "outroslancamentos.compentencia='" + competencia + "' and ";
+		        }
 			 sql = sql + "cliente.idcliente=" + cliente.getIdcliente();
-			 sql = sql + " and movimentobanco.planoContas_idplanoContas<>" + cliente.getContaRecebimento();
-			 sql = sql + " and movimentobanco.planoContas_idplanoContas<>" + cliente.getContaReceita();
-			 sql = sql + " Group by movimentobanco.planoContas_idplanoContas, movimentobanco.dataCompensacao, movimentobanco.descricao, movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  movimentobanco.compentencia ";
-			 sql = sql + " order by movimentobanco.planoContas_idplanoContas, movimentobanco.dataCompensacao, movimentobanco.descricao, movimentobanco.valorEntrada, movimentobanco.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  movimentobanco.compentencia";
+			 sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaRecebimento();
+			 sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaReceita();
+			 sql = sql + " Group by outroslancamentos.planoContas_idplanoContas, outroslancamentos.dataCompensacao, outroslancamentos.descricao, outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  outroslancamentos.compentencia ";
+			 sql = sql + " order by outroslancamentos.planoContas_idplanoContas, outroslancamentos.dataCompensacao, outroslancamentos.descricao, outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  outroslancamentos.compentencia";
 		}else{
 			sql = "Select distinct contasPagar.dataVencimento, contasPagar.descricao, contasPagar.valor, contasPagar.dataAgendamento,cliente.nomeFantasia, contasPagar.fornecedor, contasPagar.numeroDocumento";
 	        sql = sql + " From ";
@@ -245,6 +284,13 @@ public class ImprimirRelatorioMB implements Serializable{
 			 habilitarUnidade = false;
 		 }
 		 
+	 }
+	 
+	 public Boolean habilitarCompetencia(){
+		 if (relatorio.equalsIgnoreCase("Pagamentos")) {
+			desabilitarCompetencia = false;
+		} 
+		 return desabilitarCompetencia;
 	 }
 
 }

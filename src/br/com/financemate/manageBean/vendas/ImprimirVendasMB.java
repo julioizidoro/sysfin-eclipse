@@ -46,17 +46,32 @@ public class ImprimirVendasMB implements Serializable{
 	private Date dataInicial;
 	private Date dataFinal;
 	private Boolean habilitarUnidade = false;
+	private String relatorio;
 	
 	@PostConstruct
 	public void init(){
 		gerarListaCliente();
 		if (usuarioLogadoMB.getCliente() != null) {
 			cliente = usuarioLogadoMB.getCliente();
+		}else{
+			cliente = new Cliente();
 		}
 		desabilitarUnidade();
 	}
 
-	
+	 
+
+	public String getRelatorio() {
+		return relatorio;
+	}
+
+
+
+	public void setRelatorio(String relatorio) {
+		this.relatorio = relatorio;
+	}
+
+
 
 	public Cliente getCliente() {
 		return cliente;
@@ -158,17 +173,18 @@ public class ImprimirVendasMB implements Serializable{
 		 String caminhoRelatorio = "";
 		 String nomeRelatorio = null;
 		 Map<String, Object> parameters = new HashMap<String, Object>();
-		 caminhoRelatorio = "reports/Relatorios/vendas/reportVendas.jasper";
-		 nomeRelatorio = "Mapa de Vendas Gerencial";
+		 if (relatorio.equalsIgnoreCase("vendas")) {
+		 	caminhoRelatorio = "reports/Relatorios/vendas/reportVendas.jasper";
+		 	nomeRelatorio = "Mapa de Vendas Gerencial";
+		 }else if(relatorio.equalsIgnoreCase("notaFiscal")){
+			 caminhoRelatorio = "reports/Relatorios/vendas/reportNotaFiscal.jasper";
+			 nomeRelatorio = "Nota Fiscal";
+		 }
 		 File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
 		 BufferedImage logo = ImageIO.read(f);
-		 if (cliente != null) {
-			 parameters.put("idcliente", cliente.getIdcliente());			
-		}
-		 parameters.put("sql", gerarSql());
-		 parameters.put("sql2", gerarSql2());
-		 parameters.put("dataInicial", Formatacao.ConvercaoDataSql(dataInicial));
-         parameters.put("dataFinal", Formatacao.ConvercaoDataSql(dataFinal));
+		 parameters.put("sql", gerarSqlImpresssao());
+		 parameters.put("dataInicial", dataInicial);
+         parameters.put("dataFinal", dataFinal);
 		 parameters.put("logo", logo);
 		 GerarRelatorio gerarRelatorio = new GerarRelatorio();
 		 try{
@@ -180,17 +196,20 @@ public class ImprimirVendasMB implements Serializable{
 		 }
 		 return "";
 	 }
+
 	 
-	 public String gerarSql(){
-			String sql = "";
-				sql = " '" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
-	        return sql; 
-	    }
-	 
-	 public String gerarSql2(){
-			String sql2 = "";
-				sql2 = " '" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
-	        return sql2; 
-	    }
+	 public String gerarSqlImpresssao(){
+		 String sql = "";
+		 sql = sql + "SELECT distinct vendas.dataVenda, vendas.valorBruto, vendas.valordesconto, " +
+				 "vendas.comissaoLiquidaTotal, vendas.despesasFinanceiras, vendas.comissaoTerceiros, " +
+				 "vendas.comissaoFuncionarios, vendas.liquidoVendas, produto.descricao, " +
+				 "vendas.nomeCliente, vendas.idvendas, cliente.nomeFantasia  From " +
+				 "vendas join cliente on vendas.cliente_idcliente = cliente.idcliente " +
+				 "join produto on vendas.produto_idproduto = produto.idproduto " +
+				 "where vendas.dataVenda>='"+Formatacao.ConvercaoDataSql(dataInicial)+"' and vendas.dataVenda<='"
+				 +Formatacao.ConvercaoDataSql(dataFinal)+ "' and cliente.idcliente="+ cliente.getIdcliente() +
+				 " order by vendas.dataVenda";
+		 return sql;
+	 }
 
 }

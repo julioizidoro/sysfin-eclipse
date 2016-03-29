@@ -232,7 +232,7 @@ public class ImprimirContasReceberMB implements Serializable{
 			nomeRelatorio = "Contas a Receber";
 		}else if(relatorio.equalsIgnoreCase("Cobranca")){
 			caminhoRelatorio =  "reports/Relatorios/contasReceber/frmcobranca.jasper";
-			nomeRelatorio = "Relatório Cobranças";
+			nomeRelatorio = "Relatï¿½rio Cobranï¿½as";
 		}
         parameters.put("sql",gerarSql());
 		File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
@@ -240,16 +240,16 @@ public class ImprimirContasReceberMB implements Serializable{
         parameters.put("nomeFantasia", cliente.getNomeFantasia());
         parameters.put("logo", logo);
         String periodo = null;
-        periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicial) 
+        periodo = "Perï¿½odo : " + Formatacao.ConvercaoDataPadrao(dataInicial) 
                     + "    " + Formatacao.ConvercaoDataPadrao(dataFinal);
         parameters.put("periodo", periodo);
         String titulo = null;
         if (contasRecebidas){
-            titulo = "RELATÓRIO DE CONTAS RECEBIDAS";
+            titulo = "RELATÃ“RIO DE CONTAS RECEBIDAS";
         }else if (contasAberto){
-            titulo= "RELATÓRIO DE CONTAS EM ABERTO";
+            titulo= "RELATÃ“RIO DE CONTAS EM ABERTO";
         }else{
-            titulo = "RELATÓRIO DE CONTAS A RECEBER";
+            titulo = "RELATÃ“RIO DE CONTAS A RECEBER";
         }
         if (cliente==null){
             parameters.put("unidade", "TODAS AS UNIDADES");
@@ -271,11 +271,10 @@ public class ImprimirContasReceberMB implements Serializable{
 	public String gerarSql(){
 		String sql = "";
 		if (relatorio.equalsIgnoreCase("Contas a receber")) {
-			sql = "SELECT distinct contasreceber.idcontasReceber, contasreceber.numeroDocumento, contasreceber.nomeCliente as nomeCliente,contasreceber.valorParcela, contasreceber.numeroParcela, contasreceber.dataVencimento, contasreceber.juros,contasreceber.desagio, contasreceber.tipodocumento, contasreceber.venda, contasreceber.dataPagamento, contasreceber.valorPago,cliente.nomeFantasia, banco.nome, vendas.dataVenda ";
+			sql = "SELECT distinct contasreceber.idcontasReceber, contasreceber.numeroDocumento, contasreceber.nomeCliente as nomeCliente,contasreceber.valorParcela, contasreceber.numeroParcela, contasreceber.dataVencimento, contasreceber.juros,contasreceber.desagio, contasreceber.tipodocumento, contasreceber.venda, contasreceber.dataPagamento, contasreceber.valorPago,cliente.nomeFantasia, banco.nome ";
 			sql = sql + "from ";
 			sql = sql + "contasreceber join cliente on contasreceber.cliente_idcliente = cliente.idcliente ";
 			sql = sql + "join banco on contasreceber.banco_idbanco = banco.idbanco "; 
-			sql = sql + "join vendas on contasreceber.vendas_idvendas = vendas.idvendas ";
 			sql = sql + "where ";
 			String ordem = "";
 			if (contasAberto){
@@ -295,7 +294,7 @@ public class ImprimirContasReceberMB implements Serializable{
 				sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
 				ordem = " order by contasReceber.dataVencimento";
 			}
-			if (cliente!=null){
+			if (cliente!=null){ 
 				sql = sql  + " and cliente.idcliente="  + cliente.getIdcliente() + "";
 			}
 			sql = sql + ordem;
