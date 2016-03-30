@@ -31,10 +31,10 @@
                     </h:outputText> 
                 </p:column>
                 <p:column headerText="Conta" style="width: 300px; background:white; color:black; border:none;">
-                    <h:outputText value="#{recebimento.banco.nome}" /> 
+                    <h:outputText value="#{recebimento.banco.nome}" style="margin-left:30%;"/> 
                 </p:column>
                 <p:column headerText="Valor Parcial Recebido"   style="background:white; color:black; border:none;">
-                    <h:outputText value="#{recebimento.valorPago}" style="margin-left:20%;">
+                    <h:outputText value="#{recebimento.valorPago}" style="margin-left:25%;">
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>
@@ -43,7 +43,7 @@
             <br /> 
             <hr />
             <br />
-            <p:commandLink title="Voltar" style="margin-left: 40%;text-decoration: none" action="#{recebimentoParcialMB.voltar()}" >
+            <p:commandLink title="Voltar" style="margin-left: 45%;text-decoration: none" action="#{recebimentoParcialMB.voltar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
        </h:form>

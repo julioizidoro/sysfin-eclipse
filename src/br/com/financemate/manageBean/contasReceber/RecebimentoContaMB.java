@@ -266,6 +266,9 @@ public class RecebimentoContaMB implements  Serializable{
     }
     
     public String cancelar(){
+    	FacesContext fc = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		session.removeAttribute("listaRecebimentoParial");
         RequestContext.getCurrentInstance().closeDialog(null);
         contasReceber.setValorPago(0.0f);
         return "";
@@ -294,12 +297,28 @@ public class RecebimentoContaMB implements  Serializable{
         contasReceber.setBanco(banco);
         contasReceber.setCliente(cliente);
         contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-        contasReceber.setValorPago(valorPagoParcial + valorParcial);
+        contasReceber.setValorPago(contasReceber.getValorPago() + valorParcial);
         contasReceber.setValorParcela(contasReceber.getValorParcela() - valorParcial);
         contasReceber = contasReceberFacade.salvar(contasReceber);
-        contasReceber.setDataPagamento(dataRecebimentoParcial);
         listaRecebimentoParial.add(contasReceber);
-        contasReceber.setRecebimentoParcialList(listaRecebimentoParial);
+        for (int i = 0; i < listaRecebimentoParial.size(); i++) {
+			Contasreceber conta = new Contasreceber();
+			conta.setBanco(listaRecebimentoParial.get(i).getBanco());
+			conta.setCliente(listaRecebimentoParial.get(i).getCliente());
+			conta.setUsuario(listaRecebimentoParial.get(i).getUsuario());
+			conta.setValorPago(listaRecebimentoParial.get(i).getValorPago());
+			conta.setValorParcela(listaRecebimentoParial.get(i).getValorParcela());
+			conta.setDataPagamento(dataRecebimentoParcial);
+			conta.setNumeroDocumento(listaRecebimentoParial.get(i).getNumeroDocumento());
+			conta.setPlanocontas(listaRecebimentoParial.get(i).getPlanocontas());
+			conta.setVenda(listaRecebimentoParial.get(i).getVenda());
+			conta.setJuros(listaRecebimentoParial.get(i).getJuros());
+			conta.setDesagio(listaRecebimentoParial.get(i).getDesagio());
+			conta.setDataVencimento(listaRecebimentoParial.get(i).getDataVencimento());
+			conta.setNomeCliente(listaRecebimentoParial.get(i).getNomeCliente());
+			conta.setTipodocumento(listaRecebimentoParial.get(i).getTipodocumento());
+			conta = contasReceberFacade.salvar(conta);
+		}
         mensagem mensagem = new mensagem();
         mensagem.recebidoParcial();
         return "";

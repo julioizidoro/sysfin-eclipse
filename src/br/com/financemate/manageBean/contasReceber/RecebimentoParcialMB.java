@@ -1,6 +1,7 @@
 package br.com.financemate.manageBean.contasReceber;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
@@ -35,10 +37,9 @@ public class RecebimentoParcialMB implements Serializable {
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		contasReceber = (Contasreceber) session.getAttribute("contareceber");
 		valorPagoParcial = (Float) session.getAttribute("valorPagoParcial");
-		if (valorPagoParcial > 0f) {
-			listaRecebimentoParcial = new ArrayList<Contasreceber>();
-			//listaRecebimentoParcial = contasReceber.getRecebimentoParcialList();
-			}else{
+		session.removeAttribute("listaRecebimentoParial");
+		gerarListaRecebimentoParcial();
+		if (listaRecebimentoParcial == null) {
 			listaRecebimentoParcial = new ArrayList<Contasreceber>();
 		}
 	}
@@ -96,6 +97,21 @@ public class RecebimentoParcialMB implements Serializable {
 	
 	public String voltar(){
 		return "recebimentoConta";
+	}
+	
+	public void gerarListaRecebimentoParcial(){
+		ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+		String sql = "Select c from Contasreceber c where c.numeroDocumento="+ contasReceber.getNumeroDocumento() + 
+				" and  c.dataPagamento<>null order by c.dataPagamento";
+		try {
+			listaRecebimentoParcial = contasReceberFacade.listar(sql);
+			if (listaRecebimentoParcial == null) {
+				listaRecebimentoParcial = new ArrayList<Contasreceber>();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
