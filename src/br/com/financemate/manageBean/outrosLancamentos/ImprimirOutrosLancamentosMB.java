@@ -26,10 +26,15 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.OutrosLancamentosFacade;
+import br.com.financemate.facade.PlanoContasFacade;
+import br.com.financemate.manageBean.CadContasPagarMB;
 import br.com.financemate.manageBean.ImprimirRelatorioMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
 import net.sf.jasperreports.engine.JRException;
@@ -52,6 +57,9 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 	private List<Banco> listaBanco;
 	private Date dataIncial;
 	private Date dataFinal;
+	private Planocontas planocontas;
+	private List<Planocontas> listaPlanoContas;
+	private String nomeComboPlano = "Selecione";
 	
 	
 	@PostConstruct
@@ -61,6 +69,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 			cliente = usuarioLogadoMB.getCliente();
 			gerarListaBanco();
 		}
+		gerarListaPlanoContas();
 		desabilitarUnidade();
 	}
 	
@@ -68,6 +77,54 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 	
 	
 	
+	public String getNomeComboPlano() {
+		return nomeComboPlano;
+	}
+
+
+
+
+
+	public void setNomeComboPlano(String nomeComboPlano) {
+		this.nomeComboPlano = nomeComboPlano;
+	}
+
+
+
+
+
+	public Planocontas getPlanocontas() {
+		return planocontas;
+	}
+
+
+
+
+
+	public void setPlanocontas(Planocontas planocontas) {
+		this.planocontas = planocontas;
+	}
+
+
+
+
+
+	public List<Planocontas> getListaPlanoContas() {
+		return listaPlanoContas;
+	}
+
+
+
+
+
+	public void setListaPlanoContas(List<Planocontas> listaPlanoContas) {
+		this.listaPlanoContas = listaPlanoContas;
+	}
+
+
+
+
+
 	public Date getDataIncial() {
 		return dataIncial;
 	}
@@ -240,6 +297,13 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         parameters.put("logo", logo);
         parameters.put("dataInicial", dataIncial);
         parameters.put("dataFinal", dataFinal);
+        if (planocontas.getIdplanoContas() != null) {
+			parameters.put("planocontas", planocontas.getDescricao());
+		}else{
+			String nome = "Todas";
+			parameters.put("planocontas", nome);
+		}
+        parameters.put("saldo", "" + geralSqlSaldo());
 		GerarRelatorio gerarRelatorio = new GerarRelatorio();
 		try{
 			gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio, null);
@@ -260,7 +324,13 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 				"outroslancamentos.banco_idbanco = banco.idbanco join planocontas on outroslancamentos.planoContas_idplanoContas ="+
 				" planocontas.idplanoContas where outroslancamentos.dataVencimento>='"+ Formatacao.ConvercaoDataSql(dataIncial) +"' and " +
 				"outroslancamentos.dataVencimento<='"+ Formatacao.ConvercaoDataSql(dataFinal) +"' and cliente.idcliente ="+ cliente.getIdcliente() + " and "+
-				"banco.idbanco =" + banco.getIdbanco() + " order by outroslancamentos.dataVencimento";
+				"banco.idbanco =" + banco.getIdbanco();
+		if (planocontas.getIdplanoContas() != null) {
+			sql = sql + " and planocontas.descricao='" + planocontas.getDescricao() + "' order by outroslancamentos.dataVencimento";
+		}else{
+			sql = sql + " order by outroslancamentos.dataVencimento";
+		}
+		
 		return sql;
 	}
 	
@@ -268,6 +338,42 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
     }
+	
+	public void gerarListaPlanoContas() {
+        PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+        try {
+            listaPlanoContas = planoContasFacade.listar();
+            if (listaPlanoContas == null) {
+                listaPlanoContas = new ArrayList<Planocontas>();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ImprimirOutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
+        }
+        
+    }
+	
+	public String nomeComboPlanoConta(){
+    	if (listaPlanoContas == null) {
+			return nomeComboPlano;
+		}else{
+			return nomeComboPlano = "Todas";
+		}
+    }
+	
+	public float geralSqlSaldo(){
+		float saldo = 0f;
+		OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
+		try {
+			saldo = outrosLancamentosFacade.saldo(dataIncial);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return saldo;
+	}
+	
+	
 	
 
 }

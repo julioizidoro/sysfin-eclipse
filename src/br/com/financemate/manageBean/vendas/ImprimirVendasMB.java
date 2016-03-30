@@ -176,10 +176,10 @@ public class ImprimirVendasMB implements Serializable{
 		 if (relatorio.equalsIgnoreCase("vendas")) {
 		 	caminhoRelatorio = "reports/Relatorios/vendas/reportVendas.jasper";
 		 	nomeRelatorio = "Mapa de Vendas Gerencial";
-		 }else if(relatorio.equalsIgnoreCase("notaFiscal")){
-			 caminhoRelatorio = "reports/Relatorios/vendas/reportNotaFiscal.jasper";
-			 nomeRelatorio = "Nota Fiscal";
-		 }
+		 }else if(relatorio.equalsIgnoreCase("vendasRecebimento")){
+			 caminhoRelatorio = "reports/Relatorios/vendas/reportVendasRecebimento.jasper";
+			 nomeRelatorio = "Relatório de Vendas por Recebimentos";
+		 } 
 		 File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
 		 BufferedImage logo = ImageIO.read(f);
 		 parameters.put("sql", gerarSqlImpresssao());
@@ -200,16 +200,28 @@ public class ImprimirVendasMB implements Serializable{
 	 
 	 public String gerarSqlImpresssao(){
 		 String sql = "";
-		 sql = sql + "SELECT distinct vendas.dataVenda, vendas.valorBruto, vendas.valordesconto, " +
-				 "vendas.comissaoLiquidaTotal, vendas.despesasFinanceiras, vendas.comissaoTerceiros, " +
-				 "vendas.comissaoFuncionarios, vendas.liquidoVendas, produto.descricao, " +
-				 "vendas.nomeCliente, vendas.idvendas, cliente.nomeFantasia  From " +
-				 "vendas join cliente on vendas.cliente_idcliente = cliente.idcliente " +
-				 "join produto on vendas.produto_idproduto = produto.idproduto " +
-				 "where vendas.dataVenda>='"+Formatacao.ConvercaoDataSql(dataInicial)+"' and vendas.dataVenda<='"
-				 +Formatacao.ConvercaoDataSql(dataFinal)+ "' and cliente.idcliente="+ cliente.getIdcliente() +
-				 " order by vendas.dataVenda";
+		 if (relatorio.equalsIgnoreCase("vendas")) {
+			 sql = sql + "SELECT distinct vendas.dataVenda, vendas.valorBruto, vendas.valordesconto, " +
+					 "vendas.comissaoLiquidaTotal, vendas.despesasFinanceiras, vendas.comissaoTerceiros, " +
+					 "vendas.comissaoFuncionarios, vendas.liquidoVendas, produto.descricao, " +
+					 "vendas.nomeCliente, vendas.idvendas, cliente.nomeFantasia  From " +
+					 "vendas join cliente on vendas.cliente_idcliente = cliente.idcliente " +
+					 "join produto on vendas.produto_idproduto = produto.idproduto " +
+					 "where vendas.dataVenda>='"+Formatacao.ConvercaoDataSql(dataInicial)+"' and vendas.dataVenda<='"
+					 +Formatacao.ConvercaoDataSql(dataFinal)+ "' and cliente.idcliente="+ cliente.getIdcliente() +
+					 " order by vendas.dataVenda";
+		}else if(relatorio.equalsIgnoreCase("vendasRecebimento")){
+			sql = sql + "SELECT distinct vendas.dataVenda, vendas.valorBruto,  contasreceber.numeroParcela, vendas.liquidoVendas, cliente.nomeFantasia,"
+					+ " vendas.idvendas, contasreceber.valorParcela, contasreceber.dataVencimento From vendas join "
+					+ "cliente on vendas.cliente_idcliente = cliente.idcliente "
+					+ " join contasreceber on vendas.idvendas=contasreceber.venda where vendas.dataVenda>='"+Formatacao.ConvercaoDataSql(dataInicial)+"' and vendas.dataVenda<='"
+					 +Formatacao.ConvercaoDataSql(dataFinal)+ "' and cliente.idcliente="+ cliente.getIdcliente() +
+					 " order by vendas.dataVenda";
+		}
+		  
 		 return sql;
 	 }
+	 
+	
 
 }

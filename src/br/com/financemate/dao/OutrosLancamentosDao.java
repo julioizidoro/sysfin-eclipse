@@ -8,7 +8,10 @@ package br.com.financemate.dao;
 
 import br.com.financemate.connection.ConectionFactory;
 import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.util.Formatacao;
+
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -48,6 +51,20 @@ public class OutrosLancamentosDao {
         manager.remove(outroslancamentos);
         manager.getTransaction().commit();
         manager.close();
+    }
+    
+    public float gerarSaldoInicial(Date dataInicio)throws SQLException {
+    	float saldo= 0.0f;
+    	EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createNativeQuery("SELECT distinct sum(valorSaida) as totalsaida FROM outroslancamentos" +
+        									" where dataVencimento<'" + Formatacao.ConvercaoDataSql(dataInicio) + "'");
+        Double totalsaida = (Double) q.getResultList().get(0);
+        q = manager.createNativeQuery("SELECT distinct sum(valorEntrada) as totalentrada FROM outroslancamentos" +
+				" where dataVencimento<'" + Formatacao.ConvercaoDataSql(dataInicio) + "'");
+        Double totalentrada = (Double) q.getResultList().get(0);
+        saldo = totalentrada.floatValue() - totalsaida.floatValue();
+    	return saldo;
     }
     
     

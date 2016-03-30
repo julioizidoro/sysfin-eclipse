@@ -35,6 +35,7 @@
 	                    <f:selectItems  value="#{imprimirOutrosLancamentosMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
 	                    <f:attribute name="listaCliente" value="#{imprimirOutrosLancamentosMB.listaCliente}"/>
 	                    <p:ajax event="change" listener="#{imprimirOutrosLancamentosMB.gerarListaBanco()}" update="idconta"/>
+	                    <p:ajax event="change" listener="#{imprimirOutrosLancamentosMB.nomeComboPlanoConta()}" update="idPlanoConta"/>
 	                </p:selectOneMenu> 
                 </h:panelGrid>
             	<h:panelGrid columns="2" style="margin-left:65%; margin-top:-6%;"> 
@@ -47,19 +48,26 @@
 	                </p:selectOneMenu>  
              	</h:panelGrid> 
              	<br />
-             	<h:panelGrid columns="2"  style="margin-left: 1%;">   
-	           		<p:outputLabel value="Data Incial" class="left3"/>
+           		<h:panelGrid style="margin-left:1%;" columns="2">
+             		<p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
+	              	<p:selectOneMenu id="idPlanoConta" class="left3" style="width:492px;"  value="#{imprimirOutrosLancamentosMB.planocontas}" converter="PlanoContasConverter"
+	              					 filter="true" filterMatchMode="contains" panelStyle="width:200px">
+	                    <f:selectItem itemLabel="#{imprimirOutrosLancamentosMB.nomeComboPlano}" itemValue="0" noSelectionOption="true"/> 
+	                    <f:selectItems value="#{imprimirOutrosLancamentosMB.listaPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
+	                    <f:attribute name="listaPlanoConta" value="#{imprimirOutrosLancamentosMB.listaPlanoContas}"/>
+	                    
+	              	</p:selectOneMenu> 
+                </h:panelGrid>
+                <br />
+                <h:panelGrid columns="3"  style="margin-left: 1%;">   
+	           		<p:outputLabel value="Periodo" class="left3"/>
 	           		<p:inputMask mask="99/99/9999" id="dataIni" style="margin-left:1%;"  size="15" maxlength="15" value="#{imprimirOutrosLancamentosMB.dataIncial}"  class="tabelaRecebimento"  placeholder="Data Inicial" >
 	                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	                </p:inputMask>
-	            </h:panelGrid>
-	            <h:panelGrid columns="2" style="margin-left: 35%; margin-top:-5.7%;">
-	                <p:outputLabel value="Data Final" />
 	                <p:inputMask id="dataFinal"  mask="99/99/9999"  size="15" maxlength="15" class="left6" value="#{imprimirOutrosLancamentosMB.dataFinal}"  placeholder="Data Final">
 	                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	                    </p:inputMask>  
            		</h:panelGrid>
-           		<br />
            		<br /><br /><br /><br />
            		<hr />
            		<br />

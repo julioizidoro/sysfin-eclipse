@@ -10,6 +10,7 @@ package br.com.financemate.facade;
 import br.com.financemate.dao.OutrosLancamentosDao;
 import br.com.financemate.model.Outroslancamentos;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -34,6 +35,11 @@ public class OutrosLancamentosFacade {
     public void excluir(int idOutrosLancamentos) throws SQLException{
     	outrosLancamentosDao = new OutrosLancamentosDao();
     	outrosLancamentosDao.excluir(idOutrosLancamentos);
+    }
+    
+    public float saldo(Date dataInicial) throws SQLException{
+    	outrosLancamentosDao = new OutrosLancamentosDao();
+    	return outrosLancamentosDao.gerarSaldoInicial(dataInicial);
     }
     
 }
