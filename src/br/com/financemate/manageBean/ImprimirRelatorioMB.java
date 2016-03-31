@@ -24,7 +24,9 @@ import javax.servlet.ServletContext;
 
 import org.primefaces.context.RequestContext;
 
+import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
@@ -49,6 +51,10 @@ public class ImprimirRelatorioMB implements Serializable{
 	private Boolean habilitarUnidade = false;
 	private String competencia;
 	private Boolean desabilitarCompetencia = true;
+	private Banco banco;
+	private List<Banco> listaBanco;
+	private Boolean desabilitarBanco = true;
+	private String nomeComboBanco = "Selecione";
 	
 	@PostConstruct
 	public void init(){
@@ -60,6 +66,54 @@ public class ImprimirRelatorioMB implements Serializable{
 	}
 	
 	
+
+	public String getNomeComboBanco() {
+		return nomeComboBanco;
+	}
+
+
+
+	public void setNomeComboBanco(String nomeComboBanco) {
+		this.nomeComboBanco = nomeComboBanco;
+	}
+
+
+
+	public List<Banco> getListaBanco() {
+		return listaBanco;
+	}
+
+
+
+	public void setListaBanco(List<Banco> listaBanco) {
+		this.listaBanco = listaBanco;
+	}
+
+
+
+	public Boolean getDesabilitarBanco() {
+		return desabilitarBanco;
+	}
+
+
+
+	public void setDesabilitarBanco(Boolean desabilitarBanco) {
+		this.desabilitarBanco = desabilitarBanco;
+	}
+
+
+
+	public Banco getBanco() {
+		return banco;
+	}
+
+
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
+	}
+
+
 
 	public Boolean getDesabilitarCompetencia() {
 		return desabilitarCompetencia;
@@ -196,7 +250,15 @@ public class ImprimirRelatorioMB implements Serializable{
 	        parameters.put("nomeFantasia", cliente.getNomeFantasia());
 		}else if(relatorio.equalsIgnoreCase("Pagamentos")){
 			caminhoRelatorio = "reports/Relatorios/reportPagamentos01.jasper";
-		}else{
+		}else if(relatorio.equalsIgnoreCase("pagamentoSintetico")){
+			caminhoRelatorio = "reports/Relatorios/reportPagamentoSintetico.jasper";
+			if (banco.getIdbanco() != null) {
+				parameters.put("nome", banco.getNome());
+			}else{
+				String nome = "Todos";
+				parameters.put("nome", nome);
+			}
+		}else if(relatorio.equalsIgnoreCase("pagamento vencidas")){
 			caminhoRelatorio = "reports/Relatorios/reportPagamentoVencidas.jasper";
 		}
 		parameters.put("sql",gerarSql());
@@ -255,7 +317,32 @@ public class ImprimirRelatorioMB implements Serializable{
 			 sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaReceita();
 			 sql = sql + " Group by outroslancamentos.planoContas_idplanoContas, outroslancamentos.dataCompensacao, outroslancamentos.descricao, outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  outroslancamentos.compentencia ";
 			 sql = sql + " order by outroslancamentos.planoContas_idplanoContas, outroslancamentos.dataCompensacao, outroslancamentos.descricao, outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao,  outroslancamentos.compentencia";
-		}else{
+		
+		}else if(relatorio.equalsIgnoreCase("pagamentoSintetico")){
+			 sql = "Select distinct outroslancamentos.dataCompensacao, ";
+			 sql = sql + "outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, ";
+			 sql = sql + "planocontas.descricao, outroslancamentos.planoContas_idplanoContas as idPlanoContas ";
+			 sql = sql + "from outroslancamentos join cliente on outroslancamentos.cliente_idcliente = cliente.idcliente ";
+			 sql = sql + "join banco on outroslancamentos.banco_idbanco = banco.idbanco ";
+			 sql = sql + "join planocontas on outroslancamentos.planoContas_idplanoContas = planocontas.idplanoContas ";
+			 sql = sql +"where ";
+			 if ((dataInicial !=null) && (dataFinal !=null)){
+				 sql = sql + "outroslancamentos.dataCompensacao>='" +  Formatacao.ConvercaoDataSql(dataInicial) +
+						 "' and outroslancamentos.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and ";
+			 }
+			 sql = sql + "cliente.idcliente=" + cliente.getIdcliente();
+			 if (banco.getIdbanco() != null) {
+				sql = sql + " and banco.nome='"+ banco.getNome() +"'";
+			 }
+			 sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaRecebimento();
+			 sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaReceita();
+			 if (banco.getIdbanco() != null) {
+				sql = sql + " Group by planocontas.descricao, banco.nome";
+			 }else{
+				 sql = sql + " Group by  planocontas.descricao"; 
+			 }
+			 sql = sql + " order by outroslancamentos.planoContas_idplanoContas, outroslancamentos.dataCompensacao, outroslancamentos.valorEntrada, outroslancamentos.valorSaida, planocontas.descricao, banco.nome, cliente.nomeFantasia, planocontas.descricao";
+		}else if(relatorio.equalsIgnoreCase("pagamento vencidas")){
 			sql = "Select distinct contasPagar.dataVencimento, contasPagar.descricao, contasPagar.valor, contasPagar.dataAgendamento,cliente.nomeFantasia, contasPagar.fornecedor, contasPagar.numeroDocumento";
 	        sql = sql + " From ";
 	        sql = sql + " contasPagar join cliente on contasPagar.cliente_idcliente = cliente.idcliente ";
@@ -291,6 +378,34 @@ public class ImprimirRelatorioMB implements Serializable{
 			desabilitarCompetencia = false;
 		} 
 		 return desabilitarCompetencia;
+	 }
+	 
+	 public Boolean habilitarBanco(){
+		 if (relatorio.equalsIgnoreCase("pagamentoSintetico")) {
+			desabilitarBanco = false;
+		} 
+		 return desabilitarBanco;
+	 }
+	 
+	 public void gerarListaBanco(){
+		 if (cliente!=null) {
+			 BancoFacade bancoFacade = new BancoFacade();
+			 String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+			 listaBanco = bancoFacade.listar(sql);
+			 if (listaBanco ==null){
+				 listaBanco = new ArrayList<Banco>();
+			 }
+		 }else {
+			 listaBanco = new ArrayList<Banco>();
+		 }
+	 }
+	 
+	 public String nomeComboConta(){
+		 if (listaBanco == null) {
+			 return nomeComboBanco;
+		 }else{
+			 return nomeComboBanco = "Todas";
+		 }
 	 }
 
 }

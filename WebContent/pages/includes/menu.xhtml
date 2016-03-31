@@ -104,10 +104,10 @@
         	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
 	            <p:panelMenu>
 		            	<p:submenu label="Relatórios" style="font-size:16px;">
-		                    <p:menuitem value="Contas a Pagar" action="#" style="margin-left:-13%;"/>
-		                    <p:menuitem value="Contas a Receber" action="#" style="margin-left:-13%;"/>
-		                    <p:menuitem value="Outros Lançamentos" action="#" style="margin-left:-13%;"/>
-		                    <p:menuitem value="Vendas" action="#" style="margin-left:-13%;"/>
+		                    <p:menuitem value="Contas a Pagar" action="#{contasPagarMB.novaImpressao()}" style="margin-left:-13%;"/>
+		                    <p:menuitem value="Contas a Receber" action="#{contasReceberMB.novaImpressao()}" style="margin-left:-13%;"/>
+		                    <p:menuitem value="Outros Lançamentos" action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-13%;"/>
+		                    <p:menuitem value="Vendas" action="#{vendasMB.novaImpressao()}" style="margin-left:-13%;"/>
 		            	</p:submenu> 
 	    		</p:panelMenu>
     		</h:panelGrid>

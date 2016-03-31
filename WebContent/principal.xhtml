@@ -68,7 +68,7 @@
 	        		<p:submenu label="Contas a Receber" style="font-size:16px;">
 	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}" style="margin-left:-13%;"/>
 	        		</p:submenu>
 	        	</p:panelMenu>
 	        </h:panelGrid> 
@@ -114,10 +114,10 @@
         	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
 	            <p:panelMenu>
 		            	<p:submenu label="Relatórios" style="font-size:16px;">
-		                    <p:menuitem value="Contas a Pagar" action="#" style="margin-left:-13%;"/>
-		                    <p:menuitem value="Contas a Receber" action="#" style="margin-left:-13%;"/>
-		                    <p:menuitem value="Outros Lançamentos" action="#" style="margin-left:-13%;"/>
-		                    <p:menuitem value="Vendas" action="#" style="margin-left:-13%;"/>
+		                    <p:menuitem value="Contas a Pagar" action="#{contasPagarMB.novaImpressaoPrincipal()}" style="margin-left:-13%;"/>
+		                    <p:menuitem value="Contas a Receber" action="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}" style="margin-left:-13%;"/>
+		                    <p:menuitem value="Outros Lançamentos" action="#{outrosLancamentosMB.impressaoOutrosLancamentosPrincipal()}" style="margin-left:-13%;"/>
+		                    <p:menuitem value="Vendas" action="#{vendasMB.novaImpressaoPrincipal()}" style="margin-left:-13%;"/>
 		            	</p:submenu> 
 	    		</p:panelMenu>
     		</h:panelGrid>

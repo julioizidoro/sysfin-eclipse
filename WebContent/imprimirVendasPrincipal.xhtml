@@ -10,7 +10,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/cssteste.css" rel="stylesheet" type="text/css" />
     </h:head>
     
 
@@ -47,11 +47,12 @@
 	            <br />
 	            <h:panelGrid style="margin-left:1%;" columns="1">
             		<p:outputLabel value="Relatório" class="left2"/>
-		            <p:selectOneMenu id="idRelatorio" class="left5" style="width:220px"  value="#{imprimirVendasMB.relatorio}" 
+		            <p:selectOneMenu id="idRelatorio" class="left5" style="width:300px"  value="#{imprimirVendasMB.relatorio}" 
 		            					filter="true" filterMatchMode="contains" panelStyle="width:100px">
 		                <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
 		                <f:selectItem itemLabel="Relatório de Vendas" itemValue="vendas" />  
-		                <f:selectItem itemLabel="Relatório de nota fiscal" itemValue="notaFiscal" />
+		                <f:selectItem itemLabel="Relatório de Vendas por Recebimento" itemValue="vendasRecebimento" />
+		                <f:selectItem itemLabel="Fatura X Recebimento" itemValue="faturamentoRecebimento" />
 		            </p:selectOneMenu>  
 	            </h:panelGrid> 
 	            <br /><br /><br /><br /><br /><br /><br /> 

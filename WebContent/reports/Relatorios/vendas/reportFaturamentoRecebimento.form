@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Mapa de Vendas Gerencial" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="320dd56b-4281-455e-becf-bdbfae77892b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="54"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -15,8 +15,10 @@
 	<parameter name="sql" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="idCliente" class="java.lang.Integer"/>
-	<parameter name="parcela" class="java.lang.String"/>
+	<parameter name="data" class="java.lang.Integer"/>
+	<parameter name="data2" class="java.lang.String"/>
+	<parameter name="data3" class="java.lang.String"/>
+	<parameter name="data4" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[$P!{sql}]]>
 	</queryString>
@@ -50,7 +52,7 @@
 				<textElement textAlignment="Center">
 					<font size="26" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Relatório de Vendas por Recebimento"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Faturamento X Recebimento"]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="90" y="172" width="90" height="20" uuid="9adce713-8e13-4466-8f00-23d351c3aef0"/>
@@ -91,6 +93,13 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nomeFantasia}]]></textFieldExpression>
 			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="Detail" x="491" y="-5" width="69" height="15" uuid="35706f80-5aa0-48ea-9713-ac9bbaff2af8"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{data2}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -104,86 +113,142 @@
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
-			<staticText>
-				<reportElement style="Column header" x="6" y="3" width="84" height="15" uuid="20675a62-e27f-43d2-952c-43166abf1d2d"/>
-				<text><![CDATA[Data da Venda]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="100" y="3" width="47" height="15" uuid="315b305d-476b-41fd-9c5d-af8c628b570f"/>
-				<text><![CDATA[Venda]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="229" y="5" width="93" height="15" uuid="ca145b00-b653-4579-8cb8-36d22ce41438"/>
-				<text><![CDATA[Líquido Vendas]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="155" y="5" width="70" height="15" uuid="75035416-8f5c-4205-a2a4-beb512f1a981"/>
-				<text><![CDATA[Valor Bruto]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="324" y="5" width="79" height="15" uuid="c636b7a4-e5f5-44ea-b789-31d646af217a"/>
-				<text><![CDATA[Recebimento]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="409" y="3" width="92" height="17" uuid="2af0c07a-e85f-474a-9267-704f347555f3"/>
-				<text><![CDATA[Valor a Receber]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="506" y="3" width="50" height="15" uuid="0343894b-83e1-4167-bf69-5f6ddcbbd6d7"/>
-				<text><![CDATA[Parcela]]></text>
-			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="Detail" x="295" y="5" width="69" height="15" uuid="667974b6-3c82-4a78-88c8-34dfd499f5ce"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{data2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="Detail" x="183" y="6" width="69" height="15" uuid="c9d17af2-ae21-478b-b5bf-38e6f92215aa"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{data}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="Detail" x="389" y="5" width="69" height="15" uuid="b99c9a80-31a4-4f3c-b79c-c0f2578911dc"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{data3}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="Detail" x="479" y="5" width="69" height="15" uuid="b44e0531-90d5-4256-b62e-a64a6e293376"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{data4}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
-			<textField pattern="dd/MM/yyyy">
-				<reportElement style="Detail" x="15" y="2" width="67" height="15" uuid="4167ced3-989a-461d-94be-9bb6e2543f83"/>
-				<textElement textAlignment="Left">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{dataVenda}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="Detail" x="109" y="0" width="33" height="15" uuid="e0df543e-f9a3-4983-8b5f-111cc992c08b"/>
-				<textElement textAlignment="Left">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{idvendas}]]></textFieldExpression>
-			</textField>
+		<band height="79" splitType="Stretch">
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="243" y="2" width="69" height="15" uuid="4c0b5781-b7bb-4213-a971-00ea0f01211d"/>
+				<reportElement style="Detail" x="183" y="4" width="69" height="15" uuid="4c0b5781-b7bb-4213-a971-00ea0f01211d"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{liquidoVendas}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="146" y="2" width="70" height="15" uuid="292c73a8-45fe-48d9-b46b-e85bf4b09d50"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{valorBruto}]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement style="Detail" x="447" y="2" width="51" height="15" uuid="4d77b402-de9a-4751-8969-4aa056573073"/>
+				<reportElement style="Detail" x="389" y="4" width="69" height="15" uuid="4d77b402-de9a-4751-8969-4aa056573073"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{valorParcela}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement style="Detail" x="328" y="2" width="69" height="15" uuid="d4edab43-c0ec-430f-8014-e493b1ff6bcc"/>
-				<textElement textAlignment="Center">
+			<textField pattern="#,##0.00">
+				<reportElement style="Detail" x="295" y="4" width="69" height="15" uuid="d4edab43-c0ec-430f-8014-e493b1ff6bcc"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataVencimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="2" width="99" height="20" uuid="c4f6ffef-e1e2-4c19-bbdd-33bfe13beced"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Faturamento : "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="28" width="146" height="20" uuid="a249c53e-6cc8-4582-87df-1401aa5c20e8"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Total Recebido no mês: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="59" width="111" height="20" uuid="ffa30d3c-c9ed-422e-b0b4-30eacdb56ba6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total em aberto : "]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" x="389" y="31" width="69" height="15" uuid="69dbe62b-f115-46e8-9a09-57decc7cb915"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorParcela}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="Detail" x="295" y="31" width="69" height="15" uuid="2be9bf38-2efb-4299-84ad-e1c711172208"/>
+				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dataVencimento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="514" y="2" width="25" height="15" uuid="b97ab95f-cec6-4b53-b2d1-1e9d72a1985d"/>
-				<textElement textAlignment="Center">
+				<reportElement style="Detail" x="183" y="31" width="69" height="15" uuid="054d3b44-8105-4fff-999d-83c7c1300409"/>
+				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numeroParcela}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{liquidoVendas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" x="389" y="59" width="69" height="15" uuid="29dbc04f-ae05-4995-8912-b63d8a1ccb77"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorParcela}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="Detail" x="295" y="59" width="69" height="15" uuid="dca63a8a-6cdc-491b-bd32-cf61281184d5"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataVencimento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="Detail" x="183" y="59" width="69" height="15" uuid="08ff8864-2519-4338-b245-51d8f668ab5f"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{liquidoVendas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" x="479" y="4" width="69" height="15" uuid="ee1b0fcc-36bc-43bd-b2a3-d566aefd7017"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorParcela}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" x="479" y="31" width="69" height="15" uuid="e9338b8a-6c08-4b22-9b78-485d66f15112"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorParcela}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement style="Detail" x="479" y="59" width="69" height="15" uuid="187b185e-a0c3-4cdb-9890-2351dc90517e"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorParcela}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
