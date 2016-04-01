@@ -230,9 +230,6 @@ public class ImprimirContasReceberMB implements Serializable{
 		if (relatorio.equalsIgnoreCase("Contas a Receber")) {
 			caminhoRelatorio = "reports/Relatorios/contasReceber/reportContasReceber.jasper";
 			nomeRelatorio = "Contas a Receber";
-		}else if(relatorio.equalsIgnoreCase("Cobranca")){
-			caminhoRelatorio =  "reports/Relatorios/contasReceber/frmcobranca.jasper";
-			nomeRelatorio = "Relat�rio Cobran�as";
 		}
         parameters.put("sql",gerarSql());
 		File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
@@ -298,13 +295,6 @@ public class ImprimirContasReceberMB implements Serializable{
 				sql = sql  + " and cliente.idcliente="  + cliente.getIdcliente() + "";
 			}
 			sql = sql + ordem;
-		}else if(relatorio.equalsIgnoreCase("Cobranca")){
-			sql = "SELECT distinct contasreceber.idcontasreceber, contasreceber.nomeCliente as nomeCliente,contasreceber.valorParcela, contasreceber.numeroParcela, contasreceber.dataVencimento, cobranca.fone1, cobranca.fone2, cobranca.vencimentooriginal, cobranca.alterarvencimento, cobranca.email";
-			sql = sql + " from ";
-			sql = sql + "contasreceber join cobranca on contasreceber.cobranca_idcobranca = cobranca.idcobranca ";
-			sql = sql + "where contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
-			sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
-			sql = sql + " order by contasReceber.dataVencimento";
 		}
         
 		return sql;

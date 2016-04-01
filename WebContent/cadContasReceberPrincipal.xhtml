@@ -22,14 +22,14 @@
             </p:dialog>
 
             <title  >Novo Contas a Receber</title>
-            
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             <h:panelGrid>
 				<br></br>
                 	<p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%"/>
                 </h:panelGrid>
                 <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
                 <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadContasReceberMB.cliente}" converter="ClienteConverter"
-                             filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadContasReceberMB.habilitarUnidade}">
                     <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems  value="#{cadContasReceberMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{cadContasReceberMB.listaCliente}"/>
@@ -75,11 +75,10 @@
             	<p:selectOneMenu id="tipoDocumento" style="width:194px;"  value="#{cadContasReceberMB.contasReceber.tipodocumento}">
                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                     <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
-                    <f:selectItem itemLabel="Guia de Imposto" itemValue="Guia de Imposto" /> 
-                    <f:selectItem itemLabel="Holerite" itemValue="Holerite" />  
-                    <f:selectItem itemLabel="Nota Fiscal" itemValue="Nota Fiscal" />
-                    <f:selectItem itemLabel="Recibo" itemValue="Recibo" />  
-                    <f:selectItem itemLabel="Outros" itemValue="Outros" /> 
+                    <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" /> 
+                    <f:selectItem itemLabel="Cartão" itemValue="cartao" />  
+                    <f:selectItem itemLabel="Cheque" itemValue="Cheque" />
+                    <f:selectItem itemLabel="Transferência" itemValue="transferencia" />
                 </p:selectOneMenu>
             </h:panelGrid>
             <br />
@@ -119,16 +118,16 @@
 	            	 <p:outputLabel value="Frequencia" for="frequencia"  />
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left: 2%;"> 
-	            	<p:selectOneMenu id="frequencia" style="width:194px;" disabled="#{cadContasReceberMB.disabilitar}" value="#">
+	            	<p:selectOneMenu id="frequencia" style="width:194px;" disabled="#{cadContasReceberMB.disabilitar}" value="#{cadContasReceberMB.frequencia}">
 	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
-	                    <f:selectItem itemLabel="Mensal" itemValue="Mensal" />  
+	                    <f:selectItem itemLabel="Mensal" itemValue="mensal" />  
 	                    <f:selectItem itemLabel="Semanal" itemValue="Semanal" /> 
 	                    <f:selectItem itemLabel="Diária" itemValue="Diaria" />  
-	                    <f:selectItem itemLabel="Anual" itemValue="Anual" />
+	                    <f:selectItem itemLabel="Anual" itemValue="anual" />
 	                </p:selectOneMenu>
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left: 30%;"> 
-	            	<p:selectOneMenu id="vezes" style="width:100px;" disabled="#{cadContasReceberMB.disabilitar}" value="#">
+	            	<p:selectOneMenu id="vezes" style="width:100px;" disabled="#{cadContasReceberMB.disabilitar}" value="#{cadContasReceberMB.vezes}">
 	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
 	                    <f:selectItem itemLabel="1" itemValue="1" />  
 	                    <f:selectItem itemLabel="2" itemValue="2" /> 
@@ -142,8 +141,8 @@
 	            </h:panelGrid>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 90%; margin-top:-7%;">
-            	<p:commandLink title="Plano recebíveis" style="text-decoration: none"   action="#" >
-               		<img src="resources/img/iconelupaS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+            	<p:commandLink title=" Visualizar Parcelas" style="text-decoration: none"   action="#{cadContasReceberMB.abrirParcelamento()}" >
+               		<img src="resources/img/iconelupaSS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
             	</p:commandLink>
             </h:panelGrid>
             
