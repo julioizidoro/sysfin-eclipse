@@ -18,31 +18,32 @@
 	<parameter name="idCliente" class="java.lang.Integer"/>
 	<parameter name="idBanco" class="java.lang.Integer"/>
 	<parameter name="planocontas" class="java.lang.String"/>
-	<parameter name="saldo" class="java.lang.String"/>
+	<parameter name="nomeFantasia" class="java.lang.String"/>
+	<parameter name="banco" class="java.lang.String"/>
+	<parameter name="saldoInicial" class="java.lang.Float"/>
 	<queryString>
 		<![CDATA[$P!{sql}]]>
 	</queryString>
-	<field name="dataCompensacao" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="dataCompensacao" class="java.util.Date">
+		<fieldDescription><![CDATA[dataCompensacao]]></fieldDescription>
 	</field>
 	<field name="descricao" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<field name="planoContas" class="java.lang.String">
+		<fieldDescription><![CDATA[planoContas]]></fieldDescription>
+	</field>
+	<field name="saldo" class="java.lang.Float">
+		<fieldDescription><![CDATA[saldo]]></fieldDescription>
 	</field>
 	<field name="valorEntrada" class="java.lang.Float">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[valorEntrada]]></fieldDescription>
 	</field>
 	<field name="valorSaida" class="java.lang.Float">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="nome" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="nomeFantasia" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="planoContas" class="java.lang.String"/>
-	<field name="idoutroslancamentos" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[valorSaida]]></fieldDescription>
 	</field>
 	<variable name="totalEntrada" class="java.lang.Float" calculation="Sum">
 		<variableExpression><![CDATA[$F{valorEntrada}]]></variableExpression>
@@ -100,7 +101,7 @@
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nomeFantasia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{nomeFantasia}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="347" y="147" width="51" height="20" uuid="574b1da3-07cd-406f-b687-d6b8aa664f4d"/>
@@ -114,7 +115,7 @@
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{banco}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="128" y="196" width="246" height="20" uuid="f2fd9373-9738-43c0-9ede-0f4943a3f738"/>
@@ -131,18 +132,18 @@
 				<textFieldExpression><![CDATA["Plano de contas : "]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="453" y="172" width="90" height="20" uuid="ab0cbd57-a8ac-4b9e-845b-96ff187eef60"/>
+				<reportElement x="449" y="172" width="90" height="20" uuid="ab0cbd57-a8ac-4b9e-845b-96ff187eef60"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{saldo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{saldoInicial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="351" y="172" width="71" height="20" uuid="c70b34b0-d7c1-4f67-a29e-3c7cb9cdc5ba"/>
+				<reportElement x="347" y="172" width="96" height="20" uuid="c70b34b0-d7c1-4f67-a29e-3c7cb9cdc5ba"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Saldo : "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["SaldoAnterior : "]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -158,19 +159,19 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="6" y="3" width="42" height="15" uuid="20675a62-e27f-43d2-952c-43166abf1d2d"/>
+				<reportElement style="Column header" x="3" y="3" width="42" height="15" uuid="20675a62-e27f-43d2-952c-43166abf1d2d"/>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="78" y="3" width="109" height="15" uuid="315b305d-476b-41fd-9c5d-af8c628b570f"/>
+				<reportElement style="Column header" x="67" y="3" width="109" height="15" uuid="315b305d-476b-41fd-9c5d-af8c628b570f"/>
 				<text><![CDATA[Plano de Contas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="332" y="5" width="55" height="15" uuid="ca145b00-b653-4579-8cb8-36d22ce41438"/>
+				<reportElement style="Column header" x="342" y="5" width="55" height="15" uuid="ca145b00-b653-4579-8cb8-36d22ce41438"/>
 				<text><![CDATA[ Entradas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="219" y="3" width="70" height="15" uuid="75035416-8f5c-4205-a2a4-beb512f1a981"/>
+				<reportElement style="Column header" x="220" y="3" width="70" height="15" uuid="75035416-8f5c-4205-a2a4-beb512f1a981"/>
 				<text><![CDATA[Descrição]]></text>
 			</staticText>
 			<staticText>
@@ -184,33 +185,33 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="35" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="35" uuid="ee86d585-c7cb-4176-b6d0-71932d13f089"/>
+				<reportElement x="0" y="0" width="555" height="24" uuid="ee86d585-c7cb-4176-b6d0-71932d13f089"/>
 			</rectangle>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement style="Detail" x="6" y="2" width="67" height="15" uuid="4167ced3-989a-461d-94be-9bb6e2543f83"/>
+				<reportElement style="Detail" x="3" y="2" width="56" height="15" uuid="4167ced3-989a-461d-94be-9bb6e2543f83"/>
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dataCompensacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="76" y="2" width="133" height="15" uuid="e0df543e-f9a3-4983-8b5f-111cc992c08b"/>
+				<reportElement style="Detail" x="66" y="2" width="148" height="22" uuid="e0df543e-f9a3-4983-8b5f-111cc992c08b"/>
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{planoContas}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="332" y="2" width="76" height="15" uuid="4c0b5781-b7bb-4213-a971-00ea0f01211d"/>
+				<reportElement style="Detail" x="343" y="2" width="72" height="15" uuid="4c0b5781-b7bb-4213-a971-00ea0f01211d"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{valorEntrada}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement style="Detail" x="217" y="2" width="107" height="33" uuid="292c73a8-45fe-48d9-b46b-e85bf4b09d50"/>
+				<reportElement style="Detail" x="219" y="2" width="122" height="22" uuid="292c73a8-45fe-48d9-b46b-e85bf4b09d50"/>
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
@@ -221,8 +222,7 @@
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{totalEntrada}-$V{totalSaida}
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement style="Detail" x="422" y="2" width="59" height="15" uuid="d4edab43-c0ec-430f-8014-e493b1ff6bcc"/>

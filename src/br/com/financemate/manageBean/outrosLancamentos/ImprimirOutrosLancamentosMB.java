@@ -37,7 +37,9 @@ import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Named
 @ViewScoped
@@ -60,7 +62,9 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 	private Planocontas planocontas;
 	private List<Planocontas> listaPlanoContas;
 	private String nomeComboPlano = "Selecione";
-	
+	private Float saldoInicial;
+	private String unidade;
+	private String nomeBanco;
 	
 	@PostConstruct
 	public void init(){
@@ -77,6 +81,54 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 	
 	
 	
+	public String getUnidade() {
+		return unidade;
+	}
+
+
+
+
+
+	public void setUnidade(String unidade) {
+		this.unidade = unidade;
+	}
+
+
+
+
+
+	public String getNomeBanco() {
+		return nomeBanco;
+	}
+
+
+
+
+
+	public void setNomeBanco(String nomeBanco) {
+		this.nomeBanco = nomeBanco;
+	}
+
+
+
+
+
+	public Float getSaldoInicial() {
+		return saldoInicial;
+	}
+
+
+
+
+
+	public void setSaldoInicial(Float saldoInicial) {
+		this.saldoInicial = saldoInicial;
+	}
+
+
+
+
+
 	public String getNomeComboPlano() {
 		return nomeComboPlano;
 	}
@@ -291,22 +343,25 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		caminhoRelatorio = "reports/Relatorios/outroslancamentos/reportConciliacao.jasper";
 		nomeRelatorio = "Conciliacao";
-		parameters.put("sql",gerarSql());
+		List<ConciliacaoBean> lista = gerarListaConciliacao();
 		File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
         BufferedImage logo = ImageIO.read(f);
         parameters.put("logo", logo);
         parameters.put("dataInicial", dataIncial);
         parameters.put("dataFinal", dataFinal);
-        if (planocontas.getIdplanoContas() != null) {
+        parameters.put("nomeFantasia", unidade);
+        parameters.put("banco", nomeBanco);
+        parameters.put("saldoInicial", saldoInicial);
+        if (planocontas != null) {
 			parameters.put("planocontas", planocontas.getDescricao());
 		}else{
 			String nome = "Todas";
 			parameters.put("planocontas", nome);
 		}
-        parameters.put("saldo", "" + geralSqlSaldo());
+        JRDataSource jrds = new JRBeanCollectionDataSource(lista);
 		GerarRelatorio gerarRelatorio = new GerarRelatorio();
 		try{
-			gerarRelatorio.gerarRelatorioSqlPDF(caminhoRelatorio, parameters, nomeRelatorio, null);
+			gerarRelatorio.gerarRelatorioDSPDF(caminhoRelatorio, parameters, jrds, nomeRelatorio);
 	 	} catch (JRException ex) {
 	 		Logger.getLogger(ImprimirRelatorioMB.class.getName()).log(Level.SEVERE, null, ex);
 	 	} catch (IOException ex) {
@@ -315,25 +370,53 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 	 		return "";
 	}
 	
-	public String gerarSql(){
-		String sql = "";
-		sql = sql + "Select distinct outroslancamentos.dataCompensacao, outroslancamentos.descricao, " +
-				"outroslancamentos.valorEntrada, outroslancamentos.valorSaida, banco.nome, cliente.nomeFantasia, " +
-				"planocontas.descricao as planoContas, outroslancamentos.idoutroslancamentos  from outroslancamentos join" +
-				" cliente on outroslancamentos.cliente_idcliente = cliente.idcliente join banco on " +
-				"outroslancamentos.banco_idbanco = banco.idbanco join planocontas on outroslancamentos.planoContas_idplanoContas ="+
-				" planocontas.idplanoContas where outroslancamentos.dataVencimento>='"+ Formatacao.ConvercaoDataSql(dataIncial) +"' and " +
-				"outroslancamentos.dataVencimento<='"+ Formatacao.ConvercaoDataSql(dataFinal) +"' and cliente.idcliente ="+ cliente.getIdcliente() + " and "+
-				"banco.idbanco =" + banco.getIdbanco();
-		if (planocontas.getIdplanoContas() != null) {
-			sql = sql + " and planocontas.descricao='" + planocontas.getDescricao() + "' order by outroslancamentos.dataVencimento";
-		}else{
-			sql = sql + " order by outroslancamentos.dataVencimento";
+	private List<ConciliacaoBean> gerarListaConciliacao() {
+		unidade = "TODAS";
+    	nomeBanco = "TODOS";
+    	String sql = "Select o From Outroslancamentos o where o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataIncial) + "' and" +
+    				" o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
+    				    				
+    	if (cliente!=null){
+    		sql =sql + " and o.cliente.idcliente=" + cliente.getIdcliente();
+    		unidade = cliente.getNomeFantasia();
+    	}
+    	if (banco!=null){
+    		sql = sql + " and o.banco.idbanco=" + banco.getIdbanco();
+    		nomeBanco = banco.getNome();
+    	}
+    	if (planocontas!=null){
+    		sql = sql + " and o.planocontas.idplanoContas=" + planocontas.getIdplanoContas();
+    	}
+    	sql = sql + " order by o.dataCompensacao";
+    	OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
+    	List<Outroslancamentos> lista;
+		try { 
+			lista = outrosLancamentosFacade.listaOutrosLancamentos(sql);
+			List<ConciliacaoBean> listaConciliacao = new ArrayList<ConciliacaoBean>();
+	    	if (lista!=null){
+	    		saldoInicial = geralSqlSaldo();
+	    		Float saldoAtual = saldoInicial;
+	    		for(int i=0;i<lista.size();i++){
+	    			ConciliacaoBean conciliacao = new ConciliacaoBean();
+	    			conciliacao.setDataCompensacao(lista.get(i).getDataCompensacao());
+	    			conciliacao.setDescricao(lista.get(i).getDescricao());
+	    			conciliacao.setPlanoContas(lista.get(i).getPlanocontas().getDescricao());
+	    			saldoAtual = saldoAtual  + lista.get(i).getValorEntrada()  - lista.get(i).getValorSaida();
+	    			conciliacao.setSaldo(saldoAtual);
+	    			conciliacao.setValorEntrada(lista.get(i).getValorEntrada());
+	    			conciliacao.setValorSaida(lista.get(i).getValorSaida());
+	    			listaConciliacao.add(conciliacao);
+	    		}
+	    	}
+	    	return listaConciliacao;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		return sql;
+    	return null;
 	}
-	
+
+
 	public String cancelar(){
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
@@ -362,15 +445,14 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
     }
 	
 	public float geralSqlSaldo(){
-		float saldo = 0f;
 		OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
 		try {
-			saldo = outrosLancamentosFacade.saldo(dataIncial);
+			return outrosLancamentosFacade.saldo(dataIncial);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return saldo;
+		return 0f;
 	}
 	
 	

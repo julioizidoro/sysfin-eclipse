@@ -31,7 +31,6 @@
 	            					filter="true" filterMatchMode="contains" panelStyle="width:100px" >
 	                <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
 	                <f:selectItem itemLabel="Contas a receber" itemValue="contas a receber" />
-	                <f:selectItem itemLabel="Cobranças" itemValue="Cobranca" />
 	                <p:ajax event="change" listener="#{imprimirContasReceberMB.habilitarTipoRelatorio()}" update="@all"/>
 	            </p:selectOneMenu>  
              </h:panelGrid> 
