@@ -105,15 +105,15 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="6" y="3" width="84" height="15" uuid="20675a62-e27f-43d2-952c-43166abf1d2d"/>
+				<reportElement style="Column header" x="6" y="5" width="84" height="15" uuid="20675a62-e27f-43d2-952c-43166abf1d2d"/>
 				<text><![CDATA[Data da Venda]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="100" y="3" width="47" height="15" uuid="315b305d-476b-41fd-9c5d-af8c628b570f"/>
+				<reportElement style="Column header" x="99" y="5" width="47" height="15" uuid="315b305d-476b-41fd-9c5d-af8c628b570f"/>
 				<text><![CDATA[Venda]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="229" y="5" width="93" height="15" uuid="ca145b00-b653-4579-8cb8-36d22ce41438"/>
+				<reportElement style="Column header" x="231" y="5" width="93" height="15" uuid="ca145b00-b653-4579-8cb8-36d22ce41438"/>
 				<text><![CDATA[Líquido Vendas]]></text>
 			</staticText>
 			<staticText>
@@ -125,11 +125,11 @@
 				<text><![CDATA[Recebimento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="409" y="3" width="92" height="17" uuid="2af0c07a-e85f-474a-9267-704f347555f3"/>
+				<reportElement style="Column header" x="406" y="5" width="92" height="15" uuid="2af0c07a-e85f-474a-9267-704f347555f3"/>
 				<text><![CDATA[Valor a Receber]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="506" y="3" width="50" height="15" uuid="0343894b-83e1-4167-bf69-5f6ddcbbd6d7"/>
+				<reportElement style="Column header" x="503" y="5" width="50" height="15" uuid="0343894b-83e1-4167-bf69-5f6ddcbbd6d7"/>
 				<text><![CDATA[Parcela]]></text>
 			</staticText>
 		</band>
@@ -179,7 +179,7 @@
 				<textFieldExpression><![CDATA[$F{dataVencimento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="Detail" x="514" y="2" width="25" height="15" uuid="b97ab95f-cec6-4b53-b2d1-1e9d72a1985d"/>
+				<reportElement style="Detail" x="515" y="2" width="25" height="15" uuid="b97ab95f-cec6-4b53-b2d1-1e9d72a1985d"/>
 				<textElement textAlignment="Center">
 					<font size="10"/>
 				</textElement>
