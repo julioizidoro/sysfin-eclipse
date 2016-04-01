@@ -28,7 +28,6 @@ import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.manageBean.ImprimirRelatorioMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Usuario;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
 import net.sf.jasperreports.engine.JRException;

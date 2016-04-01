@@ -27,7 +27,6 @@ import javax.servlet.ServletContext;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.VendasFacade;
-import br.com.financemate.manageBean.ImprimirRelatorioMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;

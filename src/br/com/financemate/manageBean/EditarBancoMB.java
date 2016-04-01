@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;

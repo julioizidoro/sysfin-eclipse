@@ -28,7 +28,6 @@ import br.com.financemate.facade.FormaPagamentoFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
-import br.com.financemate.manageBean.contasReceber.CadContasReceberMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;

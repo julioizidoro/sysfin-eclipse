@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import org.apache.commons.net.ftp.FTPClient;
 import org.primefaces.model.UploadedFile;
 
-import br.com.financemate.facade.NomeArquivoFacade;
 
 public class Ftp {
 	

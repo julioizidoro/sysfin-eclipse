@@ -14,11 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.OperacaoUsuarioFacade;
-import br.com.financemate.facade.UsuarioFacade;
 import br.com.financemate.model.Contaspagar;
-import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Operacaousuairo;
-import br.com.financemate.model.Usuario;
 
 @Named
 @ViewScoped

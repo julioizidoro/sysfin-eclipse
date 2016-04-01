@@ -22,16 +22,12 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import br.com.financemate.facade.ClienteFacade;
-import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.ClienteMB;
-import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.manageBean.contasReceber.ContasReceberMB;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Contaspagar;
-import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
 

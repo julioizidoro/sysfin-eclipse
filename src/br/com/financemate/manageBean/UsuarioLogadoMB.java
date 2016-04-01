@@ -9,14 +9,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.financemate.util.Criptografia;
-import br.com.financemate.util.Formatacao;
 import br.com.financemate.facade.ClienteFacade;
-import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.UsuarioFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Usuario;
@@ -96,7 +93,7 @@ public class UsuarioLogadoMB implements Serializable{
                         nomeCliente = cliente.getNomeFantasia();
                     } else {
                         cliente = null;
-                        nomeCliente = "FINANCEMATE - Assessoria Contábil & Financeira";
+                        nomeCliente = "FINANCEMATE - Assessoria Contï¿½bil & Financeira";
                     }
                     return "principal";
                 }

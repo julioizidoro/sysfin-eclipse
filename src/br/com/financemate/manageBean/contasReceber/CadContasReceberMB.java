@@ -20,16 +20,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import org.jfree.data.time.Month;
-import org.jfree.data.time.Year;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.CellEditEvent;
 
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.PlanoContasFacade;
-import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
@@ -38,7 +34,6 @@ import br.com.financemate.model.Cobranca;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Vendas;
-import br.com.financemate.util.Formatacao;
 
 @Named
 @ViewScoped

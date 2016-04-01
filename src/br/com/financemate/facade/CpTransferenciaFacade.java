@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.CpTransferenciaDao;
-import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
 
 

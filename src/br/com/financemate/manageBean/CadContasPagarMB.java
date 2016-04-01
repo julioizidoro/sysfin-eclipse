@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,8 +19,6 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
-import org.apache.catalina.startup.HomesUserDatabase;
-import org.hibernate.sql.Update;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -32,7 +29,6 @@ import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.facade.FtpDadosFacade;
 import br.com.financemate.facade.NomeArquivoFacade;
-import br.com.financemate.facade.OperacaoUsuarioFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -42,7 +38,6 @@ import br.com.financemate.model.Ftpdados;
 import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
-import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.Ftp;
 
 @Named

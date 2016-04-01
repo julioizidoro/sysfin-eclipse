@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.CobrancaFacade;
@@ -26,8 +25,6 @@ import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobranca;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Historicocobranca;
-import br.com.financemate.model.Vendas;
-import br.com.financemate.util.Formatacao;
 
 @Named
 @ViewScoped

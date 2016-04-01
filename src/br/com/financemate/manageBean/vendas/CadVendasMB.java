@@ -3,7 +3,6 @@ package br.com.financemate.manageBean.vendas;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +21,6 @@ import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
-import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.facade.FormaPagamentoFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.facade.ProdutoFacade;
@@ -684,7 +682,6 @@ public class CadVendasMB implements Serializable {
 	
 	public String excluir(){
 		FormaPagamentoFacade formaPagamentoFacade = new FormaPagamentoFacade();
-		Vendas nVenda = null;
 		try {
 			formaPagamentoFacade.Excluir(formapagamento.getIdformaPagamento());
 			listaFormaPagamento.remove(formapagamento.getIdformaPagamento());

@@ -3,10 +3,7 @@ package br.com.financemate.manageBean.outrosLancamentos;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +19,6 @@ import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
-import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.OutrosLancamentosFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.manageBean.CadContasPagarMB;
@@ -31,8 +27,6 @@ import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Contaspagar;
-import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.model.Planocontas;
 
