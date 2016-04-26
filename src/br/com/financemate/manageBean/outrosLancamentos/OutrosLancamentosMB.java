@@ -269,16 +269,16 @@ public class OutrosLancamentosMB implements Serializable {
         if ((cliente != null) && (dataInicial != null) && (dataFinal != null)) {
         	if (banco.getIdbanco() != null) { 
 	            sql = "Select o from Outroslancamentos o where o.banco.idbanco=" + banco.getIdbanco()
-	            		+ "  and o.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
-	            		+ "'  and o.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+	            		+ "  and o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
+	            		+ "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
 	                    +"' and o.cliente.idcliente=" + cliente.getIdcliente();
-	            sql = sql + " order by o.dataVencimento";
+	            sql = sql + " order by o.dataCompensacao";
         	}else{
         		 sql = "Select o from Outroslancamentos o where"
-         				+ " o.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
-         				+ "'  and o.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+         				+ " o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
+         				+ "'  and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
          				+"' and o.cliente.idcliente=" + cliente.getIdcliente();
-        		 sql = sql + " order by o.dataVencimento";
+        		 sql = sql + " order by o.dataCompensacao";
         	}
             OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
             try {

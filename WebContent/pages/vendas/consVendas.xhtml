@@ -26,10 +26,17 @@
 				<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
             </p:commandLink>   
             <br /><br /> 
-            
+            		
+            		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        					<p:commandButton style="margin-left:35%;" value="Sim" action="#{vendasMB.cancelarVenda(vendasMB.venda)}" type="button" styleClass="ui-confirmdialog-yes"  />
+        					<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
+    	   			</p:confirmDialog>
             		<p:contextMenu for="idTabelaVendas" style="background:white;" ajax="onclick">  
                         <p:menuitem value="Gerar Parcela"   icon=" ui-icon-plus"  action="#{vendasMB.gerarParcelas(vendasMB.venda)}" />
-                        <p:menuitem value="Cancelar"   icon=" ui-icon-close" action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendasMB.venda)}" update="growl, idTabelaVendas"/>  
+                        <p:menuitem value="Cancelar"   icon=" ui-icon-close" action="#{mensagem.cancelado()}"  actionListener="#{vendasMB.cancelarVenda(vendasMB.venda)}" update="growl, idTabelaVendas">
+                        	<p:confirm  header="Confirmação" message="Tem certeza que deseja cancelar essa venda ?" icon="ui-icon-alert" />
+                        </p:menuitem>  
+                    	<p:menuitem value="Editar" icon="ui-icon-pencil" action="#{vendasMB.editar(vendasMB.venda)}"/>
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaVendas"  var="vendas"  value="#{vendasMB.listaVendas}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{vendasMB.venda}" selectionMode="single" rowKey="#{vendas.idvendas}">

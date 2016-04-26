@@ -38,7 +38,7 @@ public class mensagem {
     
     public void naoLiberar() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("VocÃª esta tentando liberar uma conta nÃ£o autorizada", ""));
+        context.addMessage(null, new FacesMessage("Você esta tentando liberar uma conta não autorizada", ""));
     }
     
     public void recebido() {
@@ -73,7 +73,7 @@ public class mensagem {
     
     public void competencia() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("CompetÃªncia nÃ£o informada", ""));
+        context.addMessage(null, new FacesMessage("Competência, Data Agendamento, Plano de Contas ou Compensão", "Alguns dos itens citados não foram informados"));
     }
     
     public void excluirConfirmacao() {
@@ -82,6 +82,6 @@ public class mensagem {
     }
     
     public void warn() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "AtenÃ§Ã£o!", "Campos em vermelho nÃ£o preenchido."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }
 }

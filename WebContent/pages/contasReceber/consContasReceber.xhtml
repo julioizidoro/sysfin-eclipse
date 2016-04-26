@@ -30,7 +30,7 @@
             </p:commandLink>  
             <p:commandLink id="idImagemFiltro"  action="#{contasReceberMB.coresFiltrar()}" update="@all" style="margin-left:-16%; text-decoration:none;" title="Filtros">
 				<img  src="#{contasReceberMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/> 
-           		<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogFiltrar}" update="idTabelaContaReceber"/>
+           		<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogFiltrar}" update="idTabelaContaReceber, contasVenc, contasVencer, contasReceber"/>
             </p:commandLink>
             <p:commandLink id="idImagemReceber"  action="#{contasReceberMB.novoRecebimentoLote()}" update="idImagemFiltro" style="margin-left:-30%; text-decoration:none;" title="Recebimento em lote">
 				<img  src="../../resources/img/iconeReceber.jpg" style="border:solid; border-width: 1px; border-color: #3D9446;"/>

@@ -37,7 +37,7 @@ import org.primefaces.model.chart.LineChartSeries;
 	 
 	    private void createAnimatedModels() {
 	        animatedModel1 = initLinearModel();
-	        animatedModel1.setTitle("Fluxo de Caixa diário");
+	        animatedModel1.setTitle("Fluxo de Caixa di�rio");
 	        animatedModel1.setAnimate(true);
 	        animatedModel1.setLegendPosition("ne");
 	        animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
@@ -59,7 +59,7 @@ import org.primefaces.model.chart.LineChartSeries;
 	    private BarChartModel initBarModel() {
 	        BarChartModel model = new BarChartModel();
 	        ChartSeries mes = new ChartSeries();
-	        mes.setLabel("Mês, Quantidade");
+	        mes.setLabel("Quantidade");
 	        mes.set("Jan", 100);
 	        mes.set("Fev", 60);
 	        mes.set("Mar", 110);

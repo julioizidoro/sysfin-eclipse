@@ -355,7 +355,8 @@ public class GerarParcelaMB implements Serializable {
 				Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
 	            mostrarMensagem(e, "Erro ao tentar salvar sem parcela", "Erro");
 			}
-		}
+		} 
+		RequestContext.getCurrentInstance().closeDialog(null);
 	}
 	
 	public void gerarListaFormaPagamento(){

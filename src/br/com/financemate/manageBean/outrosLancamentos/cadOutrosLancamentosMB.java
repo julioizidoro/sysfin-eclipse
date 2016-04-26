@@ -3,6 +3,7 @@ package br.com.financemate.manageBean.outrosLancamentos;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +50,7 @@ public class cadOutrosLancamentosMB implements Serializable {
 	private Boolean habilitarUnidade = false;
 	private Planocontas planoContas;
 	private List<Planocontas> listaPlanoContas;
+	private String tipoDocumento;
 	
 	
 	@PostConstruct
@@ -63,15 +65,29 @@ public class cadOutrosLancamentosMB implements Serializable {
 			cliente = outrosLancamentos.getCliente();
             planoContas = outrosLancamentos.getPlanocontas();
             banco = outrosLancamentos.getBanco();
+            tipoDocumento = outrosLancamentos.getTipoDocumento();
             gerarListaBanco();
-		}
+		} 
 		gerarListaCliente();
 		gerarListaPlanoContas();
 		desabilitarUnidade();
+		outrosLancamentos.setDataRegistro(new Date());
 	}
 
 	
 	
+	public String getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+
+
+	public void setTipoDocumento(String tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+
+
+
 	public List<Planocontas> getListaPlanoContas() {
 		return listaPlanoContas;
 	}
@@ -190,6 +206,7 @@ public class cadOutrosLancamentosMB implements Serializable {
         outrosLancamentos.setBanco(banco);
         outrosLancamentos.setCliente(cliente);
         outrosLancamentos.setPlanocontas(planoContas);
+        outrosLancamentos.setTipoDocumento(tipoDocumento);
         outrosLancamentos.setUsuario(usuarioLogadoMB.getUsuario());
         OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
         try {
@@ -215,6 +232,7 @@ public class cadOutrosLancamentosMB implements Serializable {
         outrosLancamentos.setBanco(banco);
         outrosLancamentos.setCliente(cliente);
         outrosLancamentos.setPlanocontas(planoContas);
+        outrosLancamentos.setTipoDocumento(tipoDocumento);
         outrosLancamentos.setUsuario(usuarioLogadoMB.getUsuario());
         OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
         try {

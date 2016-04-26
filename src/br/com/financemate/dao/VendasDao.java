@@ -73,7 +73,7 @@ public class VendasDao {
     public Emissaonota getEmissao(int idVendas) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("select e from Emissaonota e where e.vendas=" + idVendas);
+        Query q = manager.createQuery("select e from Emissaonota e where e.vendas.idvendas=" + idVendas);
         manager.getTransaction().commit();
         Emissaonota emissor = null;
         if (q.getResultList().size()>0){

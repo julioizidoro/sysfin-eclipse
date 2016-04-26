@@ -296,11 +296,11 @@ public class VendasMB implements Serializable {
     
     public void gerarListaVendas(){
     	if (usuarioLogadoMB.getUsuario().getCliente()>0){
-    		sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA'  and v.cliente.idcliente=" + 
+    		sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela'  and v.cliente.idcliente=" + 
     				usuarioLogadoMB.getUsuario().getCliente() + " order by v.dataVenda";
     	}else {
     		sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
-    				+ " v.situacao<>'verde' and v.situacao<>'CANCELADA' order by v.dataVenda";
+    				+ " v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' order by v.dataVenda";
     	}
         VendasFacade vendasFacade = new VendasFacade();
         try {
@@ -504,21 +504,57 @@ public class VendasMB implements Serializable {
     public void filtrar(){		 
     	sql = "Select v from Vendas v where ";
     	if (cliente!=null){
-    		sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
+    		sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente();
+    		if (nomeCliente != "") {
+				sql = sql + " and ";
+			} else if (nVenda != null && nVenda > 0) {
+				sql = sql + " and ";
+			}else if (situacao != null && situacao != "") {
+				sql = sql + " and ";
+			} else if ((dataInicial!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
     	}else {
-    		sql = sql + " v.cliente.visualizacao='Operacional' and ";
+    		sql = sql + " v.cliente.visualizacao='Operacional'";
+    		if (nomeCliente != "") {
+				sql = sql + " and ";
+			}else if (nVenda != null && nVenda > 0) {
+				sql = sql + " and ";
+			}else if (situacao != null && situacao != "") {
+				sql = sql + " and ";
+			}else if ((dataInicial!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
     	}
     	if (nomeCliente!="") {
-    		sql = sql + " v.nomeCliente like '%" + nomeCliente + "%' and ";
-    	}
+    		sql = sql + " v.nomeCliente like '%" + nomeCliente + "%'";
+    		if (nVenda != null && nVenda > 0) {
+				sql = sql + " and ";
+			}else if (situacao != null && situacao != "") {
+				sql = sql + " and ";
+			}else if ((dataInicial!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
+    	} 
     	if (nVenda != null && nVenda > 0) {
-    		sql = sql + " v.idvendas="  + nVenda + " and "; 
+    		sql = sql + " v.idvendas="  + nVenda;
+    		if (situacao != null && situacao != "") {
+				sql = sql + " and ";
+			}else if ((dataInicial!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
     	}
-    	if (situacao != null) {
+    	if (situacao != null && situacao != "") {
     		if (situacao.equalsIgnoreCase("amarelo") || situacao.equalsIgnoreCase("vermelho")) {
-    			sql = sql + " v.situacao='" + situacao + "' and "; 
+    			sql = sql + " v.situacao='" + situacao + "'";
+    			if ((dataInicial!=null) && (dataFinal!=null)){
+    				sql = sql + " and ";
+    			}
     		}else if (situacao.equalsIgnoreCase("verde")){
-    			sql = sql + " v.situacao='" + situacao + "' or v.situacao='Sem Parcela' and ";
+    			sql = sql + " v.situacao='" + situacao + "' or v.situacao='Sem Parcela'";
+    			if ((dataInicial!=null) && (dataFinal!=null)){
+    				sql = sql + " and ";
+    			}
     		}
     	}
 		
@@ -590,6 +626,17 @@ public class VendasMB implements Serializable {
         options.put("contentWidth", 500);
         RequestContext.getCurrentInstance().openDialog("imprimirVendasPrincipal"); 
         return "";
+    }
+    
+    
+    public String editar(Vendas vendas){
+    	if (vendas!=null){
+    		FacesContext fc = FacesContext.getCurrentInstance();
+    		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("vendas", vendas);
+            RequestContext.getCurrentInstance().openDialog("cadVendas");
+    	}
+    	return "";
     }
 
 }

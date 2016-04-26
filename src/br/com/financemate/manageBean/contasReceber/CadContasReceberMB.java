@@ -66,6 +66,10 @@ public class CadContasReceberMB implements Serializable {
 	    	FacesContext fc = FacesContext.getCurrentInstance();
 	        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 	        contasReceber = (Contasreceber) session.getAttribute("contareceber");
+	        frequencia = (String) session.getAttribute("frequencia");
+	        vezes = (String) session.getAttribute("vezes");
+	        session.removeAttribute("frequencia");
+	        session.removeAttribute("vezes");
 	    	gerarListaCliente();
 	    	gerarListaPlanoContas();
 	    	if (contasReceber == null){
@@ -413,6 +417,9 @@ public class CadContasReceberMB implements Serializable {
 		}
 	    
 	    public String cancelar(){
+	    	FacesContext fc = FacesContext.getCurrentInstance();
+	        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			session.removeAttribute("contareceber");
 	        RequestContext.getCurrentInstance().closeDialog(null);
 	        return "";
 	    }
@@ -446,6 +453,8 @@ public class CadContasReceberMB implements Serializable {
 			FacesContext fc = FacesContext.getCurrentInstance();
 		    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		    session.setAttribute("contasReceber", contasReceber);
+		    session.setAttribute("frequencia", frequencia);
+		    session.setAttribute("vezes", vezes);
 			return "parcelas";
 	    }
 	    

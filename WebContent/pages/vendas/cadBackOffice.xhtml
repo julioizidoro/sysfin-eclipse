@@ -91,7 +91,7 @@
            <br />
            <h:panelGrid columns="1" style="margin-left:1%;">
            		<p:outputLabel value="Pagar/Receber" style="margin-left:9%;" /> 
-           		<p:inputText id="idTotalPagRec" value="#{cadVendasMB.vendas.valorLiquido}" disabled="true" size="12">
+           		<p:inputText id="idTotalPagRec" value="#{cadVendasMB.valorPagarReceber}" disabled="true" size="12">
            			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText>
            </h:panelGrid>

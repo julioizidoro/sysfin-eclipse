@@ -154,26 +154,30 @@ public class LiberarContasPagarMB implements Serializable {
     public void salvarContaLiberadasMovimentoBanco(Contaspagar conta) {
         conta.setDataLiberacao(dataLiberacao);
         conta.setContaPaga("S");
-        Outroslancamentos movimentoBanco = new Outroslancamentos();
-        movimentoBanco.setBanco(conta.getBanco());
-        movimentoBanco.setCliente(conta.getCliente());
-        movimentoBanco.setDataVencimento(conta.getDataVencimento());
-        movimentoBanco.setDataRegistro(new Date());
-        movimentoBanco.setPlanocontas(conta.getPlanocontas());
-        movimentoBanco.setUsuario(usuarioLogadoMB.getUsuario());
-        movimentoBanco.setValorEntrada(0.0f);
-        movimentoBanco.setValorSaida(conta.getValor());
-        movimentoBanco.setDataRegistro(new Date());
-        movimentoBanco.setDataCompensacao(conta.getDataCompensacao());
-        movimentoBanco.setTipoDocumento(conta.getTipoDocumento());
-        movimentoBanco.setDescricao(conta.getDescricao());
-        movimentoBanco.setCompentencia(conta.getCompetencia());
-        OutrosLancamentosFacade movimentoBancoFacade = new OutrosLancamentosFacade();
+        Outroslancamentos outroslancamentos = new Outroslancamentos();
+        outroslancamentos.setBanco(conta.getBanco());
+        outroslancamentos.setCliente(conta.getCliente());
+        outroslancamentos.setDataVencimento(conta.getDataVencimento());
+        outroslancamentos.setDataRegistro(new Date());
+        outroslancamentos.setPlanocontas(conta.getPlanocontas());
+        outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
+        outroslancamentos.setValorEntrada(0.0f);
+        outroslancamentos.setValorSaida(conta.getValor());
+        outroslancamentos.setDataRegistro(new Date());
+        if (conta.getDataCompensacao() == null) {
+			outroslancamentos.setDataCompensacao(new Date());
+		}else{
+			outroslancamentos.setDataCompensacao(conta.getDataCompensacao());
+		}
+        outroslancamentos.setTipoDocumento(conta.getTipoDocumento());
+        outroslancamentos.setDescricao(conta.getDescricao());
+        outroslancamentos.setCompentencia(conta.getCompetencia());
+        OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
         ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
         conta = contasPagarFacade.salvar(conta);
         try {
-            movimentoBanco.setIdcontaspagar(conta.getIdcontasPagar());
-            movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
+        	outroslancamentos.setIdcontaspagar(conta.getIdcontasPagar());
+        	outroslancamentos = outrosLancamentosFacade.salvar(outroslancamentos);
             
             
         } catch (SQLException ex) {
@@ -198,7 +202,16 @@ public class LiberarContasPagarMB implements Serializable {
     public String validarDados(Contaspagar contaspagar){
     	String mensagem = "";
     	if (contaspagar.getCompetencia().equalsIgnoreCase("")){
-			mensagem = mensagem + "CompetÃªncia nÃ£o informada \r\n";
+			mensagem = mensagem + "Competência nãoo informada \r\n";
+		}
+    	if (contaspagar.getPlanocontas() == null) {
+    		mensagem = mensagem + "Plano de contas não informado \r\n";
+		}
+    	if (contaspagar.getDataCompensacao() == null) {
+    		mensagem = mensagem + "Data de Compensação não informado \r\n";
+		}
+    	if (contaspagar.getDataAgendamento() == null) {
+    		mensagem = mensagem + "Data de Agendamento não informado \r\n";
 		}
     	return mensagem;
     }

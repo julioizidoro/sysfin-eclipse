@@ -707,7 +707,7 @@ public class ContasReceberMB implements Serializable {
 		 } catch (SQLException ex) {
 			 Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
 			 mostrarMensagem(ex, "Erro Listar Contas", "Erro");
-		 }
+		 } 
 		 calcularTotal();
 		 gerarTotalContas();
 		 //calculosContasMB.calcularTotaisContasReceber();
@@ -846,37 +846,107 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public void filtrar(){		 
-		 sql = "Select v from Contasreceber v Join Vendas c on v.venda=c.idvendas where ";
+		 sql = "Select v from Contasreceber v  where ";
 		 if (cliente!=null){
-			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
+			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente();
+			 if (nomeCliente!="") {
+				sql = sql + " and ";
+			 }else if (valorParcela!=0f) {
+				sql = sql + " and ";
+			 }else if(nVenda!=0){
+				 sql = sql + " and ";
+			 }else if(banco!= null && banco.getIdbanco() != null){
+				 sql = sql + " and ";
+			 }else if(status != null && status != ""){
+				 sql = sql + " and ";
+			 } else if ((dataInicial!=null) && (dataFinal!=null)){
+				 sql = sql + " and ";
+			 }
 		 }else {
-			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
+			 sql = sql + " v.cliente.visualizacao='Operacional'";
+			 if (nomeCliente!="") {
+				 sql = sql + " and ";
+			 }else if (valorParcela!=0f) {
+				 sql = sql + " and ";
+			 }else if(nVenda!=0){
+				 sql = sql + " and ";
+			 }else if(banco!= null && banco.getIdbanco() != null){
+				 sql = sql + " and ";
+			 }else if(status != null && status != ""){
+				 sql = sql + " and ";
+			 } else if ((dataInicial!=null) && (dataFinal!=null)){
+				 sql = sql + " and ";
+			 }
 		 }
 		 
 		 if (nomeCliente!="") { 
-			 sql = sql + " v.nomeCliente like '%" + nomeCliente + "%' and ";
+			 sql = sql + " v.nomeCliente like '%" + nomeCliente + "%'";
+			 if (valorParcela!=0f) {
+				 sql = sql + " and ";
+			 }else if(nVenda!=0){
+				 sql = sql + " and ";
+			 }else if(banco!= null && banco.getIdbanco() != null){
+				 sql = sql + " and ";
+			 }else if(status != null && status != ""){
+				 sql = sql + " and ";
+			 } else if ((dataInicial!=null) && (dataFinal!=null)){
+				 sql = sql + " and ";
+			 }
 		 }
 		
 		if (valorParcela!=0f) {
-			sql = sql + " v.valorParcela=" + valorParcela + " and ";
+			sql = sql + " v.valorParcela=" + valorParcela;
+			 if(nVenda!=0){
+				 sql = sql + " and ";
+			 }else if(banco!= null && banco.getIdbanco() != null){
+				 sql = sql + " and ";
+			 }else if(status != null && status != ""){
+				 sql = sql + " and ";
+			 } else if ((dataInicial!=null) && (dataFinal!=null)){
+				 sql = sql + " and ";
+			 }
 		}
 		
 		if (nVenda!=0) {
-			sql = sql + " v.venda=" + nVenda + " and ";
+			sql = sql + " v.idcontasReceber=" + nVenda;
+			 if(banco!= null && banco.getIdbanco() != null){
+				 sql = sql + " and ";
+			 }else if(status != null && status != ""){
+				 sql = sql + " and ";
+			 } else if ((dataInicial!=null) && (dataFinal!=null)){
+				 sql = sql + " and ";
+			 }
 		}
 		
 		if (banco!=null && banco.getIdbanco() != null) {
-			sql = sql + " v.banco.idbanco=" + banco.getIdbanco() + " and ";
+			sql = sql + " v.banco.idbanco=" + banco.getIdbanco();
+			 if(status != null && status != ""){
+				 sql = sql + " and ";
+			 } else if ((dataInicial!=null) && (dataFinal!=null)){
+				 sql = sql + " and ";
+			 }
 		}
 		
 		if (status.equalsIgnoreCase("Recebidas")) {
-			sql = sql + " v.valorPago>0 and "; 
+			sql = sql + " v.valorPago>0";
+			if ((dataInicial!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
 		}else if(status.equalsIgnoreCase("Vencidas")){
-			sql = sql + " v.dataVencimento<'" + Formatacao.ConvercaoDataSql(dataFinal) + "' and v.dataPagamento=null and ";
+			sql = sql + " v.dataVencimento<'" + Formatacao.ConvercaoDataSql(new Date()) + "' and v.dataPagamento=null";
+			if ((dataInicial!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
 		}else if(status.equalsIgnoreCase("A vencer")){
-			sql = sql + " v.dataVencimento>'" + Formatacao.ConvercaoDataSql(new Date()) + "' and ";
+			sql = sql + " v.dataVencimento>'" + Formatacao.ConvercaoDataSql(new Date())+ "'";
+			if ((dataInicial!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
 		}else if (status.equalsIgnoreCase("Canceladas")){
-			sql = sql + " c.numedoDocumento=" + "'CANCELADA'"; 
+			sql = sql + " v.numeroDocumento=" + "'CANCELADA'"; 
+			if ((dataInicial!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
 		} 
 		 
 		if ((dataInicial!=null) && (dataFinal!=null)){
@@ -1008,6 +1078,7 @@ public class ContasReceberMB implements Serializable {
 			 if (listaContasReceber == null) {
 				 listaContasReceber = new ArrayList<Contasreceber>();
 			 }	
+			 calcularTotal();
 		 } catch (SQLException ex) {
 			 Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
 			 mostrarMensagem(ex, "Erro a listar contas a receber", "Erro");
@@ -1058,7 +1129,7 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public Integer numeroTotalParcela(String contasreceber){
-			 String sql = "SELECT c FROM Contasreceber c  WHERE c.numeroDocumento=" + contasreceber;
+			 String sql = "SELECT c FROM Contasreceber c  WHERE c.numeroDocumento='" + contasreceber + "'";
 			 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 			 try {
 				listaTotalParcela = contasReceberFacade.listar(sql);
@@ -1068,7 +1139,7 @@ public class ContasReceberMB implements Serializable {
 					}else{
 						totalParcela = listaTotalParcela.size();
 					}
-					return totalParcela;
+					return totalParcela; 
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

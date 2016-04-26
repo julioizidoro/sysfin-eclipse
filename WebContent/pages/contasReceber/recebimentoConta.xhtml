@@ -87,19 +87,25 @@
             	<p:outputLabel value="Deságio"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputText value="#{recebimentoContaMB.contasReceber.desagio}" size="14"/>
+            	<p:inputText value="#{recebimentoContaMB.contasReceber.desagio}" size="14">
+            		 <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+            		 <p:ajax event="change" listener="#{recebimentoContaMB.DebitarDesagio()}" update="idValorPagoRecebido"/>
+            	</p:inputText>
             </h:panelGrid>
             <h:panelGrid style="margin-left:33%; margin-top:-5%;">
             	<p:outputLabel value="Juros"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:40%; margin-top:-4.7%;">
-            	<p:inputText value="#{recebimentoContaMB.contasReceber.juros}" size="14"/>
+            	<p:inputText value="#{recebimentoContaMB.contasReceber.juros}" size="14">
+            		 <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+            		 <p:ajax event="change" listener="#{recebimentoContaMB.SomarJuros()}" update="idValorPagoRecebido"/>
+            	</p:inputText>
             </h:panelGrid>
             <h:panelGrid style="margin-left:61%; margin-top:-5%;">
             	<p:outputLabel value="Valor recebido"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:76.5%; margin-top:-5%;">
-            	<p:inputText value="#{recebimentoContaMB.contasReceber.valorPago}" size="15" readonly="true" disabled="true">
+            	<p:inputText id="idValorPagoRecebido" value="#{recebimentoContaMB.contasReceber.valorPago}" size="15" readonly="true" disabled="true">
             		<f:convertNumber pattern="##,###,###,###.##"/>
             	</p:inputText>
             </h:panelGrid>
@@ -151,7 +157,7 @@
             <br />
             <hr />
             <br />
-            <p:commandLink title="Confirmar" style="margin-left: 37%;text-decoration: none"   action="#{recebimentoContaMB.salvar()}" >
+            <p:commandLink title="Confirmar" style="margin-left: 37%;text-decoration: none"  ajax="false" action="#{recebimentoContaMB.salvar()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 9%;text-decoration: none" action="#{recebimentoContaMB.cancelar()}" >

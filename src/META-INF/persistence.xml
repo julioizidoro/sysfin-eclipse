@@ -28,7 +28,7 @@
 		<class>br.com.financemate.model.Cobrancaparcelas</class>
 		<class>br.com.financemate.model.Vendascontasreceber</class>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://191.191.45.76:8082/sysfin"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://191.191.46.209:8082/sysfin"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
 			<property name="javax.persistence.jdbc.password" value="jfhmaster123"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>

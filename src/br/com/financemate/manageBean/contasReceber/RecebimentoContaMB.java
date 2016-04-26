@@ -269,6 +269,8 @@ public class RecebimentoContaMB implements  Serializable{
 		session.removeAttribute("listaRecebimentoParial");
         RequestContext.getCurrentInstance().closeDialog(null);
         contasReceber.setValorPago(0.0f);
+        contasReceber.setJuros(0f);
+        contasReceber.setDesagio(0f);
         return "";
     }
     
@@ -333,25 +335,45 @@ public class RecebimentoContaMB implements  Serializable{
     }
     
     public void lancaOutrosLancamentos(Contasreceber conta) {
-       Outroslancamentos movimentoBanco = new Outroslancamentos();
-       movimentoBanco.setBanco(conta.getBanco());
-       movimentoBanco.setCliente(conta.getCliente());
-       movimentoBanco.setDataVencimento(conta.getDataVencimento());
-       movimentoBanco.setDataRegistro(new Date());
-       movimentoBanco.setPlanocontas(conta.getPlanocontas());
-       movimentoBanco.setUsuario(usuarioLogadoMB.getUsuario());
-       movimentoBanco.setValorEntrada(conta.getValorPago());
-       movimentoBanco.setValorSaida(0f);
-       movimentoBanco.setDataRegistro(new Date());
-       movimentoBanco.setDescricao("Recebimento contas a receber");
-       OutrosLancamentosFacade movimentoBancoFacade = new OutrosLancamentosFacade();
-       try {
-           movimentoBanco.setIdcontasreceber(conta.getIdcontasReceber());
-           movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
-       } catch (SQLException ex) {
-           Logger.getLogger(LiberarContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-           mostrarMensagem(ex, "Erro ao salvar liberaï¿½ï¿½o", "Erro");
-       }
-       
-   }
+	       Outroslancamentos outroslancamentos = new Outroslancamentos();
+	       outroslancamentos.setBanco(conta.getBanco());
+	       outroslancamentos.setCliente(conta.getCliente());
+	       outroslancamentos.setDataVencimento(conta.getDataVencimento());
+	       outroslancamentos.setDataCompensacao(new Date());
+	       outroslancamentos.setDataRegistro(new Date());
+	       outroslancamentos.setPlanocontas(conta.getPlanocontas());
+	       outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
+	       outroslancamentos.setValorEntrada(conta.getValorPago());
+	       outroslancamentos.setValorSaida(0f);
+	       outroslancamentos.setDataRegistro(new Date());
+	       outroslancamentos.setDescricao("Recebimento através do contas a receber de " + conta.getNomeCliente());
+	       OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
+	       try {
+	    	   outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
+	    	   outroslancamentos = outrosLancamentosFacade.salvar(outroslancamentos);
+	       } catch (SQLException ex) {
+	           Logger.getLogger(LiberarContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+	           mostrarMensagem(ex, "Erro ao salvar liberação", "Erro");
+	       }
+	       
+    }
+    
+    
+    public void SomarJuros(){
+    	if (contasReceber.getJuros() == null && contasReceber.getJuros() == 0) {
+			contasReceber.setJuros(0f);
+		}
+    	
+    	contasReceber.setValorPago(contasReceber.getValorPago() + contasReceber.getJuros());
+    }
+    
+    public void DebitarDesagio(){
+    	if (contasReceber.getDesagio() == null && contasReceber.getDesagio() == 0) {
+			contasReceber.setDesagio(0f);
+		}
+    	
+    	contasReceber.setValorPago(contasReceber.getValorPago() - contasReceber.getDesagio());
+    }
+    
+    
 }

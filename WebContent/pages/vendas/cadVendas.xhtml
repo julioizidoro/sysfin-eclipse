@@ -48,7 +48,7 @@
 	                <f:selectItems  value="#{cadVendasMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
 	                <f:attribute name="listaCliente" value="#{cadVendasMB.listaCliente}"/>
 	            	 <p:ajax event="change" listener="#{cadVendasMB.gerarListaProduto()}" update="idproduto"/>
-                </p:selectOneMenu> 
+                </p:selectOneMenu>
             </h:panelGrid> 
              <h:panelGrid columns="2" style="margin-left:67.6%; margin-top:-6.2%;"> 
 	            <p:outputLabel value="Data Venda" for="dataVen" class="left3" /> 
