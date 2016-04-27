@@ -50,7 +50,7 @@
                         <p:menuitem value="Cancelar"   icon=" ui-icon-trash"   actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber"/> 
                         <p:menuitem value="Editar"  icon="ui-icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Receber"  icon="ui-icon-tag"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
-                        <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}"/> 
+                        <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}" update="growl"/> 
                        <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-cancel"  action="#{contasReceberMB.gerarListaContas()}" actionListener="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaContaReceber"  var="contasReceber"  value="#{contasReceberMB.listaContasReceber}" style="border:none;" class="tabelacontas" 

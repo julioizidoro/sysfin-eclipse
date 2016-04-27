@@ -282,24 +282,24 @@ public class GerarParcelaMB implements Serializable {
 				contasreceber.setTipodocumento(tipoDocumento);
 				contasreceber.setUsuario(usuarioLogadoMB.getUsuario());
 				contasreceber.setNomeCliente(vendas.getNomeCliente());
-				contasreceber.setJuros(0f);
+				contasreceber.setJuros(0f); 
 				contasreceber.setDesagio(0f);
 				contasreceber.setValorPago(0f);
 				contasreceber.setNumeroDocumento(""+vendas.getIdvendas());
 				contasreceber.setVenda(vendas.getIdvendas());
 				contasreceber.setNumeroParcela(i+1);
-				if (usuarioLogadoMB.getCliente() != null) { 
+				if (vendas.getCliente() != null) { 
 					try {
-						banco = bancoFacade.consultar(usuarioLogadoMB.getCliente().getIdcliente(), "Nenhum");
+						banco = bancoFacade.consultar(vendas.getCliente().getIdcliente(), "Nenhum");
 						contasreceber.setBanco(banco);
-						contasreceber.setCliente(usuarioLogadoMB.getCliente());
+						contasreceber.setCliente(vendas.getCliente());
 						planocontas = planoContasFacade.consultar(1);
 						contasreceber.setPlanocontas(planocontas);
 						
 					} catch (SQLException e) {
 						Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
 			            mostrarMensagem(e, "Erro ao consultar um banco", "Erro");
-					}
+					} 
 				}else{
 					try {
 						banco = bancoFacade.consultar(8, "Nenhum");

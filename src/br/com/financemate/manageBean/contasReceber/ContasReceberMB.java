@@ -994,8 +994,8 @@ public class ContasReceberMB implements Serializable {
 		     HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		     session.setAttribute("contasReceber", contasReceber);
 		     session.setAttribute("listaContasSelecionadas", listaContasSelecionadas);
-			 RequestContext.getCurrentInstance().openDialog("cobranca");
-		
+		     mensagem mensagem = new mensagem();
+		     mensagem.cobrancasSelecionadas();
 		 return "";
 	 }
 	 

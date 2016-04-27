@@ -51,6 +51,11 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Recebimento Parcial com Sucesso", ""));
     }
     
+    public void RecebimentoParcialAcimaValor() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Você inseriu um valor parcial maior que o valor da parcela", ""));
+    }
+    
     public void cancelado() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Cancelado com Sucesso", ""));
@@ -79,6 +84,11 @@ public class mensagem {
     public void excluirConfirmacao() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Excluido com sucesso", ""));
+    }
+    
+    public void cobrancasSelecionadas() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Cobranças selecionadas com sucesso", ""));
     }
     
     public void warn() {

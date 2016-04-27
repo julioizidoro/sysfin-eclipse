@@ -480,8 +480,10 @@ public class CadVendasMB implements Serializable {
 	
 	public Boolean desabilitarCampos(){
 		if (TipoDocumento.equalsIgnoreCase("Boleto")) {
-			return habilitarCampos = false;
+			habilitarCampos = false;
+			return habilitarCampos;
 		}
+		habilitarCampos = true;
 		return habilitarCampos;
 	}
 	
@@ -514,6 +516,9 @@ public class CadVendasMB implements Serializable {
 		}
 		if (vendas.getValorPagoFornecedor() == null) {
 			vendas.setValorPagoFornecedor(0f);
+		}
+		if (vendas.getDespesasFinanceiras() == null) {
+			vendas.setDespesasFinanceiras(0f);
 		}
 		
 		vendas.setLiquidoVendas(vendas.getComissaoLiquidaTotal() - (vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros()));

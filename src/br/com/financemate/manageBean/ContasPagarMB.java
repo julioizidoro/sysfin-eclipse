@@ -656,7 +656,7 @@ public class ContasPagarMB implements Serializable{
 			sql =  sql + " v.descricao= '" + descricao + "' and ";
 		}
 		if (planocontas!=null) {
-			sql = sql + " v.planocontas.idplanocontas=" + planocontas.getIdplanoContas() + " and ";
+			sql = sql + " v.planocontas.idplanoContas=" + planocontas.getIdplanoContas() + " and ";
 		}
 		 if ((dataInicio!=null) && (dataFinal!=null)){
 			 if (liberadas){
@@ -781,6 +781,6 @@ public class ContasPagarMB implements Serializable{
 	        setTotalVencendo(Formatacao.foramtarFloatString(vencendo));
 	        setTotalVencer(Formatacao.foramtarFloatString(vencer));
 	        setTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
-	    }
+	 }
 	 
 }

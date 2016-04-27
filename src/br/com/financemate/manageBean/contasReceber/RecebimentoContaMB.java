@@ -62,7 +62,6 @@ public class RecebimentoContaMB implements  Serializable{
         cliente = contasReceber.getCliente();
         gerarListaCliente();
         gerarListaBanco();
-        contasReceber.setValorPago(contasReceber.getValorParcela());
         cliente = contasReceber.getCliente();
         banco = contasReceber.getBanco();
 		if (valorPagoParcial > 0f) {
@@ -249,12 +248,11 @@ public class RecebimentoContaMB implements  Serializable{
 			RequestContext.getCurrentInstance().closeDialog(contasReceber);
 			return "";
 		}else{
-			
-		
 	        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 	        contasReceber.setBanco(banco);
 	        contasReceber.setCliente(cliente);
 	        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+	        contasReceber.setValorPago(contasReceber.getValorParcela());
 	        contasReceber = contasReceberFacade.salvar(contasReceber);
 	        lancaOutrosLancamentos(contasReceber);
 	        session.removeAttribute("contareceber");
@@ -294,12 +292,19 @@ public class RecebimentoContaMB implements  Serializable{
     
     public String salvarRecebimentoParcial(){
         ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-        contasReceber.setBanco(banco);
-        contasReceber.setCliente(cliente);
-        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-        contasReceber.setValorPago(contasReceber.getValorPago() + valorParcial);
-        contasReceber.setValorParcela(contasReceber.getValorParcela() - valorParcial);
-        contasReceber = contasReceberFacade.salvar(contasReceber);
+        if (valorParcial <= contasReceber.getValorParcela()) {
+	        contasReceber.setBanco(banco); 
+	        contasReceber.setCliente(cliente);
+	        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+	        contasReceber.setValorPago(contasReceber.getValorPago() + valorParcial);
+	        contasReceber.setValorParcela(contasReceber.getValorParcela() - valorParcial);
+	        contasReceber = contasReceberFacade.salvar(contasReceber);
+        }else{
+        	mensagem mensagem = new mensagem();
+        	mensagem.RecebimentoParcialAcimaValor();
+        	return "";
+        }
+        lancaOutrosLancamentos(contasReceber);
         listaRecebimentoParial.add(contasReceber);
         for (int i = 0; i < listaRecebimentoParial.size(); i++) {
 			Contasreceber conta = new Contasreceber();

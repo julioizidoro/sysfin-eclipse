@@ -40,7 +40,7 @@
             <h:panelGrid columns="1" style="margin-left:1%;">
            		<p:outputLabel value="Comissão" style="margin-left:17%;"/>
            		<p:inputText value="#{cadVendasMB.vendas.comissaoLiquidaTotal}" size="12">
-           			<p:ajax event="blur"/>
+           			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>

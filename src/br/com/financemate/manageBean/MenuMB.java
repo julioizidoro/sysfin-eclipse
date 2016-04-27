@@ -1,10 +1,14 @@
 package br.com.financemate.manageBean;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+
+import org.primefaces.context.RequestContext;
 
 @Named
 @SessionScoped
@@ -64,5 +68,13 @@ public class MenuMB implements Serializable{
 	public String consVendas(){
 		return "consVendas";
 	}
+	
+	
+	public String cobranca() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("cobranca"); 
+        return "";
+    }
 
 }
