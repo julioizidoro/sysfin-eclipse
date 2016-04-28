@@ -42,4 +42,9 @@ public class OutrosLancamentosFacade {
     	return outrosLancamentosDao.gerarSaldoInicial(dataInicial);
     }
     
+    public float saldoInicialTelaConsulta(String sql) throws SQLException{
+    	outrosLancamentosDao = new OutrosLancamentosDao();
+    	return outrosLancamentosDao.saldoInicialTelaConsulta(sql);
+    }
+    
 }

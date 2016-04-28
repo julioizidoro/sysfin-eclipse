@@ -29,10 +29,10 @@
         	 <h:outputText style="font-size:16px;" value="#{usuarioLogadoMB.usuario.nome}" />
         	<tt style="margin-left: 35%; font-size: 32px; font-family: 'Pacifico',cursive;">SysFin</tt>
         	<p:commandLink  action="#" style="margin-left:32%; text-decoration:none;" title="Adicionar">
-                    <img src="resources/img/adicionarmenu.png" width="32" height="32" border="none" style="text-decoration:none;margin-top:2%;"/> 
+                    <img src="resources/img/adicionarmenu.png" width="32" height="32" border="none" style="text-decoration:none;margin-top:0.8%;"/> 
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
-            <br/> 
+            <br/><br />
         </div>
         <br />
         <h:panelGrid  class="menu2" columns="2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:2.3%;" responsive="true">
@@ -136,7 +136,7 @@
     		 </p:commandLink>
     		<br />
     		<p:link id="ajaxx"  target="_blank" style="text-decoration:none; margin-bottom:130%;" href="http://www.financemate.com.br/"  ajax="false">
-           		<img src="resources/img/iconeSobreFinance.png" style="width: 14%;"/> 
+           		<img src="resources/img/iconeLogoNavegadorTeste.gif" style="width: 14%;"/> 
         		<h:outputText value="Sobre a Financemate" style="font-size:16px; margin-left:5%;"/>
     		</p:link>
         </h:panelGrid> 
@@ -195,7 +195,7 @@
 	        		</h:panelGrid>
 	        		<br />
 	                <h:panelGrid columns="1" columnClasses="left,right" style="width:54%; margin-left: 18%; background-color:white; position:static; border-radius:5px;">
-	    				<br />
+	    				<br /> 
 	    				<p:chart class="grafico" type="line" model="#{grafico.animatedModel1}" style="width:99%; position:static ;" responsive="true"/>
 	    				<br />
 					</h:panelGrid>

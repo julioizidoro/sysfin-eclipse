@@ -7,6 +7,7 @@
 package br.com.financemate.dao;
 
 import br.com.financemate.connection.ConectionFactory;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.util.Formatacao;
 
@@ -65,6 +66,22 @@ public class OutrosLancamentosDao {
         Double totalentrada = (Double) q.getResultList().get(0);
         saldo = totalentrada.floatValue() - totalsaida.floatValue();
     	return saldo;
+    }
+    
+    
+    public Float saldoInicialTelaConsulta(String sql) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery(sql);
+        Float saldo = 0f;
+        Double total = 0D;
+        if (q.getResultList().size()>0){
+           total  = (Double) q.getResultList().get(0);
+        }
+        manager.getTransaction().commit();
+        manager.close();
+        saldo = total.floatValue();
+        return saldo;
     }
     
     

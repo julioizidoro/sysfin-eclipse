@@ -18,8 +18,10 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.OperacaoUsuarioFacade;
 import br.com.financemate.facade.OutrosLancamentosFacade;
 import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Outroslancamentos;
 
 @Named
@@ -131,6 +133,19 @@ public class LiberarContasPagarMB implements Serializable {
 					if (listaContasSelecionadas.get(i).getAutorizarPagamento().equals("S")) {
 				
 						salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
+						if (listaContasSelecionadas.get(i).getIdcontasPagar() != null) {
+							OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
+							Operacaousuairo operacaousuairo = new Operacaousuairo();
+							operacaousuairo.setContaspagar(listaContasSelecionadas.get(i));
+							operacaousuairo.setData(new Date());
+							operacaousuairo.setTipooperacao("Usuário Liberou");
+							operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
+							try {
+								operacaoUsuarioFacade.salvar(operacaousuairo);
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}
 						msg.liberar();
 						FacesContext fc = FacesContext.getCurrentInstance();
 						HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);

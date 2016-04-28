@@ -2,6 +2,7 @@ package br.com.financemate.manageBean;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -42,7 +43,7 @@ public class OperacoesUsuarioMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasPagar = (Contaspagar) session.getAttribute("contapagar");
         session.removeAttribute("contapagar");
-        inicializar();
+        gerarListaOperacoesUsuarios();
 	}
 	
 	
@@ -136,25 +137,16 @@ public class OperacoesUsuarioMB implements Serializable {
 	}
 
 	
-	public void inicializar(){
+	public void gerarListaOperacoesUsuarios(){
 		if (contasPagar != null) {
 			OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
 			try {
-				listaOperacaousuairo = operacaoUsuarioFacade.listar("SELECT o FROM Operacaousuairo o JOIN Contaspagar c on o.contaspagar.idcontasPagar=c.idcontasPagar WHERE o.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar());
-				if (listaOperacaousuairo != null) {
-					for (int i = 0; i < listaOperacaousuairo.size(); i++) {
-						if (listaOperacaousuairo.get(i).getTipooperacao().equalsIgnoreCase("Usuário Cadastrou")) {
-							usuarioCadastrou = listaOperacaousuairo.get(i).getTipooperacao();
-						}else if(listaOperacaousuairo.get(i).getTipooperacao().equalsIgnoreCase("Usuário Agendou")) {
-							usuarioAgendou = listaOperacaousuairo.get(i).getTipooperacao();
-						}else if (listaOperacaousuairo.get(i).getTipooperacao().equalsIgnoreCase("Usuário Liberou")){
-							usuarioLiberou = listaOperacaousuairo.get(i).getTipooperacao();
-						}else if(listaOperacaousuairo.get(i).getTipooperacao().equalsIgnoreCase("Usuário Autorizou")){
-							usuarioAutorizou = listaOperacaousuairo.get(i).getTipooperacao();
-						}
-					} 
+				listaOperacaousuairo = operacaoUsuarioFacade.listar("SELECT o FROM Operacaousuairo o "
+						+ " WHERE o.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar());
+				if (listaOperacaousuairo == null) {
+					listaOperacaousuairo = new ArrayList<Operacaousuairo>();
 				}
-			} catch (SQLException e) {
+				} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

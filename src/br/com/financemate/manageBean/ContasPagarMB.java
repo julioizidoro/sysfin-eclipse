@@ -24,10 +24,12 @@ import org.primefaces.event.SelectEvent;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
+import br.com.financemate.facade.OperacaoUsuarioFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Cptransferencia;
+import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
 
@@ -580,6 +582,19 @@ public class ContasPagarMB implements Serializable{
         contaspagar.setAutorizarPagamento("S");
         ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
         contaspagar = contasPagarFacade.salvar(contaspagar);
+        if (contaspagar.getIdcontasPagar() != null) {
+			OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
+			Operacaousuairo operacaousuairo = new Operacaousuairo();
+			operacaousuairo.setContaspagar(contaspagar);
+			operacaousuairo.setData(new Date());
+			operacaousuairo.setTipooperacao("Usuário Autorizou");
+			operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
+			try {
+				operacaoUsuarioFacade.salvar(operacaousuairo);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
         mensagem mensagem = new mensagem();
         mensagem.autorizar();
     } 

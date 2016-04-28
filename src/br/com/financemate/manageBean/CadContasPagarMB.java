@@ -29,6 +29,7 @@ import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.facade.FtpDadosFacade;
 import br.com.financemate.facade.NomeArquivoFacade;
+import br.com.financemate.facade.OperacaoUsuarioFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -366,6 +367,7 @@ public class CadContasPagarMB implements Serializable{
     }
 	
 	public void salvar(){
+		Operacaousuairo operacaousuairo = new Operacaousuairo();
 		contaPagar.setBanco(banco);
 		contaPagar.setCliente(cliente);
 		contaPagar.setContaPaga("N");
@@ -396,8 +398,25 @@ public class CadContasPagarMB implements Serializable{
 		String mensagem = validarDados();
 		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+			if (contaPagar.getIdcontasPagar() == null) {
+				operacaousuairo.setTipooperacao("Usuário Cadastrou");
+			}else{
+				operacaousuairo.setTipooperacao("Usuário Alterou");
+			}
 			contaPagar = contasPagarFacade.salvar(contaPagar);
-			
+			if (contaPagar.getIdcontasPagar() != null) {
+				OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
+				
+				operacaousuairo.setContaspagar(contaPagar);
+				operacaousuairo.setData(new Date());
+				operacaousuairo.setTipooperacao("Usuário Cadastrou");
+				operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
+				try {
+					operacaoUsuarioFacade.salvar(operacaousuairo);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 			if (cptransferencia!=null){
 				
 		    	salvarTransferencia();
@@ -416,6 +435,7 @@ public class CadContasPagarMB implements Serializable{
 
 	
 	public void salvarRepetir(){
+		Operacaousuairo operacaousuairo = new Operacaousuairo();
         contaPagar.setBanco(banco);
         contaPagar.setPlanocontas(planoContas);
         contaPagar.setCliente(cliente);
@@ -443,7 +463,23 @@ public class CadContasPagarMB implements Serializable{
 		String mensagem = validarDados();
 		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+			if (contaPagar == null) {
+				operacaousuairo.setTipooperacao("Usuário Cadastrou");
+			}else{
+				operacaousuairo.setTipooperacao("Usuário Alterou");
+			}
 	        contaPagar = contasPagarFacade.salvar(contaPagar);
+	        if (contaPagar.getIdcontasPagar() != null) {
+				OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
+				operacaousuairo.setContaspagar(contaPagar);
+				operacaousuairo.setData(new Date());
+				operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
+				try {
+					operacaoUsuarioFacade.salvar(operacaousuairo);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 	        if (cptransferencia!=null){
 	        	salvarTransferencia();
 	        	Cptransferencia copiaTranferencia = new Cptransferencia();

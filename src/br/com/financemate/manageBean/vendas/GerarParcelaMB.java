@@ -59,6 +59,7 @@ public class GerarParcelaMB implements Serializable {
 	private List<Contasreceber> listarContasreceber;
 	private Date dataVencimento;
 	private Float valorParcela;
+	private List<Formapagamento> listaFormaPagamento;
 	
 	
 	@PostConstruct
@@ -75,6 +76,18 @@ public class GerarParcelaMB implements Serializable {
         gerarListaParcelas();
 	}
 	 
+	
+
+	public List<Formapagamento> getListaFormaPagamento() {
+		return listaFormaPagamento;
+	}
+
+
+
+	public void setListaFormaPagamento(List<Formapagamento> listaFormaPagamento) {
+		this.listaFormaPagamento = listaFormaPagamento;
+	}
+
 
 
 	public Date getDataVencimento() {
@@ -271,6 +284,7 @@ public class GerarParcelaMB implements Serializable {
 			contasreceber.setDataVencimento(dataVencimento);
 			for (int i = 0; i < numerovezes; i++) {
 				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+				VendasFacade vendasFacade = new VendasFacade();
 				ClienteFacade clienteFacade = new ClienteFacade();
 				BancoFacade bancoFacade = new BancoFacade();
 				PlanoContasFacade planoContasFacade = new PlanoContasFacade();
@@ -317,6 +331,14 @@ public class GerarParcelaMB implements Serializable {
 				Contasreceber copia = new Contasreceber();
 				copia = contasreceber;
 				contasreceber = contasReceberFacade.salvar(contasreceber);
+				if (contasreceber.getIdcontasReceber() != null) {
+					vendas.setSituacao("Parcela Gerada");
+					try {
+						vendasFacade.salvar(vendas);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
 				Calendar c = new GregorianCalendar();
 				c.setTime(copia.getDataVencimento());
 				c.add(Calendar.MONTH, 1);
@@ -400,6 +422,18 @@ public class GerarParcelaMB implements Serializable {
 			Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
             mostrarMensagem(e, "Erro ao listar Contas a receber", "Erro");
 		}
+	}
+	
+	
+	public String recebimento(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
+        if (listaFormaPagamento == null) {
+        	listaFormaPagamento = new ArrayList<Formapagamento>(); 
+        }
+        session.setAttribute("listaFormaPagamento", listaFormaPagamento);
+		return "cadRecebimento";
 	}
 	
 	

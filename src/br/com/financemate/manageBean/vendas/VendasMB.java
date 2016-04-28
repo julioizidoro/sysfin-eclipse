@@ -296,11 +296,11 @@ public class VendasMB implements Serializable {
     
     public void gerarListaVendas(){
     	if (usuarioLogadoMB.getUsuario().getCliente()>0){
-    		sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela'  and v.cliente.idcliente=" + 
+    		sql = " Select v from Vendas v  where  v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada'  and v.cliente.idcliente=" + 
     				usuarioLogadoMB.getUsuario().getCliente() + " order by v.dataVenda";
     	}else {
     		sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
-    				+ " v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' order by v.dataVenda";
+    				+ " v.situacao<>'verde' and v.situacao<>'CANCELADA' and v.situacao<>'Sem Parcela' and v.situacao<>'Sem Parcela' and v.situacao<>'Parcela Gerada' order by v.dataVenda";
     	}
         VendasFacade vendasFacade = new VendasFacade();
         try {
@@ -551,7 +551,7 @@ public class VendasMB implements Serializable {
     				sql = sql + " and ";
     			}
     		}else if (situacao.equalsIgnoreCase("verde")){
-    			sql = sql + " v.situacao='" + situacao + "' or v.situacao='Sem Parcela'";
+    			sql = sql + " v.situacao='" + situacao + "' or v.situacao='Sem Parcela' or v.situacao='Parcela Gerada'";
     			if ((dataInicial!=null) && (dataFinal!=null)){
     				sql = sql + " and ";
     			}

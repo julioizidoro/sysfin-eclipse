@@ -289,10 +289,10 @@ public class OutrosLancamentosMB implements Serializable {
                 calcularTotal();
             } catch (SQLException ex) {
                 Logger.getLogger(OutrosLancamentosMB.class.getName()).log(Level.SEVERE, null, ex);
-                mostrarMensagem(ex, "Erro Listar Outros Lançamentos", "Erro");
+                mostrarMensagem(ex, "Erro Listar Outros Lan�amentos", "Erro");
             }
         }else {
-            mostrarMensagem(null, "Dados inválidos", "Aviso");
+            mostrarMensagem(null, "Dados invalidos", "Aviso");
         }
     }
     
@@ -399,6 +399,7 @@ public class OutrosLancamentosMB implements Serializable {
         float entrada = 0.0f;
         float saida = 0.0f;
         float saldo = 0.0f;
+        saldo = geralSqlSaldoInicial();
         for(int i=0;i<listaOutrosLancamentos.size();i++){
             if (listaOutrosLancamentos.get(i).getValorEntrada() > 0){
                 entrada = entrada + listaOutrosLancamentos.get(i).getValorEntrada();
@@ -451,6 +452,32 @@ public class OutrosLancamentosMB implements Serializable {
         RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentosPrincipal");
         return "";
     }
-	
+    
+    public float geralSqlSaldoInicial(){
+    	String sql;
+    	Float totalSaida = 0f;
+    	Float totalEntrada = 0f;
+    	Float saldoInicial = 0f;
+		OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
+		try {
+			sql = "SELECT distinct sum(o.valorSaida) as totalsaida FROM Outroslancamentos o where ";
+			if (banco != null && banco.getIdbanco() != null) {
+				sql = sql + " o.banco.idbanco=" + banco.getIdbanco() + " and ";
+			} 
+			sql = sql + "o.dataVencimento<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
+			totalSaida = outrosLancamentosFacade.saldoInicialTelaConsulta(sql);
+			sql = "SELECT distinct sum(o.valorEntrada) as totalentrada FROM Outroslancamentos o where ";
+			if (banco != null && banco.getIdbanco() != null) {
+				sql = sql + " o.banco.idbanco=" + banco.getIdbanco() + " and ";
+			}
+			sql = sql + "o.dataVencimento<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
+			totalEntrada = outrosLancamentosFacade.saldoInicialTelaConsulta(sql);
+		} catch (SQLException e) { 
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		saldoInicial = totalEntrada - totalSaida;
+		return saldoInicial;
+	}
 
 }

@@ -23,41 +23,21 @@
             <title  >Operações por Usuário</title>
             <br />
             
-            <h:panelGrid columns="2"  style="margin-left:1%;">
-            	<p:outputLabel value="Usuário Cadastrou"/>
-            	<p:inputText value="#{operacoesUsuarioMB.usuarioCadastrou}" size="31" readonly="true"/>
-            </h:panelGrid>
-            <h:panelGrid columns="2"  style="margin-left:69%; margin-top:-6.2%;">
-            	<p:outputLabel value="Data e Hora"/>
-            	<p:inputMask mask="99/99/9999" readonly="true" value="#" size="10"/>
-            </h:panelGrid>
-            <br />
-             <h:panelGrid columns="2"  style="margin-left:2%;">
-            	<p:outputLabel value="Usuário Agendou"/>
-            	<p:inputText value="#{operacoesUsuarioMB.usuarioAgendou}" readonly="true" size="31"/>
-            </h:panelGrid>
-            <h:panelGrid columns="2"  style="margin-left:69%; margin-top:-6.2%;">
-            	<p:outputLabel value="Data e Hora"/>
-            	<p:inputMask mask="99/99/9999" readonly="true" value="#" size="10"/>
-            </h:panelGrid>
-            <br />
-             <h:panelGrid columns="2"  style="margin-left:3.2%;">
-            	<p:outputLabel value="Usuário Liberou"/>
-            	<p:inputText value="#{operacoesUsuarioMB.usuarioLiberou}" readonly="true" size="31"/>
-            </h:panelGrid>
-            <h:panelGrid columns="2"  style="margin-left:69%; margin-top:-6.2%;">
-            	<p:outputLabel value="Data e Hora"/>
-            	<p:inputMask mask="99/99/9999" readonly="true" value="#" size="10"/>
-            </h:panelGrid>
-             <br />
-             <h:panelGrid columns="2"  style="margin-left:1%;">
-            	<p:outputLabel value="Usuário Autorizou"/>
-            	<p:inputText value="#{operacoesUsuarioMB.usuarioAutorizou}" readonly="true" size="31"/>
-            </h:panelGrid>
-            <h:panelGrid columns="2"  style="margin-left:69%; margin-top:-6.2%;">
-            	<p:outputLabel value="Data e Hora"/>
-            	<p:inputMask mask="99/99/9999" readonly="true" value="#" size="10"/>
-            </h:panelGrid>
+           <p:dataTable id="idOperacoesUsuario" var="operacoes"  rowStyleClass="tabela" class="tabelaselecionar" value="#{operacoesUsuarioMB.listaOperacaousuairo}" 
+                          scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{operacoesUsuarioMB.operacaousuairo}" rowKey="#{operacoes.idoperacaousuairo}"  rows="10" style="margin-bottom:20px;"> 
+                <p:column headerText="Usuario" style=" background:white; color:black; border:none;">
+                    <h:outputText value="#{operacoes.usuario.nome}" style="margin-left:40%;"/> 
+                </p:column>
+                <p:column headerText="Data" style="background:white; color:black; border:none; width:70px;">
+                    <h:outputText  value="#{operacoes.data}" style="margin-left:10%;">
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </h:outputText> 
+                </p:column>
+                <p:column headerText="Operação" style=" background:white; color:black; border:none;">
+                    <h:outputText value="#{operacoes.tipooperacao}" style="margin-left:45%;"/> 
+                </p:column>
+                
+            </p:dataTable>
             <br />
             <hr />
             <br />
