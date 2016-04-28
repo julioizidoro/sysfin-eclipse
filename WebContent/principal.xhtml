@@ -23,70 +23,30 @@
         <br></br>
         
         <div class="menu" style="position: fixed !important;">
-         
+        
         	<img src="resources/img/usuariologado.png" style="width: 1.2%; margin-left:1%;"/>
         	<h:outputText value="Bem Vindo" style="font-size:16px; margin-left:0.5%;" />,
         	 <h:outputText style="font-size:16px;" value="#{usuarioLogadoMB.usuario.nome}" />
-        	<tt style="margin-left: 35%; font-size: 30px; font-family: 'Pacifico',cursive;">SysFin</tt>
-        	<p:commandLink   action="#" style="margin-left:32%; text-decoration:none;" title="Adicionar">
-                    <img src="resources/img/adicionarmenu.png" width="32" height="32" /> 
+        	<tt style="margin-left: 35%; font-size: 32px; font-family: 'Pacifico',cursive;">SysFin</tt>
+        	<p:commandLink  action="#" style="margin-left:32%; text-decoration:none;" title="Adicionar">
+                    <img src="resources/img/adicionarmenu.png" width="32" height="32" border="none" style="text-decoration:none;margin-top:2%;"/> 
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
-        	
-        </div> 
+            <br/> 
+        </div>
         <br />
-        <h:panelGrid  class="menu2" columns="2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:0.2%;" responsive="true">
+        <h:panelGrid  class="menu2" columns="2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:2.3%;" responsive="true">
         	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;">
-           		<img src="resources/img/iconeHome.png" style="width: 10%;"/> 
+           		<img src="resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
         		<h:outputText value="Visão Geral" style="font-size:16px; margin-left:5%;"/>
-    		 </p:commandLink>
-    		 <br />
-    		 <p:commandLink id="aja"  actionListener="#" style="text-decoration:none;">
-           		<img src="resources/img/iconeclientes.png" style="width: 10%;"/>
-        		<h:outputText value="Área do cliente" style="font-size:16px; margin-left:5%;"/>
     		 </p:commandLink>
     		<br />
     		
         	 <h:panelGrid>
-        	 <h:panelGrid style="margin-left:-2%;">
-        	 	<img src="resources/img/financeiro.png" style="width: 50%;"/>
-        	 </h:panelGrid>
-        	 <h:panelGrid style="margin-left:10%; margin-top:-24%;"> 
-	        	 <p:panelMenu styleClass="ui-panelmenu">
-	        		<p:submenu  style="background:transparent;  font-size:16px; color:white; font:normal;" label="Contas a Pagar">
-	        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaContaTelaPrincipal()}" style="margin-left:-13%;"/> 
-	            		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressaoPrincipal()}" style="margin-left:-13%;"/> 
-	        		</p:submenu> 
-        		</p:panelMenu>
+        	 <h:panelGrid style="margin-left:-2%;"> 
+        	 	<img src="resources/img/iconeCadastroSysfin.png" style="width: 14%;"/>
         	</h:panelGrid>
-        	<h:panelGrid style="margin-left:-2%;">
-        	 	<img src="resources/img/financeiro.png" style="width: 50%;"/>
-        	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
-	        	<p:panelMenu styleClass="ui-panelmenu">
-	        		<p:submenu label="Contas a Receber" style="font-size:16px;">
-	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" style="margin-left:-13%;"/> 
-	            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}" style="margin-left:-13%;"/>
-	        		</p:submenu>
-	        	</p:panelMenu>
-	        </h:panelGrid> 
-	        <h:panelGrid style="margin-left:-2%;">
-        	 	<img src="resources/img/vendas.png" style="width: 25%;"/>
-        	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
-		        <p:panelMenu styleClass="ui-panelmenu">
-	        		<p:submenu label="Vendas" style="font-size:16px;">
-	        			<p:menuitem value="Lançamentos" action="#{menuMB.consVendas()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{vendasMB.novaImpressaoPrincipal()}" style="margin-left:-13%;"/>
-	        		</p:submenu>
-	        	</p:panelMenu>
-	        </h:panelGrid>
-	        <h:panelGrid style="margin-left:-2%;">
-        	 	<img src="resources/img/cadastro.png" style="width: 50%;"/>
-        	</h:panelGrid>
-	        <h:panelGrid style="margin-left:10%; margin-top:-24%;">
+	        <h:panelGrid style="margin-left:12%; margin-top:-24%;">
 	        	<p:panelMenu>
 	        		<p:submenu label="Cadastro" style="font-size:16px;">
 	                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}" style="margin-left:-13%;"/>
@@ -96,8 +56,44 @@
 	            	</p:submenu>
 	            </p:panelMenu>
             </h:panelGrid>
+        	 <h:panelGrid style="margin-left:-2%;">
+        	 	<img src="resources/img/iconeContasPagarSysfin.png" style="width: 14%;"/>
+        	 </h:panelGrid>
+        	 <h:panelGrid style="margin-left:13%; margin-top:-24%;"> 
+	        	 <p:panelMenu styleClass="ui-panelmenu">
+	        		<p:submenu  style="background:transparent;  font-size:16px; color:white; font:normal;" label="Contas a Pagar">
+	        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaContaTelaPrincipal()}" style="margin-left:-13%;"/> 
+	            		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressaoPrincipal()}" style="margin-left:-13%;"/> 
+	        		</p:submenu> 
+        		</p:panelMenu>
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:-2%;">
+        	 	<img src="resources/img/iconeContasReceberSysfin.png" style="width: 14%;"/>
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
+	        	<p:panelMenu styleClass="ui-panelmenu">
+	        		<p:submenu label="Contas a Receber" style="font-size:16px;margin-left:3%;">
+	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" style="margin-left:-13%;"/> 
+	            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}" style="margin-left:-13%;"/>
+	        		</p:submenu>
+	        	</p:panelMenu> 
+	        </h:panelGrid> 
+	        <h:panelGrid style="margin-left:-2%;">
+        	 	<img src="resources/img/iconeVendasSysfin.png" style="width: 14%;"/>
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
+		        <p:panelMenu styleClass="ui-panelmenu">
+	        		<p:submenu label="Vendas" style="font-size:16px;margin-left:3%;">
+	        			<p:menuitem value="Lançamentos" action="#{menuMB.consVendas()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{vendasMB.novaImpressaoPrincipal()}" style="margin-left:-13%;"/>
+	        		</p:submenu>
+	        	</p:panelMenu>
+	        </h:panelGrid>
+	        
             <h:panelGrid style="margin-left:-2%;"> 
-        	 	<img src="resources/img/outroslancamento.png" style="width: 12%;"/> 
+        	 	<img src="resources/img/iconeOutrosLancamentosSysfin.png" style="width: 14%;"/> 
         	</h:panelGrid>
         	<h:panelGrid style="margin-left:10%; margin-top:-23%;">
             	<p:panelMenu>
@@ -109,11 +105,11 @@
             	</p:panelMenu>
             </h:panelGrid>
             <h:panelGrid style="margin-left:-2%;"> 
-        	 	<img src="resources/img/relatorio.png" style="width: 15%;"/> 
+        	 	<img src="resources/img/iconeRelatoriosSysfin.png" style="width: 14%;"/> 
         	</h:panelGrid>
         	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
 	            <p:panelMenu>
-		            	<p:submenu label="Relatórios" style="font-size:16px;">
+		            	<p:submenu label="Relatórios" style="font-size:16px;margin-left:3%;">
 		                    <p:menuitem value="Contas a Pagar" action="#{contasPagarMB.novaImpressaoPrincipal()}" style="margin-left:-13%;"/>
 		                    <p:menuitem value="Contas a Receber" action="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}" style="margin-left:-13%;"/>
 		                    <p:menuitem value="Outros Lançamentos" action="#{outrosLancamentosMB.impressaoOutrosLancamentosPrincipal()}" style="margin-left:-13%;"/>
@@ -122,20 +118,25 @@
 	    		</p:panelMenu>
     		</h:panelGrid>
     		<h:panelGrid style="margin-left:-2%;"> 
-        	 	<img src="resources/img/receber.png" style="width: 25%;"/> 
+        	 	<img src="resources/img/iconeCobrancaSysfin.png" style="width: 14%;"/> 
         	</h:panelGrid>
         	<h:panelGrid style="margin-left:10%; margin-top:-27%;"> 
-	            <p:panelMenu>
-		            	<p:submenu label="Cobrança" style="font-size:16px;">
+	            <p:panelMenu> 
+		            	<p:submenu label="Cobrança" style="font-size:16px;margin-left:5%;">
 		                    <p:menuitem value="Nova Cobrança" action="#{menuMB.cobranca()}" style="margin-left:-13%;"/>
 	            			<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
 		            	</p:submenu> 
 	    		</p:panelMenu>
     		</h:panelGrid>
     		</h:panelGrid>
+    		 <br /><br /><br />
+    		 <p:commandLink id="aja"  actionListener="#" style="text-decoration:none;">
+           		<img src="resources/img/iconeAreaClienteSysfin.png" style="width: 14%;"/>
+        		<h:outputText value="Área do cliente" style="font-size:16px; margin-left:5%;"/>
+    		 </p:commandLink>
     		<br />
     		<p:link id="ajaxx"  target="_blank" style="text-decoration:none; margin-bottom:130%;" href="http://www.financemate.com.br/"  ajax="false">
-           		<img src="resources/img/iconeinfo.png" style="width: 10%;"/> 
+           		<img src="resources/img/iconeSobreFinance.png" style="width: 14%;"/> 
         		<h:outputText value="Sobre a Financemate" style="font-size:16px; margin-left:5%;"/>
     		</p:link>
         </h:panelGrid> 
@@ -144,12 +145,13 @@
 
 	<ui:insert name="corpo"> 
 	        <h:form>
+	        <br /><br />
 	                <h:panelGrid id="idReceberHoje" style="width:25%; margin-left: 18%; background-color:white; border-radius:5px;">
 	                	<br />
 			            <b style="margin-left:10%; font:bold; color:black;">A receber hoje</b>
 			            <br /><br />
-			            <h:panelGrid style="margin-left:35%;" rendered="#{!calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.crVencendo)}">
-			            	<h:outputText value="R$ #{calculosContasMB.crVencendo}" style="font-size:18px; color:green;"/>
+			            <h:panelGrid style="margin-left:25%;" rendered="#{!calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.crVencendo)}">
+			            	<h:outputText value="R$ #{calculosContasMB.crVencendo}" style="font-size:28px; color:green;"/>
 			            	<br />
 			            </h:panelGrid> 
 			            <h:panelGrid style="margin-left:35%;" rendered="#{calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.crVencendo)}">
@@ -167,13 +169,13 @@
 			            	<p:outputLabel  value="R$ #{calculosContasMB.crVencer}"/>
 			            </h:panelGrid> 
 	        		</h:panelGrid>
-	        		<h:panelGrid id="idPagarHoje" style="width:25%;  margin-left: 47%; margin-top: -13.5%; background-color:white; border-radius:5px;">
+	        		<h:panelGrid id="idPagarHoje" style="width:25%;  margin-left: 47%; margin-top: -14.4%; background-color:white; border-radius:5px;">
 	        			<br />
 			            <b style="margin-left:10%; font:bold; color:black;">A pagar hoje</b>
 			            <br/><br />
-			            <h:panelGrid style="margin-left:35%;" rendered="#{!calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
+			            <h:panelGrid style="margin-left:25%;" rendered="#{!calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
 			            	
-			            	<h:outputText value="R$ #{contasPagarMB.totalVencendo}" style=" font-size:18px; color:red;"/>
+			            	<h:outputText value="R$ #{contasPagarMB.totalVencendo}" style=" font-size:28px; color:red;"/>
 			            	<br />
 			            </h:panelGrid> 
 			            <h:panelGrid style="margin-left:35%;" rendered="#{calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.cpVencendo)}">

@@ -63,7 +63,7 @@ public class CobrancaMB implements Serializable {
         if (listaContasSelecionadas == null) {
 			listaContasSelecionadas = new ArrayList<Contasreceber>();
 		}
-    	gerarListaCliente();
+    	gerarListaCliente();  
         cliente = contasReceber.getCliente();
         cobranca = (Cobranca) session.getAttribute("cobranca");
         if (cobranca == null) {
@@ -271,15 +271,24 @@ public class CobrancaMB implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.removeAttribute("cobranca");
+        session.removeAttribute("listaContasSelecionadas");
+        session.removeAttribute("contasReceber");
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
-    }
+    }  
 	
 	public String listaContasCobranca(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("cobranca", cobranca);
 		return "listaContaCobranca";
+	}
+	
+	public String listaContasCobrancas(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("cobranca", cobranca);
+		return "listaContaCobrancas";
 	}
 	
 	public String cobranca(){
@@ -289,12 +298,27 @@ public class CobrancaMB implements Serializable {
 		return "cobranca";
 	}
 	
+	public String cobrancas(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.getAttribute("listaHistorico");
+		return "cobrancas";
+	}
+	
 	public String historicoCobranca(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("cobranca", cobranca);
         gerarListaHistorico();
 		return "historicoCobranca";
+	}
+	
+	public String historicoCobrancas(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("cobranca", cobranca);
+        gerarListaHistorico();
+		return "historicoCobrancas";
 	}
 	
 	public void gerarListaHistorico(){

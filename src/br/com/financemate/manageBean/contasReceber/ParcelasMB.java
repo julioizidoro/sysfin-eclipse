@@ -36,8 +36,11 @@ public class ParcelasMB implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         contasreceber = (Contasreceber) session.getAttribute("contasReceber");
+        listaParcela = (List<Contasreceber>) session.getAttribute("listarParcelas");
         if (contasreceber != null) {
-			gerarListaParcelas(); 
+			if (listaParcela == null) {
+				gerarListaParcelas();
+			}
 		}
 	} 
 	
@@ -88,6 +91,9 @@ public class ParcelasMB implements Serializable {
 
 	
 	public String voltar(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("contasReceber", contasreceber);
 		return "cadContasReceber";
 	}
 	

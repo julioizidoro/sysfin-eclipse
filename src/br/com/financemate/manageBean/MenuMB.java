@@ -76,5 +76,13 @@ public class MenuMB implements Serializable{
         RequestContext.getCurrentInstance().openDialog("cobranca"); 
         return "";
     }
+	
+	
+	public String cobrancas() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("cobrancas"); 
+        return "";
+    }
 
 }

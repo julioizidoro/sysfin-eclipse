@@ -60,6 +60,7 @@ public class CadContasReceberMB implements Serializable {
 		private Cobranca cobranca;
 		private Vendas vendas;
 		private Boolean habilitarUnidade = false;
+		private List<Contasreceber> listarParcelas;
 		
 	    @PostConstruct
 	    public void init(){
@@ -94,6 +95,22 @@ public class CadContasReceberMB implements Serializable {
 	    
 	    
 	    
+
+		public List<Contasreceber> getListarParcelas() {
+			return listarParcelas;
+		}
+
+
+
+
+
+		public void setListarParcelas(List<Contasreceber> listarParcelas) {
+			this.listarParcelas = listarParcelas;
+		}
+
+
+
+
 
 		public Boolean getHabilitarUnidade() {
 			return habilitarUnidade;
@@ -452,6 +469,8 @@ public class CadContasReceberMB implements Serializable {
 			options.put("contentWidth", 500);
 			FacesContext fc = FacesContext.getCurrentInstance();
 		    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		    gerarListasParcela();
+		    session.setAttribute("listarParcelas", listarParcelas);
 		    session.setAttribute("contasReceber", contasReceber);
 		    session.setAttribute("frequencia", frequencia);
 		    session.setAttribute("vezes", vezes);
@@ -467,6 +486,62 @@ public class CadContasReceberMB implements Serializable {
 			}
 			 
 		}
+	    
+	    
+	    public void gerarListasParcela(){
+	    	if (vezes != null) {
+				int numeroVezes = Integer.parseInt(vezes);
+				for (int i = 1; i <= numeroVezes; i++) {
+			        contasReceber.setBanco(banco);
+			        contasReceber.setPlanocontas(planoContas);
+			        contasReceber.setCliente(cliente);
+			        contasReceber.setValorPago(0.0f);
+			        contasReceber.setDesagio(0.0f);
+			        contasReceber.setJuros(0.0f);
+			        contasReceber.setNumeroParcela(i);
+			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+			        Contasreceber copia = new Contasreceber();
+			        copia = contasReceber;
+			        if (listarParcelas == null) {
+						listarParcelas = new ArrayList<Contasreceber>();
+					}
+			        listarParcelas.add(contasReceber);
+			        if (frequencia != null) {
+			        	if (frequencia.equalsIgnoreCase("mensal")) {
+			        		Calendar c = new GregorianCalendar();
+			        		c.setTime(copia.getDataVencimento());
+			        		c.add(Calendar.MONTH, 1);
+			        		Date data = c.getTime();
+			        		copia.setDataVencimento(data);
+			        	}else if (frequencia.equalsIgnoreCase("Diaria")){
+			        		Calendar c = new GregorianCalendar();
+			        		c.setTime(copia.getDataVencimento());
+			        		c.add(Calendar.DAY_OF_MONTH, 1);
+			        		Date data = c.getTime();
+			        		copia.setDataVencimento(data);
+			        	}else if(frequencia.equalsIgnoreCase("anual")){
+			        		Calendar c = new GregorianCalendar();
+			        		c.setTime(copia.getDataVencimento());
+			        		c.add(Calendar.YEAR, 1);
+			        		Date data = c.getTime();
+			        		copia.setDataVencimento(data);
+			        	}else if(frequencia.equalsIgnoreCase("Semanal")){
+			        		Calendar c = new GregorianCalendar();
+			        		c.setTime(copia.getDataVencimento());
+			        		c.add(Calendar.DAY_OF_MONTH, 7);
+			        		Date data = c.getTime();
+			        		copia.setDataVencimento(data);
+			        	}
+			        }
+			       
+			        if (i < numeroVezes) {
+			        	contasReceber = new Contasreceber();
+			        	contasReceber = copia;
+			        }
+			        
+				}
+			}
+	    }
 	    
 	    
 }

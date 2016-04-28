@@ -9,7 +9,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <link href="resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
     </h:head> 
 
     <h:body >
@@ -18,7 +18,7 @@
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                <img src="resources/img/ajax-carregando.gif" />
+                <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
             
             <br />
@@ -49,10 +49,10 @@
             <hr /> 
             <br />
             <p:commandLink title="Salvar" style="margin-left: 37%;text-decoration: none"   action="#{cobrancaMB.salvarCobrancasParcelas()}"  update=":frmidListaContaCobranca:idListaConta">
-                <img src="resources/img/confirmarS.png" width="50" height="50" style="margin-top:-15%;"/>
+                <img src="../../resources/img/confirmarS.png" width="50" height="50" style="margin-top:-15%;"/>
             </p:commandLink>
             <p:commandLink title="Fechar" style="margin-left: 9%;text-decoration: none" action="#{cobrancaMB.cancelar()}" >
-                <img src="resources/img/cancelarS.png" width="50" height="50"/> 
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/> 
             </p:commandLink> 
         </h:form>
     </h:body>
