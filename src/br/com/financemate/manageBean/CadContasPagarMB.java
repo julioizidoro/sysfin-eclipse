@@ -409,7 +409,6 @@ public class CadContasPagarMB implements Serializable{
 				
 				operacaousuairo.setContaspagar(contaPagar);
 				operacaousuairo.setData(new Date());
-				operacaousuairo.setTipooperacao("Usu·rio Cadastrou");
 				operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
 				try {
 					operacaoUsuarioFacade.salvar(operacaousuairo);
@@ -532,16 +531,16 @@ public class CadContasPagarMB implements Serializable{
 			mensagem = mensagem + "Valor n√£o informado \n";
 		}
 		if (contaPagar.getDescricao().equalsIgnoreCase("")) {
-			mensagem = mensagem + "Descri√ß√£o n√£o informado \r\n";
+			mensagem = mensagem + "DescriÁ„o n„o informado \r\n";
 		}
 		if (contaPagar.getBanco() == null) {
-			mensagem = mensagem + "Conta n√£o selecionada \r\n";
+			mensagem = mensagem + "Conta n„o selecionada \r\n";
 		}
 		if (contaPagar.getDataVencimento() == null) {
-			mensagem = mensagem + "Data de Vencimento n√£o informada \r\n";
+			mensagem = mensagem + "Data de Vencimento n„o informada \r\n";
 		}
 		if (contaPagar.getFormaPagamento() == null) {
-			mensagem = mensagem + "Forma de Pagamento n√£o selecionada \r\n";
+			mensagem = mensagem + "Forma de Pagamento n„o selecionada \r\n";
 		}
 		
 		

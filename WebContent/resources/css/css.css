@@ -41,6 +41,7 @@ h1 {
     position: fixed !important;;
     display: block;
     font-family: "Pacifico",cursive;
+    z-index: 9999;
 }
 
 
@@ -49,6 +50,7 @@ h1 {
     color:white;
     font-family: "Pacifico",cursive;
     transition: all 0.4s ease 0s;
+    z-index: 9999;
 }
 
 
@@ -67,15 +69,17 @@ h1 {
     color:#fff; 
     display:block;
     font-family: "Pacifico",cursive;
-        transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+    z-index: 9999;
 }
 
 .menu2{
 	position: fixed;
 	height: 50%;
 	width: 16%;
-	    transition: all 0.4s ease 0s;
+	transition: all 0.4s ease 0s;
 	font-family: "Pacifico",cursive;
+	z-index: 9999;
 }
 
 .menuLateral{
@@ -1506,3 +1510,23 @@ button.pesquisar5 {
  background-color:#FA5858;  
     color: black;
 }
+
+
+.ui-layout-north {
+    z-index:20 !important;
+    overflow:visible !important;;
+}
+.ui-layout-north .ui-layout-unit-content {
+    overflow:visible !important;
+}
+
+
+.nav-container{ background: url('images/nav_bg.jpg') repeat-x 0 0;}
+    .f-nav{ z-index: 9999; position: fixed; left: 0; top: 0; width: 100%;} /* this make our menu fixed top */
+
+.nav { height: 42px;}
+    .nav ul { list-style: none; }
+    .nav ul li{float: left; margin-top: 6px; padding: 6px; border-right: 1px solid #ACACAC;}
+    .nav ul li:first-child{ padding-left: 0;}
+    .nav ul li a { }
+    .nav ul li a:hover{ text-decoration: underline;}

@@ -4,10 +4,14 @@ package br.com.financemate.util;
 	import javax.annotation.PostConstruct;
 	import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 
+import org.jfree.data.time.Day;
 import org.jfree.data.time.Year;
 import org.primefaces.model.chart.Axis;
 	import org.primefaces.model.chart.AxisType;
@@ -30,6 +34,8 @@ import br.com.financemate.model.Vendas;
 		private LineChartModel animatedModel1;
 	    private BarChartModel animatedModel2;
 	    private Integer nVendasJaneiros;
+	    private Date dataInicial;
+	    private Date dataFinal;
 	 
 	    @PostConstruct
 	    public void init() {
@@ -37,8 +43,48 @@ import br.com.financemate.model.Vendas;
 	    }
 	    
 	    
-	 
-	    public Integer getnVendasJaneiros() {
+		public Date getDataInicial() {
+			return dataInicial;
+		}
+
+
+		public void setDataInicial(Date dataInicial) {
+			this.dataInicial = dataInicial;
+		}
+
+
+
+
+
+
+
+
+
+		public Date getDataFinal() {
+			return dataFinal;
+		}
+
+
+
+
+
+
+
+
+
+		public void setDataFinal(Date dataFinal) {
+			this.dataFinal = dataFinal;
+		}
+
+
+
+
+
+
+
+
+
+		public Integer getnVendasJaneiros() {
 			return nVendasJaneiros;
 		}
 
@@ -298,6 +344,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 			return null;
+	    }
+	    
+	    
+	    public void gerarDiasFluxoCaixa(){
+	    	dataInicial = new Date();
+	    	Calendar c = new GregorianCalendar();
+			c.setTime(dataInicial);
+			c.add(Calendar.DAY_OF_MONTH, 3);
+			Date data = c.getTime();
+			dataFinal = data;
 	    }
 	   
 	    
