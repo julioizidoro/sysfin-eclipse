@@ -6,6 +6,17 @@ body {
     
 }
 
+.ui-growl{
+    position:fixed;
+    top:20%;
+    width:301px;
+}
+
+
+.updateGrowl{
+	z-index: 9999;
+}
+
 border{
 	border: #fff;
 }

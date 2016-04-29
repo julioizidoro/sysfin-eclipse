@@ -8,13 +8,14 @@
 <ui:composition template="/pages/templates/default.xhtml">
 	<ui:define name="corpo">
 	<h:form id="frmConsultaOutrosLancamentos"> 
+	<br /><br /><br />
 		<p:growl id="growl" showDetail="true" sticky="true" /> 
 			<br/>  
 			
 			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog> 
-			<br /><br /><br />
+			
 			<h:panelGrid columns="1"  style="margin-left:17%;  margin-top: -4%;">
                 <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 30%"/> 
               <p:selectOneMenu id="cliente" class="left3" style="width:200px;"  value="#{outrosLancamentosMB.cliente}"   converter="ClienteConverter"
@@ -55,21 +56,27 @@
 	                    <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
 	                </p:commandLink>
 	          </h:panelGrid> 
-	          <h:panelGrid columns="3" style="margin-left:90%; margin-top:-3.3%;">
+	          <h:panelGrid columns="4" style="margin-left:86%; margin-top:-3.3%;">
              <h:panelGrid>   
-			  
-				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:2%;text-decoration:none;" title="Novo Lançamento">
+			   
+				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-2%;text-decoration:none;" title="Atualizar Saldo Inicial">
 					<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 					<p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update="growl, idTabelaOutrosLancamentos, idsaida, identrada, idtotal"/>
             	</p:commandLink>
 			 </h:panelGrid>
 			 <h:panelGrid  style="margin-left:-30%; "> 
+	            <p:commandLink   action="#{outrosLancamentosMB.consultaSaldoInicial()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Consulta Saldo Inicial" ajax="false">
+					<img src="../../resources/img/receber.png" style="border:solid; border-width: 1px; border-color: #3D9446;width: 32px"/>
+					
+	            </p:commandLink> 
+	         </h:panelGrid> 
+			 <h:panelGrid  style="margin-left:-54.5%; ">  
 	            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
 					<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 					<p:dataExporter type="xls" target="idTabelaOutrosLancamentos" fileName="outrosLancamentos" />
 	            </p:commandLink>
 	         </h:panelGrid> 
-	         <h:panelGrid style="margin-left:-60%; ">
+	         <h:panelGrid style="margin-left:-82%; ">
 	            <p:commandLink   action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 					<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
 	            </p:commandLink>   

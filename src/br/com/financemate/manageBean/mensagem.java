@@ -91,6 +91,11 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Cobranças selecionadas com sucesso", ""));
     }
     
+    public void cobrancasNaoSelecionadas() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Cobranças não selecionadas no modulo contas a receber", ""));
+    }
+    
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }

@@ -1157,4 +1157,21 @@ public class ContasReceberMB implements Serializable {
 		 
 	 }
 	 
+	 
+	 public String cobrancas() {
+		 FacesContext fc = FacesContext.getCurrentInstance();
+		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		 List<Contasreceber> listaContasSelecionadas = (List<Contasreceber>) session.getAttribute("listaContasSelecionadas");
+		 if (listaContasSelecionadas != null) {
+			 Map<String, Object> options = new HashMap<String, Object>();
+			 options.put("contentWidth", 500);
+			 RequestContext.getCurrentInstance().openDialog("cobrancas"); 
+			 return "";
+		 }else{
+			 mensagem mensagem = new mensagem();
+			 mensagem.cobrancasNaoSelecionadas();
+			 return "";
+		 }
+	 }
+	 
 }

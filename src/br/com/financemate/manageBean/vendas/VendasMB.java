@@ -22,12 +22,16 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.facade.FormaPagamentoFacade;
 import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.ClienteMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.manageBean.contasReceber.ContasReceberMB;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Formapagamento;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
 
@@ -59,6 +63,8 @@ public class VendasMB implements Serializable {
 	 private Boolean habilitarUnidade;
 	 private String nomeCliente;
 	 private Integer nVenda;
+	 private Formapagamento formapagamento;
+	 private Contasreceber contasreceber;
 
 	
 	@PostConstruct
@@ -71,6 +77,38 @@ public class VendasMB implements Serializable {
 	}
 
 	
+
+
+
+	public Formapagamento getFormapagamento() {
+		return formapagamento;
+	}
+
+
+
+
+
+	public void setFormapagamento(Formapagamento formapagamento) {
+		this.formapagamento = formapagamento;
+	}
+
+
+
+
+
+	public Contasreceber getContasreceber() {
+		return contasreceber;
+	}
+
+
+
+
+
+	public void setContasreceber(Contasreceber contasreceber) {
+		this.contasreceber = contasreceber;
+	}
+
+
 
 
 
@@ -433,7 +471,9 @@ public class VendasMB implements Serializable {
      }
     
      public String verStatus(Vendas vendas) {
-    	 if (vendas.getSituacao().equalsIgnoreCase("vermelho")) {
+    	 verificarContaComFormaPagamento(vendas);
+    	 verificarParcelasGeradas(vendas);
+    	if (vendas.getSituacao().equalsIgnoreCase("vermelho")) {
     		 return "../../resources/img/bolaVermelha.png";
     	 } else if (vendas.getSituacao().equalsIgnoreCase("amarelo")) {
     		 return "../../resources/img/bolaAmarela.png";
@@ -637,6 +677,24 @@ public class VendasMB implements Serializable {
             RequestContext.getCurrentInstance().openDialog("cadVendas");
     	}
     	return "";
+    }
+    
+    public void verificarContaComFormaPagamento(Vendas vendas){
+    	FormaPagamentoFacade formaPagamentoFacade = new FormaPagamentoFacade();
+    	try {
+			formapagamento = formaPagamentoFacade.consultar("Select f from Formapagamento f where f.vendas.idvendas="+ vendas.getIdvendas());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void verificarParcelasGeradas(Vendas vendas){
+    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+    	try {
+			contasreceber = contasReceberFacade.consultar("Select c from Contasreceber c  where c.venda=" + vendas.getIdvendas());
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+		}
     }
 
 }

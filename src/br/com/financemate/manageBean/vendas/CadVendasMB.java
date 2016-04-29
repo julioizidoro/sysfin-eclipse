@@ -671,6 +671,11 @@ public class CadVendasMB implements Serializable {
 		try {
 			String mensagem = validarDados();
 			if (mensagem == "") {
+				if (listaFormaPagamento != null) {
+					vendas.setSituacao("amarelo");
+				}else{
+					vendas.setSituacao("vermelho");
+				}
 				vendas = vendasFacade.salvar(vendas);
 				if (emissaonota != null) {
 					emissaonota.setVendas(vendas);

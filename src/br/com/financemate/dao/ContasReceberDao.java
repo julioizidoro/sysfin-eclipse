@@ -8,6 +8,8 @@ package br.com.financemate.dao;
 
 import br.com.financemate.connection.ConectionFactory;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Formapagamento;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,5 +105,16 @@ public class ContasReceberDao {
         }else totalContas.add(0.0);
         manager.close();
         return totalContas;
+    }
+    
+    
+    public Contasreceber consultar(String sql) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        Query q = manager.createQuery(sql);
+        Contasreceber contasreceber = null;
+        if (q.getResultList().size()>0){
+        	contasreceber = (Contasreceber) q.getResultList().get(0);
+        }
+        return contasreceber;
     }
 }

@@ -7,7 +7,9 @@
 package br.com.financemate.facade;
 
 
+import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.dao.FormaPagamentoDao;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Formapagamento;
 import java.sql.SQLException;
 import java.util.List;
@@ -34,6 +36,11 @@ public class FormaPagamentoFacade {
     public List<Formapagamento> listar(int idVenda) throws SQLException{
         formaPagamentoDao = new FormaPagamentoDao();
         return formaPagamentoDao.listar(idVenda);
+    }
+    
+    public Formapagamento consultar(String sql) throws SQLException{
+        formaPagamentoDao = new FormaPagamentoDao();
+        return formaPagamentoDao.consultar(sql);
     }
     
 }

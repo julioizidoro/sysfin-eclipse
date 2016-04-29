@@ -24,11 +24,13 @@ import org.primefaces.event.SelectEvent;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.OutrosLancamentosFacade;
+import br.com.financemate.facade.SaldoFacade;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Saldo;
 import br.com.financemate.util.Formatacao;
 
 @Named
@@ -373,6 +375,13 @@ public class OutrosLancamentosMB implements Serializable {
         return "";
     }
     
+    public String consultaSaldoInicial() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 600);
+        RequestContext.getCurrentInstance().openDialog("consSaldoIncial");
+        return "";
+    }
+    
     public String novoLancamentoPrincipal() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 600);
@@ -455,29 +464,22 @@ public class OutrosLancamentosMB implements Serializable {
     
     public float geralSqlSaldoInicial(){
     	String sql;
-    	Float totalSaida = 0f;
-    	Float totalEntrada = 0f;
     	Float saldoInicial = 0f;
-		OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
-		try {
-			sql = "SELECT distinct sum(o.valorSaida) as totalsaida FROM Outroslancamentos o where ";
-			if (banco != null && banco.getIdbanco() != null) {
-				sql = sql + " o.banco.idbanco=" + banco.getIdbanco() + " and ";
-			} 
-			sql = sql + "o.dataVencimento<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
-			totalSaida = outrosLancamentosFacade.saldoInicialTelaConsulta(sql);
-			sql = "SELECT distinct sum(o.valorEntrada) as totalentrada FROM Outroslancamentos o where ";
-			if (banco != null && banco.getIdbanco() != null) {
-				sql = sql + " o.banco.idbanco=" + banco.getIdbanco() + " and ";
+		SaldoFacade saldoFacade = new SaldoFacade();
+		try { 
+			sql = "Select max(s.valor) from Saldo s";
+			if (banco.getIdbanco() != null) {
+				sql = sql + " where s.banco.idbanco="+ banco.getIdbanco();
 			}
-			sql = sql + "o.dataVencimento<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
-			totalEntrada = outrosLancamentosFacade.saldoInicialTelaConsulta(sql);
-		} catch (SQLException e) { 
+			saldoInicial = saldoFacade.consultar(sql);
+			return saldoInicial;
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		saldoInicial = totalEntrada - totalSaida;
-		return saldoInicial;
+		
+		
+		return 0f;
 	}
 
 }

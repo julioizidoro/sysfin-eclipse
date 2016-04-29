@@ -8,6 +8,7 @@ package br.com.financemate.dao;
 
 
 import br.com.financemate.connection.ConectionFactory;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Formapagamento;
 import java.sql.SQLException;
 import java.util.List;
@@ -48,5 +49,15 @@ public class FormaPagamentoDao {
         manager.getTransaction().commit();
         manager.close();
         return lista;
-    }    
+    }
+    
+    public Formapagamento consultar(String sql) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        Query q = manager.createQuery(sql);
+        Formapagamento formapagamento = null;
+        if (q.getResultList().size()>0){
+            formapagamento = (Formapagamento) q.getResultList().get(0);
+        }
+        return formapagamento;
+    }
 }

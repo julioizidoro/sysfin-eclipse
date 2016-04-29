@@ -19,7 +19,9 @@
         </p:dialog>
             <h:form>
          <div id="tudo" style="color:#E7EBEB !important;">
-        <p:growl id="growl" showDetail="true" sticky="true" />
+         <div class="updateGrowl">
+         	<p:growl id="growl" showDetail="true" sticky="true" />
+         </div> 
         <br></br>
         
         <div class="menu" style="position: fixed !important;">
@@ -122,8 +124,8 @@
         	</h:panelGrid>
         	<h:panelGrid style="margin-left:10%; margin-top:-27%;"> 
 	            <p:panelMenu> 
-		            	<p:submenu label="Cobrança" style="font-size:16px;margin-left:5%;">
-		                    <p:menuitem value="Nova Cobrança" action="#{menuMB.cobranca()}" style="margin-left:-13%;"/>
+		            	<p:submenu label="Cobrança" style="font-size:16px;margin-left:5%;"> 
+		                    <p:menuitem value="Nova Cobrança" action="#{menuMB.cobranca()}" style="margin-left:-13%;" update="growl"/>
 	            			<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
 		            	</p:submenu> 
 	    		</p:panelMenu>

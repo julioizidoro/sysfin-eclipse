@@ -62,4 +62,9 @@ public class ContasReceberFacade {
         return contasReceberDao.calculaSaldos(data, idcliente);
     }
     
+    public Contasreceber consultar(String sql) throws SQLException{
+        contasReceberDao = new ContasReceberDao();
+        return contasReceberDao.consultar(sql);
+    }
+    
 }

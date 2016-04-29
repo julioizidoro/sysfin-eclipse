@@ -1,13 +1,14 @@
 package br.com.financemate.util;
 
-import org.jfree.data.time.Year;
+import org.jfree.data.time.Day;
 
 public class Main {
 
 	public static void main(String[] args) {
-	    	Integer nJaneiro;
-	    	String sql =  new Year()+"-01-01";
-	    	System.out.println(sql); 
+	    	String dia;
+	    	dia = "" + new Day();
+	    	System.out.println(dia);
+	    
 	}
 
 }
