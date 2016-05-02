@@ -33,7 +33,6 @@ public class CadClienteMB implements Serializable {
 	
 	@Inject
     private UsuarioLogadoMB usuarioLogadoMB;
-    private String idTipoPlanoConta="0";
     private Cliente cliente;
     private List<Tipoplanocontas> listarTipoPlanoContas;
     private Tipoplanocontas tipoplanocontas;
@@ -44,9 +43,11 @@ public class CadClienteMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         cliente = (Cliente) session.getAttribute("cliente");
         session.removeAttribute("cliente");
-        listarTipoPlanoContas();
+        gerarListaTipoPlanoContas();
         if (cliente == null) {
              cliente = new Cliente();
+        }else{
+        	tipoplanocontas = cliente.getTipoplanocontas();
         }
 	}
 	
@@ -72,18 +73,6 @@ public class CadClienteMB implements Serializable {
 
 	public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
 		this.usuarioLogadoMB = usuarioLogadoMB;
-	}
-
-
-
-	public String getIdTipoPlanoConta() {
-		return idTipoPlanoConta;
-	}
-
-
-
-	public void setIdTipoPlanoConta(String idTipoPlanoConta) {
-		this.idTipoPlanoConta = idTipoPlanoConta;
 	}
 
 
@@ -117,7 +106,7 @@ public class CadClienteMB implements Serializable {
         return null;
     }
 	
-	 public void listarTipoPlanoContas() {
+	 public void gerarListaTipoPlanoContas() {
 		 TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
 		 try {
 			 listarTipoPlanoContas = tipoPlanoContasFacede.listar();
@@ -137,23 +126,15 @@ public class CadClienteMB implements Serializable {
 	 }
 	 
 	 public void salvar(){
-         if (usuarioLogadoMB.getUsuario().getTipoacesso().getAcesso().getIcliente()){
             ClienteFacade clienteFacade = new ClienteFacade();
-            TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
-            Tipoplanocontas tipo;
-             try {
-                 tipo = tipoPlanoContasFacede.consultar(Integer.parseInt(idTipoPlanoConta));
-                 cliente.setTipoplanocontas(tipo);
-                 clienteFacade.salvar(cliente);
-                 RequestContext.getCurrentInstance().closeDialog(cliente);
-             } catch (SQLException ex) {
-                 Logger.getLogger(CadClienteMB.class.getName()).log(Level.SEVERE, null, ex);
-                 mostrarMensagem(ex, "Erro ao salvar um cliente", "Erro");
-             }
-        }else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
-            FacesContext.getCurrentInstance().addMessage(null, mensagem);
-        }
+                 cliente.setTipoplanocontas(tipoplanocontas);
+                 try {
+					cliente = clienteFacade.salvar(cliente);
+					RequestContext.getCurrentInstance().closeDialog(cliente);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     }
 
 }

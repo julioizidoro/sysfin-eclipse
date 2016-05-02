@@ -127,7 +127,7 @@
                <h:panelGrid columns="2" style="margin-left:35.7%; margin-top:-5.3%;">
                		<p:outputLabel value="Tipo Plano de Conta" for="tipoplanoconta"  class="left"/>
                 	<p:selectOneMenu id="tipoplanoconta" class="left" style="width:300px"  value="#{cadClienteMB.tipoplanocontas}" 
-                			filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                	 		filter="true" filterMatchMode="contains" panelStyle="width:180px" converter="TipoPlanoContasConverter">
                     	<f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     	<f:selectItems value="#{cadClienteMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado}"/>
                     	<f:attribute name="listaTipoPlanoContas" value="#{cadClienteMB.listarTipoPlanoContas}"/>
@@ -136,10 +136,10 @@
                 <br /><br /><br /><br /><br /><br />
                 <hr />
                 <br />
-                    <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadClienteMB.salvar()}" > 
+                    <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadClienteMB.salvar()}"> 
                         <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                     </p:commandLink>
-                    <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{cadClienteMB.cancelar()}" >
+                    <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{cadClienteMB.cancelar()}" ajax="false">
                         <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                     </p:commandLink>
                 <br></br>

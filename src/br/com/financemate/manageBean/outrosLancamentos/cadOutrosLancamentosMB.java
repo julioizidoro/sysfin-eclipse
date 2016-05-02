@@ -280,34 +280,34 @@ public class cadOutrosLancamentosMB implements Serializable {
 	public String validarDados(){
 		String mensagem = "";
 		if (outrosLancamentos.getCliente() == null) {
-			mensagem = mensagem + "Unidade n√£o informada \r\n";
+			mensagem = mensagem + "Unidade n„o informada \r\n";
 		}
 		if (outrosLancamentos.getDataRegistro().equals(null)) {
-			mensagem = mensagem + " Data de Registro n√£o informada \n";
+			mensagem = mensagem + " Data de Registro n„o informada \n";
 		}
 		if (outrosLancamentos.getTipoDocumento().equalsIgnoreCase(null)) {
-			mensagem = mensagem + "Tipo de documento n√£o informado \r\n";
+			mensagem = mensagem + "Tipo de documento n„o informado \r\n";
 		}
 		if (outrosLancamentos.getBanco().equals(null)) {
-			mensagem = mensagem + "Conta n√£o selecionada \r\n";
+			mensagem = mensagem + "Conta n„o selecionada \r\n";
 		}
 		if (outrosLancamentos.getDataVencimento().equals(null)) {
-			mensagem = mensagem + "Data de Vencimento n√£o informada \r\n";
+			mensagem = mensagem + "Data de Vencimento n„o informada \r\n";
 		}
 		if (outrosLancamentos.getValorEntrada() == null) {
-			mensagem = mensagem + "Valor de entrada n√£o informada \r\n";
+			mensagem = mensagem + "Valor de entrada n„o informada \r\n";
 		}
 		if (outrosLancamentos.getValorSaida() == null) {
-			mensagem = mensagem + "Valor de saida n√£o informada \r\n";
+			mensagem = mensagem + "Valor de saida n„o informada \r\n";
 		}
 		if (outrosLancamentos.getDescricao().equalsIgnoreCase(null)) {
-			mensagem = mensagem + "Descri√ß√£o n√£o informada \r\n";
+			mensagem = mensagem + "DescriÁ„o n„o informada \r\n";
 		}
 		if (outrosLancamentos.getPlanocontas() == null) {
-			mensagem = mensagem + "Plano de contas n√£o informada \r\n";
+			mensagem = mensagem + "Plano de contas n„o informada \r\n";
 		}
 		if (outrosLancamentos.getDataCompensacao() == null) {
-			mensagem = mensagem + "Data de compensa√ß√£o n√£o informada \r\n";
+			mensagem = mensagem + "Data de compensaÁ„o n„o informada \r\n";
 		}
 		
 		return mensagem;

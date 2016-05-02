@@ -43,9 +43,11 @@ public class CadPlanoContaMB implements Serializable {
 		 FacesContext fc = FacesContext.getCurrentInstance();
 		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		 planocontas = (Planocontas) session.getAttribute("planoconta");
-		 session.removeAttribute("planocontas");
+		 session.removeAttribute("planoconta");
 		 if (planocontas == null) {
 			 planocontas = new Planocontas(); 
+		 }else{
+			 tipoPlanoContas = planocontas.getTipoplanocontas();
 		 }
 		 gerarlistaTipoPlanoContas();
 	}
@@ -107,6 +109,7 @@ public class CadPlanoContaMB implements Serializable {
 	 public String salvarPlanoContas() {
 		 PlanoContasFacade planoContasFacade = new PlanoContasFacade();
 		 try {
+			 planocontas.setTipoplanocontas(tipoPlanoContas);
 			 planocontas = planoContasFacade.salvar(planocontas);
 			 RequestContext.getCurrentInstance().closeDialog(planocontas);
 		 } catch (SQLException ex) {

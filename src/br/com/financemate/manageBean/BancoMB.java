@@ -173,6 +173,11 @@ public class BancoMB implements Serializable {
 	 }
 
 	 public void retornoDialog(SelectEvent event) {
+		 Banco banco = (Banco) event.getObject();
+		 if (banco.getIdbanco() != null) {
+			mensagem mensagem = new mensagem();
+			mensagem.saveMessagem();
+		}
 		 gerarListaBanco();
 	 }
 }

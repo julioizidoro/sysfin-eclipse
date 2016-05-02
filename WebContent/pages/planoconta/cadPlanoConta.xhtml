@@ -28,11 +28,11 @@
                  <p:outputLabel value="Número" for="numero"  class="left3"/>
                  <p:inputText id="numero" size="8"  class="left3" value="#{cadPlanoContaMB.planocontas.numeroConta}"/>
                  </h:panelGrid>
-            <h:panelGrid columns="2" style="margin-left:55%; margin-top:-5.7%;"> 
-            	<p:outputLabel value="Modelo" for="modelo"  class="left5"  />   
-             	<p:selectOneMenu id="modelo" class="left" style="width:220px"  value="#{cadPlanoContaMB.tipoPlanoContas}">
+            <h:panelGrid columns="2" style="margin-left:43.2%; margin-top:-5.7%;"> 
+            	<p:outputLabel value="Tipo plano de conta" for="tplanoconta"  class="left5"  />   
+             	<p:selectOneMenu id="tplanoconta" class="left" style="width:220px"  value="#{cadPlanoContaMB.tipoPlanoContas}" converter="TipoPlanoContasConverter">
                 	<f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                    <f:selectItems value="#{cadPlanoContaMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado.idtipoplanocontas}"/>
+                    <f:selectItems value="#{cadPlanoContaMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado}"/>
                 	<f:attribute name="listaTipoPlanoContas" value="#{cadPlanoContaMB.listarTipoPlanoContas}"/>
                 </p:selectOneMenu>
             </h:panelGrid>

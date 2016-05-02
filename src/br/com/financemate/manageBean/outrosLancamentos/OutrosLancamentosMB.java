@@ -30,7 +30,6 @@ import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Outroslancamentos;
-import br.com.financemate.model.Saldo;
 import br.com.financemate.util.Formatacao;
 
 @Named

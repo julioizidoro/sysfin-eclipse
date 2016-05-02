@@ -133,12 +133,17 @@ public class PlanoContaMB implements Serializable {
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("planoconta", planocontas);
             RequestContext.getCurrentInstance().openDialog("cadPlanoConta");
-
+            
         }
         return "";
     }
 
     public void retornoDialog(SelectEvent event) {
+    	Planocontas planocontas = (Planocontas) event.getObject();
+    	if (planocontas.getIdplanoContas() != null) {
+			mensagem mensagem = new mensagem();
+			mensagem.saveMessagem();
+		}
         gerarListaPlanoConta();
     }
 

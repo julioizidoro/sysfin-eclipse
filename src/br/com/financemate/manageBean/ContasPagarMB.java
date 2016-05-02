@@ -544,8 +544,10 @@ public class ContasPagarMB implements Serializable{
 	public void retornoDialogNovo(SelectEvent event) {
         Contaspagar contaspagar = (Contaspagar) event.getObject();
         gerarListaContas();
-        mensagem mensagem = new mensagem();
-        mensagem.saveMessagem();
+        if (contaspagar.getIdcontasPagar() != null) {
+        	mensagem mensagem = new mensagem();
+            mensagem.saveMessagem();
+		}
         calculosContasMB.calcularTotalContasPagar();
     }
 	

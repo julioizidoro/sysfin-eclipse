@@ -627,8 +627,10 @@ public class VendasMB implements Serializable {
     
     public void retornoDialogNovo(SelectEvent event) {
         Vendas vendas = (Vendas) event.getObject();
-        mensagem msg = new mensagem();
-        msg.saveMessagem();
+        if (vendas.getIdvendas() != null) {
+        	mensagem msg = new mensagem();
+            msg.saveMessagem();
+		}
         gerarListaVendas();
     }
     

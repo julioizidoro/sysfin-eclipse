@@ -802,8 +802,10 @@ public class ContasReceberMB implements Serializable {
 	 public void retornoDialogNovo(SelectEvent event) {
 		 Contasreceber contasreceber = (Contasreceber) event.getObject();
 		 gerarListaContas();
-		 mensagem mensagem = new mensagem();
-	     mensagem.saveMessagem();
+		 if (contasreceber.getIdcontasReceber() != null) {
+			 mensagem mensagem = new mensagem();
+		     mensagem.saveMessagem();
+		 }
 		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 

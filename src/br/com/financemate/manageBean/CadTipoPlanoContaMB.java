@@ -82,7 +82,7 @@ public class CadTipoPlanoContaMB implements Serializable {
         if (usuarioLogadoMB.getUsuario().getTipoacesso().getAcesso().getItipoplanocontas()){
             TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
             try {
-                tipoPlanoContasFacede.salvar(tipoplanocontas);
+                tipoplanocontas = tipoPlanoContasFacede.salvar(tipoplanocontas);
                 RequestContext.getCurrentInstance().closeDialog(tipoplanocontas);
             } catch (SQLException ex) {
                 Logger.getLogger(CadTipoPlanoContaMB.class.getName()).log(Level.SEVERE, null, ex);
