@@ -8,6 +8,7 @@ package br.com.financemate.facade;
 
 
 import br.com.financemate.dao.ContasPagarDao;
+import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.model.Arquivocontaspagar;
 import br.com.financemate.model.Contaspagar;
 import java.sql.SQLException;
@@ -86,5 +87,11 @@ public class ContasPagarFacade {
     public Double calculaSaldosRestantes(Date dataAtual,Date dataFinal, int idcliente) throws SQLException {
     	contasPagarDao = new ContasPagarDao();
         return contasPagarDao.calculaSaldosRestantes(dataAtual, dataFinal, idcliente);
+    }
+    
+    
+    public Float pagamentoPorDia(String sql) throws SQLException{
+        contasPagarDao = new ContasPagarDao();
+        return contasPagarDao.pagamentoPorDia(sql);
     }
 }

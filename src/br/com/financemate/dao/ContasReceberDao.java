@@ -117,4 +117,22 @@ public class ContasReceberDao {
         }
         return contasreceber;
     }
+    
+    
+    public Float recebimentoPorDia(String sql) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        Query q = manager.createQuery(sql);
+        Float recebimento = null;
+        Double valorRecebimento;
+        if (q.getResultList().size()>0){
+        	valorRecebimento = (Double) q.getResultList().get(0);
+        	if (valorRecebimento == null) {
+				recebimento = 0f;
+			}else{
+				recebimento = valorRecebimento.floatValue();
+			}
+        }
+        manager.close();
+        return recebimento;
+    } 
 }

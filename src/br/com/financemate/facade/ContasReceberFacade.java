@@ -67,4 +67,9 @@ public class ContasReceberFacade {
         return contasReceberDao.consultar(sql);
     }
     
+    public Float recebimentoPorDia(String sql) throws SQLException{
+        contasReceberDao = new ContasReceberDao();
+        return contasReceberDao.recebimentoPorDia(sql);
+    }
+    
 }

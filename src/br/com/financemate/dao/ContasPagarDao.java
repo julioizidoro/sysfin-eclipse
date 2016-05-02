@@ -160,4 +160,22 @@ public class ContasPagarDao {
         }
         return valor;
     }
+    
+    
+    public Float pagamentoPorDia(String sql) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        Query q = manager.createQuery(sql);
+        Float pagamento = null;
+        Double valorPagamento;
+        if (q.getResultList().size()>0){
+        	valorPagamento = (Double) q.getResultList().get(0);
+        	if (valorPagamento == null) {
+        		pagamento = 0f;
+			}else{
+				pagamento = valorPagamento.floatValue();
+			}
+        }
+        manager.close();
+        return pagamento;
+    } 
 }

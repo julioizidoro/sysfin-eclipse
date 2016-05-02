@@ -21,6 +21,11 @@ import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.LineChartSeries;
 
+import com.mchange.v2.c3p0.impl.NewProxyDatabaseMetaData;
+
+import br.com.financemate.dao.ContasPagarDao;
+import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.model.Vendas;
 	 
@@ -36,6 +41,16 @@ import br.com.financemate.model.Vendas;
 	    private Integer nVendasJaneiros;
 	    private Date dataInicial;
 	    private Date dataFinal;
+	    private Integer diaInicio;
+	    private Integer diaFinal;
+	    private Date dataTerceiroDia;
+	    private Date dataQuartoDia;
+	    private Date dataQuintoDia;
+	    private Float saldoPrimeiroDia = 0f;
+	    private Float saldoSegundoDia = 0f;
+	    private Float saldoTerceiroDia = 0f;
+	    private Float saldoQuartoDia = 0f;
+	    private Float saldoQuintaDia = 0f;
 	 
 	    @PostConstruct
 	    public void init() {
@@ -43,6 +58,148 @@ import br.com.financemate.model.Vendas;
 	    }
 	    
 	    
+	    
+	    
+		public Float getSaldoPrimeiroDia() {
+			return saldoPrimeiroDia;
+		}
+
+
+
+
+		public void setSaldoPrimeiroDia(Float saldoPrimeiroDia) {
+			this.saldoPrimeiroDia = saldoPrimeiroDia;
+		}
+
+
+
+
+		public Float getSaldoSegundoDia() {
+			return saldoSegundoDia;
+		}
+
+
+
+
+		public void setSaldoSegundoDia(Float saldoSegundoDia) {
+			this.saldoSegundoDia = saldoSegundoDia;
+		}
+
+
+
+
+		public Float getSaldoTerceiroDia() {
+			return saldoTerceiroDia;
+		}
+
+
+
+
+		public void setSaldoTerceiroDia(Float saldoTerceiroDia) {
+			this.saldoTerceiroDia = saldoTerceiroDia;
+		}
+
+
+
+
+		public Float getSaldoQuartoDia() {
+			return saldoQuartoDia;
+		}
+
+
+
+
+		public void setSaldoQuartoDia(Float saldoQuartoDia) {
+			this.saldoQuartoDia = saldoQuartoDia;
+		}
+
+
+
+
+		public Float getSaldoQuintaDia() {
+			return saldoQuintaDia;
+		}
+
+
+
+
+		public void setSaldoQuintaDia(Float saldoQuintaDia) {
+			this.saldoQuintaDia = saldoQuintaDia;
+		}
+
+
+
+
+		public Date getDataTerceiroDia() {
+			return dataTerceiroDia;
+		}
+
+
+
+
+		public void setDataTerceiroDia(Date dataTerceiroDia) {
+			this.dataTerceiroDia = dataTerceiroDia;
+		}
+
+
+
+
+		public Date getDataQuartoDia() {
+			return dataQuartoDia;
+		}
+
+
+
+
+		public void setDataQuartoDia(Date dataQuartoDia) {
+			this.dataQuartoDia = dataQuartoDia;
+		}
+
+
+
+
+		public Date getDataQuintoDia() {
+			return dataQuintoDia;
+		}
+
+
+
+
+		public void setDataQuintoDia(Date dataQuintoDia) {
+			this.dataQuintoDia = dataQuintoDia;
+		}
+
+
+
+
+		public Integer getDiaInicio() {
+			return diaInicio;
+		}
+
+
+
+
+		public void setDiaInicio(Integer diaInicio) {
+			this.diaInicio = diaInicio;
+		}
+
+
+
+
+		public Integer getDiaFinal() {
+			return diaFinal;
+		}
+
+
+
+
+		public void setDiaFinal(Integer diaFinal) {
+			this.diaFinal = diaFinal;
+		}
+
+
+
+
 		public Date getDataInicial() {
 			return dataInicial;
 		}
@@ -105,6 +262,7 @@ import br.com.financemate.model.Vendas;
 	    }
 	 
 	    private void createAnimatedModels() {
+	    	gerarDiasFluxoCaixa();
 	        animatedModel1 = initLinearModel();
 	        animatedModel1.setTitle("Fluxo de Caixa diário");
 	        animatedModel1.setAnimate(true);
@@ -112,8 +270,8 @@ import br.com.financemate.model.Vendas;
 	        animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
 	        animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4"); 
 	        Axis yAxis = animatedModel1.getAxis(AxisType.Y);
-	        yAxis.setMin(0);
-	        yAxis.setMax(10);
+	        yAxis.setMin(diaInicio);
+	        yAxis.setMax(diaFinal);
 	        
 	         
 	        animatedModel2 = initBarModel();
@@ -124,6 +282,7 @@ import br.com.financemate.model.Vendas;
 	        yAxis = animatedModel2.getAxis(AxisType.Y);
 	        yAxis.setMin(0);
 	        yAxis.setMax(200);
+	        
 	    }
 	     
 	    private BarChartModel initBarModel() {
@@ -156,29 +315,29 @@ import br.com.financemate.model.Vendas;
 	        
 	        LineChartSeries recebimentos = new LineChartSeries();
 	        recebimentos.setLabel("Recebimentos");
-	        recebimentos.set(1, 2);
-	        recebimentos.set(2, 1);
-	        recebimentos.set(3, 3);
-	        recebimentos.set(4, 6);
-	        recebimentos.set(5, 10);
-	        
+	        recebimentos.set(recebimentosDia1(), diaInicio);
+	        recebimentos.set(recebimentosDia2(), diaInicio +1);
+	        recebimentos.set(recebimentosDia3(), diaInicio + 2);
+	        recebimentos.set(recebimentosDia4(), diaInicio + 3);
+	        recebimentos.set(recebimentosDia5(), diaInicio + 4); 
+	         
 	        LineChartSeries pagamentos = new LineChartSeries();
 	        pagamentos.setLabel("Pagamentos");
-	        pagamentos.set(1, 6);
-	        pagamentos.set(2, 3);
-	        pagamentos.set(3, 2);
-	        pagamentos.set(4, 7);
-	        pagamentos.set(5, 9);
-	 
+	        pagamentos.set(pagamentodia1(), diaInicio);
+	        pagamentos.set(pagamentodia2(), diaInicio +1);
+	        pagamentos.set(pagamentodia3(), diaInicio +2);
+	        pagamentos.set(pagamentodia4(), diaInicio +3);
+	        pagamentos.set(pagamentodia5(), diaInicio +4);
+	  
 	        
 	        LineChartSeries saldo = new LineChartSeries();
 	        saldo.setLabel("Saldo");
 	 
-	        saldo.set(1, 7);
-	        saldo.set(2, 3);
-	        saldo.set(3, 5);
-	        saldo.set(4, 6);
-	        saldo.set(5, 4);
+	        saldo.set(saldoPrimeiroDia, diaInicio);
+	        saldo.set(saldoSegundoDia, diaInicio +1);
+	        saldo.set(saldoTerceiroDia, diaInicio +2);
+	        saldo.set(saldoQuartoDia, diaInicio +3);
+	        saldo.set(saldoQuintaDia, diaInicio +4);
 	        
 	        model.addSeries(recebimentos);
 	        model.addSeries(pagamentos);
@@ -351,10 +510,159 @@ import br.com.financemate.model.Vendas;
 	    	dataInicial = new Date();
 	    	Calendar c = new GregorianCalendar();
 			c.setTime(dataInicial);
-			c.add(Calendar.DAY_OF_MONTH, 3);
+			c.add(Calendar.DAY_OF_MONTH, 5);
 			Date data = c.getTime();
 			dataFinal = data;
+			diaFinal = dataFinal.getDay();
+			Calendar c2 = new GregorianCalendar();
+			c2.setTime(dataInicial);
+			c2.add(Calendar.DAY_OF_MONTH, 1);
+			Date data2 = c2.getTime();
+			dataInicial = data2;
+			diaInicio = dataInicial.getDay();
+			Calendar c3 = new GregorianCalendar();
+			c3.setTime(dataInicial);
+			c3.add(Calendar.DAY_OF_MONTH, 1);
+			Date data3 = c3.getTime();
+			dataTerceiroDia = data3;
+			Calendar c4 = new GregorianCalendar();
+			c4.setTime(dataTerceiroDia);
+			c4.add(Calendar.DAY_OF_MONTH, 1);
+			Date data4 = c4.getTime();
+			dataQuartoDia = data4;
+			Calendar c5 = new GregorianCalendar();
+			c5.setTime(dataQuartoDia);
+			c5.add(Calendar.DAY_OF_MONTH, 1);
+			Date data5 = c5.getTime();
+			dataQuintoDia = data5;
 	    }
-	   
 	    
+	    public float recebimentosDia1(){
+	    	Float recebimento = null;
+	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
+			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoPrimeiroDia = saldoPrimeiroDia + recebimento;
+	    	return recebimento; 
+	    }
+	    
+	    public float recebimentosDia2(){
+	    	Float recebimento = null;
+	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
+			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoSegundoDia = saldoSegundoDia + recebimento;
+	    	return recebimento; 
+	    }
+	    
+	    public float recebimentosDia3(){
+	    	Float recebimento = null;
+	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
+			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoTerceiroDia = saldoTerceiroDia + recebimento;
+	    	return recebimento; 
+	    }
+	    public float recebimentosDia4(){
+	    	Float recebimento = null;
+	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuartoDia) + "'";
+			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoQuartoDia = saldoQuartoDia + recebimento;
+	    	return recebimento; 
+	    }
+	    public float recebimentosDia5(){
+	    	Float recebimento = null;
+	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
+			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoQuintaDia = saldoQuintaDia + recebimento;
+	    	return recebimento; 
+	    }
+	    
+	    
+	    public float pagamentodia1(){
+	    	Float pagamento = null;
+	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
+	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoPrimeiroDia = saldoPrimeiroDia - pagamento;
+	    	return pagamento; 
+	    }
+	    
+	    public float pagamentodia2(){
+	    	Float pagamento = null;
+	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
+	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoSegundoDia = saldoSegundoDia - pagamento;
+	    	return pagamento; 
+	    }
+	    
+	    public float pagamentodia3(){
+	    	Float pagamento = null;
+	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
+	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoTerceiroDia = saldoTerceiroDia - pagamento;
+	    	return pagamento; 
+	    }
+	    
+	    public float pagamentodia4(){
+	    	Float pagamento = null;
+	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuartoDia) + "'";
+	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoQuartoDia = saldoQuartoDia - pagamento;
+	    	return pagamento; 
+	    }
+	    
+	    public float pagamentodia5(){
+	    	Float pagamento = null;
+	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+	    	try {
+	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
+	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	saldoQuintaDia = saldoQuintaDia - pagamento;
+	    	return pagamento; 
+	    }
 	}
