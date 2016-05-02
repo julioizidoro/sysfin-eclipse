@@ -42,6 +42,8 @@ public class SaldoDao {
         Float saldo = null;
         if (q.getResultList().size()>0){
         	saldo = (Float) q.getResultList().get(0);
+        }else{
+        	saldo = 0f;
         }
         return saldo;
     }

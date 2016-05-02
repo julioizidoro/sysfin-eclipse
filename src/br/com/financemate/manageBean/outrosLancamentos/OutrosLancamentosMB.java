@@ -472,6 +472,9 @@ public class OutrosLancamentosMB implements Serializable {
 				sql = sql + " where s.banco.idbanco="+ banco.getIdbanco();
 			}
 			saldoInicial = saldoFacade.consultar(sql);
+			if (saldoInicial == null) {
+				saldoInicial = 0.0f;
+			}
 			return saldoInicial;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
