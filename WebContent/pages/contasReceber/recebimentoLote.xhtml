@@ -37,13 +37,18 @@
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>
+                <p:column headerText="" style=" background:white; border:none;">
+                    <p:commandLink title="Editar Banco" style="margin-left:20%;text-decoration: none" ajax="false"  action="#{recebimentoLoteMB.editarBanco(contasReceber)}" >
+                 		<img src="../../resources/img/editar.png" width="25" height="25"/> 
+            		</p:commandLink>
+                </p:column>
                 
             </p:dataTable>
             <hr />
             <br />
             <h:panelGrid columns="2" style="margin-left:10%;">
-                <p:outputLabel value="Data de Recebimento Lote"  class="left8"/>
-                <p:inputMask id="dataRecebimento"   mask="99/99/9999" size="13" maxlength="15" class="left5" value="#{recebimentoLoteMB.dataPagamento}" readonly="true" style="margin-left: 1%;">
+                <p:outputLabel value="Data de Recebimento Lote"  class="left8"/> 
+                <p:inputMask id="dataRecebimento"   mask="99/99/9999" size="13" maxlength="15" class="left5" value="#{recebimentoLoteMB.dataPagamento}"  style="margin-left: 1%;">
                 	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
             	</p:inputMask>
             </h:panelGrid>

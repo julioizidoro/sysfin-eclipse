@@ -136,6 +136,8 @@ public class CalculosContasMB implements Serializable{
 	public void setCpTotal(String cpTotal) {
 		this.cpTotal = cpTotal;
 	}
+	
+	
 
 	public void calcularTotalContasPagar(){
 		Float vencida = 0.0f;
@@ -188,12 +190,13 @@ public class CalculosContasMB implements Serializable{
 	     setCrVencendo(Formatacao.foramtarFloatString(vencendo));
 	     setCrVencer(Formatacao.foramtarFloatString(vencer));
 	     setCrTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
+	     setTotalRestante(Formatacao.foramtarFloatString(vencer - vencendo));
 	}
 	
 	
 	public Boolean habilitarDesabilitarCompraTelaPrincipal(String valor){
 		 Float valorVencendo = Formatacao.formatarStringfloat(valor);
-		 if (valorVencendo > 0) {
+		 if (valorVencendo > 0f) {
 			habilitarDesabilitar = false;
 			return habilitarDesabilitar;
 		}

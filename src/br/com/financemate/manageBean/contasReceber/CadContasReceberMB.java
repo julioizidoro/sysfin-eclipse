@@ -28,6 +28,7 @@ import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.manageBean.ContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobranca;
@@ -61,6 +62,7 @@ public class CadContasReceberMB implements Serializable {
 		private Vendas vendas;
 		private Boolean habilitarUnidade = false;
 		private List<Contasreceber> listarParcelas;
+		private List<Contasreceber> contasNumeroDocumentosIguais;
 		
 	    @PostConstruct
 	    public void init(){
@@ -95,6 +97,22 @@ public class CadContasReceberMB implements Serializable {
 	    
 	    
 	    
+
+		public List<Contasreceber> getContasNumeroDocumentosIguais() {
+			return contasNumeroDocumentosIguais;
+		}
+
+
+
+
+
+		public void setContasNumeroDocumentosIguais(List<Contasreceber> contasNumeroDocumentosIguais) {
+			this.contasNumeroDocumentosIguais = contasNumeroDocumentosIguais;
+		}
+
+
+
+
 
 		public List<Contasreceber> getListarParcelas() {
 			return listarParcelas;
@@ -358,78 +376,108 @@ public class CadContasReceberMB implements Serializable {
 		
 		public String salvar(){
 			if (vezes != null) {
-				int numeroVezes = Integer.parseInt(vezes);
-				for (int i = 1; i <= numeroVezes; i++) {
-					ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-			        contasReceber.setBanco(banco);
-			        contasReceber.setPlanocontas(planoContas);
-			        contasReceber.setCliente(cliente);
-			        contasReceber.setValorPago(0.0f);
-			        contasReceber.setDesagio(0.0f);
-			        contasReceber.setJuros(0.0f);
-			        contasReceber.setNumeroParcela(i);
-			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-			        String mensagem = validarDados();
-			        if (mensagem=="") {
-			        	Contasreceber copia = new Contasreceber();
-						copia = contasReceber;
-			        	contasReceber = contasReceberFacade.salvar(contasReceber);
-			        	if (frequencia != null) {
-							if (frequencia.equalsIgnoreCase("mensal")) {
-								Calendar c = new GregorianCalendar();
-								c.setTime(copia.getDataVencimento());
-								c.add(Calendar.MONTH, 1);
-								Date data = c.getTime();
-								copia.setDataVencimento(data);
-							}else if (frequencia.equalsIgnoreCase("Diaria")){
-								Calendar c = new GregorianCalendar();
-								c.setTime(copia.getDataVencimento());
-								c.add(Calendar.DAY_OF_MONTH, 1);
-								Date data = c.getTime();
-								copia.setDataVencimento(data);
-							}else if(frequencia.equalsIgnoreCase("anual")){
-								Calendar c = new GregorianCalendar();
-								c.setTime(copia.getDataVencimento());
-								c.add(Calendar.YEAR, 1);
-								Date data = c.getTime();
-								copia.setDataVencimento(data);
-							}else if(frequencia.equalsIgnoreCase("Semanal")){
-								Calendar c = new GregorianCalendar();
-								c.setTime(copia.getDataVencimento());
-								c.add(Calendar.DAY_OF_MONTH, 7);
-								Date data = c.getTime();
-								copia.setDataVencimento(data);
+				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+				try {
+					contasNumeroDocumentosIguais = contasReceberFacade.listar("Select c from Contasreceber c where c.numeroDocumento='"+ contasReceber.getNumeroDocumento() + "'");
+					if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true) {
+						contasNumeroDocumentosIguais = new ArrayList<Contasreceber>();
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true) {
+					int numeroVezes = Integer.parseInt(vezes);
+					for (int i = 1; i <= numeroVezes; i++) {
+				        contasReceber.setBanco(banco);
+				        contasReceber.setPlanocontas(planoContas);
+				        contasReceber.setCliente(cliente);
+				        contasReceber.setValorPago(0.0f);
+				        contasReceber.setDesagio(0.0f);
+				        contasReceber.setJuros(0.0f);
+				        contasReceber.setNumeroParcela(i);
+				        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+				        String mensagem = validarDados();
+				        if (mensagem=="") {
+				        	Contasreceber copia = new Contasreceber();
+							copia = contasReceber;
+				        	contasReceber = contasReceberFacade.salvar(contasReceber);
+				        	if (frequencia != null) {
+								if (frequencia.equalsIgnoreCase("mensal")) {
+									Calendar c = new GregorianCalendar();
+									c.setTime(copia.getDataVencimento());
+									c.add(Calendar.MONTH, 1);
+									Date data = c.getTime();
+									copia.setDataVencimento(data);
+								}else if (frequencia.equalsIgnoreCase("Diaria")){
+									Calendar c = new GregorianCalendar();
+									c.setTime(copia.getDataVencimento());
+									c.add(Calendar.DAY_OF_MONTH, 1);
+									Date data = c.getTime();
+									copia.setDataVencimento(data);
+								}else if(frequencia.equalsIgnoreCase("anual")){
+									Calendar c = new GregorianCalendar();
+									c.setTime(copia.getDataVencimento());
+									c.add(Calendar.YEAR, 1);
+									Date data = c.getTime();
+									copia.setDataVencimento(data);
+								}else if(frequencia.equalsIgnoreCase("Semanal")){
+									Calendar c = new GregorianCalendar();
+									c.setTime(copia.getDataVencimento());
+									c.add(Calendar.DAY_OF_MONTH, 7);
+									Date data = c.getTime();
+									copia.setDataVencimento(data);
+								}
 							}
+				        	if (i < numeroVezes) {
+								contasReceber = new Contasreceber();
+								contasReceber = copia;
+							}
+						}else{
+							FacesContext context = FacesContext.getCurrentInstance();
+				            context.addMessage(null, new FacesMessage(mensagem, ""));
 						}
-			        	if (i < numeroVezes) {
-							contasReceber = new Contasreceber();
-							contasReceber = copia;
-						}
+					}
+					RequestContext.getCurrentInstance().closeDialog(contasReceber);
+				}else{
+					mensagem mensagem = new mensagem();
+					mensagem.numeroDocumentosIguais();
+				}
+			}else{
+				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+				try {
+					contasNumeroDocumentosIguais = contasReceberFacade.listar("Select c from Contasreceber c where c.numeroDocumento='"+ contasReceber.getNumeroDocumento() + "'");
+					if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true) {
+						contasNumeroDocumentosIguais = new ArrayList<Contasreceber>();
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true) {
+					
+				
+					contasReceber.setBanco(banco);
+					contasReceber.setPlanocontas(planoContas);
+					contasReceber.setCliente(cliente);
+					contasReceber.setValorPago(0.0f);
+					contasReceber.setDesagio(0.0f);
+					contasReceber.setJuros(0.0f);
+					contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+					contasReceber.setNumeroParcela(1);
+					String mensagem = validarDados(); 
+					if (mensagem=="") {
+						contasReceber = contasReceberFacade.salvar(contasReceber);
+						RequestContext.getCurrentInstance().closeDialog(contasReceber);
 					}else{
 						FacesContext context = FacesContext.getCurrentInstance();
 			            context.addMessage(null, new FacesMessage(mensagem, ""));
 					}
-				}
-			}else{
-				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-				contasReceber.setBanco(banco);
-				contasReceber.setPlanocontas(planoContas);
-				contasReceber.setCliente(cliente);
-				contasReceber.setValorPago(0.0f);
-				contasReceber.setDesagio(0.0f);
-				contasReceber.setJuros(0.0f);
-				contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-				contasReceber.setNumeroParcela(1/1);
-				String mensagem = validarDados();
-				if (mensagem=="") {
-					contasReceber = contasReceberFacade.salvar(contasReceber);
-					
 				}else{
-					FacesContext context = FacesContext.getCurrentInstance();
-		            context.addMessage(null, new FacesMessage(mensagem, ""));
+					mensagem mensagem = new mensagem();
+					mensagem.numeroDocumentosIguais();
 				}
 			}
-			RequestContext.getCurrentInstance().closeDialog(contasReceber);
 			return "";
 		}
 	    
@@ -465,16 +513,22 @@ public class CadContasReceberMB implements Serializable {
 	    }
 	    
 	    public String abrirParcelamento() {
-			Map<String, Object> options = new HashMap<String, Object>();
-			options.put("contentWidth", 500);
-			FacesContext fc = FacesContext.getCurrentInstance();
-		    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-		    gerarListasParcela();
-		    session.setAttribute("listarParcelas", listarParcelas);
-		    session.setAttribute("contasReceber", contasReceber);
-		    session.setAttribute("frequencia", frequencia);
-		    session.setAttribute("vezes", vezes);
-			return "parcelas";
+	    	if (contasReceber.getIdcontasReceber() != null) {
+				Map<String, Object> options = new HashMap<String, Object>();
+				options.put("contentWidth", 500);
+				FacesContext fc = FacesContext.getCurrentInstance();
+			    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			    session.setAttribute("listarParcelas", listarParcelas);
+			    session.setAttribute("contasReceber", contasReceber);
+			    session.setAttribute("frequencia", frequencia);
+			    session.setAttribute("vezes", vezes);
+				return "parcelas";
+				
+			}else{
+				mensagem mensagem = new mensagem();
+				mensagem.salvarVisualizarParcela();
+				return "";
+			}
 	    }
 	    
 	    
@@ -488,60 +542,7 @@ public class CadContasReceberMB implements Serializable {
 		}
 	    
 	    
-	    public void gerarListasParcela(){
-	    	if (vezes != null) {
-				int numeroVezes = Integer.parseInt(vezes);
-				for (int i = 1; i <= numeroVezes; i++) {
-			        contasReceber.setBanco(banco);
-			        contasReceber.setPlanocontas(planoContas);
-			        contasReceber.setCliente(cliente);
-			        contasReceber.setValorPago(0.0f);
-			        contasReceber.setDesagio(0.0f);
-			        contasReceber.setJuros(0.0f);
-			        contasReceber.setNumeroParcela(i);
-			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-			        Contasreceber copia = new Contasreceber();
-			        copia = contasReceber;
-			        if (listarParcelas == null) {
-						listarParcelas = new ArrayList<Contasreceber>();
-					}
-			        listarParcelas.add(contasReceber);
-			        if (frequencia != null) {
-			        	if (frequencia.equalsIgnoreCase("mensal")) {
-			        		Calendar c = new GregorianCalendar();
-			        		c.setTime(copia.getDataVencimento());
-			        		c.add(Calendar.MONTH, 1);
-			        		Date data = c.getTime();
-			        		copia.setDataVencimento(data);
-			        	}else if (frequencia.equalsIgnoreCase("Diaria")){
-			        		Calendar c = new GregorianCalendar();
-			        		c.setTime(copia.getDataVencimento());
-			        		c.add(Calendar.DAY_OF_MONTH, 1);
-			        		Date data = c.getTime();
-			        		copia.setDataVencimento(data);
-			        	}else if(frequencia.equalsIgnoreCase("anual")){
-			        		Calendar c = new GregorianCalendar();
-			        		c.setTime(copia.getDataVencimento());
-			        		c.add(Calendar.YEAR, 1);
-			        		Date data = c.getTime();
-			        		copia.setDataVencimento(data);
-			        	}else if(frequencia.equalsIgnoreCase("Semanal")){
-			        		Calendar c = new GregorianCalendar();
-			        		c.setTime(copia.getDataVencimento());
-			        		c.add(Calendar.DAY_OF_MONTH, 7);
-			        		Date data = c.getTime();
-			        		copia.setDataVencimento(data);
-			        	}
-			        }
-			       
-			        if (i < numeroVezes) {
-			        	contasReceber = new Contasreceber();
-			        	contasReceber = copia;
-			        }
-			        
-				}
-			}
-	    }
+	   
 	    
 	    
 }

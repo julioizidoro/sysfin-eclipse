@@ -32,6 +32,7 @@ public class EditarParcelaMB implements Serializable{
 	private Contasreceber contasReceber;
 	private List<Contasreceber> listarContasreceber;
 	private String tipoDocumento;
+	private Float valorEditado;
 	
 	
 	@PostConstruct
@@ -46,7 +47,24 @@ public class EditarParcelaMB implements Serializable{
 		}else{
 			tipoDocumento = contasReceber.getTipodocumento();
 		}
+        valorEditado = contasReceber.getValorParcela();
 	}
+
+	
+	
+
+	public Float getValorEditado() {
+		return valorEditado;
+	}
+
+
+
+
+	public void setValorEditado(Float valorEditado) {
+		this.valorEditado = valorEditado;
+	}
+
+
 
 
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
@@ -100,10 +118,18 @@ public class EditarParcelaMB implements Serializable{
 	
 	
 	public String SalvarParcelaEditada(){
+		Float valorDividir;
+		Float valorDivido = 0f;
+		Integer numeroParcelas;
+		Float totalParcela;
+		Contasreceber conta = new Contasreceber();
 		ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 		List<Contasreceber> listarConta = null;
 		try {
-			listarConta = contasReceberFacade.listar("Select c From Contasreceber c where c.venda=" + contasReceber.getVenda());
+			conta = contasReceberFacade.consultar(contasReceber.getIdcontasReceber());
+			conta.setValorParcela(valorEditado);
+			contasReceberFacade.salvar(conta);
+			listarConta = contasReceberFacade.listar("Select c From Contasreceber c where c.venda=" + contasReceber.getVenda() + " and c.valorParcela=" + contasReceber.getValorParcela());
 			if (listarConta == null) {
 				listarConta = new ArrayList<Contasreceber>();
 			}
@@ -111,10 +137,22 @@ public class EditarParcelaMB implements Serializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		numeroParcelas = listarConta.size();
 		for (int i = 0; i < listarConta.size(); i++) {
-			listarConta.get(i).setValorParcela(contasReceber.getValorParcela());
+			if (contasReceber.getValorParcela() < valorEditado) {
+				valorDividir = valorEditado - contasReceber.getValorParcela();
+				valorDivido = valorDividir/numeroParcelas;
+				totalParcela = contasReceber.getValorParcela() - valorDivido;
+				listarConta.get(i).setValorParcela(totalParcela);
+			}else{
+				valorDividir = contasReceber.getValorParcela() - valorEditado;
+				valorDivido = valorDivido/numeroParcelas;
+				totalParcela = contasReceber.getValorParcela() + valorDivido;
+				listarConta.get(i).setValorParcela(totalParcela);
+			}
+			
 			contasReceberFacade.salvar(listarConta.get(i));
-		}
+		} 
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);

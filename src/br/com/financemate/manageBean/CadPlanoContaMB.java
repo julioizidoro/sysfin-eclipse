@@ -44,12 +44,14 @@ public class CadPlanoContaMB implements Serializable {
 		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		 planocontas = (Planocontas) session.getAttribute("planoconta");
 		 session.removeAttribute("planoconta");
+		 gerarlistaTipoPlanoContas();
 		 if (planocontas == null) {
 			 planocontas = new Planocontas(); 
 		 }else{
 			 tipoPlanoContas = planocontas.getTipoplanocontas();
+			 String oi = "";
 		 }
-		 gerarlistaTipoPlanoContas();
+		 
 	}
 	
 	

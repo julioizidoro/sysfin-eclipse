@@ -265,6 +265,7 @@ public class RecebimentoContaMB implements  Serializable{
     	FacesContext fc = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		session.removeAttribute("listaRecebimentoParial");
+		session.removeAttribute("contareceber");
         RequestContext.getCurrentInstance().closeDialog(null);
         contasReceber.setValorPago(0.0f);
         contasReceber.setJuros(0f);
@@ -304,7 +305,7 @@ public class RecebimentoContaMB implements  Serializable{
         	mensagem.RecebimentoParcialAcimaValor();
         	return "";
         }
-        lancaOutrosLancamentos(contasReceber);
+        lancaOutrosLancamentosParcial(contasReceber);
         listaRecebimentoParial.add(contasReceber);
         for (int i = 0; i < listaRecebimentoParial.size(); i++) {
 			Contasreceber conta = new Contasreceber();
@@ -344,7 +345,7 @@ public class RecebimentoContaMB implements  Serializable{
 	       outroslancamentos.setBanco(conta.getBanco());
 	       outroslancamentos.setCliente(conta.getCliente());
 	       outroslancamentos.setDataVencimento(conta.getDataVencimento());
-	       outroslancamentos.setDataCompensacao(new Date());
+	       outroslancamentos.setDataCompensacao(conta.getDataPagamento());
 	       outroslancamentos.setDataRegistro(new Date());
 	       outroslancamentos.setPlanocontas(conta.getPlanocontas());
 	       outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
@@ -369,16 +370,41 @@ public class RecebimentoContaMB implements  Serializable{
 			contasReceber.setJuros(0f);
 		}
     	
-    	contasReceber.setValorPago(contasReceber.getValorPago() + contasReceber.getJuros());
+    	contasReceber.setValorParcela(contasReceber.getValorParcela() + contasReceber.getJuros());
     }
     
     public void DebitarDesagio(){
     	if (contasReceber.getDesagio() == null && contasReceber.getDesagio() == 0) {
 			contasReceber.setDesagio(0f);
 		}
-    	
-    	contasReceber.setValorPago(contasReceber.getValorPago() - contasReceber.getDesagio());
+    	 
+    	contasReceber.setValorParcela(contasReceber.getValorParcela() - contasReceber.getDesagio());
     }
+    
+    
+    public void lancaOutrosLancamentosParcial(Contasreceber conta) {
+	       Outroslancamentos outroslancamentos = new Outroslancamentos();
+	       outroslancamentos.setBanco(conta.getBanco());
+	       outroslancamentos.setCliente(conta.getCliente());
+	       outroslancamentos.setDataVencimento(conta.getDataVencimento());
+	       outroslancamentos.setDataCompensacao(dataRecebimentoParcial);
+	       outroslancamentos.setDataRegistro(new Date());
+	       outroslancamentos.setPlanocontas(conta.getPlanocontas());
+	       outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
+	       outroslancamentos.setValorEntrada(valorParcial);
+	       outroslancamentos.setValorSaida(0f);
+	       outroslancamentos.setDataRegistro(new Date());
+	       outroslancamentos.setDescricao("Recebimento parcial através do contas a receber de " + conta.getNomeCliente());
+	       OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
+	       try {
+	    	   outroslancamentos.setIdcontasreceber(conta.getIdcontasReceber());
+	    	   outroslancamentos = outrosLancamentosFacade.salvar(outroslancamentos);
+	       } catch (SQLException ex) {
+	           Logger.getLogger(LiberarContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+	           mostrarMensagem(ex, "Erro ao salvar liberação", "Erro");
+	       }
+	       
+ }
     
     
 }

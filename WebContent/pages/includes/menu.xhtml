@@ -47,27 +47,25 @@
 	            </p:panelMenu>
             </h:panelGrid>
         	 <h:panelGrid style="margin-left:-2%;">
-        	 	<img src="../../resources/img/iconeContasPagarSysfin.png" style="width: 14%;"/>
+        	 	<img src="../../resources/img/iconeContasReceberSysfin.png" style="width: 14%;"/>
         	 </h:panelGrid>
         	 <h:panelGrid style="margin-left:10%; margin-top:-24%;"> 
 	        	 <p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu  style="background:transparent;  font-size:16px; color:white; font:normal;" label="Contas a Pagar">
 	        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaConta()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressao()}" style="margin-left:-13%;"/> 
-	        		</p:submenu> 
+	            	</p:submenu> 
         		</p:panelMenu>
         	</h:panelGrid>
         	<h:panelGrid style="margin-left:-2%;">
-        	 	<img src="../../resources/img/iconeContasReceberSysfin.png" style="width: 14%;"/>
+        	 	<img src="../../resources/img/iconeContasPagarSysfin.png" style="width: 14%;"/>
         	</h:panelGrid>
         	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
 	        	<p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu label="Contas a Receber" style="font-size:16px;">
 	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaConta()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
-	        		</p:submenu>
+	            	</p:submenu>
 	        	</p:panelMenu>
 	        </h:panelGrid> 
 	        <h:panelGrid style="margin-left:-2%;">
@@ -78,8 +76,7 @@
 	        		<p:submenu label="Vendas" style="font-size:16px;">
 	        			<p:menuitem value="Novo Lançamento" action="#{vendasMB.novaVenda()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consVendas()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{vendasMB.novaImpressao()}" style="margin-left:-13%;"/>
-	        		</p:submenu>
+	            	</p:submenu>
 	        	</p:panelMenu>
 	        </h:panelGrid>
 	        
@@ -91,42 +88,27 @@
 	            	<p:submenu label="Outros Lançamentos" style="font-size:16px; "> 
 	                    <p:menuitem value="Novo Lançamento" action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consOutrosLancamentos()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-13%;"/>
 	            	</p:submenu>
             	</p:panelMenu>
             </h:panelGrid>
-            <h:panelGrid style="margin-left:-2%;"> 
-        	 	<img src="../../resources/img/iconeRelatoriosSysfin.png" style="width: 14%;"/> 
-        	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
-	            <p:panelMenu>
-		            	<p:submenu label="Relatórios" style="font-size:16px;margin-left:3%;">
-		                    <p:menuitem value="Contas a Pagar" action="#{contasPagarMB.novaImpressao()}" style="margin-left:-13%;"/>
-		                    <p:menuitem value="Contas a Receber" action="#{contasReceberMB.novaImpressao()}" style="margin-left:-13%;"/>
-		                    <p:menuitem value="Outros Lançamentos" action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-13%;"/>
-		                    <p:menuitem value="Vendas" action="#{vendasMB.novaImpressao()}" style="margin-left:-13%;"/>
-		            	</p:submenu> 
-	    		</p:panelMenu>
-    		</h:panelGrid>
     		<h:panelGrid style="margin-left:-2%;"> 
         	 	<img src="../../resources/img/iconeCobrancaSysfin.png" style="width: 14%;"/> 
         	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-27%;"> 
+        	<h:panelGrid style="margin-left:10%; margin-top:-25%;"> 
 	            <p:panelMenu>
 		            	<p:submenu label="Cobrança" style="font-size:16px;margin-left:5%;"> 
 		                    <p:menuitem value="Nova Cobrança" action="#{contasReceberMB.cobrancas()}" style="margin-left:-13%;" ajax="false"/>
-	            			<p:menuitem value="Relatório" actionListener="#" style="margin-left:-13%;"/>
-		            	</p:submenu> 
+	            		</p:submenu> 
 	    		</p:panelMenu>
     		</h:panelGrid> 
     		</h:panelGrid>
-    		<br /><br /><br /> <br /> 
-    		 <p:commandLink id="aja"  actionListener="#" style="text-decoration:none;margin-top:-10%;">
+    		<br /><br /><br />  
+    		 <p:commandLink id="aja"  actionListener="#" style="text-decoration:none;">
            		<img src="../../resources/img/iconeAreaClienteSysfin.png" style="width: 14%;"/>
         		<h:outputText value="Área do cliente" style="font-size:16px; margin-left:5%;"/>
     		 </p:commandLink> 
     		<br />
-    		<p:link id="ajaxx" target="_blank" style="text-decoration:none; margin-bottom:130%;" href="http://www.financemate.com.br/"  ajax="false">
+    		<p:link id="ajaxx" target="_blank" style="text-decoration:none; margin-bottom:130%;margin-top:6%;" href="http://www.financemate.com.br/"  ajax="false">
            		<img src="../../resources/img/iconeLogoNavegadorTeste.gif" style="width: 14%;"/>
         		<h:outputText value="Sobre a Financemate" style="font-size:16px; margin-left:5%;"/>
     		</p:link>

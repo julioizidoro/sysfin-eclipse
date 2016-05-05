@@ -693,8 +693,7 @@ public class CadContasPagarMB implements Serializable{
 	}
 	
 	public String nomeArquivo(){
-		nomeAquivoFTP = "" + contaPagar.getIdcontasPagar();
-		nomeAquivoFTP = nomeAquivoFTP + file.getFileName().trim();
+		nomeAquivoFTP = "ContasPagar-" + file.getFileName().trim();
 		return nomeAquivoFTP;
 	}
 	

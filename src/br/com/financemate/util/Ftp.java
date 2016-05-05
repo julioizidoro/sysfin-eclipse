@@ -32,7 +32,7 @@ public class Ftp {
     }
     
     public String enviarArquivo(UploadedFile uploadedFile, String arquivoFTP) throws IOException{
-        ftpClient.changeWorkingDirectory("sysfin");
+        ftpClient.changeWorkingDirectory("/sysfin/");
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
         FileInputStream arqEnviar = (FileInputStream) uploadedFile.getInputstream();
         if (ftpClient.storeFile(arquivoFTP, arqEnviar)) {
@@ -48,7 +48,7 @@ public class Ftp {
     }
     
     public void receberArquivo(String arquivoSalvar, String arquivoFTP) throws IOException{
-        ftpClient.changeWorkingDirectory("sysfin");
+        ftpClient.changeWorkingDirectory("/sysfin/");
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
         OutputStream os = new FileOutputStream(arquivoSalvar); 
         ftpClient.retrieveFile(arquivoFTP, os );

@@ -22,9 +22,9 @@
             </p:dialog>
 
             <title  >Novo Contas a Receber</title>
-            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <p:growl id="growl" showDetail="true" sticky="true" />
             <h:panelGrid>
-				<br></br>
+				<br></br> 
                 	<p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%"/>
                 </h:panelGrid>
                 <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
@@ -156,15 +156,16 @@
 	            </h:panelGrid>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 90%; margin-top:-7%;">
-            	<p:commandLink title=" Visualizar Parcelas" style="text-decoration: none"   action="#{cadContasReceberMB.abrirParcelamento()}" >
+            	<p:commandLink title=" Visualizar Parcelas" style="text-decoration: none" update="growl"   action="#{cadContasReceberMB.abrirParcelamento()}" >
                		<img src="../../resources/img/iconelupaSS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
+               		
             	</p:commandLink>
             </h:panelGrid>
             
             <br />
             <hr />
             <br />
-            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadContasReceberMB.salvar()}" >
+            <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"   action="#{cadContasReceberMB.salvar()}" update="growl">
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadContasReceberMB.cancelar()}" >

@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 
+import org.hibernate.annotations.DiscriminatorFormula;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Year;
 import org.primefaces.model.chart.Axis;
@@ -51,6 +52,9 @@ import br.com.financemate.model.Vendas;
 	    private Float saldoTerceiroDia = 0f;
 	    private Float saldoQuartoDia = 0f;
 	    private Float saldoQuintaDia = 0f;
+	    private Integer numeroDia;
+	    private Float valorMaximo = 0f;
+	    private Float valorMinimo = 0f;
 	 
 	    @PostConstruct
 	    public void init() {
@@ -60,6 +64,48 @@ import br.com.financemate.model.Vendas;
 	    
 	    
 	    
+		public Float getValorMaximo() {
+			return valorMaximo;
+		}
+
+
+
+
+		public void setValorMaximo(Float valorMaximo) {
+			this.valorMaximo = valorMaximo;
+		}
+
+
+
+
+		public Float getValorMinimo() {
+			return valorMinimo;
+		}
+
+
+
+
+		public void setValorMinimo(Float valorMinimo) {
+			this.valorMinimo = valorMinimo;
+		}
+
+
+
+
+		public Integer getNumeroDia() {
+			return numeroDia;
+		}
+
+
+
+
+		public void setNumeroDia(Integer numeroDia) {
+			this.numeroDia = numeroDia;
+		}
+
+
+
+
 		public Float getSaldoPrimeiroDia() {
 			return saldoPrimeiroDia;
 		}
@@ -270,8 +316,8 @@ import br.com.financemate.model.Vendas;
 	        animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
 	        animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4"); 
 	        Axis yAxis = animatedModel1.getAxis(AxisType.Y);
-	        yAxis.setMin(diaInicio);
-	        yAxis.setMax(diaFinal);
+	        yAxis.setMin(valorMinimo.intValue());
+	        yAxis.setMax(valorMaximo.intValue()  + 100);
 	        
 	         
 	        animatedModel2 = initBarModel();
@@ -315,39 +361,47 @@ import br.com.financemate.model.Vendas;
 	        
 	        LineChartSeries recebimentos = new LineChartSeries();
 	        recebimentos.setLabel("Recebimentos");
-	        recebimentos.set(recebimentosDia1(), diaInicio);
-	        recebimentos.set(recebimentosDia2(), diaInicio +1);
-	        recebimentos.set(recebimentosDia3(), diaInicio + 2);
-	        recebimentos.set(recebimentosDia4(), diaInicio + 3);
-	        recebimentos.set(recebimentosDia5(), diaInicio + 4); 
+	        recebimentos.set(diaInicio, recebimentosDia1());
+	        recebimentos.set(diaInicio +1, recebimentosDia2());
+	        recebimentos.set(diaInicio + 2, recebimentosDia3());
+	        recebimentos.set(diaInicio + 3, recebimentosDia4());
+	        recebimentos.set(diaInicio + 4, recebimentosDia5()); 
 	         
 	        LineChartSeries pagamentos = new LineChartSeries();
 	        pagamentos.setLabel("Pagamentos");
-	        pagamentos.set(pagamentodia1(), diaInicio);
-	        pagamentos.set(pagamentodia2(), diaInicio +1);
-	        pagamentos.set(pagamentodia3(), diaInicio +2);
-	        pagamentos.set(pagamentodia4(), diaInicio +3);
-	        pagamentos.set(pagamentodia5(), diaInicio +4);
+	        pagamentos.set(diaInicio, pagamentodia1());
+	        pagamentos.set(diaInicio +1, pagamentodia2());
+	        pagamentos.set(diaInicio +2, pagamentodia3());
+	        pagamentos.set(diaInicio +3, pagamentodia4());
+	        pagamentos.set(diaInicio +4, pagamentodia5());
 	  
 	        
 	        LineChartSeries saldo = new LineChartSeries();
 	        saldo.setLabel("Saldo");
 	 
-	        saldo.set(saldoPrimeiroDia, diaInicio);
-	        saldo.set(saldoSegundoDia, diaInicio +1);
-	        saldo.set(saldoTerceiroDia, diaInicio +2);
-	        saldo.set(saldoQuartoDia, diaInicio +3);
-	        saldo.set(saldoQuintaDia, diaInicio +4);
+	        saldo.set(diaInicio, saldoPrimeiroDia);
+	        saldo.set(diaInicio +1, saldoSegundoDia);
+	        saldo.set(diaInicio +2, saldoTerceiroDia);
+	        saldo.set(diaInicio +3, saldoQuartoDia);
+	        saldo.set(diaInicio +4, saldoQuintaDia);
 	        
 	        model.addSeries(recebimentos);
 	        model.addSeries(pagamentos);
 	        model.addSeries(saldo);
-	         
+	        gerarValorMinimoMaximo(); 
 	        return model;
 	    }
 	    
 	    
-	    public Integer gerarVendasMensaisJaneiro(){
+	    public void gerarValorMinimoMaximo() {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+
+
+		public Integer gerarVendasMensaisJaneiro(){
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-01-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-01-31'";
@@ -508,6 +562,7 @@ import br.com.financemate.model.Vendas;
 	    
 	    public void gerarDiasFluxoCaixa(){
 	    	dataInicial = new Date();
+	    	numeroDia = dataInicial.getDay();
 	    	Calendar c = new GregorianCalendar();
 			c.setTime(dataInicial);
 			c.add(Calendar.DAY_OF_MONTH, 5);
@@ -547,6 +602,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoPrimeiroDia = saldoPrimeiroDia + recebimento;
+	    	if (recebimento >= valorMaximo ) {
+				valorMaximo = recebimento;
+			}else if(recebimento < valorMinimo){
+				valorMinimo = recebimento;
+			}
+	    	if (saldoPrimeiroDia >= valorMaximo) {
+				valorMaximo = saldoPrimeiroDia;
+			}else if(saldoPrimeiroDia < valorMinimo){
+				valorMinimo = saldoPrimeiroDia;
+			}
 	    	return recebimento; 
 	    }
 	    
@@ -560,6 +625,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoSegundoDia = saldoSegundoDia + recebimento;
+	    	if (recebimento >= valorMaximo ) {
+				valorMaximo = recebimento;
+			}else if(recebimento < valorMinimo){
+				valorMinimo = recebimento;
+			}
+	    	if (saldoSegundoDia >= valorMaximo) {
+				valorMaximo = saldoSegundoDia;
+			}else if(saldoSegundoDia < valorMinimo){
+				valorMinimo = saldoSegundoDia;
+			}
 	    	return recebimento; 
 	    }
 	    
@@ -573,6 +648,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoTerceiroDia = saldoTerceiroDia + recebimento;
+	    	if (recebimento >= valorMaximo ) {
+				valorMaximo = recebimento;
+			}else if(recebimento < valorMinimo){
+				valorMinimo = recebimento;
+			}
+	    	if (saldoTerceiroDia >= valorMaximo) {
+				valorMaximo = saldoTerceiroDia;
+			}else if(saldoTerceiroDia < valorMinimo){
+				valorMinimo = saldoTerceiroDia;
+			}
 	    	return recebimento; 
 	    }
 	    public float recebimentosDia4(){
@@ -585,6 +670,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoQuartoDia = saldoQuartoDia + recebimento;
+	    	if (recebimento >= valorMaximo ) {
+				valorMaximo = recebimento;
+			}else if(recebimento < valorMinimo){
+				valorMinimo = recebimento;
+			}
+	    	if (saldoQuartoDia >= valorMaximo) {
+				valorMaximo = saldoQuartoDia;
+			}else if(saldoQuartoDia < valorMinimo){
+				valorMinimo = saldoQuartoDia;
+			}
 	    	return recebimento; 
 	    }
 	    public float recebimentosDia5(){
@@ -597,6 +692,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoQuintaDia = saldoQuintaDia + recebimento;
+	    	if (recebimento >= valorMaximo ) {
+				valorMaximo = recebimento;
+			}else if(recebimento < valorMinimo){
+				valorMinimo = recebimento;
+			}
+	    	if (saldoQuintaDia >= valorMaximo) {
+				valorMaximo = saldoQuintaDia;
+			}else if(saldoQuintaDia < valorMinimo){
+				valorMinimo = saldoQuintaDia;
+			}
 	    	return recebimento; 
 	    }
 	    
@@ -611,6 +716,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoPrimeiroDia = saldoPrimeiroDia - pagamento;
+	    	if (pagamento >= valorMaximo ) {
+				valorMaximo = pagamento;
+			}else if(pagamento < valorMinimo){
+				valorMinimo = pagamento;
+			}
+	    	if (saldoQuintaDia >= valorMaximo) {
+				valorMaximo = saldoPrimeiroDia;
+			}else if(saldoPrimeiroDia < valorMinimo){
+				valorMinimo = saldoPrimeiroDia;
+			}
 	    	return pagamento; 
 	    }
 	    
@@ -624,6 +739,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoSegundoDia = saldoSegundoDia - pagamento;
+	    	if (pagamento >= valorMaximo ) {
+				valorMaximo = pagamento;
+			}else if(pagamento < valorMinimo){
+				valorMinimo = pagamento;
+			}
+	    	if (saldoSegundoDia >= valorMaximo) {
+				valorMaximo = saldoSegundoDia;
+			}else if(saldoSegundoDia < valorMinimo){
+				valorMinimo = saldoSegundoDia;
+			}
 	    	return pagamento; 
 	    }
 	    
@@ -637,6 +762,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoTerceiroDia = saldoTerceiroDia - pagamento;
+	    	if (pagamento >= valorMaximo ) {
+				valorMaximo = pagamento;
+			}else if(pagamento < valorMinimo){
+				valorMinimo = pagamento;
+			}
+	    	if (saldoTerceiroDia >= valorMaximo) {
+				valorMaximo = saldoTerceiroDia;
+			}else if(saldoTerceiroDia < valorMinimo){
+				valorMinimo = saldoTerceiroDia;
+			}
 	    	return pagamento; 
 	    }
 	    
@@ -650,6 +785,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoQuartoDia = saldoQuartoDia - pagamento;
+	    	if (pagamento >= valorMaximo ) {
+				valorMaximo = pagamento;
+			}else if(pagamento < valorMinimo){
+				valorMinimo = pagamento;
+			}
+	    	if (saldoQuartoDia >= valorMaximo) {
+				valorMaximo = saldoQuartoDia;
+			}else if(saldoQuartoDia < valorMinimo){
+				valorMinimo = saldoQuartoDia;
+			}
 	    	return pagamento; 
 	    }
 	    
@@ -663,6 +808,16 @@ import br.com.financemate.model.Vendas;
 				e.printStackTrace();
 			}
 	    	saldoQuintaDia = saldoQuintaDia - pagamento;
+	    	if (pagamento >= valorMaximo ) {
+				valorMaximo = pagamento;
+			}else if(pagamento < valorMinimo){
+				valorMinimo = pagamento;
+			}
+	    	if (saldoQuintaDia >= valorMaximo) {
+				valorMaximo = saldoQuintaDia;
+			}else if(saldoQuintaDia < valorMinimo){
+				valorMinimo = saldoQuintaDia;
+			}
 	    	return pagamento; 
 	    }
 	}

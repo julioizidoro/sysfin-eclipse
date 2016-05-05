@@ -96,6 +96,21 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Cobranças não selecionadas no modulo contas a receber", ""));
     }
     
+    public void valorAcimaPermitidoGerarParcela() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("O valor total maior que o valor total a ser recebido", ""));
+    }
+    
+    public void salvarVisualizarParcela() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Você precisa salvar a conta a receber para visualizar as parcelas", "Após salvar, vá em editar para visualizar"));
+    }
+    
+    public void numeroDocumentosIguais() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Você inseriu um número de documento que ja existe uma conta a receber", ""));
+    }
+    
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }

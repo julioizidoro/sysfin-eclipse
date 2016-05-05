@@ -28,6 +28,7 @@ import br.com.financemate.facade.FormaPagamentoFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
@@ -279,82 +280,88 @@ public class GerarParcelaMB implements Serializable {
 	
 	public void SalvarParcela(){
 		if (vezes != null) {
-			Integer numerovezes = Integer.parseInt(vezes);
-			Contasreceber contasreceber = new Contasreceber();
-			contasreceber.setDataVencimento(dataVencimento);
-			for (int i = 0; i < numerovezes; i++) {
-				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-				VendasFacade vendasFacade = new VendasFacade();
-				ClienteFacade clienteFacade = new ClienteFacade();
-				BancoFacade bancoFacade = new BancoFacade();
-				PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-				if (valorParcela < 0) {
-					contasreceber.setValorParcela(valorParcela * (-1));
-				}else{
-					contasreceber.setValorParcela(valorParcela);
-				}
-				contasreceber.setTipodocumento(tipoDocumento);
-				contasreceber.setUsuario(usuarioLogadoMB.getUsuario());
-				contasreceber.setNomeCliente(vendas.getNomeCliente());
-				contasreceber.setJuros(0f); 
-				contasreceber.setDesagio(0f);
-				contasreceber.setValorPago(0f);
-				contasreceber.setNumeroDocumento(""+vendas.getIdvendas());
-				contasreceber.setVenda(vendas.getIdvendas());
-				contasreceber.setNumeroParcela(i+1);
-				if (vendas.getCliente() != null) { 
-					try {
-						banco = bancoFacade.consultar(vendas.getCliente().getIdcliente(), "Nenhum");
-						contasreceber.setBanco(banco);
-						contasreceber.setCliente(vendas.getCliente());
-						planocontas = planoContasFacade.consultar(1);
-						contasreceber.setPlanocontas(planocontas);
+			if (valorParcela < vendas.getValorLiquido()) {
+				Integer numerovezes = Integer.parseInt(vezes);
+				Contasreceber contasreceber = new Contasreceber();
+				contasreceber.setDataVencimento(dataVencimento);
+				for (int i = 0; i < numerovezes; i++) {
+					ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+					VendasFacade vendasFacade = new VendasFacade();
+					ClienteFacade clienteFacade = new ClienteFacade();
+					BancoFacade bancoFacade = new BancoFacade();
+					PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+					if (valorParcela < 0) {
+						contasreceber.setValorParcela(valorParcela/numerovezes * (-1));
+					}else{
+						contasreceber.setValorParcela(valorParcela/numerovezes);
+					}
+					contasreceber.setTipodocumento(tipoDocumento);
+					contasreceber.setUsuario(usuarioLogadoMB.getUsuario());
+					contasreceber.setNomeCliente(vendas.getNomeCliente());
+					contasreceber.setJuros(0f); 
+					contasreceber.setDesagio(0f);
+					contasreceber.setValorPago(0f);
+					contasreceber.setNumeroDocumento(""+vendas.getIdvendas());
+					contasreceber.setVenda(vendas.getIdvendas());
+					contasreceber.setNumeroParcela(i+1);
+					if (vendas.getCliente() != null) { 
+						try {
+							banco = bancoFacade.consultar(vendas.getCliente().getIdcliente(), "Nenhum");
+							contasreceber.setBanco(banco);
+							contasreceber.setCliente(vendas.getCliente());
+							planocontas = planoContasFacade.consultar(1);
+							contasreceber.setPlanocontas(planocontas);
+							
+						} catch (SQLException e) {
+							Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
+				            mostrarMensagem(e, "Erro ao consultar um banco", "Erro");
+						} 
+					}else{
+						try {
+							banco = bancoFacade.consultar(8, "Nenhum");
+							contasreceber.setBanco(banco);
+							cliente = clienteFacade.consultar(8);
+							contasreceber.setCliente(cliente);
+							planocontas = planoContasFacade.consultar(1);
+							contasreceber.setPlanocontas(planocontas);
+						} catch (SQLException e) {
+							Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
+				            mostrarMensagem(e, "Erro ao consultar um banco", "Erro");
+						}
 						
-					} catch (SQLException e) {
-						Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
-			            mostrarMensagem(e, "Erro ao consultar um banco", "Erro");
-					} 
-				}else{
-					try {
-						banco = bancoFacade.consultar(8, "Nenhum");
-						contasreceber.setBanco(banco);
-						cliente = clienteFacade.consultar(8);
-						contasreceber.setCliente(cliente);
-						planocontas = planoContasFacade.consultar(1);
-						contasreceber.setPlanocontas(planocontas);
-					} catch (SQLException e) {
-						Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
-			            mostrarMensagem(e, "Erro ao consultar um banco", "Erro");
 					}
-					
-				}
-				Contasreceber copia = new Contasreceber();
-				copia = contasreceber;
-				contasreceber = contasReceberFacade.salvar(contasreceber);
-				if (contasreceber.getIdcontasReceber() != null) {
-					vendas.setSituacao("Parcela Gerada");
-					try {
-						vendasFacade.salvar(vendas);
-					} catch (SQLException e) {
-						e.printStackTrace();
+					Contasreceber copia = new Contasreceber();
+					copia = contasreceber;
+					contasreceber = contasReceberFacade.salvar(contasreceber);
+					if (contasreceber.getIdcontasReceber() != null) {
+						vendas.setSituacao("Parcela Gerada");
+						try {
+							vendasFacade.salvar(vendas);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+					Calendar c = new GregorianCalendar();
+					c.setTime(copia.getDataVencimento());
+					c.add(Calendar.MONTH, 1);
+					Date data = c.getTime();
+					copia.setDataVencimento(data);
+					if (i < numerovezes) {
+						contasreceber = new Contasreceber();
+						contasreceber = copia;
 					}
 				}
-				Calendar c = new GregorianCalendar();
-				c.setTime(copia.getDataVencimento());
-				c.add(Calendar.MONTH, 1);
-				Date data = c.getTime();
-				copia.setDataVencimento(data);
-				if (i < numerovezes) {
-					contasreceber = new Contasreceber();
-					contasreceber = copia;
-				}
+				gerarListaParcelas();
+				valorParcela = null;
+				vezes = null;
+				tipoDocumento = null;
+				dataVencimento = null;
+				
+			}else{
+				mensagem mensagem = new mensagem();
+				mensagem.valorAcimaPermitidoGerarParcela();
 			}
-			gerarListaParcelas();
-			valorParcela = null;
-			vezes = null;
-			tipoDocumento = null;
-			dataVencimento = null;
-		}
+		}	
 	}
 	
 	public void SemParcela(){
@@ -433,7 +440,7 @@ public class GerarParcelaMB implements Serializable {
         	listaFormaPagamento = new ArrayList<Formapagamento>(); 
         }
         session.setAttribute("listaFormaPagamento", listaFormaPagamento);
-		return "cadRecebimento";
+		return "selecionarForma";
 	}
 	
 	

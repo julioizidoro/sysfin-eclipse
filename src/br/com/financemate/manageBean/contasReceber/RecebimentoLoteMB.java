@@ -25,6 +25,7 @@ import br.com.financemate.manageBean.LiberarContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Outroslancamentos;
 
@@ -189,7 +190,7 @@ public class RecebimentoLoteMB implements Serializable {
 	       outroslancamentos.setBanco(conta.getBanco());
 	       outroslancamentos.setCliente(conta.getCliente());
 	       outroslancamentos.setDataVencimento(conta.getDataVencimento());
-	       outroslancamentos.setDataCompensacao(new Date());
+	       outroslancamentos.setDataCompensacao(conta.getDataPagamento());
 	       outroslancamentos.setDataRegistro(new Date());
 	       outroslancamentos.setPlanocontas(conta.getPlanocontas());
 	       outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
@@ -214,6 +215,14 @@ public class RecebimentoLoteMB implements Serializable {
 	        context.addMessage(null, new FacesMessage(titulo, erro));
 	 }
 	 
+	 
+	 public String editarBanco(Contasreceber conta){
+	    	FacesContext fc = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			session.setAttribute("conta", conta);
+			session.setAttribute("totalReceberLote", totalReceberLote);
+	    	return "editarBancoRecebimentoLote"; 
+ }
 	 
 
 

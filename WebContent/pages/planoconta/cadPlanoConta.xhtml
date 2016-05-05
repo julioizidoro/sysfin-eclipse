@@ -15,7 +15,7 @@
     
 
  <h:body style="background:white;" > 
-        <h:form id="idFrmCadContasPagar" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
+        <h:form id="idFrmCadPlanoConta" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
@@ -30,7 +30,7 @@
                  </h:panelGrid>
             <h:panelGrid columns="2" style="margin-left:43.2%; margin-top:-5.7%;"> 
             	<p:outputLabel value="Tipo plano de conta" for="tplanoconta"  class="left5"  />   
-             	<p:selectOneMenu id="tplanoconta" class="left" style="width:220px"  value="#{cadPlanoContaMB.tipoPlanoContas}" converter="TipoPlanoContasConverter">
+             	<p:selectOneMenu id="tplanoconta" class="left" style="width:220px"  value="#{cadPlanoContaMB.tipoPlanoContas}" filter="true" converter="TipoPlanoContasConverter">
                 	<f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems value="#{cadPlanoContaMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado}"/>
                 	<f:attribute name="listaTipoPlanoContas" value="#{cadPlanoContaMB.listarTipoPlanoContas}"/>

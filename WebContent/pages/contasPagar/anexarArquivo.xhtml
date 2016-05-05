@@ -30,6 +30,11 @@
                 </p:fileUpload>
                 
             </h:panelGrid>
+            <h:panelGrid>
+            	<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+        			<p:fileDownload value="#{cadContasPagarMB.baixarFile()}" />
+    			</p:commandButton>
+            </h:panelGrid>
             
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                 <p:commandLink title="Confirmar" style="text-decoration: none; margin-left:35%;"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >

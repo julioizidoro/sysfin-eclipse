@@ -498,6 +498,8 @@ public class CadVendasMB implements Serializable {
 			vendas.setValorJuros(0f);
 		}
 		vendas.setValorLiquido((vendas.getValorBruto() - vendas.getValorDesconto()) + vendas.getValorJuros());
+		vendas.setLiquidoVendas(vendas.getValorBruto());
+		valorPagarReceber = vendas.getValorBruto();
 	}
 	
 	
@@ -521,7 +523,7 @@ public class CadVendasMB implements Serializable {
 			vendas.setDespesasFinanceiras(0f);
 		}
 		
-		vendas.setLiquidoVendas(vendas.getComissaoLiquidaTotal() - (vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros()));
+		vendas.setLiquidoVendas(vendas.getLiquidoVendas() + (vendas.getComissaoLiquidaTotal() - (vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros())));
 		valorPagarReceber = vendas.getValorLiquido() - (vendas.getLiquidoVendas() + vendas.getValorPagoFornecedor());
 		
 	}
@@ -758,7 +760,11 @@ public class CadVendasMB implements Serializable {
 		VendasFacade vendasFacade = new VendasFacade();
 		Vendas nVenda;
 		try {
-			nVenda = vendasFacade.consultar(1);
+			if (vendas.getIdvendas() == null) {
+				nVenda = vendasFacade.consultar(1);
+			}else{
+				nVenda = vendas;
+			}
 			formapagamento.setTipoDocumento(TipoDocumento);
 			formapagamento.setVendas(nVenda);
 			formapagamento = formaPagamentoFacade.salvar(formapagamento);
@@ -816,6 +822,14 @@ public class CadVendasMB implements Serializable {
 	
 	public void calcularValorParcelaLancaFormaPagamento(){
 		formapagamento.setValorParcela(formapagamento.getValor()/formapagamento.getNumeroParcelas());
+	}
+	
+	public String VoltaGerarParcelas(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
+        session.removeAttribute("listaFormaPagamento");
+		return "gerarParcelas";
 	}
 
 }

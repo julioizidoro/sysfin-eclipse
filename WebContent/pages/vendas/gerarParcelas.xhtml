@@ -24,7 +24,6 @@
 
             <title  >Gerar Parcela</title>
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			
 			<h:panelGrid columns="1" style="margin-left:1%;">
                  <p:outputLabel value="Cliente" for="cliente" class="left"/>
                  <p:inputText id="cliente"  value="#{cadVendasMB.vendas.nomeCliente}"  size="50" class="left" disabled="true"/>
@@ -43,7 +42,7 @@
              </h:panelGrid>
              <br />
              <h:panelGrid columns="1" style="margin-left:1%;"> 
-                 <p:outputLabel value="Valor Parcela" for="valorparcela" class="left"/>
+                 <p:outputLabel value="Valor" for="valorparcela" class="left"/>
                  <p:inputText id="valorparcela"  value="#{gerarParcelaMB.valorParcela}"  size="12" class="left">
                  	<f:convertNumber pattern="##,###,###,###.##"/>
                  </p:inputText>
@@ -93,11 +92,11 @@
 	                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 	                 <p:ajax event="blur"/> 
 	            </p:inputMask> 
-            </h:panelGrid>
+            </h:panelGrid> 
              <br />
              <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Selecionar Forma&nbsp;&nbsp;&nbsp;&nbsp;" action="#{gerarParcelaMB.recebimento()}" style="background:#3D9446; font-size:16px;color:white;margin-left:12%; text-decoration:none; border-radius:5px;" title="Selecione Forma">
 			</p:commandLink>  
-            <p:commandLink id="gerarParcela" value="&nbsp;&nbsp;&nbsp;&nbsp;Gerar Parcela&nbsp;&nbsp;&nbsp;&nbsp;" ajax="false" action="#{gerarParcelaMB.SalvarParcela()}" update="idFrmCadVendas" style="background:#3D9446; margin-left:5%;font-size:16px;color:white;text-decoration:none; border-radius:5px;" title="Gerar Parcela">
+            <p:commandLink id="gerarParcela" value="&nbsp;&nbsp;&nbsp;&nbsp;Gerar Parcela&nbsp;&nbsp;&nbsp;&nbsp;" ajax="false" action="#{gerarParcelaMB.SalvarParcela()}" update="growl, idFrmCadVendas" style="background:#3D9446; margin-left:5%;font-size:16px;color:white;text-decoration:none; border-radius:5px;" title="Gerar Parcela">
 			</p:commandLink>
             <p:commandLink value="&nbsp;&nbsp;&nbsp;&nbsp;Sem Parcela&nbsp;&nbsp;&nbsp;&nbsp;"   action="#{gerarParcelaMB.SemParcela()}" style="background:#3D9446; font-size:16px;color:white; margin-left:5%; text-decoration:none; border-radius:5px;" title="Sem Parcela" ajax="false">
 			</p:commandLink>

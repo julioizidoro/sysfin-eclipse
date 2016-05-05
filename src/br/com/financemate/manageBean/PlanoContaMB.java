@@ -83,9 +83,9 @@ public class PlanoContaMB implements Serializable {
 	public void gerarListaPlanoConta() {
         PlanoContasFacade planoContasFacade = new PlanoContasFacade();
         try {
+        	listarPlanoContas = planoContasFacade.listar();
             if (listarPlanoContas == null) {
                 listarPlanoContas = new ArrayList<Planocontas>();
-                listarPlanoContas = planoContasFacade.listar();
             }
 
         } catch (Exception ex) {
@@ -98,10 +98,9 @@ public class PlanoContaMB implements Serializable {
     public void gerarlistaTipoPlanoContas() {
         TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
         try {
+        	listarTipoPlanoContas = tipoPlanoContasFacede.listar();
             if (listarTipoPlanoContas != null) {
-                
                 listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
-                listarTipoPlanoContas = tipoPlanoContasFacede.listar();
             }
 
         } catch (SQLException ex) {

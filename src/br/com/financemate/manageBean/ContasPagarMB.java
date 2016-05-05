@@ -71,6 +71,7 @@ public class ContasPagarMB implements Serializable{
 		@Inject
 		private CalculosContasMB calculosContasMB;
 		private Boolean habilitarUnidade = false;
+		private String totalRestante; 
 		
 	
 	@PostConstruct
@@ -81,6 +82,24 @@ public class ContasPagarMB implements Serializable{
 		gerarListaPlanoContas();
 		
 	}
+
+	
+	
+
+
+	public String getTotalRestante() {
+		return totalRestante;
+	}
+
+
+
+
+
+	public void setTotalRestante(String totalRestante) {
+		this.totalRestante = totalRestante;
+	}
+
+
 
 
 
@@ -798,6 +817,7 @@ public class ContasPagarMB implements Serializable{
 	        setTotalVencendo(Formatacao.foramtarFloatString(vencendo));
 	        setTotalVencer(Formatacao.foramtarFloatString(vencer));
 	        setTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
+	        setTotalRestante(Formatacao.foramtarFloatString(vencer - vencendo));
 	 }
 	 
 }

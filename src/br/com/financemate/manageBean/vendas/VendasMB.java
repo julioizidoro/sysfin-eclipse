@@ -419,61 +419,36 @@ public class VendasMB implements Serializable {
     }
      
      private void gerarSqlPesquisa(){
-    	 boolean linha = false;
     	 sql = " Select v from Vendas v where ";
     	 if ((dataInicial != null) && (dataFinal != null)) {
-    		 if (!linha) {
     			 sql = sql + "  v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial)
     			 	+ "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
-    			 linha = true;
-    		 }
     	 }
     	 if (!situacao.equalsIgnoreCase("Todas")){
-    		 if (!linha){
     			 sql = sql + " v.situacao='" + situacao + "'";
-    			 linha = true;
-    		 }else{
-    			 sql = sql + " and v.situacao='" + situacao + "'";
-    		 }
-    	 }
+    	 }else if (situacao.equalsIgnoreCase("Cancelada")) {
+			sql = sql + " and v.situacao='CANCELADA'";
+		 }
     	 if (clienteMB.getCliente().getIdcliente()!=null){
-    		 if (!linha){
     			 sql = sql + " v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
-    			 linha = true;
-    		 }else {
-    			 sql = sql + " and v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
-    		 }
+    	
     	 }else {
-    		 if (!linha){
     			 sql = sql + " v.cliente.visualizacao='Operacional'";
-    			 linha=true;
-    		 }else {
-    			 sql = sql + " and v.cliente.visualizacao='Operacional'";
-    		 }
     	 }
     	 if (numeroVenda.length()>0){
     		 int numero = Integer.parseInt(numeroVenda);
-    		 if (!linha){
     			 sql = sql + " v.idvendas=" + numero;
-    			 linha = true;
-    		 }else {
-    			 sql = sql + " and v.idvendas=" + numero;
-    		 }
     	 }
     	 if (nomeClientePesquisa.length()>0){
-    		 if (!linha){
     			 sql = sql + " v.nomeCliente like '%" + nomeClientePesquisa + "%'";
-    		 }else{
-    			 sql = sql + " and v.nomeCliente like '%" + nomeClientePesquisa + "%'";
-    		 }
     	 }
     	 order = " order by v.dataVenda";
      }
     
      public String verStatus(Vendas vendas) {
-    	 verificarContaComFormaPagamento(vendas);
-    	 verificarParcelasGeradas(vendas);
-    	if (vendas.getSituacao().equalsIgnoreCase("vermelho")) {
+    	 if (vendas.getSituacao().equalsIgnoreCase("CANCELADA")) {
+    		 return "../../resources/img/bolinhaPretaS.ico";
+         }else if (vendas.getSituacao().equalsIgnoreCase("vermelho")) {
     		 return "../../resources/img/bolaVermelha.png";
     	 } else if (vendas.getSituacao().equalsIgnoreCase("amarelo")) {
     		 return "../../resources/img/bolaAmarela.png";
@@ -595,8 +570,13 @@ public class VendasMB implements Serializable {
     			if ((dataInicial!=null) && (dataFinal!=null)){
     				sql = sql + " and ";
     			}
+    		}else if(situacao.equalsIgnoreCase("Cancelada")){
+    			sql = sql + " v.situacao='CANCELADA'"; 
+    			if ((dataInicial!=null) && (dataFinal!=null)){
+    				sql = sql + " and ";
+    			}
     		}
-    	}
+    	} 
 		
     	if ((dataInicial!=null) && (dataFinal!=null)){
     		sql = sql + "v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
