@@ -39,6 +39,7 @@ import br.com.financemate.model.Vendas;
 		private static final long serialVersionUID = 1L;
 		private LineChartModel animatedModel1;
 	    private BarChartModel animatedModel2;
+	    private BarChartModel animatedModel3;
 	    private Integer nVendasJaneiros;
 	    private Date dataInicial;
 	    private Date dataFinal;
@@ -64,6 +65,34 @@ import br.com.financemate.model.Vendas;
 	    
 	    
 	    
+		public BarChartModel getAnimatedModel3() {
+			return animatedModel3;
+		}
+
+
+
+
+		public void setAnimatedModel3(BarChartModel animatedModel3) {
+			this.animatedModel3 = animatedModel3;
+		}
+
+
+
+
+		public void setAnimatedModel1(LineChartModel animatedModel1) {
+			this.animatedModel1 = animatedModel1;
+		}
+
+
+
+
+		public void setAnimatedModel2(BarChartModel animatedModel2) {
+			this.animatedModel2 = animatedModel2;
+		}
+
+
+
+
 		public Float getValorMaximo() {
 			return valorMaximo;
 		}
@@ -309,15 +338,15 @@ import br.com.financemate.model.Vendas;
 	 
 	    private void createAnimatedModels() {
 	    	gerarDiasFluxoCaixa();
-	        animatedModel1 = initLinearModel();
-	        animatedModel1.setTitle("Fluxo de Caixa diário");
-	        animatedModel1.setAnimate(true);
-	        animatedModel1.setLegendPosition("ne");
-	        animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
-	        animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4"); 
-	        Axis yAxis = animatedModel1.getAxis(AxisType.Y);
-	        yAxis.setMin(valorMinimo.intValue());
-	        yAxis.setMax(valorMaximo.intValue()  + 100);
+	       // animatedModel1 = initLinearModel();
+	        //animatedModel1.setTitle("Fluxo de Caixa diário");
+	       // animatedModel1.setAnimate(true);
+	       // animatedModel1.setLegendPosition("ne");
+	       // animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
+	       // animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4"); 
+	       
+	      //  yAxis.setMin(valorMinimo.intValue());
+	      //  yAxis.setMax(valorMaximo.intValue()  + 100);
 	        
 	         
 	        animatedModel2 = initBarModel();
@@ -325,9 +354,21 @@ import br.com.financemate.model.Vendas;
 	        animatedModel2.setTitle("Grafico de vendas");
 	        animatedModel2.setAnimate(true);
 	        animatedModel2.setLegendPosition("ne");
-	        yAxis = animatedModel2.getAxis(AxisType.Y);
+	        Axis yAxis = animatedModel2.getAxis(AxisType.Y);
 	        yAxis.setMin(0);
 	        yAxis.setMax(200);
+	        
+	        
+	        animatedModel3 = initBarModel2();
+	        
+	        animatedModel3.setTitle("Fluxo de caixa");
+	        animatedModel3.setAnimate(true);
+	        animatedModel3.setLegendPosition("ne");
+	        animatedModel3.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
+	        animatedModel3.setSeriesColors("66cc66, FE2E2E, A4A4A4"); 
+	        yAxis = animatedModel3.getAxis(AxisType.Y);
+	        yAxis.setMin(valorMinimo);
+	        yAxis.setMax(valorMaximo + 800);
 	        
 	    }
 	     
@@ -350,6 +391,43 @@ import br.com.financemate.model.Vendas;
 	        mes.set("Dez", gerarVendasMensaisDezembro());
 	        model.addSeries(mes);
 	         
+	        return model;
+	    }
+	    
+	    
+	    private BarChartModel initBarModel2() {
+	        BarChartModel model = new BarChartModel();
+	        ChartSeries recebimentoDia = new ChartSeries();
+	        recebimentoDia.setLabel("Recebimento");
+	        
+	        recebimentoDia.set(diaInicio, recebimentosDia1());
+	        recebimentoDia.set(diaInicio + 1, recebimentosDia2());
+	        recebimentoDia.set(diaInicio + 2, recebimentosDia3());
+	        recebimentoDia.set(diaInicio + 3, recebimentosDia4());
+	        recebimentoDia.set(diaInicio + 4, recebimentosDia5());
+	        
+	        ChartSeries pagamentoDia = new ChartSeries();
+	        pagamentoDia.setLabel("Pagamento");
+	        
+	        pagamentoDia.set(diaInicio, pagamentodia1());
+	        pagamentoDia.set(diaInicio + 1, pagamentodia2());
+	        pagamentoDia.set(diaInicio + 2, pagamentodia3());
+	        pagamentoDia.set(diaInicio+ 3 , pagamentodia4());
+	        pagamentoDia.set(diaInicio+ 4, pagamentodia5());
+	        
+	        ChartSeries saldo = new ChartSeries();
+	        saldo.setLabel("Saldo");
+	        
+	        saldo.set(diaInicio, saldoPrimeiroDia);
+	        saldo.set(diaInicio + 1, saldoSegundoDia);
+	        saldo.set(diaInicio + 2, saldoTerceiroDia);
+	        saldo.set(diaInicio + 3, saldoQuartoDia);
+	        saldo.set(diaInicio + 4, saldoQuintaDia);
+	        
+	        model.addSeries(recebimentoDia);
+	        model.addSeries(pagamentoDia);
+	        model.addSeries(saldo);
+	        gerarValorMinimoMaximo(); 
 	        return model;
 	    }
 	    
