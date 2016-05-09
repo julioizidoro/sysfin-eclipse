@@ -313,7 +313,6 @@ public class RecebimentoContaMB implements  Serializable{
 			conta.setCliente(listaRecebimentoParial.get(i).getCliente());
 			conta.setUsuario(listaRecebimentoParial.get(i).getUsuario());
 			conta.setValorPago(listaRecebimentoParial.get(i).getValorPago());
-			conta.setValorParcela(listaRecebimentoParial.get(i).getValorParcela());
 			conta.setDataPagamento(dataRecebimentoParcial);
 			conta.setNumeroDocumento(listaRecebimentoParial.get(i).getNumeroDocumento());
 			conta.setPlanocontas(listaRecebimentoParial.get(i).getPlanocontas());

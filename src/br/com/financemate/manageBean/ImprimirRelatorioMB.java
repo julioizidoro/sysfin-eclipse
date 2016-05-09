@@ -309,9 +309,9 @@ public class ImprimirRelatorioMB implements Serializable{
 			 if ((dataInicial !=null) && (dataFinal !=null)){
 				 sql = sql + "outroslancamentos.dataCompensacao>='" +  Formatacao.ConvercaoDataSql(dataInicial) +
 						 "' and outroslancamentos.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and ";
-			 }else {
+			 }else if(competencia != null && competencia !=""){
 		            sql = sql + "outroslancamentos.compentencia='" + competencia + "' and ";
-		        }
+		        } 
 			 sql = sql + "cliente.idcliente=" + cliente.getIdcliente();
 			 sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaRecebimento();
 			 sql = sql + " and outroslancamentos.planoContas_idplanoContas<>" + cliente.getContaReceita();

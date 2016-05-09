@@ -10,7 +10,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Date dataInicial = new Date();
-		int numero = dataInicial.getDay() + 1;
+		int numero = dataInicial.getDay();
     	Calendar c = new GregorianCalendar();
 		c.setTime(dataInicial);
 		c.add(Calendar.DAY_OF_MONTH, 2);

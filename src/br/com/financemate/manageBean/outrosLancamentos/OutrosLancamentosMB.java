@@ -520,5 +520,9 @@ public class OutrosLancamentosMB implements Serializable {
 		
 		return 0f;
 	}
+    
+    public String conciliacaoBancaria(){
+    	return "conciliacaoBancaria";
+    }
 
 }

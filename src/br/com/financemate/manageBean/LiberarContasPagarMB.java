@@ -42,6 +42,7 @@ public class LiberarContasPagarMB implements Serializable {
     private UsuarioLogadoMB usuarioLogadoMB;
     @Inject
     private CalculosContasMB calculosContasMB;
+    private String liberadas;
 	
     
 	@PostConstruct
@@ -58,6 +59,18 @@ public class LiberarContasPagarMB implements Serializable {
 	}
 	
 	
+
+	public String getLiberadas() {
+		return liberadas;
+	}
+
+
+
+	public void setLiberadas(String liberadas) {
+		this.liberadas = liberadas;
+	}
+
+
 
 	public CalculosContasMB getCalculosContasMB() {
 		return calculosContasMB;
@@ -178,12 +191,11 @@ public class LiberarContasPagarMB implements Serializable {
         outroslancamentos.setUsuario(usuarioLogadoMB.getUsuario());
         outroslancamentos.setValorEntrada(0.0f);
         outroslancamentos.setValorSaida(conta.getValor());
-        outroslancamentos.setDataRegistro(new Date());
         if (conta.getDataCompensacao() == null) {
 			outroslancamentos.setDataCompensacao(new Date());
 		}else{
 			outroslancamentos.setDataCompensacao(conta.getDataCompensacao());
-		}
+		} 
         outroslancamentos.setTipoDocumento(conta.getTipoDocumento());
         outroslancamentos.setDescricao(conta.getDescricao());
         outroslancamentos.setCompentencia(conta.getCompetencia());

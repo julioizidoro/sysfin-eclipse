@@ -71,7 +71,7 @@ public class ContasPagarMB implements Serializable{
 		@Inject
 		private CalculosContasMB calculosContasMB;
 		private Boolean habilitarUnidade = false;
-		private String totalRestante; 
+		private String totalRestante;
 		
 	
 	@PostConstruct
@@ -80,7 +80,8 @@ public class ContasPagarMB implements Serializable{
 		criarConsultaContasPagarInicial();
 		gerarListaContas();
 		gerarListaPlanoContas();
-		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 	}
 
 	
@@ -781,6 +782,7 @@ public class ContasPagarMB implements Serializable{
 				msg.naoLiberar();
 			}
 		}
+ 		
 		 gerarListaContas();
 		 calculosContasMB.calcularTotalContasPagar();
 	 }

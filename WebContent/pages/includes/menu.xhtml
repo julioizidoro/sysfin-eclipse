@@ -11,7 +11,7 @@
         <p:growl id="growl" showDetail="true" sticky="true" />
         <br></br>
         
-        <div class="menu" style="position: fixed !important;">
+        <div class="menu" style="position: fixed !important;z-index: 9999;">
         
         	<img src="../../resources/img/usuariologado.png" style="width: 1.2%; margin-left:1%;"/>
         	<h:outputText value="Bem Vindo" style="font-size:16px; margin-left:0.5%;" />,
@@ -22,7 +22,7 @@
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
             <br/><br/>
-        </div>
+        </div> 
         <br />
         <h:panelGrid  class="menu2" columns="2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:2.3%;" responsive="true">
         	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;">

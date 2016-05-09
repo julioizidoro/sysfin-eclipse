@@ -3,10 +3,11 @@ body {
     font-family: tahoma;
     background-color: #E7EBEB;
     color: #333;
-    
 }
 
-
+.ui-growl{
+	top:12%;
+}
 
 border{
 	border: #fff;
@@ -31,6 +32,7 @@ h1 {
     left:9%;
     margin-top:-10px;
     margin-left:-10%;
+    overflow: autor;
 }
 .menu {
     list-style:none; 
@@ -52,6 +54,7 @@ h1 {
     font-family: "Pacifico",cursive;
     transition: all 0.4s ease 0s;
     z-index: 9999;
+    overflow: auto;
 }
 
 
@@ -72,15 +75,18 @@ h1 {
     font-family: "Pacifico",cursive;
     transition: all 0.4s ease 0s;
     z-index: 9999;
+    overflow: auto;
 }
 
 .menu2{
 	position: fixed;
-	height: 50%;
+	height: 100%;
 	width: 16%;
 	transition: all 0.4s ease 0s;
 	font-family: "Pacifico",cursive;
 	z-index: 9999;
+	overflow: auto;
+	
 }
 
 .menuLateral{

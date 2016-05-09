@@ -53,6 +53,7 @@ public class ImprimirContasReceberMB implements Serializable{
 	private Boolean todas;
 	private Boolean selecionado = false;
 	private Boolean habilitarUnidade = false;
+	private String nomeDosRelatorio;
 
 	
 	@PostConstruct
@@ -65,7 +66,27 @@ public class ImprimirContasReceberMB implements Serializable{
 	}
 	
 	
-	
+
+
+
+
+	public String getNomeDosRelatorio() {
+		return nomeDosRelatorio;
+	}
+
+
+
+
+
+
+	public void setNomeDosRelatorio(String nomeDosRelatorio) {
+		this.nomeDosRelatorio = nomeDosRelatorio;
+	}
+
+
+
+
+
 
 	public UsuarioLogadoMB getUsuarioLogadoMB() {
 		return usuarioLogadoMB;
@@ -236,16 +257,16 @@ public class ImprimirContasReceberMB implements Serializable{
         parameters.put("nomeFantasia", cliente.getNomeFantasia());
         parameters.put("logo", logo);
         String periodo = null;
-        periodo = "Perï¿½odo : " + Formatacao.ConvercaoDataPadrao(dataInicial) 
+        periodo = "Periodo : " + Formatacao.ConvercaoDataPadrao(dataInicial) 
                     + "    " + Formatacao.ConvercaoDataPadrao(dataFinal);
         parameters.put("periodo", periodo);
         String titulo = null;
-        if (contasRecebidas){
-            titulo = "RELATÃ“RIO DE CONTAS RECEBIDAS";
-        }else if (contasAberto){
-            titulo= "RELATÃ“RIO DE CONTAS EM ABERTO";
+        if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")){ 
+            titulo = "RELATÓRIO DE CONTAS RECEBIDAS";
+        }else if (nomeDosRelatorio.equalsIgnoreCase("contasAberto")){
+            titulo= "RELATÓRIO DE CONTAS EM ABERTO";
         }else{
-            titulo = "RELATÃ“RIO DE CONTAS A RECEBER";
+            titulo = "RELATÓRIO DE CONTAS A RECEBER";
         }
         if (cliente==null){
             parameters.put("unidade", "TODAS AS UNIDADES");
@@ -273,19 +294,19 @@ public class ImprimirContasReceberMB implements Serializable{
 			sql = sql + "join banco on contasreceber.banco_idbanco = banco.idbanco "; 
 			sql = sql + "where ";
 			String ordem = "";
-			if (contasAberto){
+			if (nomeDosRelatorio.equalsIgnoreCase("contasAberto")){
 				sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
 				sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
 				sql = sql + " and valorPago=0 "; 
 				ordem = " order by contasReceber.dataVencimento";
 			}
-			if (contasRecebidas){
+			if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")){
 				sql = sql + " contasreceber.datapagamento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
 				sql = sql + " and contasreceber.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
 				sql = sql + " and valorPago>0 "; 
 				ordem = " order by contasReceber.dataPagamento";
 			}
-			if (todas){
+			if (nomeDosRelatorio.equalsIgnoreCase("todascontas")){
 				sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
 				sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
 				ordem = " order by contasReceber.dataVencimento";

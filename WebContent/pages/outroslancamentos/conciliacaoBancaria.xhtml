@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/pages/templates/default.xhtml">
+	<ui:define name="corpo">
+		<h:form id="frmConciliacaoBancaria" > 
+			<p:growl id="growl" showDetail="true" sticky="true" /> 
+				<br/><br/>
+				<h:panelGrid columns="2" style="margin-left:17%;"> 
+					 <p:outputLabel value="Cliente" for="cliente"  class="left3" />
+					 <p:inputText id="cliente" size="35" class="left6" value="#" readonly="true"/>
+				</h:panelGrid> 
+				<h:panelGrid columns="2"  style="margin-left: 42.9%;margin-top:-4.3%;">   
+	           		<p:outputLabel value="Peridodo" class="left3" style="margin-left:90%;"/>
+	           		<br />
+	           		<p:inputMask mask="99/99/9999" id="dataIni" style="color:gray;"  size="15" maxlength="15" value="04/05/2016"  class="tabelaRecebimento"  placeholder="Data Inicial" readonly="true">
+	                	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+	                	<p:ajax event="blur" />
+	                </p:inputMask>
+	                <p:inputMask id="dataFinal"  mask="99/99/9999" style="color:gray;" size="15" maxlength="15" class="left6" value="11/05/2016"  placeholder="Data Final" readonly="true">
+	                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+	                    <p:ajax event="blur" /> 
+	                </p:inputMask>  
+           		</h:panelGrid>
+           		<br />
+				<h:panelGrid columns="2" style="margin-left:17%;"> 
+					 <p:outputLabel value="Banco" for="banco"  class="left3" />
+					 <p:inputText id="banco" size="35"  class="left6" value="#" readonly="true"/>
+				</h:panelGrid>
+				<h:panelGrid columns="2" style="margin-left:38.6%;margin-top:-2.4%;">
+					 <p:outputLabel value="Agência" for="agencia"  class="left3" />
+					 <p:inputText id="agencia" size="10" maxlength="15" class="left6" value="#" readonly="true"/>
+				</h:panelGrid> 
+				<h:panelGrid columns="2" style="margin-left:50%;margin-top:-2.5%;">
+					 <p:outputLabel value="Conta" for="conta"  class="left3"/>
+					 <p:inputText id="conta" size="10" maxlength="15" class="left6" value="#" readonly="true"/>
+				</h:panelGrid> 
+				
+           		<h:panelGrid style="margin-left:94.5%;margin-top:-3%;">
+           			<p:commandLink   action="#" style="text-decoration:none;" title="Voltar para outros lançamentos">
+						<img src="../../resources/img/iconeVoltar.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;" width="32px;"/>
+					</p:commandLink>
+           		</h:panelGrid>
+				<hr/>
+					<h3 style="margin-left:29%;">Outros Lançamentos</h3>
+					<h3 style="text-align:right;margin-right:18%;margin-top:-3%;">Transações</h3>
+                    
+                    <p:dataTable id="idTabelaOutrosLancamentos"   value="#" style="border:none;width:40%;" class="tabelacontas" 
+                                 scrollRows="10"  scrollable="true" scrollHeight="300"  >
+                      
+                       <p:column headerText="Data" sortBy="#" style="width:17%; font-size:12px; background:white; color:black; border:none;">
+                            <h:outputText  value="09/05/2016" style="margin-left:29%; font-size:12px;" > 
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </h:outputText> 
+                        </p:column> 
+                        <p:column headerText="Tipo" styleClass="alinhar" sortBy="#" style="width:20%;text-align:left; font-size:12px; background:white; color:black; border:#fff;">
+                            <h:outputText value="#" style=" font-size:12px;"/>
+                        </p:column> 
+                        <p:column headerText="Descrição" sortBy="#" style="widht:50%; font-size:12px; background:white; color:black; border:none;" >
+                            <h:outputText value="#" style="font-size:12px;"/>
+                        </p:column>
+                        <p:column headerText="Valor" sortBy="#" style="width:8%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="2" style="font-size:12px; margin-right:10%;">
+                                
+                            </h:outputText>                                    
+                        </p:column>
+                    </p:dataTable> 
+                    
+                    <p:dataTable id="idTabelaTransacoes"   value="#" style="border:none;width:40%;margin-left:60%;margin-top:-24%;" class="tabelacontas" 
+                                 scrollRows="10"  scrollable="true" scrollHeight="300"  >
+                       
+                       <p:column headerText="Data" sortBy="#" style="width:17%; font-size:12px; background:white; color:black; border:none;">
+                            <h:outputText  value="09/05/2016" style="margin-left:29%; font-size:12px;" > 
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </h:outputText> 
+                        </p:column> 
+                        <p:column headerText="Tipo" styleClass="alinhar" sortBy="#" style="width:20%;text-align:left; font-size:12px; background:white; color:black; border:#fff;">
+                            <h:outputText value="#" style=" font-size:12px;"/>
+                        </p:column> 
+                        <p:column headerText="Descrição" sortBy="#" style="widht:50%; font-size:12px; background:white; color:black; border:none;" >
+                            <h:outputText value="#" style="font-size:12px;"/>
+                        </p:column>
+                        <p:column headerText="Valor" sortBy="#" style="width:8%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="2" style="font-size:12px; margin-right:10%;">
+                                
+                            </h:outputText>                                    
+                        </p:column> 
+                        <p:column style="width:5px; text-decoration:none;backoground:white !important;">
+                           <p:commandLink action="#" style="text-decoration: none" title="Exporta para outros lançamento" update=":frmConciliacaoBancaria:idTabelaTransacoes">
+                               <img src="../../resources/img/iconePuxarTransicao.png"  width="9" height="9"/>
+                           </p:commandLink>
+                        </p:column> 
+                    </p:dataTable> 
+                    
+                   
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

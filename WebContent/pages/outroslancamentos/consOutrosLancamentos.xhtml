@@ -56,7 +56,7 @@
 	                    <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
 	                </p:commandLink>
 	          </h:panelGrid> 
-	          <h:panelGrid columns="4" style="margin-left:86%; margin-top:-3.3%;">
+	          <h:panelGrid columns="5" style="margin-left:86%; margin-top:-3.3%;">
              <h:panelGrid>   
 			   
 				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-2%;text-decoration:none;" title="Atualizar Saldo Inicial">
@@ -75,24 +75,31 @@
 					<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 					<p:dataExporter type="xls" target="idTabelaOutrosLancamentos" fileName="outrosLancamentos" />
 	            </p:commandLink>
-	         </h:panelGrid> 
-	         <h:panelGrid style="margin-left:-82%; ">
+	         </h:panelGrid>
+	         <h:panelGrid  style="margin-left:-80%; ">   
+	            <p:commandLink   action="#{outrosLancamentosMB.conciliacaoBancaria()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Conciliação Bancaria" ajax="false">
+					<img src="../../resources/img/iconeExtrato.png" style="border:solid; border-width: 1px; border-color: #3D9446;" width="32px;"/>
+				</p:commandLink>
+	         </h:panelGrid>   
+	         <h:panelGrid style="margin-left:-104.5%; ">
 	            <p:commandLink   action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 					<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
 	            </p:commandLink>   
 	         </h:panelGrid> 
+	         
 	         </h:panelGrid>
 	            <br /><br /> 
 	            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
         				<p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir()}" type="button" styleClass="ui-confirmdialog-yes"  />
         				<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
     			</p:confirmDialog>
-	             <p:contextMenu for="idTabelaOutrosLancamentos" style="background:white;">
+	                <p:contextMenu for="idTabelaOutrosLancamentos" style="background:white;">
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash" action="#{outrosLancamentosMB.excluir()}"  update="growl, idTabelaOutrosLancamentos" >
                         	<p:confirm header="Confirmação" message="Tem certeza que deseja excluir esse lançamento?" icon="ui-icon-alert" />
                         </p:menuitem>
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  actionListener="#{outrosLancamentosMB.editar(outrosLancamentosMB.outrosLancamentos)}" /> 
-                    	</p:contextMenu> 
+                    	<p:menuitem value="Conciliação Bancaria" ajax="false"  icon=" ui-icon-pencil"  actionListener="#{outrosLancamentosMB.conciliacaoBancaria()}" /> 
+                   </p:contextMenu> 
                     <p:dataTable id="idTabelaOutrosLancamentos"  var="outrosLancamentos"  value="#{outrosLancamentosMB.listaOutrosLancamentos}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{outrosLancamentosMB.outrosLancamentos}" selectionMode="single" rowKey="#{outrosLancamentos.idoutroslancamentos}">
                          
