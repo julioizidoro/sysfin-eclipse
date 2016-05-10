@@ -372,19 +372,34 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 	private List<ConciliacaoBean> gerarListaConciliacao() {
 		unidade = "TODAS";
     	nomeBanco = "TODOS";
-    	String sql = "Select o From Outroslancamentos o where o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataIncial) + "' and" +
+    	String sql = "Select o From Outroslancamentos o ";
+    	if (dataIncial != null || dataFinal != null || cliente != null || banco != null || planocontas != null) {
+			sql = sql + " where ";
+		}
+    	if (dataIncial != null && dataFinal != null) {
+    		sql = sql + "o.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataIncial) + "' and" +
     				" o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
+    		if (cliente != null || banco.getIdbanco() != null || planocontas != null ) {
+				sql = sql + " and ";
+			}
+		}
     				    				
     	if (cliente!=null){
-    		sql =sql + " and o.cliente.idcliente=" + cliente.getIdcliente();
+    		sql =sql + " o.cliente.idcliente=" + cliente.getIdcliente();
     		unidade = cliente.getNomeFantasia();
+    		if ( banco.getIdbanco() != null || planocontas != null ) {
+				sql = sql + " and ";
+			}
     	}
-    	if (banco!=null){
-    		sql = sql + " and o.banco.idbanco=" + banco.getIdbanco();
+    	if (banco!=null && banco.getIdbanco() != null){
+    		sql = sql + " o.banco.idbanco=" + banco.getIdbanco();
     		nomeBanco = banco.getNome();
+    		if ( planocontas != null ) {
+				sql = sql + " and ";
+			}
     	}
     	if (planocontas!=null){
-    		sql = sql + " and o.planocontas.idplanoContas=" + planocontas.getIdplanoContas();
+    		sql = sql + " o.planocontas.idplanoContas=" + planocontas.getIdplanoContas();
     	}
     	sql = sql + " order by o.dataCompensacao";
     	OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
