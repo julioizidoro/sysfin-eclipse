@@ -439,33 +439,86 @@ import br.com.financemate.model.Vendas;
 	     
 	    private LineChartModel initLinearModel() {
 	        LineChartModel model = new LineChartModel();
-	        
-	        
+	        Calendar cal = Calendar.getInstance();  
+            cal.setTime(new Date()); 
+            int dia = cal.get(Calendar.DAY_OF_MONTH);
+            Date data = cal.getTime();
+            int mes = data.getMonth() + 1;
+            int ndia = data.getDay() + 8;
+	        if (mes == 1) {
+				if (ndia > 31) {
+					dia = 1;
+				}  
+			}else if(mes == 2){
+				if (ndia > 28) {
+					dia = 1;
+				}
+			}else if(mes == 3){
+				if (ndia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 4){
+				if (ndia > 30) {
+					dia = 1;
+				}
+			}else if(mes == 5){
+				if (ndia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 6){
+				if (ndia > 30) {
+					dia = 1;
+				}
+			}else if(mes == 7){
+				if (ndia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 8){
+				if (ndia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 9){
+				if (ndia > 30) {
+					dia = 1;
+				}
+			}else if(mes == 10){
+				if (ndia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 11){
+				if (ndia > 30) {
+					dia = 1;
+				}
+			}else if(mes == 12){
+				if (ndia > 31) {
+					dia = 1;
+				}
+			}
 	        LineChartSeries recebimentos = new LineChartSeries();
 	        recebimentos.setLabel("Recebimentos");
-	        recebimentos.set(diaInicio, recebimentosDia1());
-	        recebimentos.set(diaInicio +1, recebimentosDia2());
-	        recebimentos.set(diaInicio + 2, recebimentosDia3());
-	        recebimentos.set(diaInicio + 3, recebimentosDia4());
-	        recebimentos.set(diaInicio + 4, recebimentosDia5()); 
+	        recebimentos.set(dia, recebimentosDia1());
+	        recebimentos.set(dia +1, recebimentosDia2());
+	        recebimentos.set(dia + 2, recebimentosDia3());
+	        recebimentos.set(dia + 3, recebimentosDia4());
+	        recebimentos.set(dia + 4, recebimentosDia5()); 
 	         
 	        LineChartSeries pagamentos = new LineChartSeries();
 	        pagamentos.setLabel("Pagamentos");
-	        pagamentos.set(diaInicio, pagamentodia1());
-	        pagamentos.set(diaInicio +1, pagamentodia2());
-	        pagamentos.set(diaInicio +2, pagamentodia3());
-	        pagamentos.set(diaInicio +3, pagamentodia4());
-	        pagamentos.set(diaInicio +4, pagamentodia5());
-	  
+	        pagamentos.set(dia, pagamentodia1());
+	        pagamentos.set(dia +1, pagamentodia2());
+	        pagamentos.set(dia +2, pagamentodia3());
+	        pagamentos.set(dia +3, pagamentodia4());
+	        pagamentos.set(dia +4, pagamentodia5());
+
 	        
 	        LineChartSeries saldo = new LineChartSeries();
 	        saldo.setLabel("Saldo");
 	 
-	        saldo.set(diaInicio, saldoPrimeiroDia);
-	        saldo.set(diaInicio +1, saldoSegundoDia);
-	        saldo.set(diaInicio +2, saldoTerceiroDia);
-	        saldo.set(diaInicio +3, saldoQuartoDia);
-	        saldo.set(diaInicio +4, saldoQuintaDia);
+	        saldo.set(dia, saldoPrimeiroDia);
+	        saldo.set(dia +1, saldoSegundoDia);
+	        saldo.set(dia +2, saldoTerceiroDia);
+	        saldo.set(dia +3, saldoQuartoDia);
+	        saldo.set(dia +4, saldoQuintaDia);
 	        
 	        model.addSeries(recebimentos);
 	        model.addSeries(pagamentos);
