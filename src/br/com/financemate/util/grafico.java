@@ -17,7 +17,8 @@ import org.jfree.data.time.Year;
 import org.primefaces.model.chart.Axis;
 	import org.primefaces.model.chart.AxisType;
 	import org.primefaces.model.chart.BarChartModel;
-	import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.LineChartModel;
 	import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.LineChartSeries;
@@ -338,15 +339,18 @@ import br.com.financemate.model.Vendas;
 	 
 	    private void createAnimatedModels() {
 	    	gerarDiasFluxoCaixa();
-	       // animatedModel1 = initLinearModel();
-	        //animatedModel1.setTitle("Fluxo de Caixa diário");
-	       // animatedModel1.setAnimate(true);
-	       // animatedModel1.setLegendPosition("ne");
-	       // animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
-	       // animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4"); 
-	       
-	      //  yAxis.setMin(valorMinimo.intValue());
-	      //  yAxis.setMax(valorMaximo.intValue()  + 100);
+	        animatedModel1 = initLinearModel();
+	        animatedModel1.setTitle("Fluxo de Caixa diário");
+	        animatedModel1.setAnimate(true);
+	        animatedModel1.setLegendPosition("ne");
+	        animatedModel1.setShowPointLabels(true);
+	        animatedModel1.getAxes().put(AxisType.X, new CategoryAxis("Dia"));
+	        animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
+	        animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4");
+	        Axis yAxis = animatedModel1.getAxis(AxisType.Y);
+	        yAxis.setLabel("Valor");
+	        yAxis.setMin(valorMinimo.intValue());
+	        yAxis.setMax(valorMaximo.intValue()  + 100);
 	        
 	         
 	        animatedModel2 = initBarModel();
@@ -354,21 +358,21 @@ import br.com.financemate.model.Vendas;
 	        animatedModel2.setTitle("Grafico de vendas");
 	        animatedModel2.setAnimate(true);
 	        animatedModel2.setLegendPosition("ne");
-	        Axis yAxis = animatedModel2.getAxis(AxisType.Y);
+	        yAxis = animatedModel2.getAxis(AxisType.Y);
 	        yAxis.setMin(0);
 	        yAxis.setMax(200);
 	        
 	        
-	        animatedModel3 = initBarModel2();
+	       // animatedModel3 = initBarModel2();
 	        
-	        animatedModel3.setTitle("Fluxo de caixa");
-	        animatedModel3.setAnimate(true);
-	        animatedModel3.setLegendPosition("ne");
-	        animatedModel3.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
-	        animatedModel3.setSeriesColors("66cc66, FE2E2E, A4A4A4"); 
-	        yAxis = animatedModel3.getAxis(AxisType.Y);
-	        yAxis.setMin(valorMinimo);
-	        yAxis.setMax(valorMaximo + 800);
+	       // animatedModel3.setTitle("Fluxo de caixa");
+	       // animatedModel3.setAnimate(true);
+	      //  animatedModel3.setLegendPosition("ne");
+	      //  animatedModel3.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
+	      //  animatedModel3.setSeriesColors("66cc66, FE2E2E, A4A4A4"); 
+	      //  yAxis = animatedModel3.getAxis(AxisType.Y);
+	     //   yAxis.setMin(valorMinimo);
+	     //   yAxis.setMax(valorMaximo + 800);
 	        
 	    }
 	     
