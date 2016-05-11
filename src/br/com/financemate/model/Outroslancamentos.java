@@ -72,6 +72,8 @@ public class Outroslancamentos implements Serializable {
     private boolean selecionado;
     @Column(name = "saldo")
     private Float saldo;
+    @Column(name = "conciliacao")
+    private String conciliacao;
     
 
     public Outroslancamentos() {
@@ -213,7 +215,15 @@ public class Outroslancamentos implements Serializable {
     
     
 
-    public Float getSaldo() {
+    public String getConciliacao() {
+		return conciliacao;
+	}
+
+	public void setConciliacao(String conciliacao) {
+		this.conciliacao = conciliacao;
+	}
+
+	public Float getSaldo() {
 		return saldo;
 	}
 
