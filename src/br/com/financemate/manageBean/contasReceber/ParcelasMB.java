@@ -86,7 +86,9 @@ public class ParcelasMB implements Serializable {
 	
 	
 	public void totalParcela(){
-		total = contasreceber.getValorParcela();
+		for (int i = 0; i < listaParcela.size(); i++) {
+			total = total + listaParcela.get(i).getValorParcela();
+		}
 	}
 
 	

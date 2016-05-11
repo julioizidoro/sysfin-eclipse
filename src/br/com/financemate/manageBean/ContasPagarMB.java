@@ -690,7 +690,7 @@ public class ContasPagarMB implements Serializable{
 			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
 		 }
 		 if (!descricao.equalsIgnoreCase("")) {
-			sql =  sql + " v.descricao= '" + descricao + "' and ";
+			sql =  sql + " v.descricao like '%" + descricao + "%' and ";
 		}
 		if (planocontas!=null) {
 			sql = sql + " v.planocontas.idplanoContas=" + planocontas.getIdplanoContas() + " and ";
