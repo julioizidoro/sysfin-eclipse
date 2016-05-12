@@ -386,9 +386,9 @@ public class CadContasReceberMB implements Serializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true) {
+				if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true || contasReceber.getIdcontasReceber() != null) {
 					int numeroVezes = Integer.parseInt(vezes);
-					for (int i = 1; i <= numeroVezes; i++) {
+					for (int i = 1; i <= numeroVezes; i++) { 
 				        contasReceber.setBanco(banco);
 				        contasReceber.setPlanocontas(planoContas);
 				        contasReceber.setCliente(cliente);
@@ -454,7 +454,7 @@ public class CadContasReceberMB implements Serializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true) {
+				if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true || contasReceber.getIdcontasReceber() != null) {
 					
 				
 					contasReceber.setBanco(banco);

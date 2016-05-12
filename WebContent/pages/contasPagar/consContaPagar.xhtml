@@ -44,8 +44,8 @@
                                 <img src="#{contasPagarMB.verStatus(contasPagar)}" style="margin-right:25%; font-size:12px;"/>
                             </p:commandLink>
                         </p:column>  
-                        <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; font-size:12px; background:white; color:black; border:none;">
-                            <h:outputText  value="#{contasPagar.dataVencimento}" style="margin-left:29%; font-size:12px;" > 
+                        <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; font-size:12px; background:white; color:black; border:none;text-align:center;">
+                            <h:outputText  value="#{contasPagar.dataVencimento}" style=" font-size:12px;" > 
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText> 
                         </p:column> 
@@ -55,8 +55,8 @@
                         <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{contasPagar.descricao}" style="font-size:12px;"/>
                         </p:column>
-                        <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; font-size:12px; background:white; color:black; border:none;" >
-                            <h:outputText value="#{contasPagar.fornecedor}" style="margin-left:37%; font-size:12px;"/>
+                        <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; font-size:12px; background:white; color:black; border:none;text-align:center;" >
+                            <h:outputText value="#{contasPagar.fornecedor}" style=" font-size:12px;"/>
                         </p:column>  
                         <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; font-size:12px; background:white; color:black; border:none;" styleClass="alinharCenter" >
                             <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="margin-right:50%; width:18%; font-size:12px;"/>

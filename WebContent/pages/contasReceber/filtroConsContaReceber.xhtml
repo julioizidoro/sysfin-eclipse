@@ -89,12 +89,15 @@
 	       		<p:inputText size="16" value="#{contasReceberMB.valorParcela}" />
 	       </h:panelGrid>
 	       <br />
-	        <h:panelGrid columns="5"  style="margin-left: 1%;"> 
-           		<p:outputLabel value="Data de Recebimento" class="left3"/>	
-           		<p:inputMask id="dataRecebimento" mask="99/99/9999" style="margin-left:8%;" size="15" maxlength="15" value="#{contasReceberMB.dataRecebimento}" class="tabelaRecebimento" >
+            <h:panelGrid columns="5"  style="margin-left: 1%;"> 
+           		<p:outputLabel value="Data de Recebimento" class="left3" />	
+           		<p:inputMask id="dataIniRec" mask="99/99/9999"  size="15" maxlength="15" value="#{contasReceberMB.dataRecebimentoInicial}" class="tabelaRecebimento"  placeholder="Data Inicial" >
                 	<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask>
+                <p:inputMask id="dataFinalRec"  mask="99/99/9999" size="15" maxlength="15" class="left6" value="#{contasReceberMB.dataRecebimentoFinal}"  placeholder="Data Final">
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask> 
-            </h:panelGrid>
+           </h:panelGrid>
            <br />
            <br /><br /><br /><br /><br /><br /><br /><br /><br />          
                     

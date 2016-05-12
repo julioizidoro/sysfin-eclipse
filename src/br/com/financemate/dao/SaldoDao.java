@@ -45,6 +45,9 @@ public class SaldoDao {
         }else{
         	saldo = 0f;
         }
+        if (saldo == null) {
+			saldo = 0f;
+		}
         return saldo;
     }
     

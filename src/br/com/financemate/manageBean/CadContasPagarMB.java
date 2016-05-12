@@ -80,9 +80,13 @@ public class CadContasPagarMB implements Serializable{
         cliente = (Cliente) session.getAttribute("cliente");
         contaPagar = (Contaspagar) session.getAttribute("contapagar");
         cptransferencia =  (Cptransferencia) session.getAttribute("cptransferencia");
+        banco = (Banco) session.getAttribute("banco");
+        planoContas = (Planocontas) session.getAttribute("planocontas");
         session.removeAttribute("contapagar");
         session.removeAttribute("file");
         session.removeAttribute("cliente");
+        session.removeAttribute("banco");
+        session.removeAttribute("planocontas");
         gerarListaCliente();
         gerarListaPlanoContas();
         if (contaPagar == null) { 
@@ -100,9 +104,13 @@ public class CadContasPagarMB implements Serializable{
 			if (cliente == null) {
 				cliente = contaPagar.getCliente();
 			}
-            planoContas = contaPagar.getPlanocontas();
-            banco = contaPagar.getBanco();
-            gerarListaBanco();
+			if (planoContas == null) {
+            	planoContas = contaPagar.getPlanocontas();				
+			} 
+            if (banco == null) {
+            	banco = contaPagar.getBanco();				
+			}
+            gerarListaBanco(); 
             transferenciaBancaria(); 
             if (contaPagar.getFormaPagamento().equalsIgnoreCase("transferencia")) {
             	CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
@@ -733,6 +741,8 @@ public class CadContasPagarMB implements Serializable{
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("contapagar", contaPagar);
         session.setAttribute("cliente", cliente);
+        session.setAttribute("banco", banco);
+        session.setAttribute("planocontas", planoContas);
 		return "anexarArquivo";
 	}
 
@@ -741,6 +751,9 @@ public class CadContasPagarMB implements Serializable{
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("contapagar", contaPagar);
         session.setAttribute("file", file);
+        session.setAttribute("cliente", cliente);
+        session.setAttribute("banco", banco);
+        session.setAttribute("planocontas", planoContas);
 		return "cadContasPagar";
 	}
 

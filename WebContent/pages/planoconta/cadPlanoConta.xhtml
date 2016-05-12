@@ -18,7 +18,7 @@
         <h:form id="idFrmCadPlanoConta" class="body2" style="font-size: 12px; background-color: white;" enctype="multipart/form-data">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+            <p:dialog onShow="#{planoContaMB.gerarListaPlanoConta()}"  widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
@@ -46,10 +46,12 @@
               <br />
               <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{cadPlanoContaMB.salvarPlanoContas()}" > 
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+                    
               </p:commandLink>
               <p:commandLink title="Cancelar" style="margin-left: 5%;text-decoration: none" action="#{cadPlanoContaMB.cancelar()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
               </p:commandLink>
+              
               <br></br>
         </h:form>
 </h:body>

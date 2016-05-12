@@ -524,9 +524,9 @@ public class CadVendasMB implements Serializable {
 		}
 		
 		vendas.setLiquidoVendas(vendas.getLiquidoVendas() + (vendas.getComissaoLiquidaTotal() - (vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros())));
-		valorPagarReceber = vendas.getValorLiquido() - (vendas.getLiquidoVendas() + vendas.getValorPagoFornecedor());
+		valorPagarReceber = vendas.getValorBruto() - (vendas.getComissaoLiquidaTotal() + vendas.getValorPagoFornecedor());
 		
-	}
+	} 
 	 
 	
 	public String salvarConta(){
@@ -654,7 +654,7 @@ public class CadVendasMB implements Serializable {
 		if (vendas.getValorLiquido() < 0) {
 			vendas.setValorLiquido(vendas.getValorLiquido() * (-1));
 		}
-		if (vendas.getFormapagamentoList() == null) {
+		if (listaFormaPagamento == null || listaFormaPagamento.isEmpty() == true) {
 			vendas.setSituacao("vermelho");
 		}else{
 			vendas.setSituacao("amarelo");
@@ -673,10 +673,10 @@ public class CadVendasMB implements Serializable {
 		try {
 			String mensagem = validarDados();
 			if (mensagem == "") {
-				if (listaFormaPagamento != null) {
-					vendas.setSituacao("amarelo");
-				}else{
+				if (listaFormaPagamento == null || listaFormaPagamento.isEmpty() == true) {
 					vendas.setSituacao("vermelho");
+				}else{
+					vendas.setSituacao("amarelo");
 				}
 				vendas = vendasFacade.salvar(vendas);
 				if (emissaonota != null) {

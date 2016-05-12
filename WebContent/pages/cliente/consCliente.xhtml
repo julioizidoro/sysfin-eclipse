@@ -21,8 +21,8 @@
                     <p:dataTable id="idTabelaCliente"  var="cliente"  value="#{clienteMB.listaClientes}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{clienteMB.cliente}" selectionMode="single" rowKey="#{cliente.idcliente}">
                        
-                        <p:column headerText="Nome" sortBy="#{cliente.nomeFantasia}" style="width:17%; font-size:12px; background:white; color:black; border:none;">
-                            <h:outputText  value="#{cliente.nomeFantasia}" style="margin-left:33%;" />
+                        <p:column headerText="Nome" sortBy="#{cliente.nomeFantasia}" style="width:17%; font-size:12px; background:white; color:black; border:none;text-align:center;">
+                            <h:outputText  value="#{cliente.nomeFantasia}" />
                         </p:column> 
                         <p:column headerText="Fone Fixo" sortBy="#{cliente.foneFixo}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;">
                             <h:outputText value="#{cliente.foneFixo}" style="margin-left:25%;"/>

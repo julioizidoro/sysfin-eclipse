@@ -279,89 +279,95 @@ public class GerarParcelaMB implements Serializable {
 	}
 	
 	public void SalvarParcela(){
-		if (vezes != null) {
-			if (valorParcela < vendas.getValorLiquido()) {
-				Integer numerovezes = Integer.parseInt(vezes);
-				Contasreceber contasreceber = new Contasreceber();
-				contasreceber.setDataVencimento(dataVencimento);
-				for (int i = 0; i < numerovezes; i++) {
-					ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-					VendasFacade vendasFacade = new VendasFacade();
-					ClienteFacade clienteFacade = new ClienteFacade();
-					BancoFacade bancoFacade = new BancoFacade();
-					PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-					if (valorParcela < 0) {
-						contasreceber.setValorParcela(valorParcela/numerovezes * (-1));
-					}else{
-						contasreceber.setValorParcela(valorParcela/numerovezes);
-					}
-					contasreceber.setTipodocumento(tipoDocumento);
-					contasreceber.setUsuario(usuarioLogadoMB.getUsuario());
-					contasreceber.setNomeCliente(vendas.getNomeCliente());
-					contasreceber.setJuros(0f); 
-					contasreceber.setDesagio(0f);
-					contasreceber.setValorPago(0f);
-					contasreceber.setNumeroDocumento(""+vendas.getIdvendas());
-					contasreceber.setVenda(vendas.getIdvendas());
-					contasreceber.setNumeroParcela(i+1);
-					if (vendas.getCliente() != null) { 
-						try {
-							banco = bancoFacade.consultar(vendas.getCliente().getIdcliente(), "Nenhum");
-							contasreceber.setBanco(banco);
-							contasreceber.setCliente(vendas.getCliente());
-							planocontas = planoContasFacade.consultar(1);
-							contasreceber.setPlanocontas(planocontas);
+		if (vezes != "" && valorParcela != 0f  && dataVencimento != null) {
+			if (valorParcela.floatValue() == saldoTotal().floatValue()) {
+					Integer numerovezes = Integer.parseInt(vezes); 
+					Contasreceber contasreceber = new Contasreceber();
+					contasreceber.setDataVencimento(dataVencimento);
+					for (int i = 0; i < numerovezes; i++) {
+						ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+						VendasFacade vendasFacade = new VendasFacade();
+						ClienteFacade clienteFacade = new ClienteFacade();
+						BancoFacade bancoFacade = new BancoFacade();
+						PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+						if (valorParcela < 0) {
+							contasreceber.setValorParcela(valorParcela/numerovezes * (-1));
+						}else{
+							contasreceber.setValorParcela(valorParcela/numerovezes);
+						}
+						contasreceber.setTipodocumento(tipoDocumento);
+						contasreceber.setUsuario(usuarioLogadoMB.getUsuario());
+						contasreceber.setNomeCliente(vendas.getNomeCliente());
+						contasreceber.setJuros(0f); 
+						contasreceber.setDesagio(0f);
+						contasreceber.setValorPago(0f);
+						contasreceber.setNumeroDocumento(""+vendas.getIdvendas());
+						contasreceber.setVenda(vendas.getIdvendas());
+						contasreceber.setNumeroParcela(i+1);
+						if (vendas.getCliente() != null) { 
+							try {
+								banco = bancoFacade.consultar(vendas.getCliente().getIdcliente(), "Nenhum");
+								contasreceber.setBanco(banco);
+								contasreceber.setCliente(vendas.getCliente());
+								planocontas = planoContasFacade.consultar(1);
+								contasreceber.setPlanocontas(planocontas);
+								
+							} catch (SQLException e) {
+								Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
+					            mostrarMensagem(e, "Erro ao consultar um banco", "Erro");
+							} 
+						}else{
+							try {
+								banco = bancoFacade.consultar(8, "Nenhum");
+								contasreceber.setBanco(banco);
+								cliente = clienteFacade.consultar(8);
+								contasreceber.setCliente(cliente);
+								planocontas = planoContasFacade.consultar(1);
+								contasreceber.setPlanocontas(planocontas);
+							} catch (SQLException e) {
+								Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
+					            mostrarMensagem(e, "Erro ao consultar um banco", "Erro");
+							}
 							
-						} catch (SQLException e) {
-							Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
-				            mostrarMensagem(e, "Erro ao consultar um banco", "Erro");
-						} 
-					}else{
-						try {
-							banco = bancoFacade.consultar(8, "Nenhum");
-							contasreceber.setBanco(banco);
-							cliente = clienteFacade.consultar(8);
-							contasreceber.setCliente(cliente);
-							planocontas = planoContasFacade.consultar(1);
-							contasreceber.setPlanocontas(planocontas);
-						} catch (SQLException e) {
-							Logger.getLogger(GerarParcelaMB.class.getName()).log(Level.SEVERE, null, e);
-				            mostrarMensagem(e, "Erro ao consultar um banco", "Erro");
 						}
-						
-					}
-					Contasreceber copia = new Contasreceber();
-					copia = contasreceber;
-					contasreceber = contasReceberFacade.salvar(contasreceber);
-					if (contasreceber.getIdcontasReceber() != null) {
-						vendas.setSituacao("Parcela Gerada");
-						try {
-							vendasFacade.salvar(vendas);
-						} catch (SQLException e) {
-							e.printStackTrace();
+						Contasreceber copia = new Contasreceber();
+						copia = contasreceber;
+						contasreceber = contasReceberFacade.salvar(contasreceber);
+						if (contasreceber.getIdcontasReceber() != null) {
+							vendas.setSituacao("Parcela Gerada");
+							try {
+								vendasFacade.salvar(vendas);
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}
+						Calendar c = new GregorianCalendar();
+						c.setTime(copia.getDataVencimento());
+						c.add(Calendar.MONTH, 1);
+						Date data = c.getTime();
+						copia.setDataVencimento(data);
+						if (i < numerovezes) {
+							contasreceber = new Contasreceber();
+							contasreceber = copia;
 						}
 					}
-					Calendar c = new GregorianCalendar();
-					c.setTime(copia.getDataVencimento());
-					c.add(Calendar.MONTH, 1);
-					Date data = c.getTime();
-					copia.setDataVencimento(data);
-					if (i < numerovezes) {
-						contasreceber = new Contasreceber();
-						contasreceber = copia;
-					}
-				}
-				gerarListaParcelas();
-				valorParcela = null;
-				vezes = null;
-				tipoDocumento = null;
-				dataVencimento = null;
-				
+					gerarListaParcelas();
+					valorParcela = null;
+					vezes = null;
+					tipoDocumento = null;
+					dataVencimento = null;
 			}else{
 				mensagem mensagem = new mensagem();
-				mensagem.valorAcimaPermitidoGerarParcela();
+				if (valorParcela > saldoTotal()) {	
+					mensagem.valorAcimaPermitidoGerarParcela();
+				}else{
+					mensagem.valorAbaixoPermitidoGerarParcela();
+				}
 			}
-		}	
+		}else{
+			mensagem mensagem = new mensagem();
+			mensagem.informacaoNaoPreenchida();
+		}
 	}
 	
 	public void SemParcela(){

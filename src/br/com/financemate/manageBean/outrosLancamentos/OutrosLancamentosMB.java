@@ -488,18 +488,31 @@ public class OutrosLancamentosMB implements Serializable {
 			if (banco.getIdbanco() != null) {
 				sql = sql + " where s.banco.idbanco="+ banco.getIdbanco();
 			}
-			saldoInicial = saldoFacade.consultar(sql);
+			if (banco.getIdbanco() == null) {
+				List<Banco> listaBanco;
+				BancoFacade bancoFacade = new BancoFacade(); 
+				listaBanco = bancoFacade.listar("Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente());
+				if (listaBanco == null) {
+					listaBanco = new ArrayList<Banco>();
+				}
+				for (int i = 0; i < listaBanco.size(); i++) {
+					String sql3 = "Select max(s.valor) from Saldo s where s.banco.idbanco=" + listaBanco.get(i).getIdbanco();
+					saldoInicial = saldoInicial + saldoFacade.consultar(sql3);
+				} 
+			}else{ 
+				saldoInicial = saldoFacade.consultar(sql);
+			}
 			if (saldoInicial == null) {
 				saldoInicial = 0.0f;
 			}
 			String sql2 = "Select o from Outroslancamentos o where o.dataCompensacao<'" + Formatacao.ConvercaoDataSql(dataInicial) + "'";
 			if (banco.getIdbanco() != null) {
 				sql2= sql2 + " and o.banco.idbanco="+ banco.getIdbanco();
-			}
+			}  
 			listaOutrosLancamentosAnteriores = outrosLancamentosFacade.listaOutrosLancamentos(sql2);
 			if (listaOutrosLancamentosAnteriores == null) {
 				listaOutrosLancamentosAnteriores = new ArrayList<Outroslancamentos>();
-			}
+			} 
 			for(int i=0;i<listaOutrosLancamentosAnteriores.size();i++){
 	            if (listaOutrosLancamentosAnteriores.get(i).getValorEntrada() > 0){
 	                entrada = entrada + listaOutrosLancamentosAnteriores.get(i).getValorEntrada();

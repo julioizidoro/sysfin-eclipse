@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
@@ -90,6 +91,8 @@ public class Formapagamento implements Serializable {
     @JoinColumn(name = "vendas_idvendas", referencedColumnName = "idvendas")
     @ManyToOne(optional = false)
     private Vendas vendas;
+    @Transient
+    private boolean selecionado;
 
     public Formapagamento() {
     }
@@ -257,8 +260,18 @@ public class Formapagamento implements Serializable {
     public void setVendas(Vendas vendas) {
         this.vendas = vendas;
     }
+    
+    
 
-    @Override
+    public boolean isSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idformaPagamento != null ? idformaPagamento.hashCode() : 0);

@@ -83,7 +83,8 @@ public class ContasReceberMB implements Serializable {
     private Integer cob;
     private List<Cobrancaparcelas> listaCob;
 	private Boolean habilitarUnidade = false;
-	private Date dataRecebimento;
+	private Date dataRecebimentoInicial;
+	private Date dataRecebimentoFinal;
 	
     @PostConstruct
 	public void init(){
@@ -95,17 +96,43 @@ public class ContasReceberMB implements Serializable {
     
 
 
-
-	public Date getDataRecebimento() {
-		return dataRecebimento;
+	public Date getDataRecebimentoInicial() {
+		return dataRecebimentoInicial;
 	}
 
 
 
 
-	public void setDataRecebimento(Date dataRecebimento) {
-		this.dataRecebimento = dataRecebimento;
+
+
+	public void setDataRecebimentoInicial(Date dataRecebimentoInicial) {
+		this.dataRecebimentoInicial = dataRecebimentoInicial;
 	}
+
+
+
+
+
+	public Date getDataRecebimentoFinal() {
+		return dataRecebimentoFinal;
+	}
+
+
+
+
+
+
+
+
+
+	public void setDataRecebimentoFinal(Date dataRecebimentoFinal) {
+		this.dataRecebimentoFinal = dataRecebimentoFinal;
+	}
+
+
+
+
+
 
 
 
@@ -878,7 +905,7 @@ public class ContasReceberMB implements Serializable {
 				 sql = sql + " and ";
 			 } else if ((dataInicial!=null) && (dataFinal!=null)){
 				 sql = sql + " and ";
-			 }else if(dataRecebimento != null){
+			 }else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 					sql = sql + " and ";
 			 }
 		 }else {
@@ -895,7 +922,7 @@ public class ContasReceberMB implements Serializable {
 				 sql = sql + " and ";
 			 } else if ((dataInicial!=null) && (dataFinal!=null)){
 				 sql = sql + " and ";
-			 }else if(dataRecebimento != null){
+			 }else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 					sql = sql + " and ";
 			 }
 		 }
@@ -912,7 +939,7 @@ public class ContasReceberMB implements Serializable {
 				 sql = sql + " and ";
 			 } else if ((dataInicial!=null) && (dataFinal!=null)){
 				 sql = sql + " and ";
-			 }else if(dataRecebimento != null){
+			 }else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 					sql = sql + " and ";
 			 }
 		 }
@@ -927,7 +954,7 @@ public class ContasReceberMB implements Serializable {
 				 sql = sql + " and ";
 			 } else if ((dataInicial!=null) && (dataFinal!=null)){
 				 sql = sql + " and ";
-			 }else if(dataRecebimento != null){
+			 }else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 					sql = sql + " and ";
 			 }
 		}
@@ -940,7 +967,7 @@ public class ContasReceberMB implements Serializable {
 				 sql = sql + " and ";
 			 } else if ((dataInicial!=null) && (dataFinal!=null)){
 				 sql = sql + " and ";
-			 }else if(dataRecebimento != null){
+			 }else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 					sql = sql + " and ";
 			 }
 		}
@@ -951,7 +978,7 @@ public class ContasReceberMB implements Serializable {
 				 sql = sql + " and ";
 			 } else if ((dataInicial!=null) && (dataFinal!=null)){
 				 sql = sql + " and ";
-			 }else if(dataRecebimento != null){
+			 }else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 					sql = sql + " and ";
 			 }
 		}
@@ -960,34 +987,35 @@ public class ContasReceberMB implements Serializable {
 			sql = sql + " v.valorPago>0";
 			if ((dataInicial!=null) && (dataFinal!=null)){
 				sql = sql + " and ";
-			}else if(dataRecebimento != null){
+			}else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 				sql = sql + " and ";
 			}
 		}else if(status.equalsIgnoreCase("Vencidas")){
 			sql = sql + " v.dataVencimento<'" + Formatacao.ConvercaoDataSql(new Date()) + "' and v.dataPagamento=null";
 			if ((dataInicial!=null) && (dataFinal!=null)){
 				sql = sql + " and ";
-			}else if(dataRecebimento != null){
+			}else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 				sql = sql + " and ";
 			}
 		}else if(status.equalsIgnoreCase("A vencer")){
 			sql = sql + " v.dataVencimento>'" + Formatacao.ConvercaoDataSql(new Date())+ "'";
 			if ((dataInicial!=null) && (dataFinal!=null)){
 				sql = sql + " and ";
-			}else if(dataRecebimento != null){
+			}else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 				sql = sql + " and ";
 			}
 		}else if (status.equalsIgnoreCase("Canceladas")){
 			sql = sql + " v.numeroDocumento=" + "'CANCELADA'"; 
 			if ((dataInicial!=null) && (dataFinal!=null)){
 				sql = sql + " and ";
-			}else if(dataRecebimento != null){
+			}else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
 				sql = sql + " and ";
 			}
 		}
 		
-		if (dataRecebimento!= null) {
-			sql = sql + " v.dataPagamento='" + Formatacao.ConvercaoDataSql(dataRecebimento) + "'";
+		if ((dataRecebimentoInicial != null) && (dataRecebimentoFinal != null)) {
+			sql = sql + "v.dataPagamento>='" + Formatacao.ConvercaoDataSql(dataRecebimentoInicial) + 
+					"' and v.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataRecebimentoFinal) + "'";
 			if ((dataInicial!=null) && (dataFinal!=null)){
 				sql = sql + " and ";
 			}
@@ -998,7 +1026,6 @@ public class ContasReceberMB implements Serializable {
 					"' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
 					"' order by v.dataVencimento";
 		}
-		gerarListaContas();
 		RequestContext.getCurrentInstance().closeDialog(sql);
 	 }
 	 

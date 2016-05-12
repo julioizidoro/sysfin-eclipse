@@ -46,6 +46,11 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Recebido com Sucesso", ""));
     }
     
+    public void informacaoNaoPreenchida() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Informações obrigatórias para gerar a parcela não informada", ""));
+    }
+    
     public void recebidoParcial() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Recebimento Parcial com Sucesso", ""));
@@ -99,6 +104,11 @@ public class mensagem {
     public void valorAcimaPermitidoGerarParcela() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("O valor total maior que o valor total a ser recebido", ""));
+    }
+    
+    public void valorAbaixoPermitidoGerarParcela() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("O valor total menor que o valor total a ser recebido", ""));
     }
     
     public void salvarVisualizarParcela() {
