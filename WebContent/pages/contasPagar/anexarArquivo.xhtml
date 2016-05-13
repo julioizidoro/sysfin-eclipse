@@ -31,18 +31,18 @@
                 
             </h:panelGrid>
             <h:panelGrid>
-            	<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
-        			<p:fileDownload value="#{cadContasPagarMB.baixarFile()}" />
+            	<p:commandButton value="Download" ajax="false"  onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+        			<p:fileDownload value="#{cadContasPagarMB.baixarFile()}"/>
     			</p:commandButton>
             </h:panelGrid>
             
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                <p:commandLink title="Confirmar" style="text-decoration: none; margin-left:35%;"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >
+                <p:commandLink title="Confirmar"  style="text-decoration: none; margin-left:35%;"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
                 </p:commandLink>
                 <p:commandLink title="Cancelar" style="margin-left: 10%;text-decoration: none"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >
                     <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
                 </p:commandLink>
-        </h:form>
+        </h:form> 
  </h:body>
 </html>

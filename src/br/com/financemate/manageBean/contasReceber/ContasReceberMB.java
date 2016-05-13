@@ -731,13 +731,13 @@ public class ContasReceberMB implements Serializable {
 		 if (usuarioLogadoMB.getUsuario().getCliente()>0){
 			 sql = " Select v from Contasreceber v where " +
 					 " v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
-					 " and v.dataPagamento=null and v.numeroDocumento<>'CANCELADA'" + " order by v.dataVencimento";
+					 " and v.dataPagamento is null and v.numeroDocumento<>'CANCELADA'" + " order by v.dataVencimento";
 		 }else { 
 			 sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and v.cliente.idcliente=" + cliente.getIdcliente()  
-					 + " and v.dataPagamento=null and v.numeroDocumento<>'CANCELADA'" + " order by v.dataVencimento";
+					 + " and v.dataPagamento is null and v.numeroDocumento<>'CANCELADA'" + " order by v.dataVencimento";
 	        } 
 		 gerarListaContas();
-	 }  
+	 }
 	 
 	 public void gerarListaContas() {
 		 try {

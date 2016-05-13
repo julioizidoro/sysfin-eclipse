@@ -3,6 +3,7 @@ package br.com.financemate.manageBean.vendas;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,6 +69,7 @@ public class CadVendasMB implements Serializable {
 	private Emissaonota emissaonota;
 	private List<Formapagamento> listaFormaPagamento;
 	private Float valorPagarReceber;
+	private List<Formapagamento> listaSelecionadosFormaPagamentos;
 	
 	@PostConstruct
 	public void init(){
@@ -107,6 +109,20 @@ public class CadVendasMB implements Serializable {
 	
 	
 	
+	public List<Formapagamento> getListaSelecionadosFormaPagamentos() {
+		return listaSelecionadosFormaPagamentos;
+	}
+
+
+
+
+	public void setListaSelecionadosFormaPagamentos(List<Formapagamento> listaSelecionadosFormaPagamentos) {
+		this.listaSelecionadosFormaPagamentos = listaSelecionadosFormaPagamentos;
+	}
+
+
+
+
 	public Float getValorPagarReceber() {
 		return valorPagarReceber;
 	}
@@ -824,7 +840,31 @@ public class CadVendasMB implements Serializable {
 		formapagamento.setValorParcela(formapagamento.getValor()/formapagamento.getNumeroParcelas());
 	}
 	
-	public String VoltaGerarParcelas(){
+	public String selecionarForma(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        String vezes = "";
+        Float valorParcela = 0f;
+        String tipoDocumento = "";
+        Date dataVencimento = null;
+        for (int i = 0; i < listaFormaPagamento.size(); i++) {
+			if (listaFormaPagamento.get(i).isSelecionado()) {
+				vezes = "" + listaFormaPagamento.get(i).getNumeroParcelas();
+				valorParcela = listaFormaPagamento.get(i).getValorParcela();
+				tipoDocumento = listaFormaPagamento.get(i).getTipoDocumento();
+				dataVencimento = listaFormaPagamento.get(i).getDataVencimento();
+			}
+			session.setAttribute("vezes", vezes);
+	        session.setAttribute("tipoDocumento", tipoDocumento);
+	        session.setAttribute("dataVencimento", dataVencimento);
+	        session.setAttribute("valorParcela", valorParcela);
+		}
+        session.setAttribute("vendas", vendas);
+        session.removeAttribute("listaFormaPagamento");
+		return "gerarParcelas";
+	}
+	
+	public String voltarGerarParcelas(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);

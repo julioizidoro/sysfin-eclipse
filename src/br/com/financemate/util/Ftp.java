@@ -50,8 +50,8 @@ public class Ftp {
     public void receberArquivo(String arquivoSalvar, String arquivoFTP) throws IOException{
         ftpClient.changeWorkingDirectory("/sysfin/");
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-        OutputStream os = new FileOutputStream(arquivoSalvar); 
+        OutputStream os = new FileOutputStream("ContasPagar-"+arquivoSalvar); 
         ftpClient.retrieveFile(arquivoFTP, os );
         os.close(); 
-    }
+    } 
 }

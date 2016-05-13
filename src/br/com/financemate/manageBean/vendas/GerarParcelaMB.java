@@ -69,7 +69,15 @@ public class GerarParcelaMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         vendas = (Vendas) session.getAttribute("vendas");
         contasReceber = (Contasreceber) session.getAttribute("contasreceber");
+        vezes = (String) session.getAttribute("vezes");
+        tipoDocumento = (String) session.getAttribute("tipoDocumento");
+        dataVencimento = (Date) session.getAttribute("dataVencimento");
+        valorParcela = (Float) session.getAttribute("valorParcela");
         session.removeAttribute("contasreceber");
+        session.removeAttribute("vezes");
+        session.removeAttribute("valorParcela");
+        session.removeAttribute("dataVencimento");
+        session.removeAttribute("tipoDocumento");
         if (contasReceber == null) {
 			contasReceber = new Contasreceber();
 		}

@@ -679,11 +679,11 @@ public class CadContasPagarMB implements Serializable{
             mostrarMensagem(ex, "Erro conectar FTP", "Erro");
         }
         try {
-            ftp.receberArquivo(""+file, nomeAquivoFTP);
+            ftp.receberArquivo(""+file.getFileName(), nomeAquivoFTP);
         } catch (IOException ex) {
             Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro Salvar Arquivo", "Erro");
-            return false;
+            return false; 
         }
         try {
             ftp.desconectar();
