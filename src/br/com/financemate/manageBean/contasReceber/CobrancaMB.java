@@ -257,6 +257,7 @@ public class CobrancaMB implements Serializable {
         return "cobranca";
     }
 	
+	//Para chamada da tela, na tela principal
 	public String editarHistorico(Historicocobranca historicocobranca) { 
         if (historico!=null){
             FacesContext fc = FacesContext.getCurrentInstance();
@@ -265,6 +266,17 @@ public class CobrancaMB implements Serializable {
             session.setAttribute("cobranca", cobranca);
         }
         return "editarHistorico";
+    }
+	
+	// Para chamada da dialog dentro de algum modulo
+	public String editarHistoricos(Historicocobranca historicocobranca) { 
+        if (historico!=null){
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("historico", historico);
+            session.setAttribute("cobranca", cobranca);
+        }
+        return "editarHistoricos";
     }
 	
 	public String cancelar(){
@@ -277,6 +289,7 @@ public class CobrancaMB implements Serializable {
         return null;
     }  
 	
+	//Para chamada da tela, na tela principal
 	public String listaContasCobranca(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -284,6 +297,7 @@ public class CobrancaMB implements Serializable {
 		return "listaContaCobranca";
 	}
 	
+	// Para chamada da dialog dentro de algum modulo
 	public String listaContasCobrancas(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -291,6 +305,7 @@ public class CobrancaMB implements Serializable {
 		return "listaContaCobrancas";
 	}
 	
+	//Para chamada da tela, na tela principal
 	public String cobranca(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -298,6 +313,7 @@ public class CobrancaMB implements Serializable {
 		return "cobranca";
 	}
 	
+	// Para chamada da dialog dentro de algum modulo
 	public String cobrancas(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -305,6 +321,8 @@ public class CobrancaMB implements Serializable {
 		return "cobrancas";
 	}
 	
+	
+	//Para chamada da tela, na tela principal
 	public String historicoCobranca(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -313,6 +331,8 @@ public class CobrancaMB implements Serializable {
 		return "historicoCobranca";
 	}
 	
+	
+	// Para chamada da dialog dentro de algum modulo
 	public String historicoCobrancas(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);

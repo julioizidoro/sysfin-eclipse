@@ -538,10 +538,10 @@ public class CadVendasMB implements Serializable {
 		if (vendas.getDespesasFinanceiras() == null) {
 			vendas.setDespesasFinanceiras(0f);
 		}
-		
-		vendas.setLiquidoVendas(vendas.getLiquidoVendas() + (vendas.getComissaoLiquidaTotal() - (vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros())));
+		 
+		vendas.setLiquidoVendas(vendas.getComissaoLiquidaTotal() - (vendas.getValorDesconto() + vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros()));
 		valorPagarReceber = vendas.getValorBruto() - (vendas.getComissaoLiquidaTotal() + vendas.getValorPagoFornecedor());
-		
+		vendas.setValorLiquido(vendas.getValorLiquido() - vendas.getValorPagoFornecedor());
 	} 
 	 
 	
@@ -734,6 +734,9 @@ public class CadVendasMB implements Serializable {
 		if (vendas.getValorBruto() == null) {
 			mensagem = mensagem + " Valor bruto não informado \r\n";
 		}
+		if (vendas.getDataVenda() == null) {
+			mensagem = mensagem + " Data da venda não informada \r\n";
+		}
 		return mensagem;
 	}
 	
@@ -850,7 +853,7 @@ public class CadVendasMB implements Serializable {
         for (int i = 0; i < listaFormaPagamento.size(); i++) {
 			if (listaFormaPagamento.get(i).isSelecionado()) {
 				vezes = "" + listaFormaPagamento.get(i).getNumeroParcelas();
-				valorParcela = listaFormaPagamento.get(i).getValorParcela();
+				valorParcela = listaFormaPagamento.get(i).getValor();
 				tipoDocumento = listaFormaPagamento.get(i).getTipoDocumento();
 				dataVencimento = listaFormaPagamento.get(i).getDataVencimento();
 			}
@@ -861,7 +864,7 @@ public class CadVendasMB implements Serializable {
 		}
         session.setAttribute("vendas", vendas);
         session.removeAttribute("listaFormaPagamento");
-		return "gerarParcelas";
+		return "gerarParcelas"; 
 	}
 	
 	public String voltarGerarParcelas(){

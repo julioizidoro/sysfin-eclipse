@@ -150,7 +150,7 @@ public class EditarParcelaMB implements Serializable{
 				totalParcela = contasReceber.getValorParcela() + valorDivido;
 				listarConta.get(i).setValorParcela(totalParcela);
 			}
-			
+			listarConta.get(i).setTipodocumento(tipoDocumento);
 			contasReceberFacade.salvar(listarConta.get(i));
 		} 
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -158,6 +158,6 @@ public class EditarParcelaMB implements Serializable{
         session.setAttribute("vendas", vendas);
 		return "gerarParcelas";
 	}
-	
+	 
 
 }
