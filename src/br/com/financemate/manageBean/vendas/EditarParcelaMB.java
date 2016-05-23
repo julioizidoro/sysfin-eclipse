@@ -147,11 +147,11 @@ public class EditarParcelaMB implements Serializable{
 				listarConta.get(i).setValorParcela(totalParcela);
 			}else{
 				valorDividir = contasReceber.getValorParcela() - valorEditado;
-				valorDivido = valorDivido/numeroParcelas;
+				valorDivido = valorDividir/numeroParcelas;
 				totalParcela = contasReceber.getValorParcela() + valorDivido;
 				listarConta.get(i).setValorParcela(totalParcela);
 			}
-			
+			 
 			contasReceberFacade.salvar(listarConta.get(i));
 		} 
 		FacesContext fc = FacesContext.getCurrentInstance();
