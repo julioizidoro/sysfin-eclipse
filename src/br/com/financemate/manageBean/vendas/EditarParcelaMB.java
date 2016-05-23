@@ -127,6 +127,7 @@ public class EditarParcelaMB implements Serializable{
 		List<Contasreceber> listarConta = null;
 		try {
 			conta = contasReceberFacade.consultar(contasReceber.getIdcontasReceber());
+			conta.setTipodocumento(tipoDocumento);
 			conta.setValorParcela(valorEditado);
 			contasReceberFacade.salvar(conta);
 			listarConta = contasReceberFacade.listar("Select c From Contasreceber c where c.venda=" + contasReceber.getVenda() + " and c.valorParcela=" + contasReceber.getValorParcela());
@@ -150,7 +151,7 @@ public class EditarParcelaMB implements Serializable{
 				totalParcela = contasReceber.getValorParcela() + valorDivido;
 				listarConta.get(i).setValorParcela(totalParcela);
 			}
-			listarConta.get(i).setTipodocumento(tipoDocumento);
+			
 			contasReceberFacade.salvar(listarConta.get(i));
 		} 
 		FacesContext fc = FacesContext.getCurrentInstance();
