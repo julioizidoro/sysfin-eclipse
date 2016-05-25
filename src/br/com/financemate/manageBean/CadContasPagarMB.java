@@ -413,18 +413,7 @@ public class CadContasPagarMB implements Serializable{
 				operacaousuairo.setTipooperacao("Usuário Alterou");
 			}
 			contaPagar = contasPagarFacade.salvar(contaPagar);
-			if (contaPagar.getIdcontasPagar() != null) {
-				OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
-				
-				operacaousuairo.setContaspagar(contaPagar);
-				operacaousuairo.setData(new Date());
-				operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
-				try {
-					operacaoUsuarioFacade.salvar(operacaousuairo);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			operacaousuairo =  salvarOperacaoUsuario(contaPagar, operacaousuairo);
 			if (cptransferencia!=null){
 				
 		    	salvarTransferencia();
@@ -477,17 +466,7 @@ public class CadContasPagarMB implements Serializable{
 				operacaousuairo.setTipooperacao("Usuário Alterou");
 			}
 	        contaPagar = contasPagarFacade.salvar(contaPagar);
-	        if (contaPagar.getIdcontasPagar() != null) {
-				OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
-				operacaousuairo.setContaspagar(contaPagar);
-				operacaousuairo.setData(new Date());
-				operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
-				try {
-					operacaoUsuarioFacade.salvar(operacaousuairo);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+	        operacaousuairo =  salvarOperacaoUsuario(contaPagar, operacaousuairo);
 	        if (cptransferencia!=null){
 	        	salvarTransferencia();
 	        	Cptransferencia copiaTranferencia = new Cptransferencia();
@@ -755,6 +734,23 @@ public class CadContasPagarMB implements Serializable{
         session.setAttribute("banco", banco);
         session.setAttribute("planocontas", planoContas);
 		return "cadContasPagar";
+	}
+	
+	
+	public Operacaousuairo salvarOperacaoUsuario(Contaspagar contaspagar, Operacaousuairo operacaousuairo){
+		if (contaspagar.getIdcontasPagar() != null) {
+			OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
+			
+			operacaousuairo.setContaspagar(contaspagar);
+			operacaousuairo.setData(new Date());
+			operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
+			try {
+				operacaousuairo =  operacaoUsuarioFacade.salvar(operacaousuairo);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return operacaousuairo;
 	}
 
 	

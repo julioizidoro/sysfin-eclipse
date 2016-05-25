@@ -146,19 +146,7 @@ public class LiberarContasPagarMB implements Serializable {
 					if (listaContasSelecionadas.get(i).getAutorizarPagamento().equals("S")) {
 				
 						salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
-						if (listaContasSelecionadas.get(i).getIdcontasPagar() != null) {
-							OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
-							Operacaousuairo operacaousuairo = new Operacaousuairo();
-							operacaousuairo.setContaspagar(listaContasSelecionadas.get(i));
-							operacaousuairo.setData(new Date());
-							operacaousuairo.setTipooperacao("Usuário Liberou");
-							operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
-							try {
-								operacaoUsuarioFacade.salvar(operacaousuairo);
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-						}
+						salvarOperacaoUsuarioLiberou(listaContasSelecionadas.get(i));
 						msg.liberar();
 						FacesContext fc = FacesContext.getCurrentInstance();
 						HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -249,5 +237,22 @@ public class LiberarContasPagarMB implements Serializable {
 			HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 			session.setAttribute("conta", conta);
 	    	return "editarBanco"; 
+    }
+    
+    
+    public void salvarOperacaoUsuarioLiberou(Contaspagar contaspagar){
+    	if (contaspagar != null) {
+			OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
+			Operacaousuairo operacaousuairo = new Operacaousuairo();
+			operacaousuairo.setContaspagar(contaspagar);
+			operacaousuairo.setData(new Date());
+			operacaousuairo.setTipooperacao("Usuário Liberou");
+			operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
+			try {
+				operacaoUsuarioFacade.salvar(operacaousuairo);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
     }
 }
