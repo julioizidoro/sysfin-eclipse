@@ -377,15 +377,7 @@ public class CadContasReceberMB implements Serializable {
 		public String salvar(){
 			if (vezes != null) {
 				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-				try {
-					contasNumeroDocumentosIguais = contasReceberFacade.listar("Select c from Contasreceber c where c.numeroDocumento='"+ contasReceber.getNumeroDocumento() + "'");
-					if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true) {
-						contasNumeroDocumentosIguais = new ArrayList<Contasreceber>();
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 					int numeroVezes = Integer.parseInt(vezes);
 					for (int i = 1; i <= numeroVezes; i++) { 
 				        contasReceber.setBanco(banco);
@@ -441,15 +433,7 @@ public class CadContasReceberMB implements Serializable {
 				
 			}else{
 				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-				try {
-					contasNumeroDocumentosIguais = contasReceberFacade.listar("Select c from Contasreceber c where c.numeroDocumento='"+ contasReceber.getNumeroDocumento() + "'");
-					if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true) {
-						contasNumeroDocumentosIguais = new ArrayList<Contasreceber>();
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 					contasReceber.setBanco(banco);
 					contasReceber.setPlanocontas(planoContas);
 					contasReceber.setCliente(cliente);
