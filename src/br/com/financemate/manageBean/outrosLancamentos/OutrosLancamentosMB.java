@@ -384,22 +384,22 @@ public class OutrosLancamentosMB implements Serializable {
     
     public String novoLancamento() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentos");
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentos", options, null);
         return "";
     }
     
     public String consultaSaldoInicial() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("consSaldoIncial");
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("consSaldoIncial", options, null);
         return "";
     }
     
     public String novoLancamentoPrincipal() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentosPrincipal");
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentosPrincipal", options, null);
         return "";
     }
     
@@ -408,7 +408,9 @@ public class OutrosLancamentosMB implements Serializable {
     		FacesContext fc = FacesContext.getCurrentInstance();
     		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("outroslancamentos", outroslancamentos);
-            RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentos");
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("closable", false);
+            RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentos", options, null);
     	}
     	return "";
     }
@@ -464,15 +466,15 @@ public class OutrosLancamentosMB implements Serializable {
     
     public String impressaoOutrosLancamentos() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentos");
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentos", options, null);
         return "";
     }
     
     public String impressaoOutrosLancamentosPrincipal() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentosPrincipal");
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentosPrincipal", options, null);
         return "";
     }
     

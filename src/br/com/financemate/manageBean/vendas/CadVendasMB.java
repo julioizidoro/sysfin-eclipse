@@ -514,7 +514,6 @@ public class CadVendasMB implements Serializable {
 			vendas.setValorJuros(0f);
 		}
 		vendas.setValorLiquido((vendas.getValorBruto() - vendas.getValorDesconto()) + vendas.getValorJuros());
-		vendas.setLiquidoVendas(vendas.getValorBruto());
 		valorPagarReceber = vendas.getValorBruto();
 	}
 	
@@ -541,7 +540,7 @@ public class CadVendasMB implements Serializable {
 		 
 		vendas.setLiquidoVendas(vendas.getComissaoLiquidaTotal() - (vendas.getValorDesconto() + vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros()));
 		valorPagarReceber = vendas.getValorBruto() - (vendas.getComissaoLiquidaTotal() + vendas.getValorPagoFornecedor());
-		vendas.setValorLiquido(vendas.getValorLiquido() - vendas.getValorPagoFornecedor());
+		
 	} 
 	 
 	
@@ -784,15 +783,28 @@ public class CadVendasMB implements Serializable {
 			}else{
 				nVenda = vendas;
 			}
-			formapagamento.setTipoDocumento(TipoDocumento);
-			formapagamento.setVendas(nVenda);
-			formapagamento = formaPagamentoFacade.salvar(formapagamento);
-			gerarListaFormaPagamento();
+			if (!TipoDocumento.equalsIgnoreCase("sn")) {
+				if (formapagamento.getDataVencimento() != null) {
+					formapagamento.setTipoDocumento(TipoDocumento);
+					formapagamento.setVendas(nVenda);
+					formapagamento = formaPagamentoFacade.salvar(formapagamento);
+					gerarListaFormaPagamento();
+					return "cadRecebimento";
+				}else{
+					mensagem mensagem = new mensagem();
+					mensagem.dataNaoFormaPagamento();
+					return "";
+				}
+			}else{
+				mensagem mensagem = new mensagem();
+				mensagem.tipoDocumentoNaoFormaPagamento();
+			}
+			
 		} catch (SQLException ex) {
 			Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
 			mostrarMensagem(ex, "Erro ao salvar uma forma de pagamento:", "Erro");
 		}
-		return "cadRecebimento";
+		return "";
 	}
 	
 	public String voltarRecebimento(){
@@ -874,5 +886,7 @@ public class CadVendasMB implements Serializable {
         session.removeAttribute("listaFormaPagamento");
 		return "gerarParcelas";
 	}
+	
+	
 
 }

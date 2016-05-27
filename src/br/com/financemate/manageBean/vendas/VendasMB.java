@@ -471,8 +471,8 @@ public class VendasMB implements Serializable {
     
     public String novaVenda() {
     	Map<String, Object> options = new HashMap<String, Object>();
-    	options.put("contentWidth", 600);
-    	RequestContext.getCurrentInstance().openDialog("cadVendas");
+    	options.put("closable", false);
+    	RequestContext.getCurrentInstance().openDialog("cadVendas", options, null);
     	return "";
     }
     
@@ -480,8 +480,8 @@ public class VendasMB implements Serializable {
     
     public String filtro() {
     	Map<String, Object> options = new HashMap<String, Object>();
-    	options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("filtrarVenda");
+    	options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("filtrarVenda", options, null);
         return "";
     }
     
@@ -631,22 +631,24 @@ public class VendasMB implements Serializable {
     		FacesContext fc = FacesContext.getCurrentInstance();
     		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
     		session.setAttribute("vendas", vendas);
-    		RequestContext.getCurrentInstance().openDialog("gerarParcelas");
+    		Map<String, Object> options = new HashMap<String, Object>();
+            options.put("closable", false);
+    		RequestContext.getCurrentInstance().openDialog("gerarParcelas", options, null);
     	}
     	return "";
     }
     
     public String novaImpressao() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 500);
-        RequestContext.getCurrentInstance().openDialog("imprimirVendas"); 
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("imprimirVendas", options, null); 
         return "";
     }
     
     public String novaImpressaoPrincipal() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 500);
-        RequestContext.getCurrentInstance().openDialog("imprimirVendasPrincipal"); 
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("imprimirVendasPrincipal", options, null); 
         return "";
     }
     
@@ -656,7 +658,9 @@ public class VendasMB implements Serializable {
     		FacesContext fc = FacesContext.getCurrentInstance();
     		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("vendas", vendas);
-            RequestContext.getCurrentInstance().openDialog("cadVendas");
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("closable", false);
+            RequestContext.getCurrentInstance().openDialog("cadVendas", options, null);
     	}
     	return "";
     }

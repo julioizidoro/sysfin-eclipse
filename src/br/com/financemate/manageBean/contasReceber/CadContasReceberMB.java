@@ -386,7 +386,6 @@ public class CadContasReceberMB implements Serializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true || contasReceber.getIdcontasReceber() != null) {
 					int numeroVezes = Integer.parseInt(vezes);
 					for (int i = 1; i <= numeroVezes; i++) { 
 				        contasReceber.setBanco(banco);
@@ -439,10 +438,7 @@ public class CadContasReceberMB implements Serializable {
 						}
 					}
 					RequestContext.getCurrentInstance().closeDialog(contasReceber);
-				}else{
-					mensagem mensagem = new mensagem();
-					mensagem.numeroDocumentosIguais();
-				}
+				
 			}else{
 				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 				try {
@@ -454,9 +450,6 @@ public class CadContasReceberMB implements Serializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if (contasNumeroDocumentosIguais == null || contasNumeroDocumentosIguais.isEmpty() == true || contasReceber.getIdcontasReceber() != null) {
-					
-				
 					contasReceber.setBanco(banco);
 					contasReceber.setPlanocontas(planoContas);
 					contasReceber.setCliente(cliente);
@@ -473,11 +466,7 @@ public class CadContasReceberMB implements Serializable {
 						FacesContext context = FacesContext.getCurrentInstance();
 			            context.addMessage(null, new FacesMessage(mensagem, ""));
 					}
-				}else{
-					mensagem mensagem = new mensagem();
-					mensagem.numeroDocumentosIguais();
 				}
-			}
 			return "";
 		}
 	    

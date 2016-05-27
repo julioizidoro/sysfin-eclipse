@@ -121,6 +121,16 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Você inseriu um número de documento que ja existe uma conta a receber", ""));
     }
     
+    public void tipoDocumentoNaoFormaPagamento() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Você não inseriu o tipo de documento", ""));
+    }
+    
+    public void dataNaoFormaPagamento() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Você não inseriu a data", ""));
+    }
+    
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }

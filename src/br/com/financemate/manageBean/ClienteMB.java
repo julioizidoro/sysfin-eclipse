@@ -140,6 +140,7 @@ public class ClienteMB implements Serializable {
 				 session.setAttribute("cliente", cliente);
 				 Map<String, Object> options = new HashMap<String, Object>();
 				 options.put("contentWidth", 700);
+				 options.put("closable", false);
 				 RequestContext.getCurrentInstance().openDialog("cadCliente", options, null);
 			 }
 		 } else {
@@ -157,6 +158,7 @@ public class ClienteMB implements Serializable {
 				 cliente = new Cliente();
 				 Map<String, Object> options = new HashMap<String, Object>();
 				 options.put("contentWidth", 700);
+				 options.put("closable", false);
 				 RequestContext.getCurrentInstance().openDialog("cadCliente", options, null);
 				 return "";
 			 } catch (SQLException ex) {

@@ -116,8 +116,8 @@ public class PlanoContaMB implements Serializable {
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("planoconta", planocontas);
             Map<String, Object> options = new HashMap<String, Object>();
-            options.put("contentWidth", 500);
-            RequestContext.getCurrentInstance().openDialog("cadPlanoConta");
+            options.put("closable", false);
+            RequestContext.getCurrentInstance().openDialog("cadPlanoConta", options, null);
         } else {
 
             mostrarMensagem(null, "Erro! ", "Acesso Negado");
@@ -131,7 +131,9 @@ public class PlanoContaMB implements Serializable {
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("planoconta", planocontas);
-            RequestContext.getCurrentInstance().openDialog("cadPlanoConta");
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("closable", false);
+            RequestContext.getCurrentInstance().openDialog("cadPlanoConta", options, null);
             
         }
         return "";

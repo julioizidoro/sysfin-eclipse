@@ -663,15 +663,15 @@ public class ContasReceberMB implements Serializable {
 
 	public String novaConta() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("cadContasReceber");
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("cadContasReceber", options, null);
         return "";
     }
 	
 	public String novaContaReceberTelaPrincipal() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 600);
-        RequestContext.getCurrentInstance().openDialog("cadContasReceberPrincipal");
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("cadContasReceberPrincipal", options, null);
         return "";
     }
 	
@@ -688,15 +688,15 @@ public class ContasReceberMB implements Serializable {
 	
 	public String novaImpressao() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 500);
-        RequestContext.getCurrentInstance().openDialog("imprimirContasReceber"); 
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("imprimirContasReceber", options, null); 
         return "";
     }
 	
 	public String novaImpressaoContasReceberTelaPrincipal() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 500);
-        RequestContext.getCurrentInstance().openDialog("imprimirContasReceberTelaPrincipal"); 
+        options.put("closable", false);
+        RequestContext.getCurrentInstance().openDialog("imprimirContasReceberTelaPrincipal", options, null); 
         return "";
     }
 	
@@ -752,7 +752,6 @@ public class ContasReceberMB implements Serializable {
 		 } 
 		 calcularTotal();
 		 gerarTotalContas();
-		 //calculosContasMB.calcularTotaisContasReceber();
 	 }
 	 
 	 public void gerarTotalContas(){
@@ -885,8 +884,8 @@ public class ContasReceberMB implements Serializable {
 	 
 	 public void novoFiltro() {
 		 Map<String, Object> options = new HashMap<String, Object>();
-		 options.put("contentWidth", 500);
-		 RequestContext.getCurrentInstance().openDialog("filtroConsContaReceber");
+		 options.put("closable", false);
+		 RequestContext.getCurrentInstance().openDialog("filtroConsContaReceber", options, null);
 	 }
 	 
 	 public void filtrar(){		 
@@ -1047,7 +1046,9 @@ public class ContasReceberMB implements Serializable {
 			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 			 session.setAttribute("contareceber", contasreceber);
 			 session.setAttribute("valorPagoParcial", valorPagoParcial);
-			 RequestContext.getCurrentInstance().openDialog("recebimentoConta");
+			 Map<String, Object> options = new HashMap<String, Object>();
+			 options.put("closable", false);
+			 RequestContext.getCurrentInstance().openDialog("recebimentoConta", options, null);
 		 }
 		 return "";
 	 }
@@ -1059,8 +1060,7 @@ public class ContasReceberMB implements Serializable {
 				listaContasSelecionadas.add(listaContasReceber.get(i));
 			 }
 		 }
-			 Map<String, Object> options = new HashMap<String, Object>();
-			 options.put("contentWidth", 600);
+			
 			 FacesContext fc = FacesContext.getCurrentInstance();
 		     HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		     session.setAttribute("contasReceber", contasReceber);
@@ -1072,8 +1072,8 @@ public class ContasReceberMB implements Serializable {
 	 
 	 public void novoHistorico(Contasreceber contasreceber) {
 		 Map<String, Object> options = new HashMap<String, Object>();
-		 options.put("contentWidth", 500);
-		 RequestContext.getCurrentInstance().openDialog("historico");
+		 options.put("closable", false);
+		 RequestContext.getCurrentInstance().openDialog("historico", options, null);
 	 }
 	 
 	 public void desfazerRecebimento(Contasreceber contasreceber){
@@ -1119,14 +1119,14 @@ public class ContasReceberMB implements Serializable {
 		 }
 		 totalReceberLote = Formatacao.foramtarFloatString(valorTotal);
 		 Map<String, Object> options = new HashMap<String, Object>();
-		 options.put("contentWidth", 500);
+		 options.put("closable", false);
 		 FacesContext fc = FacesContext.getCurrentInstance();
 		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		 session.setAttribute("listaContasSelecionadas", listaContasSelecionadas);
 		 session.setAttribute("totalReceberLote", totalReceberLote);
 		 session.setAttribute("contasReceber", contasReceber);
 		 session.setAttribute("cliente", cliente);
-		 RequestContext.getCurrentInstance().openDialog("recebimentoLote");
+		 RequestContext.getCurrentInstance().openDialog("recebimentoLote", options, null);
 		 return "";
 	 }
 	 
@@ -1235,8 +1235,8 @@ public class ContasReceberMB implements Serializable {
 		 List<Contasreceber> listaContasSelecionadas = (List<Contasreceber>) session.getAttribute("listaContasSelecionadas");
 		 if (listaContasSelecionadas != null) {
 			 Map<String, Object> options = new HashMap<String, Object>();
-			 options.put("contentWidth", 500);
-			 RequestContext.getCurrentInstance().openDialog("cobrancas"); 
+			 options.put("closable", false);
+			 RequestContext.getCurrentInstance().openDialog("cobrancas", options, null); 
 			 return "";
 		 }else{
 			 mensagem mensagem = new mensagem();

@@ -156,6 +156,7 @@ public class BancoMB implements Serializable {
 		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		 Map<String, Object> options = new HashMap<String, Object>();
 		 options.put("contentWidth", 700);
+		 options.put("closable", false);
 		 session.setAttribute("idcliente", idcliente);
 		 RequestContext.getCurrentInstance().openDialog("cadBanco", options, null);
 		 return "";
@@ -166,7 +167,10 @@ public class BancoMB implements Serializable {
 			 FacesContext fc = FacesContext.getCurrentInstance();
 			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 			 session.setAttribute("banco", banco);
-			 RequestContext.getCurrentInstance().openDialog("cadBanco");
+			 Map<String, Object> options = new HashMap<String, Object>();
+			 options.put("contentWidth", 700);
+			 options.put("closable", false);
+			 RequestContext.getCurrentInstance().openDialog("cadBanco", options, null);
 			 
 		 }
 		 return "";

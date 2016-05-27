@@ -108,8 +108,8 @@ public class TipoPlanoContaMB implements Serializable {
 	        if (usuarioLogadoMB.getUsuario().getTipoacesso().getAcesso().getItipoplanocontas()) {
 	            tipoplanocontas = new Tipoplanocontas();
 	            Map<String, Object> options = new HashMap<String, Object>();
-	            options.put("contentWidth", 300);
-	            RequestContext.getCurrentInstance().openDialog("cadTipoPlanoConta");
+	            options.put("closable", false);
+	            RequestContext.getCurrentInstance().openDialog("cadTipoPlanoConta", options, null);
 	        } else {
 	            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
 	            FacesContext.getCurrentInstance().addMessage(null, mensagem);
@@ -125,7 +125,9 @@ public class TipoPlanoContaMB implements Serializable {
 	                FacesContext fc = FacesContext.getCurrentInstance();
 	                HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 	                session.setAttribute("tipoplanocontas", tipoplanocontas);
-	                RequestContext.getCurrentInstance().openDialog("cadTipoPlanoConta");
+	                Map<String, Object> options = new HashMap<String, Object>();
+		            options.put("closable", false);
+	                RequestContext.getCurrentInstance().openDialog("cadTipoPlanoConta", options, null);
 	            }
 	            return  "";
 	        }else {
