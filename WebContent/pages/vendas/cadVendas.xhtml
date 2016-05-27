@@ -88,28 +88,28 @@
            <br />
            <h:panelGrid columns="1" style="margin-left:1%;">
            		<p:outputLabel value="Valor Bruto" style="margin-left:17%;"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorBruto}" size="12">
+           		<p:inputText value="#{cadVendasMB.vendas.valorBruto}" size="12" style="text-align: right;">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
            		<p:outputLabel value="Desconto" style="margin-left:18%;"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorDesconto}" size="12">
+           		<p:inputText value="#{cadVendasMB.vendas.valorDesconto}"  size="12" style="text-align: right;">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
            		<p:outputLabel value="Juros" style="margin-left:28%;"/> 
-           		<p:inputText value="#{cadVendasMB.vendas.valorJuros}" size="12">
+           		<p:inputText value="#{cadVendasMB.vendas.valorJuros}" size="12" style="text-align: right;">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoTotalVenda()}" update="total"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:80%; margin-top:-9.3%;"> 
            		<p:outputLabel value="Total" style="margin-left:28%;"/>
-           		<p:inputText id="total" value="#{cadVendasMB.vendas.valorLiquido}" size="12" disabled="true">
+           		<p:inputText id="total" value="#{cadVendasMB.vendas.valorLiquido}" size="12" disabled="true" style="text-align: right;">
            			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText>
            </h:panelGrid>
@@ -127,8 +127,7 @@
            <p:commandLink title="Cancelar" style="margin-left: 6%;text-decoration: none" action="#{cadVendasMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
            </p:commandLink>
-            <br></br>
-            <br></br>        
+            <br></br>     
         </h:form>
 </h:body>
 </html>

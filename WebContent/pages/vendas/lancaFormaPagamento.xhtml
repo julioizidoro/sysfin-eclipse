@@ -40,7 +40,7 @@
        <h:panelGrid id="habilitarCampos">
        		 <h:panelGrid columns="1" style="margin-left:1%;">   
                  <p:outputLabel value="N° Parcelas" for="parcelas" class="left30"/>
-                 <p:inputText id="parcelas" value="#{cadVendasMB.formapagamento.numeroParcelas}"  size="12" class="">
+                 <p:inputText id="parcelas" value="#{cadVendasMB.formapagamento.numeroParcelas}"  size="12" class="" style="text-align: right;">
                  	<p:ajax event="blur"/>
                  </p:inputText>
              </h:panelGrid>
@@ -53,14 +53,14 @@
             </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:51%;margin-top:-10.7%;">
                  <p:outputLabel value="Valor R$" for="valorRS" class="left"/>
-                 <p:inputText id="valorRS"  value="#{cadVendasMB.formapagamento.valor}"  size="15" class="left">
+                 <p:inputText id="valorRS"  value="#{cadVendasMB.formapagamento.valor}"  size="15" class="left" style="text-align: right;">
                  	<f:convertNumber pattern="##,###,###,###.##"/>
                  	<p:ajax event="change" listener="#{cadVendasMB.calcularValorParcelaLancaFormaPagamento()}" update="valorParcela"/>
                  </p:inputText>
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:78%;margin-top:-11.2%;">
                  <p:outputLabel value="Valor da Parcela" for="valorParcela" class="left"/>
-                 <p:inputText id="valorParcela" readonly="true" value="#{cadVendasMB.formapagamento.valorParcela}"  size="15" class="left">
+                 <p:inputText id="valorParcela" readonly="true" value="#{cadVendasMB.formapagamento.valorParcela}"  size="15" class="left" style="text-align: right;">
                  	<f:convertNumber currencySymbol="" type="currency"/>
                  </p:inputText>
              </h:panelGrid> 
@@ -70,7 +70,7 @@
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:68%; margin-top:-9.1%;">
            		  <p:outputLabel value="N°CPF/CNPJ" />
-           		  <p:inputText value="#{cadVendasMB.formapagamento.cpf}" size="25"  disabled="#{cadVendasMB.habilitarCampos}"/>
+           		  <p:inputText value="#{cadVendasMB.formapagamento.cpf}" size="25"  disabled="#{cadVendasMB.habilitarCampos}" style="text-align: right;"/>
              </h:panelGrid>
              <br />
              <h:panelGrid columns="1" style="margin-left:1%;">
@@ -91,7 +91,7 @@
              <br />
              <h:panelGrid columns="1" style="margin-left:1%;">
                  <p:outputLabel value="Número" for="numero"  class="cliente3"/>
-                 <p:inputMask id="numero"   disabled="#{cadVendasMB.habilitarCampos}"  size="8"  class="" value="#{cadVendasMB.formapagamento.numero}" mask="?999999999"/>
+                 <p:inputMask id="numero"   disabled="#{cadVendasMB.habilitarCampos}"  size="8"  class="" value="#{cadVendasMB.formapagamento.numero}" mask="?999999999" style="text-align: right;"/>
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:19%; margin-top:-10.2%;">
                   <p:outputLabel value="Complemento" for="comple" class="left"/>

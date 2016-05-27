@@ -27,7 +27,7 @@
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			
 			<h:panelGrid columns="1">
-				<br></br>
+				
                 	<p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left:40%;"/>
              <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadOutrosLancamentosMB.cliente}" converter="ClienteConverter"
                              filter="true" filterMatchMode="contains" panelStyle="width:180px" disabled="#{cadOutrosLancamentosMB.habilitarUnidade}">
@@ -75,18 +75,18 @@
             <br />
             <h:panelGrid columns="1" style="margin-left:1%;"> 
             	<p:outputLabel value="Valor Entrada"  for="valor" class="leftvalor" style="margin-left:12%;"/>
-             	<p:inputText maxlength="10"  id="valor" size="14"  class="valorr"  value="#{cadOutrosLancamentosMB.outrosLancamentos.valorEntrada}">
+             	<p:inputText maxlength="10"  id="valor" size="14"  class="valorr"  value="#{cadOutrosLancamentosMB.outrosLancamentos.valorEntrada}" style="text-align: right;">
              		<f:convertNumber pattern="##,###,###,###.##"/>
              	</p:inputText>
             </h:panelGrid>
             <h:panelGrid columns="1" style="margin-left:38%; margin-top:-9.6%;">
             	<p:outputLabel value="Valor Saída"  for="valorS" class="leftvalor" style="margin-left:12%;"/>
-           		<p:inputText maxlength="10"  id="valorS" size="14"  class="valorr"  value="#{cadOutrosLancamentosMB.outrosLancamentos.valorSaida}">
+           		<p:inputText maxlength="10"  id="valorS" size="14" style="text-align: right;" class="valorr"  value="#{cadOutrosLancamentosMB.outrosLancamentos.valorSaida}">
              		<f:convertNumber pattern="##,###,###,###.##" />
              	</p:inputText>
             </h:panelGrid>
             <h:panelGrid columns="1" style="margin-left:79%; margin-top:-9.6%;">
-             	<p:outputLabel value="Competência" for="competencia" class="left5" style="margin-left:12%"/> 
+             	<p:outputLabel value="Competência" for="competencia" class="left5" style="margin-left:12%;"/> 
              	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadOutrosLancamentosMB.outrosLancamentos.compentencia}" size="12" mask="99/9999"  class="left1"/>
              </h:panelGrid> 
              <br />
@@ -114,7 +114,7 @@
 	                    
 	              </p:selectOneMenu> 
              </h:panelGrid>
-             <br /><br /><br /><br /><br />
+             <br />
              <hr /> 
              
              <h:panelGrid columns="3" style="margin-left:40%;"> 

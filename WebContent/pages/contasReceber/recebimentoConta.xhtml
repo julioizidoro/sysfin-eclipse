@@ -42,7 +42,7 @@
             	<p:outputLabel value="Valor"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:7%; margin-top:-4.5%;">
-            	<p:inputText id="valor" size="17" value="#{recebimentoContaMB.contasReceber.valorParcela}" readonly="true" disabled="true">
+            	<p:inputText id="valor" size="17" style="text-align: right;" value="#{recebimentoContaMB.contasReceber.valorParcela}" readonly="true" disabled="true">
             		<f:convertNumber pattern="##,###,###,###.##"/>
             	</p:inputText>
             </h:panelGrid>
@@ -58,7 +58,7 @@
             	<p:outputLabel value="Parcela"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:78%; margin-top:-5%;">
-            	<p:inputText style="width:103px;" value="#{recebimentoContaMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
+            	<p:inputText style="width:103px;text-align: right;" value="#{recebimentoContaMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
             </h:panelGrid>
             <br />
             <hr />
@@ -87,7 +87,7 @@
             	<p:outputLabel value="Deságio"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputText value="#{recebimentoContaMB.contasReceber.desagio}" size="14">
+            	<p:inputText value="#{recebimentoContaMB.contasReceber.desagio}" size="14" style="text-align: right;">
             		 <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
             		 <p:ajax event="change" listener="#{recebimentoContaMB.DebitarDesagio()}" update="idValorPagoRecebido"/>
             	</p:inputText>
@@ -96,7 +96,7 @@
             	<p:outputLabel value="Juros"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:40%; margin-top:-4.7%;">
-            	<p:inputText value="#{recebimentoContaMB.contasReceber.juros}" size="14">
+            	<p:inputText value="#{recebimentoContaMB.contasReceber.juros}" size="14" style="text-align: right;">
             		 <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
             		 <p:ajax event="change" listener="#{recebimentoContaMB.SomarJuros()}" update="idValorPagoRecebido"/>
             	</p:inputText>
@@ -105,7 +105,7 @@
             	<p:outputLabel value="Valor recebido"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:76.5%; margin-top:-5%;">
-            	<p:inputText id="idValorPagoRecebido" value="#{recebimentoContaMB.contasReceber.valorParcela}" size="15" readonly="true" disabled="true">
+            	<p:inputText id="idValorPagoRecebido" style="text-align: right;" value="#{recebimentoContaMB.contasReceber.valorParcela}" size="15" readonly="true" disabled="true">
             		<f:convertNumber pattern="##,###,###,###.##"/>
             	</p:inputText> 
             </h:panelGrid>
@@ -131,7 +131,7 @@
 	            	<p:outputLabel value="Valor"/>
 	            </h:panelGrid>
 	            <h:panelGrid style="margin-left:2%;">
-	            	<p:inputText id="valor1" size="16" disabled="#{recebimentoContaMB.disabilitar}" value="#{recebimentoContaMB.valorParcial}">
+	            	<p:inputText id="valor1" size="16" style="text-align: right;" disabled="#{recebimentoContaMB.disabilitar}" value="#{recebimentoContaMB.valorParcial}">
 	            		<f:convertNumber pattern="##,###,###,###.##"/>
 	            	</p:inputText>
 	            </h:panelGrid>

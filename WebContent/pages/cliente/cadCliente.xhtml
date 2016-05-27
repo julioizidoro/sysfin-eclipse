@@ -58,7 +58,7 @@
                     <br />
                    <h:panelGrid columns="2" style="margin-left:7%;">
                    		<p:outputLabel value="Número" for="numero"  class="cliente3"/>
-                		<p:inputMask id="numero"    size="8" required="true" class="" value="#{cadClienteMB.cliente.numero}" mask="?999999999"/>
+                		<p:inputMask id="numero"   size="8"  class="" value="#{cadClienteMB.cliente.numero}" mask="?999999999"/>
                	   </h:panelGrid>
                	   <h:panelGrid columns="2" style="margin-left:32%; margin-top:-5.5%;">
                        <p:outputLabel value="Complemento" for="comple" class="left"/>
@@ -108,7 +108,7 @@
                 </h:panelGrid>
                 <h:panelGrid columns="2" style="margin-left:77.7%; margin-top:-5.9%;">
                 	<p:outputLabel value="CEP" for="cep" class="left15"/>
-                    <p:inputMask id="cep" size="11" required="true" maxlength="9" class="left1" value="#{cadClienteMB.cliente.cep}" mask="99999-999"/>     
+                    <p:inputMask id="cep" size="11"  maxlength="9" class="left1" value="#{cadClienteMB.cliente.cep}" mask="99999-999"/>     
                 </h:panelGrid>
                     <br/>
                 <h:panelGrid columns="2" style="margin-left:10.7%;">
@@ -122,7 +122,7 @@
                <br />
                <h:panelGrid columns="2" style="margin-lefT:2.7%;">
                 	<p:outputLabel value="Código SysTM" for="codigoTM"  class="cliente4"/>
-                	<p:inputText id="codigoTM"  size="14" maxlength="20" class="leftMeio2" value="#{cadClienteMB.cliente.codigosystm}"/>
+                	<p:inputText id="codigoTM" style="text-align: right;" size="14" maxlength="20" class="leftMeio2" value="#{cadClienteMB.cliente.codigosystm}"/>
                </h:panelGrid>
                <h:panelGrid columns="2" style="margin-left:35.7%; margin-top:-5.3%;">
                		<p:outputLabel value="Tipo Plano de Conta" for="tipoplanoconta"  class="left"/>

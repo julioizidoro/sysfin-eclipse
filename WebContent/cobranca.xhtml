@@ -49,7 +49,7 @@
             	<p:outputLabel value="Valor"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:7%; margin-top:-4.5%;">
-            	<p:inputText id="valor" size="17" value="#{cobrancaMB.contasReceber.valorParcela}" readonly="true" disabled="true"/>
+            	<p:inputText id="valor" size="17" value="#{cobrancaMB.contasReceber.valorParcela}" readonly="true" disabled="true" style="text-align: right;"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 33%; margin-top:-5%;">
             	<p:outputLabel value="Vencimento" for="dataVenc" /> 
@@ -63,7 +63,7 @@
             	<p:outputLabel value="Parcela"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:78%; margin-top:-5%;">
-            	<p:inputText style="width:103px;" value="#{cobrancaMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
+            	<p:inputText style="width:103px;text-align: right;" value="#{cobrancaMB.contasReceber.numeroParcela}"  readonly="true" disabled="true" />
             </h:panelGrid>
             <br />
             <hr />
@@ -72,13 +72,13 @@
             	<p:outputLabel value="Fone 1"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:10%; margin-top:-4.5%;">
-            	<p:inputMask id="fone1" mask="(99) 9999-9999" value="#{cobrancaMB.cobranca.fone1}" size="17"/>
+            	<p:inputMask id="fone1" style="text-align: right;" mask="(99) 9999-9999" value="#{cobrancaMB.cobranca.fone1}" size="17"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:34%; margin-top:-4.5%;">
             	<p:outputLabel value="Fone 2" />
             </h:panelGrid>
             <h:panelGrid style="margin-left:43%; margin-top:-5%;">
-            	<p:inputMask id="fone2" mask="(99) 9999-9999" value="#{cobrancaMB.cobranca.fone2}" size="17"/>
+            	<p:inputMask id="fone2" style="text-align: right;" mask="(99) 9999-9999" value="#{cobrancaMB.cobranca.fone2}" size="17"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left: 67%; margin-top:-5%;">
             	<p:outputLabel value="Vcto. Original" for="dataVencOri" /> 

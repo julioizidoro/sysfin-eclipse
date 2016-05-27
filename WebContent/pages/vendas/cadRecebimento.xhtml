@@ -38,13 +38,13 @@
     		</p:confirmDialog>
 			 <h:panelGrid columns="2" style="margin-left:1%;">
            		<p:outputLabel value="Valor"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorLiquido}" size="12"  style="margin-left:17%;" disabled="true">
+           		<p:inputText value="#{cadVendasMB.vendas.valorLiquido}" size="12"  style="margin-left:17%;text-align: right;" disabled="true">
            			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText>
              </h:panelGrid>
              <h:panelGrid columns="2" style="margin-left:65%; margin-top:-5%;">
            		<p:outputLabel value="Saldo Restante"/>
-           		<p:inputText id="saldorestante" value="#{cadVendasMB.saldoRestante()}" size="12"  style="margin-left:2%;" disabled="true">
+           		<p:inputText id="saldorestante" value="#{cadVendasMB.saldoRestante()}" size="12"  style="margin-left:2%;text-align: right;" disabled="true">
            			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText>
              </h:panelGrid>
@@ -64,10 +64,10 @@
                     <h:outputText value="#{recebimento.tipoDocumento}" style="margin-left:40%;"/> 
                 </p:column>
                 <p:column headerText="N° Parcelas" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{recebimento.numeroParcelas}" style="margin-left:45%;"/> 
+                    <h:outputText value="#{recebimento.numeroParcelas}" style="text-align: right;"/> 
                 </p:column> 
                 <p:column headerText="Valor"   style="background:white; color:black; width: 80px; border:none;">
-                    <h:outputText value="#{recebimento.valor}" style="margin-left:28%;">
+                    <h:outputText value="#{recebimento.valor}" style="text-align: right;">
                     	<f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>

@@ -384,9 +384,9 @@ public class CadContasReceberMB implements Serializable {
 				        contasReceber.setPlanocontas(planoContas);
 				        contasReceber.setCliente(cliente);
 				        contasReceber.setValorPago(0.0f);
-				        contasReceber.setDesagio(0.0f);
+				        contasReceber.setDesagio(0.0f); 
 				        contasReceber.setJuros(0.0f);
-				        contasReceber.setNumeroParcela(i);
+				        contasReceber.setNumeroParcela(i+"/"+vezes);
 				        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
 				        String mensagem = validarDados();
 				        if (mensagem=="") {
@@ -441,7 +441,7 @@ public class CadContasReceberMB implements Serializable {
 					contasReceber.setDesagio(0.0f);
 					contasReceber.setJuros(0.0f);
 					contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-					contasReceber.setNumeroParcela(1);
+					contasReceber.setNumeroParcela("1/1");
 					String mensagem = validarDados(); 
 					if (mensagem=="") {
 						contasReceber = contasReceberFacade.salvar(contasReceber);

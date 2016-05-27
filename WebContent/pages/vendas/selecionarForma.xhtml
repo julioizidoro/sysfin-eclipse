@@ -34,10 +34,10 @@
                     <h:outputText value="#{recebimento.tipoDocumento}" style="margin-left:40%;"/> 
                 </p:column>
                 <p:column headerText="N° Parcelas" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{recebimento.numeroParcelas}" style="margin-left:45%;"/> 
+                    <h:outputText value="#{recebimento.numeroParcelas}" style="text-align: center;"/> 
                 </p:column> 
                 <p:column headerText="Valor"   style="background:white; color:black; width: 80px; border:none;">
-                    <h:outputText value="#{recebimento.valor}" style="margin-left:28%;">
+                    <h:outputText value="#{recebimento.valor}" style="text-align: right;">
                     	<f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>

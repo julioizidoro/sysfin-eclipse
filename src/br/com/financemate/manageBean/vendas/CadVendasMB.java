@@ -595,7 +595,7 @@ public class CadVendasMB implements Serializable {
 			contasreceber.setJuros(0f);
 			contasreceber.setDesagio(0f);
 			contasreceber.setValorPago(0f);
-			contasreceber.setNumeroParcela(1);
+			contasreceber.setNumeroParcela("1/1");
 			
 			if (usuarioLogadoMB.getCliente() != null) { 
 				try {

@@ -75,7 +75,7 @@
             	 <p:outputLabel value="Valor "  for="valor" class="leftvalor"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:7%; margin-top:-4.5%;"> 
-             	<p:inputText maxlength="10"  id="valor" size="12"  class="valorr"  value="#{cadContasPagarMB.contaPagar.valor}">
+             	<p:inputText maxlength="10"  id="valor" size="12"  class="valorr"  value="#{cadContasPagarMB.contaPagar.valor}" style="text-align: right;">
              		<f:convertNumber pattern="##,###,###,###.##"/>
              		<p:ajax event="blur"/>
              	</p:inputText>
@@ -142,7 +142,7 @@
              </h:panelGrid>
              <h:panelGrid columns="2" style="margin-left:71%; margin-top:-6%;">
              	<p:outputLabel value="Competência" for="competencia" class="left5"/> 
-             	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadContasPagarMB.contaPagar.competencia}" size="8" mask="99/9999"  class="left1">
+             	<p:inputMask style="margin-left:2%;text-align: right;" id="competencia" label="competencia" value="#{cadContasPagarMB.contaPagar.competencia}" size="8" mask="99/9999"  class="left1" >
              		<p:ajax event="blur"/>
                 </p:inputMask>
              </h:panelGrid>
@@ -169,19 +169,19 @@
 	             	<p:outputLabel value="Banco" class="left2"/>
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:8%; margin-top:-5%;">
-	             	<p:inputText id="banco" value="#{cadContasPagarMB.cptransferencia.banco}" size="12"/>
+	             	<p:inputText id="banco" value="#{cadContasPagarMB.cptransferencia.banco}" size="12" style="text-align: right;"/>
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:40%; margin-top:-6%;">
 	             	<p:outputLabel value="Agência" />
 	             </h:panelGrid> 
 	             <h:panelGrid style="margin-left:49%; margin-top:-7.5%;">
-	             	<p:inputText id="agencia" value="#{cadContasPagarMB.cptransferencia.agencia}" size="11"/>
+	             	<p:inputText id="agencia" value="#{cadContasPagarMB.cptransferencia.agencia}" size="11" style="text-align: right;"/>
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:78%; margin-top:-7.5%;">
 	             	<p:outputLabel value="Conta" />
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:84.5%; margin-top:-8.9%;">
-	             	<p:inputText id="conta" value="#{cadContasPagarMB.cptransferencia.conta}" size="9"/>
+	             	<p:inputText id="conta" value="#{cadContasPagarMB.cptransferencia.conta}" size="9" style="text-align: right;"/>
 	             </h:panelGrid>
 	             <h:panelGrid style="margin-left:1%;">
 	             	<p:outputLabel value="Beneficiário" />
@@ -193,7 +193,7 @@
 	             	<p:outputLabel value="CPF/CNPJ" />
 	             </h:panelGrid> 
 	             <h:panelGrid style="margin-left:67.2%; margin-top:-7%;">
-	             	<p:inputText id="cpfcnpj" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}" size="26"/>
+	             	<p:inputText id="cpfcnpj" value="#{cadContasPagarMB.cptransferencia.cpfcnpj}" size="26" style="text-align: right;"/>
 	             </h:panelGrid>
 	             <hr /> 
 	         </h:panelGrid>

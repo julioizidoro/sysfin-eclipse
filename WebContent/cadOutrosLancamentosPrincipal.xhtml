@@ -60,26 +60,26 @@
             </h:panelGrid>
             <h:panelGrid columns="1" style="margin-left:79%; margin-top:-9.2%;">
                 <p:outputLabel value="Compensação" for="dataComp" class="left1" style="margin-left: 12%;"/>
-                <p:inputMask style="margin-left:2%;" id="dataComp"  mask="99/99/9999" size="12" maxlength="15" class="left1" value="#{cadOutrosLancamentosMB.outrosLancamentos.dataCompensacao}">
+                <p:inputMask style="margin-left:2%;text-align: right;" id="dataComp"  mask="99/99/9999" size="12" maxlength="15" class="left1" value="#{cadOutrosLancamentosMB.outrosLancamentos.dataCompensacao}">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
              </h:panelGrid> 
             <br />
             <h:panelGrid columns="1" style="margin-left:1%;"> 
             	<p:outputLabel value="Valor Entrada"  for="valor" class="leftvalor" style="margin-left:12%;"/>
-             	<p:inputText maxlength="10"  id="valor" size="14"  class="valorr"  value="#{cadOutrosLancamentosMB.outrosLancamentos.valorEntrada}">
+             	<p:inputText maxlength="10"  id="valor" size="14"  class="valorr"  value="#{cadOutrosLancamentosMB.outrosLancamentos.valorEntrada}" style="text-align: right;">
              		<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
              	</p:inputText>
             </h:panelGrid>
             <h:panelGrid columns="1" style="margin-left:38%; margin-top:-9.6%;">
             	<p:outputLabel value="Valor Saída"  for="valorS" class="leftvalor" style="margin-left:12%;"/>
-           		<p:inputText maxlength="10"  id="valorS" size="14"  class="valorr"  value="#{cadOutrosLancamentosMB.outrosLancamentos.valorSaida}">
+           		<p:inputText maxlength="10"  id="valorS" size="14"  class="valorr" style="text-align: right;" value="#{cadOutrosLancamentosMB.outrosLancamentos.valorSaida}">
              		<f:convertNumber pattern="##,###,###,###.##" integerOnly="true" minIntegerDigits="1"/>
              	</p:inputText>
             </h:panelGrid>
             <h:panelGrid columns="1" style="margin-left:79%; margin-top:-9.6%;">
              	<p:outputLabel value="Competência" for="competencia" class="left5" style="margin-left:12%"/> 
-             	<p:inputMask style="margin-left:2%;" id="competencia" label="competencia" value="#{cadOutrosLancamentosMB.outrosLancamentos.compentencia}" size="12" mask="99/9999"  class="left1"/>
+             	<p:inputMask style="margin-left:2%;text-align: right;"  id="competencia" label="competencia" value="#{cadOutrosLancamentosMB.outrosLancamentos.compentencia}" size="12" mask="99/9999"  class="left1"/>
              </h:panelGrid> 
              <br />
              <h:panelGrid columns="2" style="margin-left: 1%;"> 

@@ -30,20 +30,20 @@
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:60%; margin-top:-9.3%;"> 
                  <p:outputLabel value="Valor Total" for="valortotal" class="left"/>
-                 <p:inputText id="valortotal"  value="#{cadVendasMB.vendas.valorLiquido}"  size="12" class="left" disabled="true">
+                 <p:inputText id="valortotal"  value="#{cadVendasMB.vendas.valorLiquido}"  size="12" class="left" disabled="true" style="text-align: right;">
                  	<f:convertNumber currencySymbol="" type="currency"/>
                  </p:inputText>
              </h:panelGrid>
              <h:panelGrid columns="1" style="margin-left:82%; margin-top:-9.3%;"> 
                  <p:outputLabel value="Saldo" for="saldo" class="left"/>
-                 <p:inputText id="saldo"  value="#{gerarParcelaMB.saldoTotal()}"  size="12" class="left" disabled="true">
+                 <p:inputText id="saldo"  value="#{gerarParcelaMB.saldoTotal()}" style="text-align: right;"  size="12" class="left" disabled="true">
                  	<f:convertNumber currencySymbol="" type="currency"/>
                  </p:inputText>
              </h:panelGrid>
              <br />
              <h:panelGrid columns="1" style="margin-left:1%;"> 
                  <p:outputLabel value="Valor" for="valorparcela" class="left"/>
-                 <p:inputText id="valorparcela"  value="#{gerarParcelaMB.valorParcela}"  size="12" class="left">
+                 <p:inputText id="valorparcela"  value="#{gerarParcelaMB.valorParcela}" style="text-align: right;"  size="12" class="left">
                  	<f:convertNumber pattern="##,###,###,###.##"/>
                  </p:inputText>
              </h:panelGrid>
@@ -108,13 +108,13 @@
              <p:dataTable id="idparcelas" var="parcelas"  rowStyleClass="tabela" class="tabelaselecionar" value="#{gerarParcelaMB.listarContasreceber}" 
                           scrollRows="10" selectionMode="single" scrollable="true" selection="#{gerarParcelaMB.contasReceber}" rowKey="#{parcelas.idcontasReceber}" scrollHeight="120"   rows="10" style="margin-bottom:20px"> 
                 <p:column headerText="Parcela" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{parcelas.numeroParcela}" style="margin-left:50%;"/> 
+                    <h:outputText value="#{parcelas.numeroParcela}" style="text-align: center;"/> 
                 </p:column>
                  <p:column headerText="Tipo" style=" background:white; color:black; border:none;">
                     <h:outputText value="#{parcelas.tipodocumento}" style="margin-left:35%;"/> 
                 </p:column>
                 <p:column headerText="Valor Parcela"   style="background:white; color:black; border:none;">
-                    <h:outputText value="#{parcelas.valorParcela}" style="margin-left:40%;" styleClass="alinharCenter">
+                    <h:outputText value="#{parcelas.valorParcela}" style="text-align: right;" styleClass="alinharCenter">
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>

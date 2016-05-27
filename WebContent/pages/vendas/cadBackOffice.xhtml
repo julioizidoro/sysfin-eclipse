@@ -39,28 +39,28 @@
     		</p:confirmDialog>
             <h:panelGrid columns="1" style="margin-left:1%;">
            		<p:outputLabel value="Comissão" style="margin-left:17%;"/>
-           		<p:inputText value="#{cadVendasMB.vendas.comissaoLiquidaTotal}" size="12">
+           		<p:inputText value="#{cadVendasMB.vendas.comissaoLiquidaTotal}" size="12" style="text-align: right;">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
            		<p:outputLabel value="Desp. Financeiras" />
-           		<p:inputText value="#{cadVendasMB.vendas.despesasFinanceiras}" size="12">
+           		<p:inputText value="#{cadVendasMB.vendas.despesasFinanceiras}" size="12" style="text-align: right;">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:54%; margin-top:-9.3%;">
            		<p:outputLabel value="Comis. Vendedor"/> 
-           		<p:inputText value="#{cadVendasMB.vendas.comissaoFuncionarios}" size="12">
+           		<p:inputText value="#{cadVendasMB.vendas.comissaoFuncionarios}" size="12" style="text-align: right;">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;"> 
            		<p:outputLabel value="Comis. Terceiros" />
-           		<p:inputText value="#{cadVendasMB.vendas.comissaoTerceiros}" size="12">
+           		<p:inputText value="#{cadVendasMB.vendas.comissaoTerceiros}" size="12" style="text-align: right;">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec, idliquidoVenda"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
@@ -68,7 +68,7 @@
            <br />
            <h:panelGrid columns="1" style="margin-left:1%;">
            		<p:outputLabel value="Líquido da Venda"/>
-           		<p:inputText id="idliquidoVenda" value="#{cadVendasMB.vendas.liquidoVendas}" size="12" disabled="true">
+           		<p:inputText id="idliquidoVenda" value="#{cadVendasMB.vendas.liquidoVendas}" size="12" disabled="true" style="text-align: right;">
            			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText> 
            </h:panelGrid>
@@ -83,7 +83,7 @@
            </h:panelGrid>
            <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;">
            		<p:outputLabel value="Pago Fornecedor"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorPagoFornecedor}" size="12">
+           		<p:inputText value="#{cadVendasMB.vendas.valorPagoFornecedor}" size="12" style="text-align: right;">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
@@ -91,7 +91,7 @@
            <br />
            <h:panelGrid columns="1" style="margin-left:1%;">
            		<p:outputLabel value="Pagar/Receber" style="margin-left:9%;" /> 
-           		<p:inputText id="idTotalPagRec" value="#{cadVendasMB.valorPagarReceber}" disabled="true" size="12">
+           		<p:inputText id="idTotalPagRec" value="#{cadVendasMB.valorPagarReceber}" disabled="true" size="12" style="text-align: right;">
            			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText>
            </h:panelGrid>
