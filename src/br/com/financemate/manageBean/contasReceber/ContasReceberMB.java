@@ -24,13 +24,16 @@ import org.primefaces.event.SelectEvent;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.CobrancaParcelasFacade;
+import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.manageBean.CalculosContasMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobrancaparcelas;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
@@ -795,7 +798,9 @@ public class ContasReceberMB implements Serializable {
 	        Date data = new Date();
 	        String diaData = Formatacao.ConvercaoDataPadrao(data);
 	        data = Formatacao.ConvercaoStringDataBrasil(diaData);
-	        if (contasreceber.getDataVencimento().after(data)) {
+	        if (contasreceber.getNumeroDocumento().equalsIgnoreCase("CANCELADA")) {
+	    		 return "../../resources/img/bolinhaPretaS.ico";
+	         }else if (contasreceber.getDataVencimento().after(data)) {
 	            return "../../resources/img/bolaVerde.png";
 	        } else {
 	            if (contasreceber.getDataVencimento().before(data)) {
@@ -850,15 +855,51 @@ public class ContasReceberMB implements Serializable {
 		 calculosContasMB.calcularTotalContasPagar();
 	 }
 	 
-	 public void excluir(){
+	 public String excluir(){
 		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-		 contasReceberFacade.excluir(contasReceber.getIdcontasReceber());
-		 FacesContext context = FacesContext.getCurrentInstance();
-		 context.addMessage(null, new FacesMessage("Excluido com Sucesso", ""));
+		 List<Contasreceber> listaContasMultiplas = new ArrayList<Contasreceber>();
+		 for (int i = 0; i < listaContasReceber.size(); i++) {
+			 if (listaContasReceber.get(i).isSelecionado()) {
+				 listaContasMultiplas.add(listaContasReceber.get(i));
+			 }
+			 
+		 }
+		 if (listaContasMultiplas.isEmpty()) {
+			 excluirCobrancaParcela(contasReceber.getIdcontasReceber());
+			 contasReceberFacade.excluir(contasReceber.getIdcontasReceber());
+		 }else{
+			 for (int i = 0; i < listaContasMultiplas.size(); i++) {
+				 excluirCobrancaParcela(listaContasMultiplas.get(i).getIdcontasReceber());
+				 contasReceberFacade.excluir(listaContasMultiplas.get(i).getIdcontasReceber());
+			 }
+		 }
 		 gerarListaContas();
+		 mensagem msg = new mensagem();
+		 msg.excluiMessagem();
+		 return "";
 	 }
 	 
-	 public String editar(Contasreceber contasreceber){
+	 private String excluirCobrancaParcela(Integer idcontasReceber) {
+		CobrancaParcelasFacade cobrancaParcelasFacade = new CobrancaParcelasFacade();
+		Cobrancaparcelas cobrancaparcelas = new Cobrancaparcelas();
+		try {
+			cobrancaparcelas = cobrancaParcelasFacade.listarCobrancaParcela(idcontasReceber);
+			if (cobrancaparcelas == null) {
+				return "";
+			}else{
+				cobrancaParcelasFacade.excluir(cobrancaparcelas.getIdcobrancaparcelas());
+				cobrancaparcelas = new Cobrancaparcelas();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+
+
+	public String editar(Contasreceber contasreceber){
 		 if (contasreceber!=null){
 			 FacesContext fc = FacesContext.getCurrentInstance();
 			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -1034,6 +1075,7 @@ public class ContasReceberMB implements Serializable {
 			 imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
 		 }else if(imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")){
 			 listaContasReceber = null;
+			 criarConsultaContaReceber();
 			 imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
 		 }
 		 return "";
@@ -1170,52 +1212,66 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public void cancelar(Contasreceber contasreceber){
-		 	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-		 	contasreceber.setNumeroDocumento("CANCELADA");
-			contasReceberFacade.salvar(contasreceber);
-			mensagem msg = new mensagem();
-			msg.cancelado();
-			gerarListaContas();
+		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+		 List<Contasreceber> listaContasMultiplas = new ArrayList<Contasreceber>();
+		 for (int i = 0; i < listaContasReceber.size(); i++) {
+			 if (listaContasReceber.get(i).isSelecionado()) {
+				 listaContasMultiplas.add(listaContasReceber.get(i));
+			 }
+			 
+		 }
+		 if (listaContasMultiplas.isEmpty()) {
+			 contasreceber.setNumeroDocumento("CANCELADA");
+			 contasReceberFacade.salvar(contasreceber);
+		 }else{
+			 for (int i = 0; i < listaContasMultiplas.size(); i++) {
+				 listaContasMultiplas.get(i).setNumeroDocumento("CANCELADA");
+				 contasReceberFacade.salvar(listaContasMultiplas.get(i));
+			 }
+		 }
+		 mensagem msg = new mensagem();
+		 msg.cancelado();
+		 gerarListaContas();
 	 }
 	 
 	 
 	 public Integer numeroCob(int contasreceber){
-			String sql = "Select cp From Cobrancaparcelas cp Join Contasreceber c on cp.contasreceber.idcontasReceber=c.idcontasReceber Where cp.contasreceber.idcontasReceber=" + contasreceber;
-			CobrancaParcelasFacade cobrancaParcelasFacade = new CobrancaParcelasFacade();
-			try { 
-				listaCob = cobrancaParcelasFacade.listar(sql);
-				if (listaCob.size() > 0) {
-					cob = listaCob.size();
-				}else{
-					cob = 0;
-				}
-				
-				return cob;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		 String sql = "Select cp From Cobrancaparcelas cp Join Contasreceber c on cp.contasreceber.idcontasReceber=c.idcontasReceber Where cp.contasreceber.idcontasReceber=" + contasreceber;
+		 CobrancaParcelasFacade cobrancaParcelasFacade = new CobrancaParcelasFacade();
+		 try { 
+			 listaCob = cobrancaParcelasFacade.listar(sql);
+			 if (listaCob.size() > 0) {
+				 cob = listaCob.size();
+			 }else{
+				 cob = 0;
+			 }
+			 
+			 return cob;
+		 } catch (SQLException e) {
+			 // TODO Auto-generated catch block
+			 e.printStackTrace();
+		 }
 		 
 		 return null;
 	 }
 	 
 	 public Integer numeroTotalParcela(String contasreceber){
-			 String sql = "SELECT c FROM Contasreceber c  WHERE c.numeroDocumento='" + contasreceber + "'";
-			 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-			 try {
-				listaTotalParcela = contasReceberFacade.listar(sql);
-				if (listaTotalParcela != null) {
-					if (listaTotalParcela.size() <=0) {
-						totalParcela = 1;
-					}else{
-						totalParcela = listaTotalParcela.size();
-					}
-					return totalParcela; 
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		 String sql = "SELECT c FROM Contasreceber c  WHERE c.numeroDocumento='" + contasreceber + "'";
+		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+		 try {
+			 listaTotalParcela = contasReceberFacade.listar(sql);
+			 if (listaTotalParcela != null) {
+				 if (listaTotalParcela.size() <=0) {
+					 totalParcela = 1;
+				 }else{
+					 totalParcela = listaTotalParcela.size();
+				 }
+				 return totalParcela; 
+			 }
+		 } catch (SQLException e) {
+			 // TODO Auto-generated catch block
+			 e.printStackTrace();
+		 }
 		 return null;
 	 }
 	 
@@ -1244,5 +1300,8 @@ public class ContasReceberMB implements Serializable {
 			 return "";
 		 }
 	 }
+	 
+	 
+	 
 	 
 }

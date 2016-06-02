@@ -48,10 +48,11 @@
             
             		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick">  
                         <p:menuitem value="Cancelar"   icon=" ui-icon-trash"   actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber"/> 
+                        <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}" update="growl"/>
+                        <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-cancel"  action="#{contasReceberMB.gerarListaContas()}" actionListener="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
                         <p:menuitem value="Editar"  icon="ui-icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
+                        <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasReceberMB.excluir()}" update="growl, idTabelaContaReceber"/>
                         <p:menuitem value="Receber"  icon="ui-icon-tag"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
-                        <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}" update="growl"/> 
-                       <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-cancel"  action="#{contasReceberMB.gerarListaContas()}" actionListener="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaContaReceber"  var="contasReceber"  value="#{contasReceberMB.listaContasReceber}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">

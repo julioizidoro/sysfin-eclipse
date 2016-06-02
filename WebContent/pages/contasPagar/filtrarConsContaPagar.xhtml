@@ -69,6 +69,16 @@
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask> 
            </h:panelGrid>
+            <h:panelGrid style="margin-left: 70%; margin-top:-5.5%;">
+	            <p:outputLabel value="Status" for="status"  />
+	       </h:panelGrid>
+           <h:panelGrid style="margin-left: 77.5%; margin-top:-4.6%;"> 
+	            	<p:selectOneMenu id="status" style="width:130px;" value="#{contasPagarMB.status}">
+	                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+	                    <f:selectItem itemLabel="Ativo" itemValue="Ativo" />  
+	                    <f:selectItem itemLabel="Canceladas" itemValue="Canceladas" />
+	                </p:selectOneMenu>
+	       </h:panelGrid>  
                      
                     <br /><br /> <br /> <br /> <br /> <br /> <br /> 
                     <hr />

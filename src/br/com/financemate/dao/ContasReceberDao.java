@@ -7,6 +7,7 @@
 package br.com.financemate.dao;
 
 import br.com.financemate.connection.ConectionFactory;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Formapagamento;
 
@@ -55,13 +56,10 @@ public class ContasReceberDao {
     }
     
     public void excluir(int idConta) throws SQLException{
-         EntityManager manager = ConectionFactory.getConnection();
+        EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("Select c from Contasreceber c where c.idcontasReceber=" + idConta);
-        if (q.getResultList().size()>0){
-            Contasreceber contasreceber = (Contasreceber) q.getResultList().get(0);
-            manager.remove(contasreceber);
-        }
+        Contasreceber conta = manager.find(Contasreceber.class, idConta);
+        manager.remove(conta);
         manager.getTransaction().commit();
         manager.close();
     }

@@ -10,6 +10,7 @@
 	<h:form id="frmConsultaPagar"> 
 	<p:growl id="growl" showDetail="true" sticky="true" /> 
 		<br/><br/>  
+			
 			<p:commandLink   action="#{contasPagarMB.novaConta()}" style="margin-left:84.8%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
@@ -31,9 +32,10 @@
             </p:commandLink>   
             <br /><br /> 
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
-                        <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="growl, idTabelaContaPagar"/>
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update=" growl, idTabelaContaPagar"/>
+                        <p:menuitem value="Cancelar"   icon=" ui-icon-trash"   actionListener="#{contasPagarMB.cancelar(contasPagarMB.contasPagar)}" update="growl, idTabelaContaPagar"/>
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  actionListener="#{contasPagarMB.editar(contasPagarMB.contasPagar)}"/>
+                        <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="growl, idTabelaContaPagar"/>
                     	<p:menuitem value="Operações Usuário"  icon=" ui-icon-person"  action="#{contasPagarMB.operacoesUsuario(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
                     	</p:contextMenu> 
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" rowStyleClass="#{contasPagar.selecionado eq true ? 'old' : null}"

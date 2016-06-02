@@ -8,6 +8,8 @@ import javax.persistence.Query;
 
 import br.com.financemate.connection.ConectionFactory;
 import br.com.financemate.model.Cobrancaparcelas;
+import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Nomearquivo;
 
 public class CobrancaParcelasDao {
 	
@@ -49,6 +51,30 @@ public class CobrancaParcelasDao {
         manager.getTransaction().commit();
         manager.close();
         return lista;
+    }
+    
+    
+    public Cobrancaparcelas listarCobrancaParcela(int idConta) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery("SELECT c FROM Cobrancaparcelas c where c.contasreceber.idcontasReceber=" + idConta);
+        Cobrancaparcelas cobrancaparcelas = null;
+        if (q.getResultList().size()>0){
+        	cobrancaparcelas =  (Cobrancaparcelas) q.getResultList().get(0);
+        }
+        manager.getTransaction().commit();
+        manager.close();
+        return cobrancaparcelas;
+    }
+    
+    
+    public void excluir(int idCobrancaParcelas) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Cobrancaparcelas cobrancaparcelas = manager.find(Cobrancaparcelas.class, idCobrancaParcelas);
+        manager.remove(cobrancaparcelas);
+        manager.getTransaction().commit();
+        manager.close();
     }
     
     

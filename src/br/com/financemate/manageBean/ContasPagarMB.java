@@ -23,12 +23,16 @@ import org.primefaces.event.SelectEvent;
 
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
+import br.com.financemate.facade.NomeArquivoFacade;
 import br.com.financemate.facade.OperacaoUsuarioFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Cptransferencia;
+import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.util.Formatacao;
@@ -72,6 +76,7 @@ public class ContasPagarMB implements Serializable{
 		private CalculosContasMB calculosContasMB;
 		private Boolean habilitarUnidade = false;
 		private String totalRestante;
+		private String status;
 		
 	
 	@PostConstruct
@@ -84,6 +89,22 @@ public class ContasPagarMB implements Serializable{
 
 	
 	
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
 
 
 	public String getTotalRestante() {
@@ -447,7 +468,9 @@ public class ContasPagarMB implements Serializable{
         Date data = new Date();
         String diaData = Formatacao.ConvercaoDataPadrao(data);
         data = Formatacao.ConvercaoStringDataBrasil(diaData);
-        if (contaspagar.getDataVencimento().after(data)) {
+        if (contaspagar.getStatus().equalsIgnoreCase("CANCELADA")) {
+   		 return "../../resources/img/bolinhaPretaS.ico";
+        }else if (contaspagar.getDataVencimento().after(data)) {
             return "../../resources/img/bolaVerde.png";
         } else {
             if (contaspagar.getDataVencimento().before(data)) {
@@ -506,7 +529,7 @@ public class ContasPagarMB implements Serializable{
         }else {
              sql = sql + "  and v.cliente.visualizacao='Operacional' ";
          }
-        sql = sql + " order by v.dataVencimento";
+        sql = sql + " and v.status<>'CANCELADA' order by v.dataVencimento";
         
     }
 	
@@ -521,7 +544,6 @@ public class ContasPagarMB implements Serializable{
             Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro a listar contas a pagar", "Erro");
         }
-        //calculosContasMB.calcularTotalContasPagar();
         calcularTotal();
     }
 	
@@ -576,28 +598,60 @@ public class ContasPagarMB implements Serializable{
 	
 	public String excluir(){
 		ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-		if (contasPagar.getFormaPagamento().equalsIgnoreCase("Transferencia")) {
-			CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
-			String sql = "Select c from Cptransferencia c join Contaspagar p on c.contaspagar.idcontasPagar= p.idcontasPagar"
-					+ " where c.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar();
-			try {
-				listaTransferencia = cpTransferenciaFacade.listarTranferencia(sql);
-			} catch (SQLException e) {
-				e.printStackTrace(); 
-			}
-			if (listaTransferencia != null) {
-				for (int i = 0; i < listaTransferencia.size(); i++) {
-					cpTransferenciaFacade.excluir(listaTransferencia.get(i).getIdcptransferencia());
+		 List<Contaspagar> listaContasMultiplas = new ArrayList<Contaspagar>();
+		 for (int i = 0; i < listaContasPagar.size(); i++) {
+			 if (listaContasPagar.get(i).isSelecionado()) {
+				 listaContasMultiplas.add(listaContasPagar.get(i));
+			 }
+	            
+		 }
+		if (listaContasMultiplas.isEmpty()) {
+			if (contasPagar.getFormaPagamento().equalsIgnoreCase("Transferencia")) {
+				CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
+				String sql = "Select c from Cptransferencia c join Contaspagar p on c.contaspagar.idcontasPagar= p.idcontasPagar"
+						+ " where c.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar();
+				try {
+					listaTransferencia = cpTransferenciaFacade.listarTranferencia(sql);
+				} catch (SQLException e) {
+					e.printStackTrace(); 
+				}
+				if (listaTransferencia != null) {
+					for (int i = 0; i < listaTransferencia.size(); i++) {
+						cpTransferenciaFacade.excluir(listaTransferencia.get(i).getIdcptransferencia());
+					}
 				}
 			}
+			
+			excluirNomeArquivo(contasPagar.getIdcontasPagar());
+	        contasPagarFacade.excluir(contasPagar.getIdcontasPagar());
+		}else{
+			for (int i = 0; i < listaContasMultiplas.size(); i++) {
+				if (listaContasMultiplas.get(i).getFormaPagamento().equalsIgnoreCase("Transferencia")){
+					CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
+					String sql = "Select c from Cptransferencia c join Contaspagar p on c.contaspagar.idcontasPagar= p.idcontasPagar"
+							+ " where c.contaspagar.idcontasPagar=" + listaContasMultiplas.get(i).getIdcontasPagar();
+					try {
+						listaTransferencia = cpTransferenciaFacade.listarTranferencia(sql);
+					} catch (SQLException e) {
+						e.printStackTrace(); 
+					}
+					if (listaTransferencia != null) {
+						for (int j = 0; j < listaTransferencia.size(); j++) {
+							cpTransferenciaFacade.excluir(listaTransferencia.get(j).getIdcptransferencia());
+						}
+					}
+				}
+				excluirNomeArquivo(listaContasMultiplas.get(i).getIdcontasPagar());
+		        contasPagarFacade.excluir(listaContasMultiplas.get(i).getIdcontasPagar());
+			}
 		}
-        contasPagarFacade.excluir(contasPagar.getIdcontasPagar());
         gerarListaContas();
         mensagem msg = new mensagem();
         msg.excluiMessagem();
         return "";
      }
 	
+
 	public void autorizarPagamento(Contaspagar contaspagar){
         contaspagar.setAutorizarPagamento("S");
         ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
@@ -663,6 +717,13 @@ public class ContasPagarMB implements Serializable{
 				 valorTotal = valorTotal + listaContasPagar.get(i).getValor();
 			 }
 	            
+		 } listaContasSelecionadas = new ArrayList<Contaspagar>();
+		 for (int i = 0; i < listaContasPagar.size(); i++) {
+			 if (listaContasPagar.get(i).isSelecionado()) {
+				 listaContasSelecionadas.add(listaContasPagar.get(i));
+				 valorTotal = valorTotal + listaContasPagar.get(i).getValor();
+			 }
+	            
 		 }
 		 totalLiberadas = Formatacao.foramtarFloatString(valorTotal);
 		 Map<String, Object> options = new HashMap<String, Object>();
@@ -680,20 +741,63 @@ public class ContasPagarMB implements Serializable{
 		 sql = "Select v from Contaspagar v where ";
 		 if (liberadas){
 			 sql = sql + " v.contaPaga='S' and ";
-		 }else sql = sql + " v.contaPaga='N' and ";
+		 }else{
+			 sql = sql + " v.contaPaga='N' and ";
+			 
+		 }
 		 if (autorizadas){
 			 sql = sql + " v.autorizarPagamento='S' and ";
 		 }
 		 if (cliente!=null){
-			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente() + " and ";
+			 sql = sql + " v.cliente.idcliente=" + cliente.getIdcliente();
+			 if (!descricao.equalsIgnoreCase("")) {
+				sql = sql + " and ";
+			}else if (planocontas != null) {
+				sql = sql + " and ";
+			}else if (status != null && status != "") {
+				sql = sql + " and ";
+			}else if ((dataInicio!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
 		 }else {
-			 sql = sql + " v.cliente.visualizacao='Operacional' and ";
+			 sql = sql + " v.cliente.visualizacao='Operacional'";
+			 if (!descricao.equalsIgnoreCase("")) {
+				 sql = sql + " and ";
+			 }else if (planocontas != null) {
+				 sql = sql + " and ";
+			 }else if (status != null && status != "") {
+				 sql = sql + " and ";
+			 }else if ((dataInicio!=null) && (dataFinal!=null)){
+				 sql = sql + " and ";
+			 }
 		 }
 		 if (!descricao.equalsIgnoreCase("")) {
-			sql =  sql + " v.descricao like '%" + descricao + "%' and ";
+			sql =  sql + " v.descricao like '%" + descricao + "%'";
+			if (planocontas != null) {
+				sql = sql + " and ";
+			}else if (status != null && status != "") {
+				sql = sql + " and ";
+			}else if ((dataInicio!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
 		}
 		if (planocontas!=null) {
-			sql = sql + " v.planocontas.idplanoContas=" + planocontas.getIdplanoContas() + " and ";
+			sql = sql + " v.planocontas.idplanoContas=" + planocontas.getIdplanoContas();
+			if (status != null && status != "") {
+				sql = sql + " and ";
+			}else if ((dataInicio!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
+		}
+		if (status != "" && status != null) {
+			if (status.equalsIgnoreCase("Canceladas")) {
+				sql = sql + " v.status='CANCELADA' ";
+			}else if(status.equalsIgnoreCase("Ativo")){
+				sql = sql + " v.status='Ativo' ";
+			}
+			if ((dataInicio!=null) && (dataFinal!=null)){
+				sql = sql + " and ";
+			}
 		}
 		 if ((dataInicio!=null) && (dataFinal!=null)){
 			 if (liberadas){
@@ -823,4 +927,46 @@ public class ContasPagarMB implements Serializable{
 	        setTotalRestante(Formatacao.foramtarFloatString(vencer - vencendo));
 	 }
 	 
+	 
+	 public String excluirNomeArquivo(int idConta){
+		 NomeArquivoFacade nomeArquivoFacade = new NomeArquivoFacade();
+		 Nomearquivo nomearquivo = new Nomearquivo();
+		 try {
+			 nomearquivo = nomeArquivoFacade.listar(idConta);
+			 if (nomearquivo == null) {
+				 return "";
+			 }else{
+				 nomeArquivoFacade.excluir(nomearquivo.getIdnomearquivo());
+				 nomearquivo = new Nomearquivo();
+			 }
+		 } catch (SQLException e) {
+			 // TODO Auto-generated catch block
+			 e.printStackTrace();
+		 }
+		 return "";
+	 }
+	 
+	 
+	 public void cancelar(Contaspagar contaspagar){
+		 ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+		 List<Contaspagar> listaContasMultiplas = new ArrayList<Contaspagar>();
+		 for (int i = 0; i < listaContasPagar.size(); i++) {
+			 if (listaContasPagar.get(i).isSelecionado()) {
+				 listaContasMultiplas.add(listaContasPagar.get(i));
+			 }
+			 
+		 }
+		 if (listaContasMultiplas.isEmpty()) {
+			 contaspagar.setStatus("CANCELADA");
+			 contasPagarFacade.salvar(contaspagar);
+		 }else{
+			 for (int i = 0; i < listaContasMultiplas.size(); i++) {
+				 listaContasMultiplas.get(i).setStatus("CANCELADA");
+				 contasPagarFacade.salvar(listaContasMultiplas.get(i));
+			 }
+		 }
+		 mensagem msg = new mensagem();
+		 msg.cancelado();
+		 gerarListaContas();
+	 }
 }

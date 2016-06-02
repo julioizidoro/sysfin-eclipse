@@ -60,16 +60,11 @@ public class RecebimentoContaMB implements  Serializable{
         contasReceber = (Contasreceber) session.getAttribute("contareceber");
         valorPagoParcial = (Float) session.getAttribute("valorPagoParcial");
         cliente = contasReceber.getCliente();
-        gerarListaCliente();
+        gerarListaCliente(); 
         gerarListaBanco();
         cliente = contasReceber.getCliente();
         banco = contasReceber.getBanco();
-		if (valorPagoParcial > 0f) {
-			listaRecebimentoParial = new ArrayList<Contasreceber>();
-			listaRecebimentoParial = contasReceber.getRecebimentoParcialList();
-		}else{
-			listaRecebimentoParial = new ArrayList<Contasreceber>();
-		}
+		listaRecebimentoParial = new ArrayList<Contasreceber>();
 		
     }
     

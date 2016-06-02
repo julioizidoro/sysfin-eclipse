@@ -6,6 +6,7 @@
 package br.com.financemate.dao;
 
 import br.com.financemate.connection.ConectionFactory;
+import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Nomearquivo;
 import java.sql.SQLException;
 import javax.persistence.EntityManager;
@@ -37,6 +38,15 @@ public class NomeArquivoDao {
         manager.getTransaction().commit();
         manager.close();
         return nomearquivo;
+    }
+    
+    public void excluir(int idNomeArquivo) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Nomearquivo nomearquivo = manager.find(Nomearquivo.class, idNomeArquivo);
+        manager.remove(nomearquivo);
+        manager.getTransaction().commit();
+        manager.close();
     }
     
     

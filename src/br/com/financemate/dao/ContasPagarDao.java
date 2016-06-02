@@ -73,19 +73,20 @@ public class ContasPagarDao {
         Contaspagar conta = manager.find(Contaspagar.class, idConta);
         manager.remove(conta);
         manager.getTransaction().commit();
+        manager.close();
     }
     
     
     
     public Contaspagar consultarVenda(String sql) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
-        manager.getTransaction().commit();
+        manager.getTransaction().begin();
         Query q = manager.createQuery(sql);
         Contaspagar conta = null;
         if (q.getResultList().size()>0){
             conta = (Contaspagar) q.getResultList().get(0);
         }
-        manager.getTransaction().begin();
+        manager.close();
         return conta;
     }
     
@@ -98,6 +99,7 @@ public class ContasPagarDao {
         manager.merge(arquivo);
         //fechando uma transação
         manager.getTransaction().commit();
+        manager.close();
     }
     
     public Arquivocontaspagar consultarArquivo(int idContasPagar) throws SQLException{
@@ -108,7 +110,7 @@ public class ContasPagarDao {
         if (q.getResultList().size()>0){
             arquivo =  (Arquivocontaspagar) q.getResultList().get(0);
         }
-        manager.getTransaction().commit();
+        manager.close();
         return arquivo;
     }
     
@@ -120,6 +122,7 @@ public class ContasPagarDao {
             manager.remove(arquivo);
         }
         manager.getTransaction().commit();
+        manager.close();
     }
     
     public List<Double> calculaSaldos(String data, int idcliente) throws SQLException {

@@ -83,7 +83,6 @@ public class Contasreceber implements Serializable {
     private Banco banco;
     @Transient
     private boolean selecionado;
-    private List<Contasreceber> recebimentoParcialList;
 
     public Contasreceber() {
     }
@@ -245,17 +244,6 @@ public class Contasreceber implements Serializable {
     public void setSelecionado(boolean selecionado) {
         this.selecionado = selecionado;
     }
-
-  
-    public List<Contasreceber> getRecebimentoParcialList() {
-		return recebimentoParcialList;
-	}
-
-
-
-	public void setRecebimentoParcialList(List<Contasreceber> recebimentoParcialList) {
-		this.recebimentoParcialList = recebimentoParcialList;
-	}
 
 
 
