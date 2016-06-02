@@ -545,13 +545,13 @@ public class CadVendasMB implements Serializable {
 	 
 	
 	public String salvarConta(){
-		if (vendas.getValorLiquido() > 0) {
+		if (valorPagarReceber > 0) {
 			Contaspagar contaspagar = new Contaspagar();
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 			BancoFacade bancoFacade = new BancoFacade();
 			ClienteFacade clienteFacade = new ClienteFacade();
 			contaspagar.setDataEnvio(vendas.getDataVenda());
-			contaspagar.setValor(vendas.getValorLiquido());
+			contaspagar.setValor(valorPagarReceber);
 			contaspagar.setPlanocontas(planocontas);
 			contaspagar.setTipoDocumento(TipoDocumento);
 			contaspagar.setCompetencia(competencia);
@@ -559,6 +559,8 @@ public class CadVendasMB implements Serializable {
 			contaspagar.setContaPaga("N");
 			contaspagar.setDataVencimento(vendas.getDataVenda());
 			contaspagar.setFornecedor(vendas.getNomeFornecedor());
+			contaspagar.setFormaPagamento(TipoDocumento);
+			contaspagar.setStatus("Ativo");
 			if (usuarioLogadoMB.getCliente() != null) {
 				try {
 					banco = bancoFacade.consultar(usuarioLogadoMB.getCliente().getIdcliente(), "Nenhum");
@@ -581,13 +583,13 @@ public class CadVendasMB implements Serializable {
 				
 			}
 			contaspagar = contasPagarFacade.salvar(contaspagar);
-		}else if(vendas.getValorLiquido() < 0 ){
+		}else if(valorPagarReceber < 0 ){
 			Contasreceber contasreceber = new Contasreceber();
 			ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 			ClienteFacade clienteFacade = new ClienteFacade();
 			BancoFacade bancoFacade = new BancoFacade();
 			contasreceber.setDataVencimento(vendas.getDataVenda());
-			contasreceber.setValorParcela(vendas.getValorLiquido() * (-1));
+			contasreceber.setValorParcela(valorPagarReceber * (-1));
 			contasreceber.setPlanocontas(planocontas);
 			contasreceber.setTipodocumento(TipoDocumento);
 			contasreceber.setUsuario(usuarioLogadoMB.getUsuario());
@@ -596,6 +598,7 @@ public class CadVendasMB implements Serializable {
 			contasreceber.setDesagio(0f);
 			contasreceber.setValorPago(0f);
 			contasreceber.setNumeroParcela("1/1");
+			contasreceber.setStatus("Ativo");
 			
 			if (usuarioLogadoMB.getCliente() != null) { 
 				try {
@@ -610,7 +613,7 @@ public class CadVendasMB implements Serializable {
 			}else{
 				try {
 					banco = bancoFacade.consultar(8, "Nenhum");
-					contasreceber.setBanco(banco);
+					contasreceber.setBanco(banco); 
 					cliente = clienteFacade.consultar(8);
 					contasreceber.setCliente(cliente);
 				} catch (SQLException ex) {
@@ -636,7 +639,7 @@ public class CadVendasMB implements Serializable {
 			valorTotalForma = valorTotalForma + listaFormaPagamento.get(i).getValor();
 		}
 		if (vendas.getValorLiquido() == null) {
-			saldoRestante = 0 - valorTotalForma;
+			saldoRestante = 0 - valorTotalForma; 
 		}else{
 			saldoRestante = vendas.getValorLiquido() - valorTotalForma;
 		}

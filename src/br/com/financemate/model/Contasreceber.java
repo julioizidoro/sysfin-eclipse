@@ -83,6 +83,8 @@ public class Contasreceber implements Serializable {
     private Banco banco;
     @Transient
     private boolean selecionado;
+    @Column(name = "status")
+    private String status;
 
     public Contasreceber() {
     }
@@ -244,6 +246,18 @@ public class Contasreceber implements Serializable {
     public void setSelecionado(boolean selecionado) {
         this.selecionado = selecionado;
     }
+
+    
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 
 

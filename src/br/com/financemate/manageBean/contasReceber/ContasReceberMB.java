@@ -734,10 +734,10 @@ public class ContasReceberMB implements Serializable {
 		 if (usuarioLogadoMB.getUsuario().getCliente()>0){
 			 sql = " Select v from Contasreceber v where " +
 					 " v.cliente.idcliente=" + usuarioLogadoMB.getUsuario().getCliente() + 
-					 " and v.dataPagamento is null and v.numeroDocumento<>'CANCELADA'" + " order by v.dataVencimento";
+					 " and v.dataPagamento is null and v.status<>'CANCELADA'" + " order by v.dataVencimento";
 		 }else { 
 			 sql = " Select v from Contasreceber v where v.cliente.visualizacao='Operacional' and v.cliente.idcliente=" + cliente.getIdcliente()  
-					 + " and v.dataPagamento is null and v.numeroDocumento<>'CANCELADA'" + " order by v.dataVencimento";
+					 + " and v.dataPagamento is null and v.status<>'CANCELADA'" + " order by v.dataVencimento";
 	        } 
 		 gerarListaContas();
 	 }
@@ -1221,11 +1221,11 @@ public class ContasReceberMB implements Serializable {
 			 
 		 }
 		 if (listaContasMultiplas.isEmpty()) {
-			 contasreceber.setNumeroDocumento("CANCELADA");
+			 contasreceber.setStatus("CANCELADA");
 			 contasReceberFacade.salvar(contasreceber);
 		 }else{
 			 for (int i = 0; i < listaContasMultiplas.size(); i++) {
-				 listaContasMultiplas.get(i).setNumeroDocumento("CANCELADA");
+				 listaContasMultiplas.get(i).setStatus("CANCELADA");
 				 contasReceberFacade.salvar(listaContasMultiplas.get(i));
 			 }
 		 }
@@ -1255,25 +1255,7 @@ public class ContasReceberMB implements Serializable {
 		 return null;
 	 }
 	 
-	 public Integer numeroTotalParcela(String contasreceber){
-		 String sql = "SELECT c FROM Contasreceber c  WHERE c.numeroDocumento='" + contasreceber + "'";
-		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-		 try {
-			 listaTotalParcela = contasReceberFacade.listar(sql);
-			 if (listaTotalParcela != null) {
-				 if (listaTotalParcela.size() <=0) {
-					 totalParcela = 1;
-				 }else{
-					 totalParcela = listaTotalParcela.size();
-				 }
-				 return totalParcela; 
-			 }
-		 } catch (SQLException e) {
-			 // TODO Auto-generated catch block
-			 e.printStackTrace();
-		 }
-		 return null;
-	 }
+	
 	 
 	 public void desabilitarUnidade(){
 		 if (usuarioLogadoMB.getCliente() != null) {
@@ -1300,7 +1282,6 @@ public class ContasReceberMB implements Serializable {
 			 return "";
 		 }
 	 }
-	 
 	 
 	 
 	 

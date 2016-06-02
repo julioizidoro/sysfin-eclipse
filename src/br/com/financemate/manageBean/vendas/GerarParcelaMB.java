@@ -312,6 +312,7 @@ public class GerarParcelaMB implements Serializable {
 						contasreceber.setNumeroDocumento(""+vendas.getIdvendas());
 						contasreceber.setVenda(vendas.getIdvendas());
 						contasreceber.setNumeroParcela(i+1+"/"+vezes);
+						contasreceber.setStatus("Ativo");
 						if (vendas.getCliente() != null) { 
 							try {
 								banco = bancoFacade.consultar(vendas.getCliente().getIdcliente(), "Nenhum");

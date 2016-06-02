@@ -45,7 +45,6 @@
             </p:commandLink>
             </h:panelGrid>     
             <br />
-            
             		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick">  
                         <p:menuitem value="Cancelar"   icon=" ui-icon-trash"   actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber"/> 
                         <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}" update="growl"/>
