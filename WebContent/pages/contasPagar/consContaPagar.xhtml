@@ -41,9 +41,9 @@
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" rowStyleClass="#{contasPagar.selecionado eq true ? 'old' : null}"
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
                         
-                        <p:column headerText="Status"  style="width:30px; font-size:12px; background:white; color:black; border:none;" styleClass="alinharCenter">
+                        <p:column headerText="Status"  style="width:30px; font-size:12px; text-align:center; background:white; color:black; border:none;" styleClass="alinharCenter">
                             <p:commandLink style="margin-left:-2%;">
-                                <img src="#{contasPagarMB.verStatus(contasPagar)}" style="margin-right:25%; font-size:12px;"/>
+                                <img src="#{contasPagarMB.verStatus(contasPagar)}" style="font-size:12px;"/>
                             </p:commandLink>
                         </p:column>  
                         <p:column headerText="Vencimento" sortBy="#{contasPagar.dataVencimento}" style="width:17%; font-size:12px; background:white; color:black; border:none;text-align:center;">
@@ -51,20 +51,20 @@
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText> 
                         </p:column> 
-                        <p:column headerText="Unidade" styleClass="alinhar" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;">
+                        <p:column headerText="Unidade" styleClass="alinhar" sortBy="#{contasPagar.cliente.nomeFantasia}" style="width:15%; font-size:12px; background:white; color:black; border:#fff;text-align:center;">
                             <h:outputText value="#{contasPagar.cliente.nomeFantasia}" style=" font-size:12px;"/>
                         </p:column> 
-                        <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%; font-size:12px; background:white; color:black; border:none;" >
+                        <p:column headerText="Descrição" sortBy="#{contasPagar.descricao}" style="widht:55%;text-align:left; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{contasPagar.descricao}" style="font-size:12px;"/>
                         </p:column>
                         <p:column headerText="Fornecedor" sortBy="#{contasPagar.fornecedor}" style="width:15%; font-size:12px; background:white; color:black; border:none;text-align:center;" >
                             <h:outputText value="#{contasPagar.fornecedor}" style=" font-size:12px;"/>
                         </p:column>  
-                        <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; font-size:12px; background:white; color:black; border:none;" styleClass="alinharCenter" >
-                            <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="margin-right:50%; width:18%; font-size:12px;"/>
+                        <p:column id="imagemAutorizadas"  headerText="Autorizadas" sortBy="#{contasPagar.autorizarPagamento}"   style="width:10%; font-size:12px; background:white; color:black; border:none; text-align:center;" styleClass="alinharCenter" >
+                            <img id="corAutorizadas"  src="#{contasPagarMB.imagemAutorizadas(contasPagar)}" style="width:18%; font-size:12px;"/>
                         </p:column>
-                        <p:column headerText="Valor Conta" sortBy="#{contasPagar.valor}" style="width:8%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{contasPagar.valor}" style="font-size:12px; color:red; margin-right:10%;">
+                        <p:column headerText="Valor Conta" sortBy="#{contasPagar.valor}" style="width:8%; background:white; font-size:12px; color:black; border:none; text-align:right;" styleClass="alinharCenter">
+                            <h:outputText value="#{contasPagar.valor}" style="font-size:12px; color:red;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
                         </p:column>

@@ -25,16 +25,16 @@
             <br />
              <p:dataTable id="idparcelas" var="contasReceber"  rowStyleClass="tabela" class="tabelaselecionar" value="#{parcelasMB.listaParcela}" 
                           scrollRows="10"  scrollable="true" selection="#{parcelasMB.contasreceber}" rowKey="#{contasReceber.idcontasReceber}" scrollHeight="160"   rows="10" style="margin-bottom:20px"> 
-                <p:column headerText="Parcela" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{contasReceber.numeroParcela}" style="margin-left:50%;"/> 
+                <p:column headerText="Parcela" style=" background:white; text-align:center; color:black; border:none;">
+                    <h:outputText value="#{contasReceber.numeroParcela}"/> 
                 </p:column>
-                <p:column headerText="Vencimento" style="background:white; color:black; border:none;">
-                    <h:outputText  value="#{contasReceber.dataVencimento}" style="margin-left:35%;">
+                <p:column headerText="Vencimento" style="background:white; text-align:center; color:black; border:none;">
+                    <h:outputText  value="#{contasReceber.dataVencimento}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
-                <p:column headerText="Valor"   style="background:white; color:black; border:none;">
-                    <h:outputText value="#{contasReceber.valorParcela}" style="margin-left:40%;" styleClass="alinharCenter">
+                <p:column headerText="Valor"   style="background:white; color:black; border:none; text-align:right;">
+                    <h:outputText value="#{contasReceber.valorParcela}" styleClass="alinharCenter">
                         <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
                     </h:outputText>
                 </p:column>

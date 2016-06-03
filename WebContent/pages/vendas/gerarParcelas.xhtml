@@ -107,24 +107,24 @@
              </p:contextMenu>  
              <p:dataTable id="idparcelas" var="parcelas"  rowStyleClass="tabela" class="tabelaselecionar" value="#{gerarParcelaMB.listarContasreceber}" 
                           scrollRows="10" selectionMode="single" scrollable="true" selection="#{gerarParcelaMB.contasReceber}" rowKey="#{parcelas.idcontasReceber}" scrollHeight="120"   rows="10" style="margin-bottom:20px"> 
-                <p:column headerText="Parcela" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{parcelas.numeroParcela}" style="text-align: center;"/> 
+                <p:column headerText="Parcela" style=" background:white; color:black; border:none; text-align: center;">
+                    <h:outputText value="#{parcelas.numeroParcela}"/> 
                 </p:column>
-                 <p:column headerText="Tipo" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{parcelas.tipodocumento}" style="margin-left:35%;"/> 
+                 <p:column headerText="Tipo" style=" background:white; color:black; border:none; text-align:center;">
+                    <h:outputText value="#{parcelas.tipodocumento}"/> 
                 </p:column>
-                <p:column headerText="Valor Parcela"   style="background:white; color:black; border:none;">
-                    <h:outputText value="#{parcelas.valorParcela}" style="text-align: right;" styleClass="alinharCenter">
+                <p:column headerText="Valor Parcela"   style="background:white;text-align: right; color:black; border:none;">
+                    <h:outputText value="#{parcelas.valorParcela}" styleClass="alinharCenter">
                         <f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>
-                <p:column headerText="Vencimento" style="background:white; color:black; border:none;">
-                    <h:outputText  value="#{parcelas.dataVencimento}" style="margin-left:20%;">
+                <p:column headerText="Vencimento" style="background:white;text-align: center; color:black; border:none;">
+                    <h:outputText  value="#{parcelas.dataVencimento}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
-                 <p:column headerText="N°Doc" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{parcelas.numeroDocumento}" style="margin-left:40%;"/> 
+                 <p:column headerText="N°Doc" style=" background:white;text-align: center; color:black; border:none;">
+                    <h:outputText value="#{parcelas.numeroDocumento}"/> 
                 </p:column>
                 
                 

@@ -34,19 +34,19 @@
             </p:contextMenu>   
             <p:dataTable id="idHistoricoCobranca" var="historicoCobranca"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cobrancaMB.listaHistorico}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80" selection="#{cobrancaMB.historico}" selectionMode="single" rowKey="#{historicoCobranca.idhistoricocobranca}"  rows="10" style="margin-bottom:20px;"> 
-                <p:column headerText="Data" style="background:white; color:black; border:none; width:70px;">
-                    <h:outputText  value="#{historicoCobranca.data}" style="margin-left:10%;">
+                <p:column headerText="Data" style="background:white; color:black; border:none; width:70px; text-align:center;">
+                    <h:outputText  value="#{historicoCobranca.data}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
-                <p:column headerText="Contato" style="width: 80px; background:white; color:black; border:none;">
+                <p:column headerText="Contato" style="width: 80px; background:white; color:black; border:none; text-align:left;">
                     <h:outputText value="#{historicoCobranca.contato}" /> 
                 </p:column>
-                <p:column headerText="Descrição" style=" background:white; color:black; border:none;">
+                <p:column headerText="Descrição" style=" background:white; color:black; border:none; text-align:left;">
                     <h:outputText value="#{historicoCobranca.descricao}" /> 
                 </p:column> 
-                <p:column headerText="Usuário"   style="background:white; color:black; width: 80px; border:none;">
-                    <h:outputText value="#{historicoCobranca.usuario.nome}" style="margin-left:20%;"/>
+                <p:column headerText="Usuário"   style="background:white; text-align:left; color:black; width: 80px; border:none;">
+                    <h:outputText value="#{historicoCobranca.usuario.nome}"/>
                 </p:column>
                 
             </p:dataTable>

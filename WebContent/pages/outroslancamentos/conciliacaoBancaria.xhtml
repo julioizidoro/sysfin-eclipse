@@ -55,26 +55,26 @@
                     <p:dataTable id="idTabelaOutrosLancamentos"   value="#{conciliacaoMB.listaLacamentos}" style="border:none;width:40%;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300"  var="outros" sortBy="#{outros.conciliacao}">
                       
-                       <p:column headerText="Data Compensação"  style="width:17%; font-size:12px; background:white; color:black; border:none;">
-                            <h:outputText  value="#{outros.dataCompensacao}" style="margin-left:29%; font-size:12px;" > 
+                       <p:column headerText="Data Compensação"  style="width:17%; text-align:center; font-size:12px; background:white; color:black; border:none;">
+                            <h:outputText  value="#{outros.dataCompensacao}" style="font-size:12px;" > 
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText> 
                         </p:column> 
-                        <p:column headerText="Descrição" sortBy="#" style="widht:50%; font-size:12px; background:white; color:black; border:none;" >
+                        <p:column headerText="Descrição" sortBy="#" style="widht:50%; font-size:12px; text-align:left; background:white; color:black; border:none;" >
                             <h:outputText value="#{outros.descricao}" style="font-size:12px;"/>
                         </p:column>
                         <p:column headerText="Valor Entrada" style="width:8%; background:white; text-align: right; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{outros.valorEntrada}" style="font-size:12px; margin-right:10%;">
+                            <h:outputText value="#{outros.valorEntrada}" style="font-size:12px;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
                         </p:column>
                         <p:column headerText="Valor Saída"  style="width:8%;text-align: right; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{outros.valorSaida}" style="font-size:12px; margin-right:10%;">
+                            <h:outputText value="#{outros.valorSaida}" style="font-size:12px;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
                         </p:column>
-                         <p:column headerText="ID"  style="width:11%; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="" style="font-size:12px; margin-right:10%;"/>                              
+                         <p:column headerText="ID"  style="width:11%; text-align:center; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="" style="font-size:12px;"/>                              
                         </p:column>
                     </p:dataTable> 
                      
@@ -83,21 +83,21 @@
                        <p:column headerText="ID"  style="width:11%; text-align:center; font-size:12px; background:white; color:black; border:none;" >
                             <h:outputText value="#{transacao.id}" style="font-size:12px;"/>
                         </p:column> 
-                       <p:column headerText="Data Compensação" style="width:17%; font-size:12px; background:white; color:black; border:none;">
-                            <h:outputText  value="#{transacao.data}" style="margin-left:29%; font-size:12px;" > 
+                       <p:column headerText="Data Compensação" style="width:17%; text-align:center; font-size:12px; background:white; color:black; border:none;">
+                            <h:outputText  value="#{transacao.data}" style="font-size:12px;" > 
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText>  
                         </p:column> 
-                        <p:column headerText="Descrição"  style="widht:50%; font-size:12px; background:white; color:black; border:none;" >
+                        <p:column headerText="Descrição"  style="widht:50%; font-size:12px; background:white; text-align:center; color:black; border:none;" >
                             <h:outputText value="#{transacao.descricao}" style="font-size:12px;"/>
                         </p:column>
                         <p:column headerText="Valor Entrada" style="width:8%;text-align: right; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{transacao.valorEntrada}" style="font-size:12px; margin-right:10%;">
+                            <h:outputText value="#{transacao.valorEntrada}" style="font-size:12px;">
                                  <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
                         </p:column>
                         <p:column headerText="Valor Saída" style="width:8%;text-align: right; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{transacao.valorSaida}" style="font-size:12px; margin-right:10%;">
+                            <h:outputText value="#{transacao.valorSaida}" style="font-size:12px;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
                         </p:column> 

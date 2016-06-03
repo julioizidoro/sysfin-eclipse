@@ -42,16 +42,16 @@
                     <p:dataTable id="idTabelaVendas"  var="vendas"  value="#{vendasMB.listaVendas}" style="border:none;" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{vendasMB.venda}" selectionMode="single" rowKey="#{vendas.idvendas}">
                         
-                        <p:column headerText="Situação"  style="width:8%;; background:white; color:black; border:none; font-size:12px;" styleClass="alinharCenter">
+                        <p:column headerText="Situação"  style="width:8%; text-align:center; background:white; color:black; border:none; font-size:12px;" styleClass="alinharCenter">
                             <p:commandLink>
-                                <img src="#{vendasMB.verStatus(vendas)}" style="margin-right:45%;"/> 
+                                <img src="#{vendasMB.verStatus(vendas)}"/> 
                             </p:commandLink>
                         </p:column>
-                        <p:column headerText="N° Venda" style="width:7%; background:white; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
-                             <h:outputText  value="#{vendas.idvendas}" style="font-size:12px; margin-right:30px;"/>                                     
-                        </p:column>  
-                        <p:column headerText=" Data Venda" sortBy="#{vendas.dataVenda}" style="width:12%; font-size:12px; margin-left:10px; background:white; color:black; border:none;">
-                            <h:outputText  value="#{vendas.dataVenda}" style="margin-left:20%; font-size:12px;" > 
+                        <p:column headerText="N° Venda" style="width:7%; background:white;text-align:center; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
+                             <h:outputText  value="#{vendas.idvendas}" style="font-size:12px;"/>                                     
+                        </p:column>
+                        <p:column headerText=" Data Venda" sortBy="#{vendas.dataVenda}" style="text-align:center;width:12%; font-size:12px; background:white; color:black; border:none;">
+                            <h:outputText  value="#{vendas.dataVenda}" style="font-size:12px;" > 
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/> 
                             </h:outputText> 
                         </p:column> 
@@ -61,13 +61,13 @@
                         <p:column headerText="Cliente" sortBy="#{vendas.nomeCliente}"   style=" font-size:12px; background:white; color:black; border:none;" >
                              <h:outputText  value="#{vendas.nomeCliente}" style=" font-size:12px; text-align:center;"/>
                         </p:column>
-                        <p:column headerText="Valor" sortBy="#{vendas.valorLiquido}" style=" background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
-                            <h:outputText value="#{vendas.valorLiquido}" style="margin-right:40%; font-size:12px;"> 
+                        <p:column headerText="Valor" sortBy="#{vendas.valorLiquido}" style="text-align:right; background:white; font-size:12px; color:black; border:none;" styleClass="alinharCenter">
+                            <h:outputText value="#{vendas.valorLiquido}" style="font-size:12px;"> 
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Produto" sortBy="#{vendas.produto}" style=" font-size:11.5px; background:white; color:black; border:none;">
-                            <h:outputText value="#{vendas.produto.descricao}" style="margin-right:20px; font-size:12px;"/> 
+                        <p:column headerText="Produto" sortBy="#{vendas.produto}" style="text-align:left; font-size:11.5px; background:white; color:black; border:none;">
+                            <h:outputText value="#{vendas.produto.descricao}" style="font-size:12px;"/> 
                         </p:column>
                       </p:dataTable>
       </h:form>

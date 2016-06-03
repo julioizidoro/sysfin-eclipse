@@ -55,19 +55,19 @@
               </p:contextMenu> 
               <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadVendasMB.listaFormaPagamento}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80"  selectionMode="single" selection="#{cadVendasMB.formapagamento}" rowKey="#{recebimento.idformaPagamento}"  rows="10" style="margin-bottom:20px;"> 
-                <p:column headerText="Data" style="background:white; color:black; border:none; width:70px;">
-                    <h:outputText  value="#{recebimento.dataVencimento}" style="margin-left:10%;">
+                <p:column headerText="Data" style="background:white; color:black; border:none; width:70px; text-align:center;">
+                    <h:outputText  value="#{recebimento.dataVencimento}">
                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </h:outputText> 
                 </p:column>
-                <p:column headerText="Tipo" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{recebimento.tipoDocumento}" style="margin-left:40%;"/> 
+                <p:column headerText="Tipo" style=" background:white; color:black; border:none; text-align:left;">
+                    <h:outputText value="#{recebimento.tipoDocumento}"/> 
                 </p:column>
-                <p:column headerText="N° Parcelas" style=" background:white; color:black; border:none;">
-                    <h:outputText value="#{recebimento.numeroParcelas}" style="text-align: right;"/> 
+                <p:column headerText="N° Parcelas" style=" background:white; text-align:center; color:black; border:none;">
+                    <h:outputText value="#{recebimento.numeroParcelas}"/> 
                 </p:column> 
-                <p:column headerText="Valor"   style="background:white; color:black; width: 80px; border:none;">
-                    <h:outputText value="#{recebimento.valor}" style="text-align: right;">
+                <p:column headerText="Valor"   style="background:white; text-align:right; color:black; width: 80px; border:none;">
+                    <h:outputText value="#{recebimento.valor}">
                     	<f:convertNumber currencySymbol="" type="currency"/>
                     </h:outputText>
                 </p:column>
