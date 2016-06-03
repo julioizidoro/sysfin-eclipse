@@ -607,19 +607,7 @@ public class ContasPagarMB implements Serializable{
 		 }
 		if (listaContasMultiplas.isEmpty()) {
 			if (contasPagar.getFormaPagamento().equalsIgnoreCase("Transferencia")) {
-				CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
-				String sql = "Select c from Cptransferencia c join Contaspagar p on c.contaspagar.idcontasPagar= p.idcontasPagar"
-						+ " where c.contaspagar.idcontasPagar=" + contasPagar.getIdcontasPagar();
-				try {
-					listaTransferencia = cpTransferenciaFacade.listarTranferencia(sql);
-				} catch (SQLException e) {
-					e.printStackTrace(); 
-				}
-				if (listaTransferencia != null) {
-					for (int i = 0; i < listaTransferencia.size(); i++) {
-						cpTransferenciaFacade.excluir(listaTransferencia.get(i).getIdcptransferencia());
-					}
-				}
+				excluindoTransferencia(contasPagar);
 			}
 			
 			excluirNomeArquivo(contasPagar.getIdcontasPagar());
@@ -627,19 +615,7 @@ public class ContasPagarMB implements Serializable{
 		}else{
 			for (int i = 0; i < listaContasMultiplas.size(); i++) {
 				if (listaContasMultiplas.get(i).getFormaPagamento().equalsIgnoreCase("Transferencia")){
-					CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
-					String sql = "Select c from Cptransferencia c join Contaspagar p on c.contaspagar.idcontasPagar= p.idcontasPagar"
-							+ " where c.contaspagar.idcontasPagar=" + listaContasMultiplas.get(i).getIdcontasPagar();
-					try {
-						listaTransferencia = cpTransferenciaFacade.listarTranferencia(sql);
-					} catch (SQLException e) {
-						e.printStackTrace(); 
-					}
-					if (listaTransferencia != null) {
-						for (int j = 0; j < listaTransferencia.size(); j++) {
-							cpTransferenciaFacade.excluir(listaTransferencia.get(j).getIdcptransferencia());
-						}
-					}
+					excluindoTransferencia(listaContasMultiplas.get(i));
 				}
 				excluirNomeArquivo(listaContasMultiplas.get(i).getIdcontasPagar());
 		        contasPagarFacade.excluir(listaContasMultiplas.get(i).getIdcontasPagar());
@@ -969,4 +945,27 @@ public class ContasPagarMB implements Serializable{
 		 msg.cancelado();
 		 gerarListaContas();
 	 }
+	 
+	 
+	 public String excluindoTransferencia(Contaspagar conta){
+		 CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();
+		 String sql = "Select c from Cptransferencia c join Contaspagar p on c.contaspagar.idcontasPagar= p.idcontasPagar"
+				 + " where c.contaspagar.idcontasPagar=" + conta.getIdcontasPagar();
+		 try {
+			 listaTransferencia = cpTransferenciaFacade.listarTranferencia(sql);
+		 } catch (SQLException e) {
+			 e.printStackTrace(); 
+		 }
+		 if (listaTransferencia != null) {
+			 for (int i = 0; i < listaTransferencia.size(); i++) {
+				 cpTransferenciaFacade.excluir(listaTransferencia.get(i).getIdcptransferencia());
+			 }
+		 }
+		 
+		 return "";
+	 }
 }
+
+
+
+

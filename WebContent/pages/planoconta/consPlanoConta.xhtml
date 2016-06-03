@@ -15,7 +15,7 @@
 		<p:dialog  widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <img src="../../resources/img/ajax-carregando.gif" />
         </p:dialog>
-		<p:growl id="growl" showDetail="true" sticky="true" /> 
+		<p:growl id="growl" showDetail="true" sticky="false" /> 
 			<p:commandLink   action="#{planoContaMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{planoContaMB.retornoDialog}" update="growl, idTabelaPlanoConta"/>

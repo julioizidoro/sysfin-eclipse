@@ -57,14 +57,12 @@
              </h:panelGrid>
              <br />
              <h:panelGrid id="idTipoRelatorio" rendered="#{imprimirContasReceberMB.selecionado}">
-             	<h:panelGrid columns="7">
-             		<p:outputLabel value="Tipo de Relatório:"  class="left3"/>
-             		<p:selectBooleanCheckbox value="#{imprimirContasReceberMB.contasRecebidas}"/>
-            		<p:outputLabel value="Contas recebidas"  />
-            		<p:selectBooleanCheckbox value="#{imprimirContasReceberMB.contasAberto}" style="margin-left:20%;"/>
-            		<p:outputLabel value="Contas em aberto"/>
-            		<p:selectBooleanCheckbox value="#{imprimirContasReceberMB.todas}" style="margin-left:20%;"/>
-            		<p:outputLabel value="Todas as contas"  />
+             	<h:panelGrid columns="3">
+            		<p:selectOneRadio id="porSemana2"  value="#{imprimirContasReceberMB.nomeDosRelatorio}" style="width:100%;" disabled="#{cadCursoMB.camposSegundoCurso}">
+                        <f:selectItem itemLabel="Contas recebidas" itemValue="contasRecebidas"  /> 
+                        <f:selectItem itemLabel="Contas em aberto" itemValue="contasAberto" />
+                        <f:selectItem itemLabel="Todas as contas" itemValue="todasContas" /> 
+                    </p:selectOneRadio>
             	</h:panelGrid>
              </h:panelGrid> 
              <br /><br /><br /><br /><br /> 
