@@ -72,4 +72,10 @@ public class ContasReceberFacade {
         return contasReceberDao.recebimentoPorDia(sql);
     }
     
+    
+    public List<Contasreceber> listaFluxo(String sql) throws SQLException{
+        contasReceberDao = new ContasReceberDao();
+        return contasReceberDao.listaFluxo(sql);
+    }
+    
 }

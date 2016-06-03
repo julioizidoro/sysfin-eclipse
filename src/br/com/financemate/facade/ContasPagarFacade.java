@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Wolverine
@@ -93,5 +95,10 @@ public class ContasPagarFacade {
     public Float pagamentoPorDia(String sql) throws SQLException{
         contasPagarDao = new ContasPagarDao();
         return contasPagarDao.pagamentoPorDia(sql);
+    }
+    
+    public List<Contaspagar> listaFluxo(String sql) throws SQLException{
+        contasPagarDao = new ContasPagarDao();
+        return contasPagarDao.listaFluxo(sql);
     }
 }

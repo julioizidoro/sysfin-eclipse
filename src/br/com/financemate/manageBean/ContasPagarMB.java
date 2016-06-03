@@ -880,6 +880,19 @@ public class ContasPagarMB implements Serializable{
 		 return "";
 	 }
 	 
+	 public String consultarArquivo(Contaspagar contaspagar){
+		 if (contaspagar!=null){
+			 Map<String, Object> options = new HashMap<String, Object>();
+			 options.put("contentWidth", 600);
+			 options.put("closable", false);
+			 FacesContext fc = FacesContext.getCurrentInstance();
+			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			 session.setAttribute("contapagar", contaspagar);
+			 RequestContext.getCurrentInstance().openDialog("visualizarArquivo", options, null);
+		 }
+		 return "";
+	 }
+	 
 	 public void calcularTotal(){
 	        float vencida = 0.0f;
 	        float vencendo = 0.0f;

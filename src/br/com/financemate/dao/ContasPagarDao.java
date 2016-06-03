@@ -181,4 +181,14 @@ public class ContasPagarDao {
         manager.close();
         return pagamento;
     } 
+    
+    
+    public List<Contaspagar> listaFluxo(String sql) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery(sql);
+        List<Contaspagar> listaFluxo= q.getResultList();
+        manager.getTransaction().commit();
+        return listaFluxo;
+    }
 }

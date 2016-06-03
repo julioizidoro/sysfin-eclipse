@@ -133,4 +133,16 @@ public class ContasReceberDao {
         manager.close();
         return recebimento;
     } 
+    
+    public List<Contasreceber> listaFluxo(String sql) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery(sql);
+        List<Contasreceber> listaFluxo= q.getResultList();
+        manager.getTransaction().commit();
+        return listaFluxo;
+    }
+    
+    
+   
 }

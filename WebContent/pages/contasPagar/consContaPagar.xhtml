@@ -29,14 +29,15 @@
             </p:commandLink>
             <p:commandLink   action="#{contasPagarMB.novaImpressao()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 				<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
-            </p:commandLink>   
+            </p:commandLink>    
             <br /><br /> 
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
+                    	<p:menuitem value="Arquivo"  icon=" ui-icon-file"  action="#{contasPagarMB.consultarArquivo(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update=" growl, idTabelaContaPagar"/>
                         <p:menuitem value="Cancelar"   icon=" ui-icon-trash"   actionListener="#{contasPagarMB.cancelar(contasPagarMB.contasPagar)}" update="growl, idTabelaContaPagar"/>
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  actionListener="#{contasPagarMB.editar(contasPagarMB.contasPagar)}"/>
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="growl, idTabelaContaPagar"/>
-                    	<p:menuitem value="Operações Usuário"  icon=" ui-icon-person"  action="#{contasPagarMB.operacoesUsuario(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
+                    	<p:menuitem value="Operações Usuário"  icon=" ui-icon-person"  action="#{contasPagarMB.operacoesUsuario(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" />
                     	</p:contextMenu> 
                     <p:dataTable id="idTabelaContaPagar"  var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" style="border:none;" class="tabelacontas" rowStyleClass="#{contasPagar.selecionado eq true ? 'old' : null}"
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
