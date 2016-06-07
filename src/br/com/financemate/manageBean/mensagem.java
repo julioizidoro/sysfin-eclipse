@@ -131,6 +131,11 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Você não inseriu a data", ""));
     }
     
+    public void alteracaoSenha() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Alteração de senha", ""));
+    }
+    
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }

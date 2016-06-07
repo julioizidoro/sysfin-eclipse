@@ -18,11 +18,12 @@
         	<br/> 
             <img src="resources/img/ajax-carregando.gif" />
         </p:dialog>
+        <p:growl id="growl" showDetail="true" sticky="false" />
         <h:form class="login">
             <div id="tudo">
             	<img src="resources/img/loginSysfiiin.jpg" width="80%" />
             	<h:panelGrid style="margin-top:-44%; margin-left:80%;"> 
-                    <img src="resources/img/iconeUserLogin2.png" style="width: 9%; margin-left:1%;font-family: 'Pacifico',cursive;">Nome do úsuario</img>
+                    <img src="resources/img/iconeUserLogin2.png" style="width: 9%; margin-left:1%;font: 'Pacifico',cursive;">Nome do usuário</img>
                 </h:panelGrid>
                 <h:panelGrid style=" margin-left:80%;"> 
                     <p:inputText id="nome" size="27"  class="meio" value="#{usuarioLogadoMB.usuario.login}"  required="required" requiredMessage="Campo Obrigatorio"/>
@@ -34,10 +35,11 @@
                     <p:password id="senha" size="27"  class="meio" value="#{usuarioLogadoMB.usuario.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
                 </h:panelGrid> 
                 <h:panelGrid columns="2" style="margin-left:87.5%; margin-top:1%;">
-                	<p:commandLink title="Entra" style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" >
+                	<p:commandLink title="Entra" style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" update="growl">
                 		<img src="resources/img/botaoEntra.png" width="33" height="33"/>
             		</p:commandLink>
-            		<p:commandLink title="Alterar Senha" style="margin-left: 85%;text-decoration: none" action="#{usuarioLogadoMB.validarTrocarSenha()}" >
+            		<p:commandLink title="Alterar Senha" style="margin-left: 85%;text-decoration: none" update="growl" action="#{usuarioLogadoMB.validarTrocarSenha()}" >
+                		<p:ajax event="dialogReturn" listener="#{usuarioLogadoMB.retornoDialogAlteracaoSenha}" update="growl"/>
                 		<img src="resources/img/botaoAlterar.png" width="33" height="33"/>
             		</p:commandLink>
                 
