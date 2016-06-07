@@ -6,27 +6,29 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head><meta charset="utf-8"/>  
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/> 
-        <title>Login SysFin</title> 
+        <title>Login SysFin</title>  
         <link href="resources/css/cssLogin.css" rel="stylesheet" type="text/css" />
-        <link rel="icon" href="resources/img/iconeLogoNavegador.jpg" type="image/x-icon" />
+        <link rel="icon" href="resources/img/iconesysfin.png" type="image/x-icon" />
     </h:head> 
     <h:body> 
         <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+        	<p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        	<br/> 
             <img src="resources/img/ajax-carregando.gif" />
         </p:dialog>
         <h:form class="login">
             <div id="tudo">
             	<img src="resources/img/loginSysfiiin.jpg" width="80%" />
-            	<h:panelGrid style="margin-top:-46%; margin-left:80%;"> 
-                    <p:outputLabel value="Nome do usuário" for="nome"  class="meio"/>
+            	<h:panelGrid style="margin-top:-44%; margin-left:80%;"> 
+                    <img src="resources/img/iconeUserLogin2.png" style="width: 9%; margin-left:1%;font-family: 'Pacifico',cursive;">Nome do úsuario</img>
                 </h:panelGrid>
                 <h:panelGrid style=" margin-left:80%;"> 
                     <p:inputText id="nome" size="27"  class="meio" value="#{usuarioLogadoMB.usuario.login}"  required="required" requiredMessage="Campo Obrigatorio"/>
                 </h:panelGrid>
                 <h:panelGrid style=" margin-left:80%;">
-                    <p:outputLabel value="Senha" for="senha"  class="meio"/>
+                	<img src="resources/img/iconeCadeado.png" style="width: 10%; margin-left:1%;font-family: 'Pacifico',cursive;">Senha</img>
                 </h:panelGrid>
                 <h:panelGrid style=" margin-left:80%;">
                     <p:password id="senha" size="27"  class="meio" value="#{usuarioLogadoMB.usuario.senha}" required="required" requiredMessage="Campo Obrigatorio"/>

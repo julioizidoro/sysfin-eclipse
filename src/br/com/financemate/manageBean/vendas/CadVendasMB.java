@@ -561,6 +561,7 @@ public class CadVendasMB implements Serializable {
 			contaspagar.setFornecedor(vendas.getNomeFornecedor());
 			contaspagar.setFormaPagamento(TipoDocumento);
 			contaspagar.setStatus("Ativo");
+			contaspagar.setAutorizarPagamento("N");
 			if (usuarioLogadoMB.getCliente() != null) {
 				try {
 					banco = bancoFacade.consultar(usuarioLogadoMB.getCliente().getIdcliente(), "Nenhum");

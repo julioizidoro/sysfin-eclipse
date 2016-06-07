@@ -7,14 +7,35 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>SysFIN</title>
+        <title>...SysFIN...</title>
         <link href="resources/css/css.css" rel="stylesheet" media="screen" />
         <link href="../../resources/css/css.css" rel="stylesheet" media="screen" />
-        <link rel="icon" href="resources/img/iconeLogoNavegador.jpg" type="image/x-icon" />
+        <link rel="icon" href="resources/img/iconesysfin.png" type="image/x-icon" />
     </h:head>
 
     <h:body style="color:#E7EBEB !important;">
+    <!-- rolando o titulo da pagina -->
+		<script> var repeat=1 // 0 para rolar uma vez, 1 para rolar infinitamente
+			var title=document.title
+			var leng=title.length
+			var start=1
+			function titlemove() {
+				titl=title.substring(start, leng) + title.substring(0, start)
+				document.title=titl
+				start++
+				if (start==leng+1) {
+					start=0
+				if (repeat==0)
+					return
+				}
+				setTimeout("titlemove()",300)  // aqui vc pode aumentar ou diminuir a velocidade 
+			}
+			if (document.title)
+			titlemove()
+		</script>
         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+        	<p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        	<br/> 
             <img src="resources/img/ajax-carregando.gif" />
         </p:dialog>
             <h:form>
@@ -24,8 +45,8 @@
          </div> 
         <br></br>
         
-        <div class="menu" style="position: fixed !important;z-index: 9999;">
-        	<img src="resources/img/usuariologado.png" style="width: 1.2%; margin-left:1%;"/>
+        <div class="menu" style="position: fixed !important;z-index: 9999;"> 
+        	<img src="resources/img/iconeUser2.png" style="width: 2%; margin-left:1%;"/>
         	<h:outputText value="Bem Vindo" style="font-size:16px; margin-left:0.5%;" />,
         	 <h:outputText style="font-size:16px;" value="#{usuarioLogadoMB.usuario.nome}" />
         	<tt style="margin-left: 35%; font-size: 32px; font-family: 'Pacifico',cursive;">SysFin</tt>

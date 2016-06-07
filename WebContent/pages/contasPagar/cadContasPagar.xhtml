@@ -19,11 +19,13 @@
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
+                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        		<br/> 
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
             <title  >Novo Pagamento</title>
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			<p:growl id="growl" showDetail="true" sticky="false" /> 
              
 				<h:panelGrid>
 				<br></br>

@@ -406,6 +406,7 @@ public class CadContasPagarMB implements Serializable{
 		String mensagem = validarDados();
 		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+			contaPagar.setStatus("Ativo");
 			contaPagar = contasPagarFacade.salvar(contaPagar);
 			operacaousuairo =  salvarOperacaoUsuario(contaPagar, operacaousuairo);
 			if (cptransferencia!=null){
@@ -451,48 +452,63 @@ public class CadContasPagarMB implements Serializable{
 		if (contaPagar.getDataCompensacao() == null) {
 			contaPagar.setDataCompensacao(null);
 		}
+		
+		if (contaPagar.getAutorizarPagamento() == null || contaPagar.getAutorizarPagamento().equalsIgnoreCase("N")) {
+			contaPagar.setAutorizarPagamento("N");
+		}  
+		
 		String mensagem = validarDados();
 		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-			
+			contaPagar.setStatus("Ativo");
 	        contaPagar = contasPagarFacade.salvar(contaPagar);
 	        operacaousuairo =  salvarOperacaoUsuario(contaPagar, operacaousuairo);
 	        if (cptransferencia!=null){
 	        	salvarTransferencia();
 	        	Cptransferencia copiaTranferencia = new Cptransferencia();
 	        	copiaTranferencia = cptransferencia;
-	        	cptransferencia = new Cptransferencia();
-	        	cptransferencia.setBanco(copiaTranferencia.getBanco());
-	        	cptransferencia.setAgencia(copiaTranferencia.getAgencia());
-	        	cptransferencia.setConta(copiaTranferencia.getConta());
-	        	cptransferencia.setBeneficiario(copiaTranferencia.getBeneficiario());
-	        	cptransferencia.setCpfcnpj(copiaTranferencia.getCpfcnpj());
+	        	cptransferencia = repetirValoresTransferencia(copiaTranferencia);
 		    }
 	        if (file != null) {
 				salvarArquivoFTP();
 			}
 	        Contaspagar copia = new Contaspagar();
 	        copia = contaPagar;
-	        contaPagar = new Contaspagar();
-	        contaPagar.setBanco(copia.getBanco());
-	        contaPagar.setCliente(copia.getCliente());
-	        contaPagar.setPlanocontas(copia.getPlanocontas());
-	        contaPagar.setDataEnvio(copia.getDataEnvio());
-	        contaPagar.setFormaPagamento(copia.getFormaPagamento());
-	        contaPagar.setFornecedor(copia.getFornecedor());
-	        contaPagar.setValor(copia.getValor());
-	        contaPagar.setDescricao(copia.getDescricao());
-	        contaPagar.setDataAgendamento(copia.getDataAgendamento());
-	        contaPagar.setDataCompensacao(copia.getDataCompensacao());
-	        contaPagar.setCompetencia(copia.getCompetencia());
-	        contaPagar.setNumeroDocumento(copia.getNumeroDocumento());
-	        contaPagar.setDataVencimento(copia.getDataVencimento());
-	        
+	        contaPagar = repetirValoresContasPagar(copia);
 		}else{
 			FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(mensagem, ""));
 		}
     }
+	
+	
+	public Contaspagar repetirValoresContasPagar(Contaspagar conta){
+        contaPagar = new Contaspagar();
+        contaPagar.setBanco(conta.getBanco());
+        contaPagar.setCliente(conta.getCliente());
+        contaPagar.setPlanocontas(conta.getPlanocontas());
+        contaPagar.setDataEnvio(conta.getDataEnvio());
+        contaPagar.setFormaPagamento(conta.getFormaPagamento());
+        contaPagar.setFornecedor(conta.getFornecedor());
+        contaPagar.setValor(conta.getValor());
+        contaPagar.setDescricao(conta.getDescricao());
+        contaPagar.setDataAgendamento(conta.getDataAgendamento());
+        contaPagar.setDataCompensacao(conta.getDataCompensacao());
+        contaPagar.setCompetencia(conta.getCompetencia());
+        contaPagar.setNumeroDocumento(conta.getNumeroDocumento());
+        contaPagar.setDataVencimento(conta.getDataVencimento());
+        return contaPagar;
+	}
+	
+	public Cptransferencia repetirValoresTransferencia(Cptransferencia transferencia){
+    	cptransferencia = new Cptransferencia();
+    	cptransferencia.setBanco(transferencia.getBanco());
+    	cptransferencia.setAgencia(transferencia.getAgencia());
+    	cptransferencia.setConta(transferencia.getConta());
+    	cptransferencia.setBeneficiario(transferencia.getBeneficiario());
+    	cptransferencia.setCpfcnpj(transferencia.getCpfcnpj());
+    	return cptransferencia;
+	}
 	
 	public void salvarTransferencia(){
 		CpTransferenciaFacade cpTransferenciaFacade = new CpTransferenciaFacade();

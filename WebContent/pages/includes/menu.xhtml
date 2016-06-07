@@ -4,7 +4,9 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        	<br/> 
             <img src="resources/img/ajax-carregando.gif" />
         </p:dialog>
          <div id="tudo" style="color:#E7EBEB !important;">
@@ -13,7 +15,7 @@
         
         <div class="menu" style="position: fixed !important;z-index: 9999;">
         
-        	<img src="../../resources/img/usuariologado.png" style="width: 1.2%; margin-left:1%;"/>
+        	<img src="../../resources/img/iconeUser2.png" style="width: 2%; margin-left:1%;"/>
         	<h:outputText value="Bem Vindo" style="font-size:16px; margin-left:0.5%;" />,
         	 <h:outputText style="font-size:16px;" value="#{usuarioLogadoMB.usuario.nome}" />
         	<tt style="margin-left: 35%; font-size: 32px; font-family: 'Pacifico',cursive;">SysFin</tt>
