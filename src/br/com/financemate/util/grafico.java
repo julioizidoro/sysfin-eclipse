@@ -361,18 +361,7 @@ import br.com.financemate.model.Vendas;
 	        yAxis = animatedModel2.getAxis(AxisType.Y);
 	        yAxis.setMin(0);
 	        yAxis.setMax(200);
-	        
-	        
-	       // animatedModel3 = initBarModel2();
-	        
-	       // animatedModel3.setTitle("Fluxo de caixa");
-	       // animatedModel3.setAnimate(true);
-	      //  animatedModel3.setLegendPosition("ne");
-	      //  animatedModel3.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
-	      //  animatedModel3.setSeriesColors("66cc66, FE2E2E, A4A4A4"); 
-	      //  yAxis = animatedModel3.getAxis(AxisType.Y);
-	     //   yAxis.setMin(valorMinimo);
-	     //   yAxis.setMax(valorMaximo + 800);
+	       
 	        
 	    }
 	     
@@ -398,42 +387,6 @@ import br.com.financemate.model.Vendas;
 	        return model;
 	    }
 	    
-	    
-	    private BarChartModel initBarModel2() {
-	        BarChartModel model = new BarChartModel();
-	        ChartSeries recebimentoDia = new ChartSeries();
-	        recebimentoDia.setLabel("Recebimento");
-	        
-	        recebimentoDia.set(diaInicio, recebimentosDia1());
-	        recebimentoDia.set(diaInicio + 1, recebimentosDia2());
-	        recebimentoDia.set(diaInicio + 2, recebimentosDia3());
-	        recebimentoDia.set(diaInicio + 3, recebimentosDia4());
-	        recebimentoDia.set(diaInicio + 4, recebimentosDia5());
-	        
-	        ChartSeries pagamentoDia = new ChartSeries();
-	        pagamentoDia.setLabel("Pagamento");
-	        
-	        pagamentoDia.set(diaInicio, pagamentodia1());
-	        pagamentoDia.set(diaInicio + 1, pagamentodia2());
-	        pagamentoDia.set(diaInicio + 2, pagamentodia3());
-	        pagamentoDia.set(diaInicio+ 3 , pagamentodia4());
-	        pagamentoDia.set(diaInicio+ 4, pagamentodia5());
-	        
-	        ChartSeries saldo = new ChartSeries();
-	        saldo.setLabel("Saldo");
-	        
-	        saldo.set(diaInicio, saldoPrimeiroDia);
-	        saldo.set(diaInicio + 1, saldoSegundoDia);
-	        saldo.set(diaInicio + 2, saldoTerceiroDia);
-	        saldo.set(diaInicio + 3, saldoQuartoDia);
-	        saldo.set(diaInicio + 4, saldoQuintaDia);
-	        
-	        model.addSeries(recebimentoDia);
-	        model.addSeries(pagamentoDia);
-	        model.addSeries(saldo);
-	        gerarValorMinimoMaximo(); 
-	        return model;
-	    }
 	    
 	    
 	     
