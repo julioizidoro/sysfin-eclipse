@@ -293,11 +293,11 @@ public class ImprimirContasReceberMB implements Serializable{
 			sql = sql + "contasreceber join cliente on contasreceber.cliente_idcliente = cliente.idcliente ";
 			sql = sql + "join banco on contasreceber.banco_idbanco = banco.idbanco "; 
 			sql = sql + "where ";
-			String ordem = "";
+			String ordem = ""; 
 			if (nomeDosRelatorio.equalsIgnoreCase("contasAberto")){
 				sql = sql + " contasreceber.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + "' ";
 				sql = sql + " and contasreceber.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
-				sql = sql + " and valorPago=0 "; 
+				sql = sql + " and contasreceber.dataPagamento is null ";
 				ordem = " order by contasReceber.dataVencimento";
 			}
 			if (nomeDosRelatorio.equalsIgnoreCase("contasRecebidas")){

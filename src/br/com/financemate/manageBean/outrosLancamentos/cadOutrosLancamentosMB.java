@@ -203,11 +203,7 @@ public class cadOutrosLancamentosMB implements Serializable {
     }
 	
 	public void salvar() {
-        outrosLancamentos.setBanco(banco);
-        outrosLancamentos.setCliente(cliente);
-        outrosLancamentos.setPlanocontas(planoContas);
-        outrosLancamentos.setTipoDocumento(tipoDocumento);
-        outrosLancamentos.setUsuario(usuarioLogadoMB.getUsuario());
+        outrosLancamentos = setaValoresOutrosLancamentos(outrosLancamentos);
         OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
         try {
         	String mensagem = validarDados();
@@ -229,11 +225,7 @@ public class cadOutrosLancamentosMB implements Serializable {
     }
 	
 	public void salvarRepetir() {
-        outrosLancamentos.setBanco(banco);
-        outrosLancamentos.setCliente(cliente);
-        outrosLancamentos.setPlanocontas(planoContas);
-        outrosLancamentos.setTipoDocumento(tipoDocumento);
-        outrosLancamentos.setUsuario(usuarioLogadoMB.getUsuario());
+        outrosLancamentos = setaValoresOutrosLancamentos(outrosLancamentos);
         OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
         try {
         	String mensagem = validarDados();
@@ -241,20 +233,7 @@ public class cadOutrosLancamentosMB implements Serializable {
         		outrosLancamentos = outrosLancamentosFacade.salvar(outrosLancamentos);
         		Outroslancamentos copia = new Outroslancamentos();
         		copia = outrosLancamentos;
-        		outrosLancamentos = new Outroslancamentos();
-        		outrosLancamentos.setBanco(copia.getBanco());
-        		outrosLancamentos.setCliente(copia.getCliente());
-        		outrosLancamentos.setCompentencia(copia.getCompentencia());
-        		outrosLancamentos.setDataCompensacao(copia.getDataCompensacao());
-        		outrosLancamentos.setDataRegistro(copia.getDataCompensacao());
-        		outrosLancamentos.setDataVencimento(copia.getDataVencimento());
-        		outrosLancamentos.setDescricao(copia.getDescricao());
-        		outrosLancamentos.setPlanocontas(copia.getPlanocontas());
-        		outrosLancamentos.setSaldo(copia.getSaldo());
-        		outrosLancamentos.setTipoDocumento(copia.getTipoDocumento());
-        		outrosLancamentos.setUsuario(copia.getUsuario());
-        		outrosLancamentos.setValorEntrada(copia.getValorEntrada());
-        		outrosLancamentos.setValorSaida(copia.getValorSaida());
+        		outrosLancamentos = repetirValoresOutrosLancamentos(copia);
         		mensagem msg = new mensagem();
         		msg.saveMessagem();
 			}else{
@@ -331,6 +310,35 @@ public class cadOutrosLancamentosMB implements Serializable {
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
     }
+	
+	
+	public Outroslancamentos setaValoresOutrosLancamentos(Outroslancamentos outros){
+		outros.setBanco(banco);
+		outros.setCliente(cliente);
+		outros.setPlanocontas(planoContas);
+		outros.setTipoDocumento(tipoDocumento);
+		outros.setUsuario(usuarioLogadoMB.getUsuario());
+        return outros;
+	}
+	
+	public Outroslancamentos repetirValoresOutrosLancamentos(Outroslancamentos outros){
+		outrosLancamentos = new Outroslancamentos();
+		outrosLancamentos.setBanco(outros.getBanco());
+		outrosLancamentos.setCliente(outros.getCliente());
+		outrosLancamentos.setCompentencia(outros.getCompentencia());
+		outrosLancamentos.setDataCompensacao(outros.getDataCompensacao());
+		outrosLancamentos.setDataRegistro(outros.getDataCompensacao());
+		outrosLancamentos.setDataVencimento(outros.getDataVencimento());
+		outrosLancamentos.setDescricao(outros.getDescricao());
+		outrosLancamentos.setPlanocontas(outros.getPlanocontas());
+		outrosLancamentos.setSaldo(outros.getSaldo());
+		outrosLancamentos.setTipoDocumento(outros.getTipoDocumento());
+		outrosLancamentos.setUsuario(outros.getUsuario());
+		outrosLancamentos.setValorEntrada(outros.getValorEntrada());
+		outrosLancamentos.setValorSaida(outros.getValorSaida());
+		return outrosLancamentos;
+	}
+	
 	
 	
 }

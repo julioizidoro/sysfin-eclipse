@@ -773,76 +773,74 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public void calcularTotal(){
-	        float vencida = 0.0f;
-	        float vencendo = 0.0f;
-	        float vencer = 0.0f;
-	        Date data = new Date();
-	        String diaData = Formatacao.ConvercaoDataPadrao(data);
-	        for(int i=0;i<listaContasReceber.size();i++){
-	            String vencData = Formatacao.ConvercaoDataPadrao(listaContasReceber.get(i).getDataVencimento());
-	            if (diaData.equalsIgnoreCase(vencData)){
-	                vencendo = vencendo + listaContasReceber.get(i).getValorParcela();
-	            }else if (listaContasReceber.get(i).getDataVencimento().before(data)){
-	                vencida = vencida + listaContasReceber.get(i).getValorParcela();
-	            }else if (listaContasReceber.get(i).getDataVencimento().after(data)){
-	                vencer = vencer + listaContasReceber.get(i).getValorParcela();
-	            }
-	            
-	        }
-	        setTotalVencidas(Formatacao.foramtarFloatString(vencida));
-	        setTotalVencer(Formatacao.foramtarFloatString(vencer));
-	        setTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
-	    }
+		 float vencida = 0.0f;
+		 float vencendo = 0.0f;
+		 float vencer = 0.0f;
+		 Date data = new Date();
+		 String diaData = Formatacao.ConvercaoDataPadrao(data);
+		 for(int i=0;i<listaContasReceber.size();i++){
+			 String vencData = Formatacao.ConvercaoDataPadrao(listaContasReceber.get(i).getDataVencimento());
+			 if (diaData.equalsIgnoreCase(vencData)){
+				 vencendo = vencendo + listaContasReceber.get(i).getValorParcela();
+			 }else if (listaContasReceber.get(i).getDataVencimento().before(data)){
+				 vencida = vencida + listaContasReceber.get(i).getValorParcela();
+			 }else if (listaContasReceber.get(i).getDataVencimento().after(data)){
+				 vencer = vencer + listaContasReceber.get(i).getValorParcela();
+			 }
+			 
+		 }
+		 setTotalVencidas(Formatacao.foramtarFloatString(vencida));
+		 setTotalVencer(Formatacao.foramtarFloatString(vencer));
+		 setTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
+	 }
 	 
 	 public String verStatus(Contasreceber contasreceber) {
-	        Date data = new Date();
-	        String diaData = Formatacao.ConvercaoDataPadrao(data);
-	        data = Formatacao.ConvercaoStringDataBrasil(diaData);
-	        if (contasreceber.getNumeroDocumento().equalsIgnoreCase("CANCELADA")) {
-	    		 return "../../resources/img/bolinhaPretaS.ico";
-	         }else if (contasreceber.getDataVencimento().after(data)) {
-	            return "../../resources/img/bolaVerde.png";
-	        } else {
-	            if (contasreceber.getDataVencimento().before(data)) {
-	                return "../../resources/img/bolaVermelha.png";
-	            } else {
-	                if (contasreceber.equals(data)) {
-	                    return "../../resources/img/bolaAmarela.png";
-	                }
-	            }
-	        }
-	        return "../../resources/img/bolaVerde.png";
-	    }
+		 Date data = new Date();
+		 String diaData = Formatacao.ConvercaoDataPadrao(data);
+		 data = Formatacao.ConvercaoStringDataBrasil(diaData);
+		 if (contasreceber.getNumeroDocumento().equalsIgnoreCase("CANCELADA")) {
+			 return "../../resources/img/bolinhaPretaS.ico";
+		 }else if (contasreceber.getDataVencimento().after(data)) {
+			 return "../../resources/img/bolaVerde.png";
+		 } else {
+			 if (contasreceber.getDataVencimento().before(data)) {
+				 return "../../resources/img/bolaVermelha.png";
+			 } else {
+				 if (contasreceber.equals(data)) {
+					 return "../../resources/img/bolaAmarela.png";
+				 }
+			 }
+		 }
+		 return "../../resources/img/bolaVerde.png";
+	 }
 	 
 	 public void gerarListaCliente(){
-	        ClienteFacade clienteFacade = new ClienteFacade();
-	        try {
-	            listaCliente = clienteFacade.listar("");
-	            if (listaCliente == null) {
-	                listaCliente = new ArrayList<Cliente>();
-	            }
-	        } catch (SQLException ex) {
-	            Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
-	            mostrarMensagem(ex, "Erro Listar Clientes", "Erro");
-	        }
+		 ClienteFacade clienteFacade = new ClienteFacade();
+		 try {
+			 listaCliente = clienteFacade.listar("");
+			 if (listaCliente == null) {
+				 listaCliente = new ArrayList<Cliente>();
+			 }
+		 } catch (SQLException ex) {
+			 Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+			 mostrarMensagem(ex, "Erro Listar Clientes", "Erro");
+		 }
 	 }
 	 
 	 public void verificarCliente(){
-	        if (usuarioLogadoMB.getUsuario().getCliente()>0){
-	            ClienteFacade clienteFacade = new ClienteFacade();
-	            try {
-	                cliente = clienteFacade.consultar(usuarioLogadoMB.getUsuario().getCliente());
-	                verCliente = true;
-	                if(cliente==null){
-	                    verCliente=false;
-	                    cliente = new Cliente();
-	                }
-	            } catch (SQLException ex) {
-	                Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
-	            }
-	        }
-	    
-
+		 if (usuarioLogadoMB.getUsuario().getCliente()>0){
+			 ClienteFacade clienteFacade = new ClienteFacade();
+			 try {
+				 cliente = clienteFacade.consultar(usuarioLogadoMB.getUsuario().getCliente());
+				 verCliente = true;
+				 if(cliente==null){
+					 verCliente=false;
+					 cliente = new Cliente();
+				 }
+			 } catch (SQLException ex) {
+				 Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+			 }
+		 }
 	 }
 	 
 	 public void retornoDialogNovo(SelectEvent event) {
@@ -900,15 +898,14 @@ public class ContasReceberMB implements Serializable {
 
 
 	public String editar(Contasreceber contasreceber){
-		 if (contasreceber!=null){
-			 FacesContext fc = FacesContext.getCurrentInstance();
-			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-			 session.setAttribute("contareceber", contasreceber);       
-			 RequestContext.getCurrentInstance().openDialog("cadContasReceber");
-			 
-		 }
-		 return "";
-	 }
+		if (contasreceber!=null){
+			FacesContext fc = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			session.setAttribute("contareceber", contasreceber);       
+			RequestContext.getCurrentInstance().openDialog("cadContasReceber");
+		}
+		return "";
+	}
 	 
 	 public void gerarListaBanco(){
 		 if (cliente!=null) {

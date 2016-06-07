@@ -406,11 +406,6 @@ public class CadContasPagarMB implements Serializable{
 		String mensagem = validarDados();
 		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-			if (contaPagar.getIdcontasPagar() == null) {
-				operacaousuairo.setTipooperacao("Usu·rio Cadastrou");
-			}else{
-				operacaousuairo.setTipooperacao("Usu·rio Alterou");
-			}
 			contaPagar = contasPagarFacade.salvar(contaPagar);
 			operacaousuairo =  salvarOperacaoUsuario(contaPagar, operacaousuairo);
 			if (cptransferencia!=null){
@@ -459,11 +454,7 @@ public class CadContasPagarMB implements Serializable{
 		String mensagem = validarDados();
 		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-			if (contaPagar == null) {
-				operacaousuairo.setTipooperacao("Usu·rio Cadastrou");
-			}else{
-				operacaousuairo.setTipooperacao("Usu·rio Alterou");
-			}
+			
 	        contaPagar = contasPagarFacade.salvar(contaPagar);
 	        operacaousuairo =  salvarOperacaoUsuario(contaPagar, operacaousuairo);
 	        if (cptransferencia!=null){
@@ -512,10 +503,10 @@ public class CadContasPagarMB implements Serializable{
 	public String validarDados(){
 		String mensagem = "";
 		if (contaPagar.getFornecedor() == null) {
-			mensagem = mensagem + "Fornecedor n√£o informado \r\n";
+			mensagem = mensagem + "Fornecedor n„o informado \r\n";
 		}
 		if (contaPagar.getValor().equals(0f)) {
-			mensagem = mensagem + "Valor n√£o informado \n";
+			mensagem = mensagem + "Valor n„o informado \n";
 		}
 		if (contaPagar.getDescricao().equalsIgnoreCase("")) {
 			mensagem = mensagem + "DescriÁ„o n„o informado \r\n";
@@ -737,17 +728,22 @@ public class CadContasPagarMB implements Serializable{
 	
 	
 	public Operacaousuairo salvarOperacaoUsuario(Contaspagar contaspagar, Operacaousuairo operacaousuairo){
+		OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();		
 		if (contaspagar.getIdcontasPagar() != null) {
-			OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
-			
+			operacaousuairo.setTipooperacao("Usu·rio Alterou");
 			operacaousuairo.setContaspagar(contaspagar);
 			operacaousuairo.setData(new Date());
 			operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
-			try {
-				operacaousuairo =  operacaoUsuarioFacade.salvar(operacaousuairo);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		}else{
+			operacaousuairo.setTipooperacao("Usu·rio Cadastrou");
+			operacaousuairo.setContaspagar(contaspagar);
+			operacaousuairo.setData(new Date());
+			operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
+		}
+		try {
+			operacaousuairo =  operacaoUsuarioFacade.salvar(operacaousuairo);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return operacaousuairo;
 	}

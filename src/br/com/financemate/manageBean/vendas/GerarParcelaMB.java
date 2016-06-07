@@ -81,7 +81,6 @@ public class GerarParcelaMB implements Serializable {
         if (contasReceber == null) {
 			contasReceber = new Contasreceber();
 		}
-        //gerarListaFormaPagamento();
         gerarListaParcelas();
 	}
 	 

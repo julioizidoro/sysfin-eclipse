@@ -32,9 +32,9 @@
             </p:commandLink>    
             <br /><br /> 
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
-                    	<p:menuitem value="Arquivo"  icon=" ui-icon-file"  action="#{contasPagarMB.consultarArquivo(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
+                    	<p:menuitem value="Visualizar Arquivo"  icon="ui-icon-document"  action="#{contasPagarMB.consultarArquivo(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" /> 
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update=" growl, idTabelaContaPagar"/>
-                        <p:menuitem value="Cancelar"   icon=" ui-icon-trash"   actionListener="#{contasPagarMB.cancelar(contasPagarMB.contasPagar)}" update="growl, idTabelaContaPagar"/>
+                        <p:menuitem value="Cancelar"   icon="ui-icon-cancel"   actionListener="#{contasPagarMB.cancelar(contasPagarMB.contasPagar)}" update="growl, idTabelaContaPagar"/>
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  actionListener="#{contasPagarMB.editar(contasPagarMB.contasPagar)}"/>
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasPagarMB.excluir()}" update="growl, idTabelaContaPagar"/>
                     	<p:menuitem value="Operações Usuário"  icon=" ui-icon-person"  action="#{contasPagarMB.operacoesUsuario(contasPagarMB.contasPagar)}" update="idTabelaContaPagar" />

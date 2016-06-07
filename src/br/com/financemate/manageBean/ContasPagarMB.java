@@ -693,13 +693,6 @@ public class ContasPagarMB implements Serializable{
 				 valorTotal = valorTotal + listaContasPagar.get(i).getValor();
 			 }
 	            
-		 } listaContasSelecionadas = new ArrayList<Contaspagar>();
-		 for (int i = 0; i < listaContasPagar.size(); i++) {
-			 if (listaContasPagar.get(i).isSelecionado()) {
-				 listaContasSelecionadas.add(listaContasPagar.get(i));
-				 valorTotal = valorTotal + listaContasPagar.get(i).getValor();
-			 }
-	            
 		 }
 		 totalLiberadas = Formatacao.foramtarFloatString(valorTotal);
 		 Map<String, Object> options = new HashMap<String, Object>();

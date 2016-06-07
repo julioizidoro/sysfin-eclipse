@@ -29,7 +29,7 @@
 	<field name="valorParcela" class="java.lang.Float">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="numeroParcela" class="java.lang.Integer">
+	<field name="numeroParcela" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="dataVencimento" class="java.sql.Date">

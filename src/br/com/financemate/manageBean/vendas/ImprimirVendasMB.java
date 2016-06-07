@@ -583,16 +583,16 @@ public class ImprimirVendasMB implements Serializable{
 		 try {
 			 listaTotalRecebidoMes = contasReceberFacade.listar("Select c from Contasreceber c where c.dataVencimento>='"
 						+ Formatacao.ConvercaoDataSql(dataInicial) +"' and  c.dataVencimento<='" + Formatacao.ConvercaoDataSql(data)
-						+ "' and c.valorPago>0 and c.numeroDocumento<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
+						+ "' and c.valorPago>0 and c.status<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
 			 listaTotalRecebidoMes2 = contasReceberFacade.listar("Select c from Contasreceber c where c.dataVencimento>='"
 						+ Formatacao.ConvercaoDataSql(segundaData) +"' and  c.dataVencimento<='" + Formatacao.ConvercaoDataSql(data2)
-						+ "' and c.valorPago>0 and c.numeroDocumento<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
+						+ "' and c.valorPago>0 and c.status<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
 			 listaTotalRecebidoMes3 = contasReceberFacade.listar("Select c from Contasreceber c where c.dataVencimento>='"
 						+ Formatacao.ConvercaoDataSql(terceiraData) +"' and  c.dataVencimento<='" + Formatacao.ConvercaoDataSql(data3)
-						+ "' and c.valorPago>0 and c.numeroDocumento<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
+						+ "' and c.valorPago>0 and c.status<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
 			 listaTotalRecebidoMes4 = contasReceberFacade.listar("Select c from Contasreceber c where c.dataVencimento>='"
 						+ Formatacao.ConvercaoDataSql(dataFinal) +"' and  c.dataVencimento<='" + Formatacao.ConvercaoDataSql(data4)
-						+ "' and c.valorPago>0 and c.numeroDocumento<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
+						+ "' and c.valorPago>0 and c.status<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
 			 
 			 if (listaTotalRecebidoMes == null) {
 				 listaTotalRecebidoMes = new ArrayList<Contasreceber>();
@@ -634,13 +634,13 @@ public class ImprimirVendasMB implements Serializable{
 		 
 		 try {
 			 listaTotalAberto = contasReceberFacade.listar("Select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
-					 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data) + "' and c.valorPago=0 and c.numeroDocumento<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
+					 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data) + "' and c.valorPago=0 and c.status<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
 			 listaTotalAberto2 = contasReceberFacade.listar("Select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(segundaData)
-			 		 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data2) + "' and c.valorPago=0 and c.numeroDocumento<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
+			 		 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data2) + "' and c.valorPago=0 and c.status<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
 			 listaTotalAberto3 = contasReceberFacade.listar("Select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(terceiraData)
-			 		 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data3) + "' and c.valorPago=0 and c.numeroDocumento<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
+			 		 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data3) + "' and c.valorPago=0 and c.status<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
 			 listaTotalAberto4 = contasReceberFacade.listar("Select c from Contasreceber c where c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataFinal)
-			 		 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data4) + "' and c.valorPago=0 and c.numeroDocumento<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
+			 		 + "' and c.dataVencimento<'" + Formatacao.ConvercaoDataSql(data4) + "' and c.valorPago=0 and c.status<>'CANCELADA' and c.cliente.idcliente="+ cliente.getIdcliente());
 			if (listaTotalAberto == null) {
 				listaTotalAberto = new ArrayList<Contasreceber>();
 			}
