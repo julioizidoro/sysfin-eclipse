@@ -334,7 +334,7 @@ public class ImprimirOutrosLancamentosMB implements Serializable {
 			listaBanco = new ArrayList<Banco>();
         }
     }
-	
+	 
 	public String gerarRelatorio() throws SQLException, IOException{
 		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 		String caminhoRelatorio = "";

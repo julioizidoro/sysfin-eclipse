@@ -14,8 +14,7 @@
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{bancoMB.retornoDialog}" update="growl, idTabelaBanco"/>
             </p:commandLink>
-            <br /><br /> 
-            
+             <br /><br />    
              <p:contextMenu for="idTabelaBanco" style="background:white;">
                    <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{bancoMB.editar(bancoMB.banco)}" update="idTabelaBanco" /> 
              </p:contextMenu> 

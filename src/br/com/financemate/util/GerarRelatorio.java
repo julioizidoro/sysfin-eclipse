@@ -21,6 +21,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jasper.compiler.ServletWriter;
 import org.eclipse.persistence.internal.jpa.EntityManagerImpl;
 import org.primefaces.context.RequestContext;
 
@@ -52,6 +53,7 @@ public class GerarRelatorio {
         facesContext.renderResponse();
         facesContext.responseComplete();
     }
+
     
     public void gerarRelatorioSqlPDF(String caminhoRelatorio, Map<String, Object> parameters, String nomeArquivo, String subDir ) throws JRException, IOException, SQLException{
         FacesContext facesContext = FacesContext.getCurrentInstance();  
@@ -86,4 +88,6 @@ public class GerarRelatorio {
   
         facesContext.responseComplete();  
     }
+    
+    
 }

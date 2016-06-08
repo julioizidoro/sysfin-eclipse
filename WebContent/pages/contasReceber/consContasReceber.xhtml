@@ -101,22 +101,19 @@
                         </p:column>
                     </p:dataTable>
                     <br />
-                    <h:panelGrid  style="width:18%; margin-left: 35%; background-color:white; border-radius:5px; border:solid; border-left-color:red; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
+                    <h:panelGrid columns="1"  style="width:18%; text-align:right; margin-left: 35%; background-color:white; border-radius:5px; border:solid; border-left-color:red; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 	                	<br />
-			            <tt style="margin-left:10%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
-			            <br />
-			              <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.totalVencidas}"  readonly="true"/>
+			            <tt style="margin-right:20%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
+			            <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.totalVencidas}"  readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid  style="width:20%;  margin-left:55%; margin-top: -6.7%; background-color:white; border-radius:5px; border:solid; border-left-color:green; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
-	        			<br />
-			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Vencer</tt>
-			            <br/>
+	        		<h:panelGrid columns="1"  style="width:20%;  margin-left:55%; text-align:right; margin-top: -6.7%; background-color:white; border-radius:5px; border:solid; border-left-color:green; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
+	        			<br /> 
+			            <tt style="margin-right:25%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Vencer</tt>
 			            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.totalVencer}" readonly="true"/>
 	        		</h:panelGrid>
-	        		<h:panelGrid  style="width:20%;  margin-left:77%; margin-top: -6.7%; background-color:white; border-radius:5px; border:solid; border-left-color:blue; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
+	        		<h:panelGrid  style="width:20%; text-align:right;  margin-left:77%; margin-top: -6.7%; background-color:white; border-radius:5px; border:solid; border-left-color:blue; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 	        			<br /> 
-			            <tt style="margin-left: 10%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Receber</tt> 
-			            <br/>
+			            <tt style="margin-right: 25%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Receber</tt>
 			            <h:outputText id="contasReceber" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.total}"  readonly="true"/>
 			             
 	        		</h:panelGrid>

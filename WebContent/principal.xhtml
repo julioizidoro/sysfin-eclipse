@@ -68,7 +68,7 @@
         	 <h:panelGrid style="margin-left:-4%;margin-left:0%;"> 
         	 	<img src="resources/img/iconeCadastroSysfin.png" style="width: 14%;"/>
         	</h:panelGrid>
-	        <h:panelGrid style="margin-left:12%; margin-top:-24%;">
+	        <h:panelGrid style="margin-left:12%; margin-top:-23%;">
 	        	<p:panelMenu>
 	        		<p:submenu label="Cadastro" style="font-size:15px; font-family: 'Pacifico',cursive;">
 	                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
@@ -167,50 +167,50 @@
 	        <h:form>
 	        <br /><br />
 	                <h:panelGrid id="idReceberHoje" style="width:25%; margin-left: 18%; background-color:white; border-radius:5px;">
-	                	<br />
-			            <b style="margin-left:10%; font:bold; color:black;">A receber hoje</b>
-			            <br /><br />
+	                	<br />   
+			            <b style="margin-left:10%; font:bold; color:black; font-family: 'Pacifico',cursive;">A receber hoje</b>
+			            <br /><br /> 
 			            <h:panelGrid style="margin-left:25%;" rendered="#{!calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.crVencendo)}">
-			            	<h:outputText value="R$ #{calculosContasMB.crVencendo}" style="font-size:28px; color:green;"/>
-			            	<br />
+			            	<h:outputText value="R$ #{calculosContasMB.crVencendo}" style="font-size:28px; color:green; font-family: 'Pacifico',cursive;"/>
+			            	<br /> 
 			            </h:panelGrid> 
 			            <h:panelGrid style="margin-left:22%;" rendered="#{calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.crVencendo)}">
-			            	<p:outputLabel value="Você não possui recebimentos hoje" style="margin-left:-5%; font-size:11px; color:black;"/>
+			            	<p:outputLabel value="Você não possui recebimentos hoje" style="margin-left:-5%; font-family: 'Pacifico',cursive; font-size:11px; color:black;"/>
 			            	<p:commandLink  action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" style="color:black;">
-        						<h:outputText value="Gerar Contas a Receber" style="font-size:18px; color:black;"/>
+        						<h:outputText value="Gerar Contas a Receber" style="font-size:18px; color:black; font-family: 'Pacifico',cursive;"/>
         						<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovoPrincipal(calculosContasMB.crVencendo)}" update="idReceberHoje"/>
     		 				</p:commandLink> 
 			            </h:panelGrid>
 			            <br />
 			            <h:panelGrid style="margin-left:9%; font-size:12px; color:black;">
-			             	<p:outputLabel value="Restante"/> 
+			             	<p:outputLabel value="Restante" style="font-family: 'Pacifico',cursive;"/> 
 			            </h:panelGrid> 
 			            <h:panelGrid style="color:black; margin-left:70%; margin-top:-9%; font-size:12px;">
-			            	<p:outputLabel  value="R$ #{calculosContasMB.totalRestante}"/>
+			            	<p:outputLabel style="font-family: 'Pacifico',cursive;" value="R$ #{calculosContasMB.totalRestante}"/>
 			            </h:panelGrid>  
 	        		</h:panelGrid>
 	        		<h:panelGrid id="idPagarHoje" style="width:25%;  margin-left: 47%; margin-top: -14.4%; background-color:white; border-radius:5px;">
-	        			<br /> 
-			            <b style="margin-left:10%; font:bold; color:black;">A pagar hoje</b>
+	        			<br />  
+			            <b style="margin-left:10%; font:bold; color:black; font-family: 'Pacifico',cursive;">A pagar hoje</b>
 			            <br/><br />
 			            <h:panelGrid style="margin-left:25%;" rendered="#{!calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
 			            	
-			            	<h:outputText value="R$ #{contasPagarMB.totalVencendo}" style=" font-size:28px; color:red;"/>
+			            	<h:outputText value="R$ #{contasPagarMB.totalVencendo}" style=" font-size:28px; color:red; font-family: 'Pacifico',cursive;"/>
 			            	<br />
 			            </h:panelGrid> 
 			            <h:panelGrid style="margin-left:22%;" rendered="#{calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
-			            	<p:outputLabel value="Você não possui pagamentos hoje" style="margin-left:-5%; font-size:11px; color:black;"/>
+			            	<p:outputLabel value="Você não possui pagamentos hoje" style="margin-left:-5%; font-size:11px; color:black; font-family: 'Pacifico',cursive;"/>
 			            	<p:commandLink ajax="false" action="#{contasPagarMB.novaContaTelaPrincipal()}" style="color:black;">
-        						<h:outputText value="Gerar Conta a Pagar" style="font-size:18px; color:black;"/>
+        						<h:outputText value="Gerar Conta a Pagar" style="font-size:18px; color:black; font-family: 'Pacifico',cursive;"/>
         						<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovoPrincipal(calculosContasMB.cpVencendo)}" update="idPagarHoje"/>
     		 				</p:commandLink>
 			            </h:panelGrid>  
 			            <br />
 			            <h:panelGrid style="margin-left:9%; font-size:12px; color:black;">
-			             	<p:outputLabel value="Restante"/>
+			             	<p:outputLabel value="Restante" style="font-family: 'Pacifico',cursive;"/>
 			            </h:panelGrid>
 			            <h:panelGrid style="color:black; margin-left:70%; margin-top:-9%; font-size:12px;">
-			            	<p:outputLabel  value="R$ #{contasPagarMB.totalRestante}"/>
+			            	<p:outputLabel style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalRestante}"/>
 			            </h:panelGrid>
 	        		</h:panelGrid>
 	        		<br />
@@ -222,16 +222,16 @@
 					<br />
 					<h:panelGrid  style="width:25%; margin-left: 18%; background-color:white; border-radius:5px;">
 	                <br/>
-			            <b style="margin-left:10%; font-size:12px; color:black;">Todos os recebimentos em atraso</b>
+			            <b style="margin-left:10%; font-family: 'Pacifico',cursive; font-size:14px; color:black;">Todos os recebimentos em atraso</b>
 			            <br /><br />
-			            <h:outputText value="R$ #{calculosContasMB.crVencidas}" style="color:green; margin-left:10%; font-size:28px;"/>
-			            <br /><br />
+			            <h:outputText value="R$ #{calculosContasMB.crVencidas}" style="color:green; font-family: 'Pacifico',cursive; margin-left:10%; font-size:28px;"/>
+			            <br /><br /> 
 	        		</h:panelGrid> 
-	        		<h:panelGrid  style="width:25%; margin-left: 47%; margin-top:-11.2%; background-color:white; border-radius:5px;">
+	        		<h:panelGrid  style="width:25%; margin-left: 47%; margin-top:-11.5%; background-color:white; border-radius:5px;">
 	        		<br/>
-			            <b style="margin-left:10%; font-size:12px; color:black;">Todos os pagamentos em atraso</b>
+			            <b style="margin-left:10%; font-size:14px; font-family: 'Pacifico',cursive; color:black;">Todos os pagamentos em atraso</b>
 			            <br /><br />
-			            <h:outputText value="R$ #{contasPagarMB.totalVencidas}" style="margin-left:10%; font-size:28px; color:red;"/>
+			            <h:outputText value="R$ #{contasPagarMB.totalVencidas}" style="margin-left:10%; font-family: 'Pacifico',cursive; font-size:28px; color:red;"/>
 			            <br /><br />
 	        		</h:panelGrid> 
 					<br />

@@ -347,16 +347,18 @@ import br.com.financemate.model.Vendas;
 	        animatedModel1.getAxes().put(AxisType.X, new CategoryAxis("Dia"));
 	        animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
 	        animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4");
+	        animatedModel1.setZoom(true);
 	        Axis yAxis = animatedModel1.getAxis(AxisType.Y);
-	        yAxis.setLabel("Valor");
-	        yAxis.setMin(valorMinimo.intValue());
-	        yAxis.setMax(valorMaximo.intValue()  + 100);
+	        yAxis.setLabel("R$");
+	        yAxis.setMin(valorMinimo.floatValue());
+	        yAxis.setMax(valorMaximo.floatValue()  + 100);
 	        
 	         
 	        animatedModel2 = initBarModel();
 	        
 	        animatedModel2.setTitle("Grafico de vendas");
 	        animatedModel2.setAnimate(true);
+	        animatedModel2.setShowPointLabels(true);
 	        animatedModel2.setLegendPosition("ne");
 	        yAxis = animatedModel2.getAxis(AxisType.Y);
 	        yAxis.setMin(0);
