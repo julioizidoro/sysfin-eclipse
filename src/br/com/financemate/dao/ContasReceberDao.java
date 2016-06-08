@@ -17,6 +17,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.tomcat.dbcp.dbcp.ConnectionFactory;
+
 
 
 /**
@@ -135,11 +137,12 @@ public class ContasReceberDao {
     } 
     
     public List<Contasreceber> listaFluxo(String sql) throws SQLException{
-        EntityManager manager = ConectionFactory.getConnection();
+    	manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery(sql);
         List<Contasreceber> listaFluxo= q.getResultList();
         manager.getTransaction().commit();
+        manager.close();
         return listaFluxo;
     }
     

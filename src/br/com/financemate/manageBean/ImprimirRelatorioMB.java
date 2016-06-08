@@ -248,6 +248,7 @@ public class ImprimirRelatorioMB implements Serializable{
 		if (relatorio.equalsIgnoreCase("Fluxo de Caixa")) {
 			caminhoRelatorio = "reports/Relatorios/reportFluxoCaixa.jasper";
 	        parameters.put("nomeFantasia", cliente.getNomeFantasia());
+	        validarRelatorioFluxoCaixa();
 		}else if(relatorio.equalsIgnoreCase("Pagamentos")){
 			caminhoRelatorio = "reports/Relatorios/reportPagamentos01.jasper";
 		}else if(relatorio.equalsIgnoreCase("pagamentoSintetico")){
@@ -271,7 +272,7 @@ public class ImprimirRelatorioMB implements Serializable{
         		periodo = "Periodo : " + Formatacao.ConvercaoDataPadrao(dataInicial) 
                 + "    " + Formatacao.ConvercaoDataPadrao(dataFinal);
 			}else{
-				periodo = "CompetÃªncia : " + competencia;
+				periodo = "Competência : " + competencia;
 			}
         	
 		}else{
@@ -406,6 +407,10 @@ public class ImprimirRelatorioMB implements Serializable{
 		 }else{
 			 return nomeComboBanco = "Todas";
 		 }
+	 }
+	 
+	 private void validarRelatorioFluxoCaixa(){
+		 FluxoCaixaBean fluxoCaixaBean = new FluxoCaixaBean(dataInicial, dataFinal, cliente, "R");
 	 }
 
 }

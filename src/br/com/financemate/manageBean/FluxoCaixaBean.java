@@ -44,7 +44,7 @@ public class FluxoCaixaBean {
     }
     
     public void gerarListaContasPagar(Date dataInicial, Date dataFinal, Cliente cliente){
-        String sql = "Select v from Contaspagar v where v.clienteIdcliente=" + cliente.getIdcliente() +
+        String sql = "Select v from Contaspagar v where v.cliente.idcliente=" + cliente.getIdcliente() +
                 " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
                 "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
                 "' order by v.dataVencimento";
@@ -76,7 +76,7 @@ public class FluxoCaixaBean {
     
     
     public void gerarListaContasReceber(Date dataInicial, Date dataFinal, Cliente cliente){
-        String sql = "Select v from Contasreceber v where v.clienteIdcliente=" + cliente.getIdcliente() +
+        String sql = "Select v from Contasreceber v where v.cliente.idcliente=" + cliente.getIdcliente() +
                 " and v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
                 "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
                 "' order by v.dataVencimento";
@@ -100,6 +100,9 @@ public class FluxoCaixaBean {
             String data1 = Formatacao.ConvercaoDataPadrao(listaFluxo.get(i).getData());
             String data2 = Formatacao.ConvercaoDataPadrao(contasReceber.getDataVencimento());
             if (data1.equalsIgnoreCase(data2)){
+            	if (contasReceber.getValorParcela() == null) {
+					contasReceber.setValorParcela(0.0f);
+				}
                 listaFluxo.get(i).setValorContasReceber(contasReceber.getValorParcela().floatValue());
                 i = listaFluxo.size()+10;
             }
