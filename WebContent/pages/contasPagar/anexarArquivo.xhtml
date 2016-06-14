@@ -38,6 +38,16 @@
     			</p:commandButton>
             </h:panelGrid>
             
+            <script type="text/javascript">
+				function start() {
+				    PF('statusDialog').show();
+				}
+				
+				function stop() {
+				    PF('statusDialog').hide();
+				}
+			</script>
+            
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                 <p:commandLink title="Confirmar"  style="text-decoration: none; margin-left:35%;"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >
                     <img src="../../resources/img/confirmarS.png" width="50" height="50"/>

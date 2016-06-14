@@ -2,6 +2,7 @@ package br.com.financemate.manageBean;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ import javax.swing.JOptionPane;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.financemate.facade.BancoFacade;
@@ -763,6 +766,29 @@ public class CadContasPagarMB implements Serializable{
 		}
 		return operacaousuairo;
 	}
+	
+	private StreamedContent files;
+	
+	
+	public StreamedContent getFiles() {
+		return files;
+	}
+
+
+
+
+	public void setFiles(StreamedContent files) {
+		this.files = files;
+	}
+
+ 
+
+
+	public void FileDownloadView() {        
+        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/demo/images/optimus.jpg");
+		file = (UploadedFile) new DefaultStreamedContent(stream, "/resources/img", "adicionar.png");
+	}
+
 
 	
 }
