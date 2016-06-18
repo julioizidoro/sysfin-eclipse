@@ -38,6 +38,7 @@ public class UsuarioLogadoMB implements Serializable{
 	private Usuario usuario;
     private Cliente cliente;
     private String novaSenha;
+    private String senhaAtual;
     private String confirmaNovaSenha;
     private String nomeCliente;
     
@@ -78,7 +79,14 @@ public class UsuarioLogadoMB implements Serializable{
 		this.nomeCliente = nomeCliente;
 	}
     
-    
+	public String getSenhaAtual() {
+		return senhaAtual;
+	}
+	public void setSenhaAtual(String senhaAtual) {
+		this.senhaAtual = senhaAtual;
+	}
+	
+	
 	public String validarUsuario() {
         if ((usuario.getLogin() != null) && (usuario.getSenha() == null)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Login Invalido."));
@@ -158,39 +166,56 @@ public class UsuarioLogadoMB implements Serializable{
         }
     }
      public String confirmaNovaSenha() {
-        if ((novaSenha.length() > 0) && (confirmaNovaSenha.length() > 0)) {
-            if (novaSenha.equalsIgnoreCase(confirmaNovaSenha)) {
-                UsuarioFacade usuarioFacade = new UsuarioFacade();
-                String senha = "";
-                try {
-                    senha = Criptografia.encript(novaSenha);
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(UsuarioLogadoMB.class.getName()).log(Level.SEVERE, null, ex);
-                    FacesMessage mensagem = new FacesMessage("Erro: " + ex);
-                    FacesContext.getCurrentInstance().addMessage(null, mensagem);
-                }
-                usuario.setSenha(senha);
-                try {
-                    usuario = usuarioFacade.salvar(usuario);
-                    novaSenha = "";
-                confirmaNovaSenha = "";
-                RequestContext.getCurrentInstance().closeDialog(usuario);
-                return "";
-                } catch (SQLException ex) {
-                    Logger.getLogger(UsuarioLogadoMB.class.getName()).log(Level.SEVERE, null, ex);
-                    FacesMessage mensagem = new FacesMessage("Erro: " + ex);
-                    FacesContext.getCurrentInstance().addMessage(null, mensagem);
-                }
-                
-            } else {
-                novaSenha = "";
-                confirmaNovaSenha = "";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
-            }
-
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
-        }
+    	 String repetirSenhaAtual = "";
+    	 try {
+			repetirSenhaAtual = Criptografia.encript(senhaAtual);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	if (repetirSenhaAtual.equalsIgnoreCase(usuario.getSenha())) {
+    	
+	        if ((novaSenha.length() > 0) && (confirmaNovaSenha.length() > 0)) {
+	        	if (novaSenha.equalsIgnoreCase(confirmaNovaSenha)) {
+	        		UsuarioFacade usuarioFacade = new UsuarioFacade();
+	                String senha = "";
+	                try {
+	                    senha = Criptografia.encript(novaSenha);
+	                } catch (NoSuchAlgorithmException ex) {
+	                    Logger.getLogger(UsuarioLogadoMB.class.getName()).log(Level.SEVERE, null, ex);
+	                    FacesMessage mensagem = new FacesMessage("Erro: " + ex);
+	                    FacesContext.getCurrentInstance().addMessage(null, mensagem);
+	                }
+	                usuario.setSenha(senha);
+	                try {
+	                    usuario = usuarioFacade.salvar(usuario);
+	                    novaSenha = "";
+	                    confirmaNovaSenha = "";
+	                RequestContext.getCurrentInstance().closeDialog(usuario);
+	                return "";
+	                } catch (SQLException ex) {
+	                    Logger.getLogger(UsuarioLogadoMB.class.getName()).log(Level.SEVERE, null, ex);
+	                    FacesMessage mensagem = new FacesMessage("Erro: " + ex);
+	                    FacesContext.getCurrentInstance().addMessage(null, mensagem);
+	                }
+	                
+	            } else {
+	                novaSenha = "";
+	                confirmaNovaSenha = "";
+	                senhaAtual = "";
+	                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
+	            }
+	
+	        } else {
+	        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
+	        }
+    	}else{
+    		mensagem mensagem = new mensagem();
+    		mensagem.alteracao();
+    		senhaAtual = "";
+    		novaSenha = "";
+    		confirmaNovaSenha = "";
+    	}
         return "";
     }
     

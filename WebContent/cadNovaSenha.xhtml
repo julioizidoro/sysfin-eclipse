@@ -25,9 +25,14 @@
             </p:dialog>
 
             <title  >Nova Senha</title>
-            
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             <h:panelGrid columns="2">
-                 <p:outputLabel value="Nova Senha" for="novaSenha"  class="left3"/>
+                 <p:outputLabel value="Senha Atual" for="senhaAtual"  class="left3"/>
+                 <p:inputText type="password" id="senhaAtual" size="15" style="text-align: left; margin-left:18%;"  class="left3" value="#{usuarioLogadoMB.senhaAtual}"/>
+            </h:panelGrid>
+            <br />
+            <h:panelGrid columns="2">
+                 <p:outputLabel value="Nova Senha" for="novaSenha"  class="left3"/> 
                  <p:inputText type="password" id="novaSenha" size="15" style="text-align: left; margin-left:18%;"  class="left3" value="#{usuarioLogadoMB.novaSenha}"/>
             </h:panelGrid>
             <br />
@@ -38,14 +43,14 @@
               <br/>
               <hr />
               <br />
-              <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none" ajax="false" action="#{usuarioLogadoMB.confirmaNovaSenha()}" > 
+              <p:commandLink title="Confirmar" style="margin-left: 30%;text-decoration: none" ajax="false" action="#{usuarioLogadoMB.confirmaNovaSenha()}" > 
                     <img src="resources/img/confirmarS.png" width="50" height="50"/>
               </p:commandLink>
               <p:commandLink title="Cancelar" style="margin-left: 5%;text-decoration: none" action="#{usuarioLogadoMB.cancelarTrocaSenha()}" >
                     <img src="resources/img/cancelarS.png" width="50" height="50"/>
               </p:commandLink>
               
-              <br></br>
+              <br/><br/><br/>
         </h:form>
 </h:body>
 </html>

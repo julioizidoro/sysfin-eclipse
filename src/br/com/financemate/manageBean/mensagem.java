@@ -73,12 +73,22 @@ public class mensagem {
     
     public void historico() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("HistÃ³rico Salvo com Sucesso", ""));
+        context.addMessage(null, new FacesMessage("Histórico Salvo com Sucesso", ""));
     }
     
     public void acesso() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Acesso Negado", ""));
+    }
+    
+    public void downloadSucesso() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Arquivo baixado", "Em sua pasta download com sucesso"));
+    }
+    
+    public void alteracao() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Alteração Negada", ""));
     }
     
     public void competencia() {

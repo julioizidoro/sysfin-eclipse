@@ -410,6 +410,11 @@ public class CadContasPagarMB implements Serializable{
 		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 			contaPagar.setStatus("Ativo");
+			if (contaPagar.getIdcontasPagar() != null) {
+				operacaousuairo.setTipooperacao("Usuário Alterou");
+			}else{
+				operacaousuairo.setTipooperacao("Usuário Cadastrou");
+			}
 			contaPagar = contasPagarFacade.salvar(contaPagar);
 			operacaousuairo =  salvarOperacaoUsuario(contaPagar, operacaousuairo);
 			if (cptransferencia!=null){
@@ -464,6 +469,11 @@ public class CadContasPagarMB implements Serializable{
 		if (mensagem=="") {
 			ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 			contaPagar.setStatus("Ativo");
+			if (contaPagar.getIdcontasPagar() != null) {
+				operacaousuairo.setTipooperacao("Usuário Alterou");
+			}else{
+				operacaousuairo.setTipooperacao("Usuário Cadastrou");
+			}
 	        contaPagar = contasPagarFacade.salvar(contaPagar);
 	        operacaousuairo =  salvarOperacaoUsuario(contaPagar, operacaousuairo);
 	        if (cptransferencia!=null){
@@ -628,7 +638,8 @@ public class CadContasPagarMB implements Serializable{
 		            mostrarMensagem(ex, "Erro ao salvar um arquivo", "Erro");
 				}
 			}
-            mostrarMensagem(null, msg, "");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(msg, ""));
             return true;
         } catch (IOException ex) {
             Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
@@ -690,7 +701,11 @@ public class CadContasPagarMB implements Serializable{
 	}
 	
 	public String nomeArquivo(){
-		nomeAquivoFTP = "ContasPagar-" + file.getFileName().trim();
+		if (contaPagar.getIdcontasPagar() != null) {
+			nomeAquivoFTP = "ContasPagar-" + contaPagar.getIdcontasPagar() + "-" + file.getFileName().trim();			
+		}else{
+			nomeAquivoFTP = "ContasPagar-"+ file.getFileName().trim();
+		}
 		return nomeAquivoFTP;
 	}
 	
@@ -747,18 +762,10 @@ public class CadContasPagarMB implements Serializable{
 	
 	
 	public Operacaousuairo salvarOperacaoUsuario(Contaspagar contaspagar, Operacaousuairo operacaousuairo){
-		OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();		
-		if (contaspagar.getIdcontasPagar() != null) {
-			operacaousuairo.setTipooperacao("Usuário Alterou");
-			operacaousuairo.setContaspagar(contaspagar);
-			operacaousuairo.setData(new Date());
-			operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
-		}else{
-			operacaousuairo.setTipooperacao("Usuário Cadastrou");
-			operacaousuairo.setContaspagar(contaspagar);
-			operacaousuairo.setData(new Date());
-			operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
-		}
+		OperacaoUsuarioFacade operacaoUsuarioFacade = new OperacaoUsuarioFacade();
+		operacaousuairo.setContaspagar(contaspagar);
+		operacaousuairo.setData(new Date());
+		operacaousuairo.setUsuario(usuarioLogadoMB.getUsuario());
 		try {
 			operacaousuairo =  operacaoUsuarioFacade.salvar(operacaousuairo);
 		} catch (SQLException e) {
@@ -766,29 +773,5 @@ public class CadContasPagarMB implements Serializable{
 		}
 		return operacaousuairo;
 	}
-	
-	private StreamedContent files;
-	
-	
-	public StreamedContent getFiles() {
-		return files;
-	}
-
-
-
-
-	public void setFiles(StreamedContent files) {
-		this.files = files;
-	}
-
- 
-
-
-	public void FileDownloadView() {        
-        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/demo/images/optimus.jpg");
-		file = (UploadedFile) new DefaultStreamedContent(stream, "/resources/img", "adicionar.png");
-	}
-
-
 	
 }

@@ -19,34 +19,16 @@
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
-                <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
-        		<br/> 
-                <img src="../../resources/img/ajax-carregando.gif" />
+                <p:graphicImage name="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			
 			<h:panelGrid style="margin-left:1%;">
             	<p:fileUpload  label="#{cadContasPagarMB.AdicionarNomeAnexado()}" fileUploadListener="#{cadContasPagarMB.fileUploadListener}"  value="#{cadContasPagarMB.file}" mode="advanced"
-                     update="messages" auto="true" >
+                     update="messages" auto="true">
                 </p:fileUpload>
-                
             </h:panelGrid>
-            <h:panelGrid>
-            	<p:commandButton value="Download" ajax="false"  onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
-        			<p:fileDownload value="#{cadContasPagarMB.baixarFile()}"/>
-    			</p:commandButton>
-            </h:panelGrid>
-            
-            <script type="text/javascript">
-				function start() {
-				    PF('statusDialog').show();
-				}
-				
-				function stop() {
-				    PF('statusDialog').hide();
-				}
-			</script>
             
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                 <p:commandLink title="Confirmar"  style="text-decoration: none; margin-left:35%;"   action="#{cadContasPagarMB.voltarCadContasPagar()}" >

@@ -3,7 +3,6 @@ package br.com.financemate.util;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.primefaces.model.UploadedFile;
@@ -38,7 +37,7 @@ public class Ftp {
         if (ftpClient.storeFile(arquivoFTP, arqEnviar)) {
         	ftpClient.getReplyString();
         	desconectar();
-            return "Arquivo Salvo com Sucesso";
+            return "Arquivo: "+ arquivoFTP + " salvo com Sucesso";
         } else {
         	System.out.println(ftpClient.getReplyString());
             return "Erro Salvar Arquivo";
@@ -54,8 +53,8 @@ public class Ftp {
         ftpClient.changeWorkingDirectory("/sysfin/contasPagar");
         ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
         ftpClient.enterLocalPassiveMode();
-        System.out.println(ftpClient.listNames());
-        FileOutputStream os = new FileOutputStream("/Users/Kamilla Rodrigues/Documents/"+arquivoSalvar);
+        String nomeUsuario = System.getProperty("user.name");
+        FileOutputStream os = new FileOutputStream("/Users/"+nomeUsuario+"/Downloads/"+arquivoSalvar);
         ftpClient.retrieveFile(arquivoFTP, os);
         os.close(); 
     } 
