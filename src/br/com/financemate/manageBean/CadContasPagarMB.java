@@ -2,7 +2,6 @@ package br.com.financemate.manageBean;
 
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,8 +21,6 @@ import javax.swing.JOptionPane;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.financemate.facade.BancoFacade;
@@ -42,7 +39,6 @@ import br.com.financemate.model.Ftpdados;
 import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
-import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.Ftp;
 
 @Named

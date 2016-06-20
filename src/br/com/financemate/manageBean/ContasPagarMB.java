@@ -23,14 +23,12 @@ import org.primefaces.event.SelectEvent;
 
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
-import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.facade.NomeArquivoFacade;
 import br.com.financemate.facade.OperacaoUsuarioFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
-import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Cptransferencia;
 import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;

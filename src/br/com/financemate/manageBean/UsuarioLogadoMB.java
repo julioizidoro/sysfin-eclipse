@@ -1,8 +1,5 @@
 package br.com.financemate.manageBean;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -11,7 +8,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -24,9 +20,7 @@ import java.util.logging.Logger;
 import br.com.financemate.util.Criptografia;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.UsuarioFacade;
-import br.com.financemate.manageBean.outrosLancamentos.LerOFXBean;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Usuario;
 
 @Named

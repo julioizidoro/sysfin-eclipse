@@ -1,7 +1,6 @@
 package br.com.financemate.manageBean;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,7 +15,6 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import br.com.financemate.facade.FtpDadosFacade;
@@ -152,11 +150,6 @@ public class consultaArquivoMB implements Serializable{
         
     }
 	
-	public void baixarFile(){
-		//salvarArquivoFTP(nomeArquivo.getNomearquivo01(), nomeArquivo.getNomearquivo01());
-		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("resources/img/bolaVerde.png");
-        file = new DefaultStreamedContent(stream, "/Users/Kamila Rodrigues/Downloads", "downloaded_Arquivo.jpg");
-	}
 	
 	
 	public void mostrarMensagem(Exception ex, String erro, String titulo){

@@ -763,4 +763,11 @@ public class Formatacao {
       }
       return novoValor;
   }
+  
+  
+  public static String removeAcentos(final String str) {
+  	String strSemAcentos = Normalizer.normalize(str, Normalizer.Form.NFD);
+  	strSemAcentos = strSemAcentos.replaceAll("[^\\p{ASCII}]", "");
+  	return strSemAcentos;
+  }
 }

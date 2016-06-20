@@ -25,7 +25,6 @@ import br.com.financemate.manageBean.LiberarContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Outroslancamentos;
 

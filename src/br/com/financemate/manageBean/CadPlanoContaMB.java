@@ -49,7 +49,6 @@ public class CadPlanoContaMB implements Serializable {
 			 planocontas = new Planocontas(); 
 		 }else{
 			 tipoPlanoContas = planocontas.getTipoplanocontas();
-			 String oi = "";
 		 }
 		 
 	}
