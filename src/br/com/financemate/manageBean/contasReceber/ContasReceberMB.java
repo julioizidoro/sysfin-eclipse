@@ -1116,10 +1116,11 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public void desfazerRecebimento(Contasreceber contasreceber){
+		 float valorPago = contasreceber.getValorPago();
 		 contasreceber.setDataPagamento(null);
 		 contasreceber.setDesagio(0f);
 		 contasreceber.setJuros(0f);
-		 contasreceber.setValorParcela(contasreceber.getValorParcela() + contasreceber.getValorPago());
+		 contasreceber.setValorParcela(contasreceber.getValorParcela() + valorPago);
 		 contasreceber.setValorPago(0f);
 		 ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 		 contasReceberFacade.salvar(contasreceber);
