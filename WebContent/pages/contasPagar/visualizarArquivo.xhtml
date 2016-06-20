@@ -25,7 +25,9 @@
              <h:panelGrid style="margin-left: 1%" columns="3">
             	<p:outputLabel value="Nome do Arquivo" />
                 <p:inputText style="margin-left: 2%;" id="nomeArquivo" size="40" value="#{consultaArquivoMB.nomeArquivo.nomearquivo01}" readonly="true"/>
-                <a title="Download" name="download" href="http://200.175.61.147:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank" style="border-radius:2px;text-decoration:none; background: #3D9446; color:white; font-size:18px;" type="button"> &#160;Download&#160;</a>
+                <a title="Download" name="download" href="http://200.175.61.147:82/ftproot/sysfin/contasPagar/#{consultaArquivoMB.nomeArquivo.nomearquivo01}" target="_blank" style="text-decoration:none;font-size:18px;" type="button">
+                	<img src="../../resources/img/iconeDownload.png" width="27" height="27"/>
+                </a>
              </h:panelGrid>
             <br />
             <hr />

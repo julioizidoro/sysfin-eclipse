@@ -33,7 +33,8 @@ public class CalculosContasMB implements Serializable{
 	private String cpVencendo;
 	private String cpTotal;
 	private String TotalRestante;
-	private Boolean habilitarDesabilitar;
+	private Boolean habilitarDesabilitarComCompra;
+	private Boolean habilitarDesabilitarSemCompra;
 	
 	@PostConstruct
 	public void init(){
@@ -63,11 +64,11 @@ public class CalculosContasMB implements Serializable{
 	}
 
 	public Boolean getHabilitarDesabilitar() {
-		return habilitarDesabilitar;
+		return habilitarDesabilitarComCompra;
 	}
 
-	public void setHabilitarDesabilitar(Boolean habilitarDesabilitar) {
-		this.habilitarDesabilitar = habilitarDesabilitar;
+	public void setHabilitarDesabilitar(Boolean habilitarDesabilitarComCompra) {
+		this.habilitarDesabilitarComCompra = habilitarDesabilitarComCompra;
 	}
 
 	public String getCrVencer() {
@@ -136,7 +137,14 @@ public class CalculosContasMB implements Serializable{
 		this.cpTotal = cpTotal;
 	}
 	
-	
+
+	public Boolean getHabilitarDesabilitarSemCompra() {
+		return habilitarDesabilitarSemCompra;
+	}
+
+	public void setHabilitarDesabilitarSemCompra(Boolean habilitarDesabilitarSemCompra) {
+		this.habilitarDesabilitarSemCompra = habilitarDesabilitarSemCompra;
+	}
 
 	public void calcularTotalContasPagar(){
 		Float vencida = 0.0f;
@@ -193,14 +201,27 @@ public class CalculosContasMB implements Serializable{
 	}
 	
 	
-	public Boolean habilitarDesabilitarCompraTelaPrincipal(String valor){
+	public Boolean habilitarDesabilitarSemCompraTelaPrincipal(String valor){
 		 Float valorVencendo = Formatacao.formatarStringfloat(valor);
 		 if (valorVencendo > 0f) {
-			habilitarDesabilitar = false;
-			return habilitarDesabilitar;
+			habilitarDesabilitarComCompra = false;
+			return habilitarDesabilitarComCompra;
+		}else{
+			habilitarDesabilitarComCompra = true;
+			return habilitarDesabilitarComCompra;
 		}
-		return true;
-	 } 
+	 }
+	
+	public Boolean habilitarDesabilitarComCompraTelaPrincipal(String valor){
+		 Float valorVencendo = Formatacao.formatarStringfloat(valor);
+		 if (valorVencendo > 0f) {
+			habilitarDesabilitarSemCompra = true;
+			return habilitarDesabilitarSemCompra;
+		}else{
+			habilitarDesabilitarSemCompra = false;
+			return habilitarDesabilitarSemCompra;
+		}
+	 }
 	
 	
 }

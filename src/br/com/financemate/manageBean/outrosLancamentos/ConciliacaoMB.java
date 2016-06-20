@@ -2,9 +2,9 @@ package br.com.financemate.manageBean.outrosLancamentos;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +12,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.financemate.facade.BancoFacade;
@@ -34,7 +35,58 @@ public class ConciliacaoMB implements Serializable{
 	private Date dataInicial;
 	private Date dataFinal;
 	private UploadedFile arquivo;
+	private List<ConciliarBean> listaConciliacaoBancaria;
+	private String nomeBotaoConciliar = "Conciliar";
+	private List<TransacaoBean> listaTransacaoNaoConciliado;
+	private List<Outroslancamentos> listaOutrosNaoConciliado;
+	private Integer sizeConciliada;
+	private TransacaoBean transacaoBean;
+	private Outroslancamentos outroslancamentos;
 	
+	
+	
+	public String getNomeBotaoConciliar() {
+		return nomeBotaoConciliar;
+	}
+	public void setNomeBotaoConciliar(String nomeBotaoConciliar) {
+		this.nomeBotaoConciliar = nomeBotaoConciliar;
+	}
+	public List<TransacaoBean> getListaTransacaoNaoConciliado() {
+		return listaTransacaoNaoConciliado;
+	}
+	public void setListaTransacaoNaoConciliado(List<TransacaoBean> listaTransacaoNaoConciliado) {
+		this.listaTransacaoNaoConciliado = listaTransacaoNaoConciliado;
+	}
+	public List<Outroslancamentos> getListaOutrosNaoConciliado() {
+		return listaOutrosNaoConciliado;
+	}
+	public void setListaOutrosNaoConciliado(List<Outroslancamentos> listaOutrosNaoConciliado) {
+		this.listaOutrosNaoConciliado = listaOutrosNaoConciliado;
+	}
+	public Integer getSizeConciliada() {
+		return sizeConciliada;
+	}
+	public void setSizeConciliada(Integer sizeConciliada) {
+		this.sizeConciliada = sizeConciliada;
+	}
+	public TransacaoBean getTransacaoBean() {
+		return transacaoBean;
+	}
+	public void setTransacaoBean(TransacaoBean transacaoBean) {
+		this.transacaoBean = transacaoBean;
+	}
+	public Outroslancamentos getOutroslancamentos() {
+		return outroslancamentos;
+	}
+	public void setOutroslancamentos(Outroslancamentos outroslancamentos) {
+		this.outroslancamentos = outroslancamentos;
+	}
+	public List<ConciliarBean> getListaConciliacaoBancaria() {
+		return listaConciliacaoBancaria;
+	}
+	public void setListaConciliacaoBancaria(List<ConciliarBean> listaConciliacaoBancaria) {
+		this.listaConciliacaoBancaria = listaConciliacaoBancaria;
+	}
 	public UploadedFile getArquivo() {
 		return arquivo;
 	}
@@ -74,6 +126,7 @@ public class ConciliacaoMB implements Serializable{
 	
 	
 	public void carregarArquivo(FileUploadEvent e){
+		listaConciliacaoBancaria = null;
 		arquivo = e.getFile();
 		File arq = new File(arquivo.getFileName());
 		FileInputStream file = null;
@@ -129,24 +182,88 @@ public class ConciliacaoMB implements Serializable{
 		for (int i = 0; i < listaTransacao.size(); i++) {
 			verficarLancamentos(listaTransacao.get(i));
 		}
+		sizeConciliada = listaConciliacaoBancaria.size();
+		for (int i = 0; i < listaTransacao.size(); i++) {
+			gerarListaTransacaoNaoConciliada(listaTransacao.get(i));
+		}
+		gerarListaOutrosLancamentosNaoConciliado();
+		for (int i = 0; i < listaConciliacaoBancaria.size(); i++) {
+			if (listaConciliacaoBancaria.get(i).getOutroslancamentos() == null) {
+				listaConciliacaoBancaria.get(i).setOutroslancamentos(new Outroslancamentos());
+				listaConciliacaoBancaria.get(i).getOutroslancamentos().setSelecionado(false);
+			}
+		}
 	}
 	
 	public void verficarLancamentos(TransacaoBean transacao){
+		ConciliarBean cb = new ConciliarBean();
+		if (listaConciliacaoBancaria == null) {
+			listaConciliacaoBancaria = new ArrayList<ConciliarBean>();
+		} 
 		for (int j = 0; j < listaLacamentos.size(); j++) {
 			Float valor;
 			String dataTransacao = Formatacao.ConvercaoDataPadrao(transacao.getData());
 			String dataLancamento = Formatacao.ConvercaoDataPadrao(listaLacamentos.get(j).getDataCompensacao());
-			if (transacao.getTipo().equalsIgnoreCase("DEBIT")){
+			if (transacao.getTipo().equalsIgnoreCase("DEBIT")){ 
 				valor =  transacao.getValorSaida();
-				if ((listaLacamentos.get(j).getValorSaida()== valor) && (dataTransacao.equals(dataLancamento))){
+				if ((listaLacamentos.get(j).getValorSaida().floatValue() == valor.floatValue()) && (dataTransacao.equals(dataLancamento))){
 					listaLacamentos.get(j).setConciliacao(transacao.getId());
+					listaLacamentos.get(j).setConciliada(true);
+					transacao.setConciliada(true);
+					cb = new ConciliarBean();
+					cb.setOutroslancamentos(listaLacamentos.get(j));
+					cb.setTransacao(transacao);
+					listaConciliacaoBancaria.add(cb);
 				}
 			}else if (transacao.getTipo().equalsIgnoreCase("CREDIT")){
 				valor =  transacao.getValorEntrada();
-				if ((listaLacamentos.get(j).getValorEntrada()== valor) && (dataTransacao.equals(dataLancamento))){
+				if ((listaLacamentos.get(j).getValorEntrada().floatValue() == valor.floatValue()) && (dataTransacao.equals(dataLancamento))){
 					listaLacamentos.get(j).setConciliacao(transacao.getId());
+					listaLacamentos.get(j).setConciliada(true);
+					transacao.setConciliada(true);
+					cb = new ConciliarBean();
+					cb.setOutroslancamentos(listaLacamentos.get(j));
+					cb.setTransacao(transacao);
+					listaConciliacaoBancaria.add(cb);
 				}
 			}
 		}
 	}
+	
+	
+	public void gerarListaTransacaoNaoConciliada(TransacaoBean transacao){
+		ConciliarBean conciliarBean = new ConciliarBean();
+		if (listaTransacaoNaoConciliado == null) {
+			listaTransacaoNaoConciliado = new ArrayList<TransacaoBean>();
+		}
+			if (transacao.getConciliada() == false) {
+				listaTransacaoNaoConciliado.add(transacao);
+				conciliarBean.setTransacao(transacao);
+				listaConciliacaoBancaria.add(conciliarBean);
+			}
+		
+	}
+	
+	public void gerarListaOutrosLancamentosNaoConciliado(){
+		ConciliarBean conciliarBean = new ConciliarBean();
+		if (listaOutrosNaoConciliado == null) {
+			listaOutrosNaoConciliado = new ArrayList<Outroslancamentos>();
+		} 
+		for (int i = 0; i < listaLacamentos.size(); i++) {
+			if (listaLacamentos.get(i).getConciliada() == false) {
+				listaOutrosNaoConciliado.add(listaLacamentos.get(i));
+				conciliarBean.setOutroslancamentos(listaLacamentos.get(i));
+				listaConciliacaoBancaria.get(sizeConciliada +i).setOutroslancamentos(conciliarBean.getOutroslancamentos());
+				
+			}
+		}
+	}
+	
+	
+	public void retornoDialogConciliado(SelectEvent e) {
+        listaConciliacaoBancaria = null;
+        carregarOutrosLancamentos();
+        conciliar();
+	}
+	
 }

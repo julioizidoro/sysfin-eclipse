@@ -593,7 +593,7 @@ public class ContasPagarMB implements Serializable{
 	
 	public void retornoDialogNovoPrincipal(String valor) {
         calculosContasMB.calcularTotalContasPagar();
-        calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(valor);
+        calculosContasMB.habilitarDesabilitarSemCompraTelaPrincipal(valor);
     }
 	
 	public String excluir(){

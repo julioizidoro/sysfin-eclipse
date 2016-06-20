@@ -42,6 +42,7 @@ import br.com.financemate.model.Ftpdados;
 import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.Ftp;
 
 @Named
