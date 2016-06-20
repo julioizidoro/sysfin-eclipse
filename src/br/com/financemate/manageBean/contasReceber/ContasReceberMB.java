@@ -680,7 +680,7 @@ public class ContasReceberMB implements Serializable {
 	
 	public void retornoDialogNovoPrincipal(String valor) {
         calculosContasMB.calcularTotaisContasReceber();
-        calculosContasMB.habilitarDesabilitarCompraTelaPrincipal(valor);
+        calculosContasMB.habilitarDesabilitarSemCompraTelaPrincipal(valor);
     }
 	
 	public void mostrarMensagem(Exception ex, String erro, String titulo){

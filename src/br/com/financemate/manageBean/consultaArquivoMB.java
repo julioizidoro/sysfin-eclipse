@@ -168,9 +168,9 @@ public class consultaArquivoMB implements Serializable{
 	
 	public boolean desabilitarDownload(){
 		if (nomeArquivo.getNomearquivo01().equalsIgnoreCase("Não existe arquivo anexado")) {
-			return true;
-		}else{
 			return false;
+		}else{
+			return true;
 		}
 	}
 	
