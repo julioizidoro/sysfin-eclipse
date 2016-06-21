@@ -19,19 +19,22 @@
         	<h:outputText value="Bem Vindo" style="font-size:16px; margin-left:0.5%;" />,
         	 <h:outputText style="font-size:16px;" value="#{usuarioLogadoMB.usuario.nome}" />
         	<tt style="margin-left: 35%; font-size: 32px; font-family: 'Pacifico',cursive;">SysFin</tt>
-        	<p:commandLink  action="#" style="margin-left:32%; text-decoration:none;" title="Adicionar">
-                    <img src="../../resources/img/adicionarmenu.png" width="32" height="32" border="none" style="text-decoration:none;margin-top:0.8%;"/> 
+        	<p:commandLink  action="#" style="margin-left:30%; text-decoration:none;" title="Adicionar">
+                    <img src="../../resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.4%;"/> 
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
-            <br/><br/>
+            <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style="margin-left:5%; text-decoration:none;" title="Sair">
+                    <img src="../../resources/img/iconeDeslogar.png" border="none" style="text-decoration:none;margin-bottom:-0.5%;"/>
+            </p:commandLink>
+            <br/><br />
         </div> 
         <br />
-        <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:2.3%;" responsive="true">
+        <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:1.9%;">
         	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;margin-left:1%;">
            		<img src="../../resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
         		<h:outputText value="Visão Geral" style="font-size:15px; margin-left:5%;"/>
     		 </p:commandLink>
-    		 
+    		   
     		
         	 <h:panelGrid>
         	 <h:panelGrid style="margin-left:-2%;"> 

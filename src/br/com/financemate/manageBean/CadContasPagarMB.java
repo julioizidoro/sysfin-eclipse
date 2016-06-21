@@ -69,6 +69,7 @@ public class CadContasPagarMB implements Serializable{
 	private Boolean habilitarUnidade = false;
 	private Operacaousuairo operacaousuairo;
 	private List<Cptransferencia> listaCptransferencia;
+	private Nomearquivo nomearquivo;
 	
 
 	@PostConstruct
@@ -82,7 +83,6 @@ public class CadContasPagarMB implements Serializable{
         banco = (Banco) session.getAttribute("banco");
         planoContas = (Planocontas) session.getAttribute("planocontas");
         session.removeAttribute("contapagar");
-        session.removeAttribute("file");
         session.removeAttribute("cliente");
         session.removeAttribute("banco");
         session.removeAttribute("planocontas");
@@ -322,11 +322,30 @@ public class CadContasPagarMB implements Serializable{
 	}
 
 	public String cancelar(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("file");
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
     }
 	
 	
+	
+	
+	public Nomearquivo getNomearquivo() {
+		return nomearquivo;
+	}
+
+
+
+
+	public void setNomearquivo(Nomearquivo nomearquivo) {
+		this.nomearquivo = nomearquivo;
+	}
+
+
+
+
 	public void mostrarMensagem(Exception ex, String erro, String titulo){
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
@@ -422,6 +441,9 @@ public class CadContasPagarMB implements Serializable{
 				nomeArquivo();
 				salvarArquivoFTP();
 			}
+			FacesContext fc = FacesContext.getCurrentInstance();
+	        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+	        session.removeAttribute("file");
 			RequestContext.getCurrentInstance().closeDialog(contaPagar);
 			
 		}else{
@@ -576,11 +598,13 @@ public class CadContasPagarMB implements Serializable{
 	}
 	
 	public String nomeAnexo(){
-		if (file != null) {
+		if (consultarArquivos().equalsIgnoreCase("Não existe arquivo anexado")) {
+			nomeAnexo = "Anexar";
+			return nomeAnexo;
+		}else{			
 			nomeAnexo = "Anexado";
 			return nomeAnexo;
 		}
-		return nomeAnexo = "Anexar";
 	}
 	
 	public String AdicionarNomeAnexado(){
@@ -769,6 +793,34 @@ public class CadContasPagarMB implements Serializable{
 			e.printStackTrace();
 		}
 		return operacaousuairo;
+	}
+	
+	
+	public String consultarArquivos(){
+		NomeArquivoFacade nomeArquivoFacade = new NomeArquivoFacade();
+		String nomeFile = "";
+		try {
+			if (contaPagar.getIdcontasPagar() != null) {
+				nomearquivo = nomeArquivoFacade.listar(contaPagar.getIdcontasPagar());
+				if (nomearquivo == null) {
+					nomearquivo = new Nomearquivo();
+					nomearquivo.setNomearquivo01("Não existe arquivo anexado");
+				
+				}
+				nomeFile = nomearquivo.getNomearquivo01();
+				return nomeFile;
+			}else{
+				if (file != null) {
+					nomeFile = file.getFileName();
+				}else{
+					nomeFile = "Não existe arquivo anexado";
+				}
+				return nomeFile;
+			}
+		} catch (SQLException e) {
+			mostrarMensagem(e, "Erro ao consulta o nome do arquivo", "");
+		}
+		return "";
 	}
 	
 }

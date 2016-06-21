@@ -23,7 +23,7 @@
                 <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog> 
             
-            <h2  >Editar Histórico</h2>
+            <h2  >Novo Histórico</h2>
             <br />
             <h:panelGrid style="margin-left: 1%">
             	<p:outputLabel value="Unidade" />
@@ -56,7 +56,7 @@
             	<p:outputLabel value="Parcela"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:78%; margin-top:-5%;">
-            	<p:inputText style="width:103px;text-align: right;"  value="#{historicoMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
+            	<p:inputText style="width:103px;text-align: right;" value="#{historicoMB.contasReceber.numeroParcela}"  readonly="true" disabled="true"/>
             </h:panelGrid>
             <br />
             <hr />
@@ -77,18 +77,18 @@
             </h:panelGrid>
             <br />
             <h:panelGrid style="margin-left:1%;">
-            	<p:outputLabel value="Descrição" />
+            	<p:outputLabel value="Descrição" for="descricao"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:1%;">
-            	<p:inputTextarea style="width:585px;" value="#{historicoMB.historicaCobranca.descricao}"/>
+            	<p:inputTextarea id="descricao"  style="width:585px;" class="left3" value="#{historicoMB.historicaCobranca.descricao}"/>
             </h:panelGrid>
             <br />
             <hr /> 
             <br />
-            <p:commandLink title="Confirmar"    style="margin-left: 40%;text-decoration: none" update="growl"  action="#{historicoMB.salvarEdicaoPrincipal()}" ajax="false">
+            <p:commandLink title="Confirmar"    style="margin-left: 40%;text-decoration: none"   action="#{historicoMB.salvarHitoricos()}" ajax="false">
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-            <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{historicoMB.cancelarPrincipal()}" >
+            <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{historicoMB.cancelar()}" >
             	<img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>     
              <br />  

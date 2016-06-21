@@ -50,7 +50,6 @@ public class HistoricoMB implements Serializable {
         contasReceber = (Contasreceber) session.getAttribute("contasReceber");
         cobranca = (Cobranca) session.getAttribute("cobranca");
         historicaCobranca = (Historicocobranca) session.getAttribute("historico");
-        session.removeAttribute("historico");
     	gerarListaCliente();
     	if (historicaCobranca == null) {
     		historicaCobranca = new Historicocobranca();
@@ -141,6 +140,7 @@ public class HistoricoMB implements Serializable {
         context.addMessage(null, new FacesMessage(titulo, erro));
     }
 	
+	//Chamada na tela principal
 	public String salvarHitorico(){
         CobrancaFacade cobrancaFacade = new CobrancaFacade();
         if (cobranca.getIdcobranca()==null){
@@ -152,21 +152,70 @@ public class HistoricoMB implements Serializable {
         historicaCobranca.setUsuario(usuarioLogadoMB.getUsuario());
         historicaCobranca = cobrancaFacade.salvar(historicaCobranca);
         cobranca.getHistoricocobrancaList().add(historicaCobranca);
-        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "HistÃ³rico de CobranÃ§a Salvo.");
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("historico");
+        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Histórico de Cobrança Salvo.");
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
         return "historicoCobranca";
     }
 	
+	//Chamada na tela dentro da pages
+	public String salvarHitoricos(){
+        CobrancaFacade cobrancaFacade = new CobrancaFacade();
+        if (cobranca.getIdcobranca()==null){
+            cobranca = cobrancaFacade.salvar(cobranca);
+            
+        }
+        historicaCobranca.setData(new Date());
+        historicaCobranca.setCobranca(cobranca);
+        historicaCobranca.setUsuario(usuarioLogadoMB.getUsuario());
+        historicaCobranca = cobrancaFacade.salvar(historicaCobranca);
+        cobranca.getHistoricocobrancaList().add(historicaCobranca);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("historico");
+        FacesMessage mensagem = new FacesMessage("Salvo com Sucesso! ", "Histórico de Cobrança Salvo.");
+        FacesContext.getCurrentInstance().addMessage(null, mensagem);
+        return "historicoCobrancas";
+    }
+	
+	
 	public String cancelar(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("historico");
+        return "cobrancas";
+    }
+	
+	public String cancelarPrincipal(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("historico");
         return "cobranca";
     } 
+	
+	public String salvarEdicaoPrincipal(){ 
+        HistoricoCobrancaFacade historicoCobrancaFacade = new HistoricoCobrancaFacade();
+        historicoCobrancaFacade.salvar(historicaCobranca);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("historico");
+        mensagem mensagem = new  mensagem();
+        mensagem.historico();
+        return "cobranca";
+    }
+	
 	
 	public String salvarEdicao(){ 
         HistoricoCobrancaFacade historicoCobrancaFacade = new HistoricoCobrancaFacade();
         historicoCobrancaFacade.salvar(historicaCobranca);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("historico");
         mensagem mensagem = new  mensagem();
         mensagem.historico();
-        return "cobranca";
+        return "cobrancas";
     }
 
 }

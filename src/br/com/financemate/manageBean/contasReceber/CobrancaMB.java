@@ -240,6 +240,17 @@ public class CobrancaMB implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, mensagem);
         return "";
    }
+	
+	
+	public String novoHistoricos() {
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put("contentWidth", 500);
+		FacesContext fc = FacesContext.getCurrentInstance();
+	    HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+	    session.setAttribute("contasReceber", contasReceber);
+	    session.setAttribute("cobranca", cobranca);
+		return "historicos";
+    }
 	 
 	public String salvarHitorico(){
         CobrancaFacade cobrancaFacade = new CobrancaFacade();

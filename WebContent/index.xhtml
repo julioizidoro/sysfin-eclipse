@@ -14,36 +14,30 @@
         <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
         <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-        	<p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
+        	<p:outputLabel value="Aguarde.."/>
         	<br/> 
             <img src="resources/img/ajax-carregando.gif" />
         </p:dialog>
         <p:growl id="growl" showDetail="true" sticky="false" />
-        <h:form class="login"> 
-            <div id="tudo">
-            	<img src="resources/img/loginSysfiiin.jpg" width="80%" />
-            	<p:outputLabel style="font-size:12px; margin-left:40%;font-family: 'Pacifico',cursive;" value="Financemate - Soluções para o Sucesso."/>
-            	<h:panelGrid style="margin-top:-44%; margin-left:80%;" columns="2"> 
-                    <img src="resources/img/iconeUserLogin2.png" style="width: 9%; margin-left:1%;"><tt style="font-family: 'Pacifico',cursive;">Nome do usuário</tt></img>
-                </h:panelGrid>
-                <h:panelGrid style=" margin-left:80%;"> 
-                    <p:inputText id="nome" size="27"  class="meio" value="#{usuarioLogadoMB.usuario.login}" style="font-family: 'Pacifico',cursive;" required="required" requiredMessage="Campo Obrigatorio"/>
-                </h:panelGrid>
-                <h:panelGrid style=" margin-left:80%;">
-                	<img src="resources/img/iconeCadeado.png" style="width: 10%; margin-left:1%;"><tt style="font-family: 'Pacifico',cursive;">Senha</tt></img>
-                </h:panelGrid> 
-                <h:panelGrid style=" margin-left:80%;">
-                    <p:password id="senha" size="27" style="font-family: 'Pacifico',cursive;" class="meio" value="#{usuarioLogadoMB.usuario.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
-                </h:panelGrid>
-                <h:panelGrid columns="2" style="margin-left:89.2%; margin-top:1%;">
-                	<p:commandLink title="Entra" style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" update="growl">
-                		<img src="resources/img/botaoEntra.png" width="33" height="33"/>
-            		</p:commandLink>
-            		<p:commandLink title="Alterar Senha" style="margin-left: 85%;text-decoration: none" update="growl" action="#{usuarioLogadoMB.validarTrocarSenha()}" >
+        <h:form id="login">
+            <div id="tudo">  
+            	<img src="resources/img/loginSysfin.jpg" width="100%" height="659px"/>  
+            	<h:panelGrid style=" margin-left:8%; margin-top:-12%;">  
+            		<p:outputLabel value="Nome do usuário" style="color:white"/> 
+                    <p:inputText id="nome" size="23" style="padding:2px;"  class="meio" value="#{usuarioLogadoMB.usuario.login}" required="required" requiredMessage="Campo Obrigatorio"/>
+                </h:panelGrid>   
+                <h:panelGrid style=" margin-left:28%; margin-top:-4.7%;">
+                	<p:outputLabel value="Senha" style="color:white"/>
+                    <p:password id="senha" size="23" style="padding:2px;" class="meio" value="#{usuarioLogadoMB.usuario.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
+                </h:panelGrid>  
+                <h:panelGrid columns="1" style="margin-left:46%; margin-top:-3%;"> 
+                	<p:commandLink title="Entra"   style="text-decoration: none" action="#{usuarioLogadoMB.validarUsuario()}" update="growl">
+                		<img src="resources/img/iconeEntrar.png" width="20" height="20"/>
+            		</p:commandLink> 
+            		<p:commandLink title="Alterar Senha" style="text-decoration: none" update="growl" action="#{usuarioLogadoMB.validarTrocarSenha()}" >
                 		<p:ajax event="dialogReturn" listener="#{usuarioLogadoMB.retornoDialogAlteracaoSenha}" update="growl"/>
-                		<img src="resources/img/botaoAlterar.png" width="33" height="33"/>
+                		<img src="resources/img/iconeTrocaSenha.png" width="20" height="20"/>
             		</p:commandLink>
-                
                 </h:panelGrid>
             </div>
         </h:form>

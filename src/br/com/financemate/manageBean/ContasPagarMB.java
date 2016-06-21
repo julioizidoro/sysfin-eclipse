@@ -874,7 +874,7 @@ public class ContasPagarMB implements Serializable{
 	 public String consultarArquivo(Contaspagar contaspagar){
 		 if (contaspagar!=null){
 			 Map<String, Object> options = new HashMap<String, Object>();
-			 options.put("contentWidth", 600);
+			 options.put("contentWidth", 480);
 			 options.put("closable", false);
 			 FacesContext fc = FacesContext.getCurrentInstance();
 			 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);

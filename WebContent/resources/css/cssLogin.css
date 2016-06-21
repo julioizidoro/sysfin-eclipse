@@ -1,12 +1,14 @@
 body {
-    font-size:15px;
     font-family: tahoma;
     background-color: #F8F8F8;
     color: #333;
-    
+	margin: 0px;
+	padding: 0px;
 }
 
 
-.meio{
-	font-size: 14px;
+.meio{ 
+	font-size: 16px;
+	margin: 0px;
+	padding: 0px;
 }

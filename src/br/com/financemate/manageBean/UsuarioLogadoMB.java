@@ -128,7 +128,7 @@ public class UsuarioLogadoMB implements Serializable{
     }
     
     public void validarTrocarSenha() {
-        if ((usuario.getLogin() != null) && (usuario.getSenha() == null)) {
+        if ((usuario.getLogin() != null) && (usuario.getSenha() == null) || (usuario.getLogin() == null) && (usuario.getSenha() != null)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Login Invalido."));
         } else {
             UsuarioFacade usuarioFacade = new UsuarioFacade();
@@ -228,5 +228,12 @@ public class UsuarioLogadoMB implements Serializable{
          	mensagem mensagem = new mensagem();
              mensagem.saveMessagem();
          }
+     }
+     
+     
+     public String deslogar(){
+         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();  
+         sessionMap.clear();  
+         return "index";
      }
 }

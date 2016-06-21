@@ -20,7 +20,7 @@
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
         		<br/> 
-                <img src="resources/img/ajax-carregando.gif" />
+                <img src="../../resources/img/ajax-carregando.gif" />
             </p:dialog>
             
             <br />
@@ -32,7 +32,7 @@
 			</p:commandLink>
 			<br /><br /><br />
             <p:contextMenu  style="background:white;">
-                <p:menuitem value="Visualizar"  icon=" ui-icon-pencil"   action="#{cobrancaMB.editarHistorico(cobrancaMB.historico)}"/>
+                <p:menuitem value="Visualizar"  icon=" ui-icon-pencil"   action="#{cobrancaMB.editarHistoricos(cobrancaMB.historico)}"/>
             </p:contextMenu>   
             <p:dataTable id="idHistoricoCobranca" var="historicoCobranca"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cobrancaMB.listaHistorico}" 
                           scrollRows="10"  scrollable="true" scrollHeight="80" selection="#{cobrancaMB.historico}" selectionMode="single" rowKey="#{historicoCobranca.idhistoricocobranca}"  rows="10" style="margin-bottom:20px;"> 
@@ -53,7 +53,7 @@
                 
             </p:dataTable>
             <br />
-            <p:commandLink   action="#{cobrancaMB.novoHistorico()}" style="margin-left:40%;text-decoration:none;" title="Adicionar">
+            <p:commandLink   action="#{cobrancaMB.novoHistoricos()}" style="margin-left:40%;text-decoration:none;" title="Adicionar">
 				<img src="../../resources/img/iconeplus.png"/>
 			
 			<h:panelGrid style="margin-left:45%; margin-top:-5%;">

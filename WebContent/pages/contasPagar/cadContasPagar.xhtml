@@ -67,7 +67,7 @@
                 </p:inputText>
             </h:panelGrid>
             <h:panelGrid columns="3" style="margin-left:80%; margin-top:-5.5%;">
-             	<p:commandLink  title="Anexar arquivo" style="margin-left: 3%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
+             	<p:commandLink  title="#{cadContasPagarMB.consultarArquivos()}" style="margin-left: 3%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
                     <img src="../../resources/img/icone.jpg" width="20"/>
                 </p:commandLink>
             	<p:outputLabel value="#{cadContasPagarMB.nomeAnexo()}" style="margin-left:10%; color:black;"/>
