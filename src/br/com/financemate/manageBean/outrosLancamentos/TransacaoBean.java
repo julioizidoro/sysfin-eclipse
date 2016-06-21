@@ -2,6 +2,8 @@ package br.com.financemate.manageBean.outrosLancamentos;
 
 import java.util.Date;
 
+import javax.persistence.Transient;
+
 public class TransacaoBean {
 	
 	private String id;
@@ -10,6 +12,10 @@ public class TransacaoBean {
 	private String descricao;
 	private Float valorEntrada;
 	private Float valorSaida;
+	@Transient
+	private Boolean conciliada;
+	@Transient
+	private boolean selecionado;
 	
 	
 	public String getId() {
@@ -47,6 +53,18 @@ public class TransacaoBean {
 	}
 	public void setValorSaida(Float valorSaida) {
 		this.valorSaida = valorSaida;
+	}
+	public Boolean getConciliada() {
+		return conciliada;
+	}
+	public void setConciliada(Boolean conciliada) {
+		this.conciliada = conciliada;
+	}
+	public boolean isSelecionado() {
+		return selecionado;
+	}
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
 	}
 	
 	
