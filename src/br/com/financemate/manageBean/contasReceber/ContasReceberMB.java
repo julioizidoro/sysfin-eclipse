@@ -49,7 +49,7 @@ public class ContasReceberMB implements Serializable {
     private Cliente cliente;
     private Date dataInicial;
     private Date dataFinal;
-    private String sql;
+    private String sql; 
     private List<Contasreceber> listaContasReceber;
     private Contasreceber contasReceber;
     private boolean recebidas;
@@ -1039,7 +1039,7 @@ public class ContasReceberMB implements Serializable {
 				sql = sql + " and ";
 			}
 		}else if (status.equalsIgnoreCase("Canceladas")){
-			sql = sql + " v.numeroDocumento=" + "'CANCELADA'"; 
+			sql = sql + " v.status=" + "'CANCELADA'"; 
 			if ((dataInicial!=null) && (dataFinal!=null)){
 				sql = sql + " and ";
 			}else if(dataRecebimentoInicial != null && dataRecebimentoFinal != null){
