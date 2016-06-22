@@ -25,11 +25,33 @@
             <title  >Novo Tipo de Conta</title>
             
             <br></br>
-            <h:panelGrid columns="2" style="margin-left:3%;">
+            <h:panelGrid columns="2" style="margin-left:1%;">
             	<p:outputLabel value="Descrição" for="descricao" class="left3"/>  
             	<p:inputText size="80" id="descricao"  class="left3"  value="#{cadTipoPlanoContaMB.tipoplanocontas.descricao}"/>
             </h:panelGrid>
             <br/>
+            <h:panelGrid style="margin-left:1%;" columns="3">
+             	<p:outputLabel value="Plano de Contas" for="idPlanoConta" class="left3"/>
+	            <p:selectOneMenu id="idPlanoConta" class="left3" style="width:320px;"  value="#{cadTipoPlanoContaMB.planocontas}" converter="PlanoContasConverter"
+	              					 filter="true" filterMatchMode="contains" panelStyle="width:200px">
+	                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+	                    <f:selectItems value="#{cadTipoPlanoContaMB.listarPlanoContas}" var="planoContaselecionado" itemLabel="#{planoContaselecionado.descricao}" itemValue="#{planoContaselecionado}"/>
+	                    <f:attribute name="listaPlanoConta" value="#{cadTipoPlanoContaMB.listarPlanoContas}"/>
+	                    
+	            </p:selectOneMenu> 
+	            <p:commandLink   action="#{cadTipoPlanoContaMB.adicionarPlanoConta()}" update="idPlanoContas" style="margin-left:25%;text-decoration:none;" title="Adicionar">
+					<img src="../../resources/img/iconeplus.png"/>
+				</p:commandLink>
+            </h:panelGrid>
+            <p:contextMenu  style="background:white;">
+            </p:contextMenu>   
+            <p:dataTable id="idPlanoContas" var="planoContasTipo"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadTipoPlanoContaMB.listaPlanoContaTipo}" 
+                          scrollRows="10"  scrollable="true" scrollHeight="80"   rowKey="#{planoContasTipo.idplanocontatipo}"  rows="10" style="margin-bottom:20px;"> 
+               
+                <p:column headerText="Descrição" style=" background:white; color:black; border:none; text-align:left;">
+                    <h:outputText value="#{planoContasTipo.planocontas.descricao}" /> 
+                </p:column>
+            </p:dataTable>
 			<hr />
 			<br />
             <p:commandLink title="Confirmar" style="margin-left: 40%;text-decoration: none"  action="#{cadTipoPlanoContaMB.salvar()}" >

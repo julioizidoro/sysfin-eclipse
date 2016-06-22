@@ -47,9 +47,9 @@ public class CadPlanoContaMB implements Serializable {
 		 gerarlistaTipoPlanoContas();
 		 if (planocontas == null) {
 			 planocontas = new Planocontas(); 
-		 }else{
-			 tipoPlanoContas = planocontas.getTipoplanocontas();
-		 }
+		 }//else{
+		//	 tipoPlanoContas = planocontas.get;
+		 //}
 		 
 	}
 	
@@ -110,7 +110,7 @@ public class CadPlanoContaMB implements Serializable {
 	 public String salvarPlanoContas() {
 		 PlanoContasFacade planoContasFacade = new PlanoContasFacade();
 		 try {
-			 planocontas.setTipoplanocontas(tipoPlanoContas);
+			 //planocontas.setTipoplanocontas(tipoPlanoContas);
 			 planocontas = planoContasFacade.salvar(planocontas);
 			 RequestContext.getCurrentInstance().closeDialog(planocontas);
 		 } catch (SQLException ex) {
