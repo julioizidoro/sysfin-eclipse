@@ -37,8 +37,6 @@ public class Tipoplanocontas implements Serializable {
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoplanocontas")
     private List<Cliente> clienteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoplanocontas")
-    private List<Planocontas> planocontasList;
     @Transient
     private boolean selecionado;
 
@@ -73,14 +71,7 @@ public class Tipoplanocontas implements Serializable {
         this.clienteList = clienteList;
     }
 
-    public List<Planocontas> getPlanocontasList() {
-        return planocontasList;
-    }
-
-    public void setPlanocontasList(List<Planocontas> planocontasList) {
-        this.planocontasList = planocontasList;
-    }
-
+    
     public boolean isSelecionado() {
         return selecionado;
     }

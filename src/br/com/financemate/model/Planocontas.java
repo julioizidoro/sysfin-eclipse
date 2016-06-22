@@ -48,9 +48,7 @@ public class Planocontas implements Serializable {
     private List<Contaspagar> contaspagarList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "planocontas")
     private List<Vendas> vendasList;
-    @JoinColumn(name = "tipoplanocontas_idtipoplanocontas", referencedColumnName = "idtipoplanocontas")
-    @ManyToOne(optional = false)
-    private Tipoplanocontas tipoplanocontas;
+    
     @Transient
     private boolean selecionado;
 
@@ -123,14 +121,6 @@ public class Planocontas implements Serializable {
 
     public void setVendasList(List<Vendas> vendasList) {
         this.vendasList = vendasList;
-    }
-
-    public Tipoplanocontas getTipoplanocontas() {
-        return tipoplanocontas;
-    }
-
-    public void setTipoplanocontas(Tipoplanocontas tipoplanocontas) {
-        this.tipoplanocontas = tipoplanocontas;
     }
 
     @Override

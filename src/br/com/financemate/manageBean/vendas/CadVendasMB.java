@@ -35,7 +35,6 @@ import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Emissaonota;
 import br.com.financemate.model.Formapagamento;
-import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Produto;
 import br.com.financemate.model.Vendas;
@@ -540,7 +539,11 @@ public class CadVendasMB implements Serializable {
 		 
 		vendas.setLiquidoVendas(vendas.getComissaoLiquidaTotal() - (vendas.getValorDesconto() + vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros()));
 		valorPagarReceber = vendas.getValorBruto() - (vendas.getComissaoLiquidaTotal() + vendas.getValorPagoFornecedor());
-		
+		vendas.setLiquidoReceber(vendas.getValorLiquido() - vendas.getValorPagoFornecedor());
+		FacesContext fc = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		session.setAttribute("valorPagarReceber", valorPagarReceber);
+		session.setAttribute("vendas", vendas);
 	} 
 	 
 	
