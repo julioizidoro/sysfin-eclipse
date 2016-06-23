@@ -769,6 +769,16 @@ public class CadContasPagarMB implements Serializable{
         session.setAttribute("planocontas", planoContas);
 		return "anexarArquivo";
 	}
+	
+	public String anexarArquivoPrincipal(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("contapagar", contaPagar);
+        session.setAttribute("cliente", cliente);
+        session.setAttribute("banco", banco);
+        session.setAttribute("planocontas", planoContas);
+		return "anexarArquivoPrincipal";
+	}
 
 	public String voltarCadContasPagar(){
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -779,6 +789,18 @@ public class CadContasPagarMB implements Serializable{
         session.setAttribute("banco", banco);
         session.setAttribute("planocontas", planoContas);
 		return "cadContasPagar";
+	}
+	
+	
+	public String voltarCadContasPagarPrincipal(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("contapagar", contaPagar);
+        session.setAttribute("file", file);
+        session.setAttribute("cliente", cliente);
+        session.setAttribute("banco", banco);
+        session.setAttribute("planocontas", planoContas);
+		return "cadContasPagarPrincipal";
 	}
 	
 	
@@ -822,5 +844,8 @@ public class CadContasPagarMB implements Serializable{
 		}
 		return "";
 	}
+	
+	
+	
 	
 }

@@ -25,11 +25,11 @@
             </p:dialog>
 
             <title  >Novo Pagamento</title>
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
              
 				<h:panelGrid>
 				<br></br>
-                	<p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%"/>
+                	<p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 10%;"/>
                 </h:panelGrid>
                 <h:panelGrid style="margin-left:9.5%; margin-top: -4.5%;">
                 <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadContasPagarMB.cliente}" converter="ClienteConverter"
@@ -67,7 +67,7 @@
                 </p:inputText>
             </h:panelGrid>
             <h:panelGrid columns="3" style="margin-left:80%; margin-top:-5.5%;">
-             	<p:commandLink  title="Anexar arquivo" style="margin-left: 3%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivo()}" >
+             	<p:commandLink  title="#{cadContasPagarMB.consultarArquivos()}" style="margin-left: 3%;text-decoration: none"   action="#{cadContasPagarMB.anexarArquivoPrincipal()}" >
                     <img src="resources/img/icone.jpg" width="20"/>
                 </p:commandLink>
             	<p:outputLabel value="#{cadContasPagarMB.nomeAnexo()}" style="margin-left:10%; color:black;"/>

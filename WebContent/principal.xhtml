@@ -169,13 +169,14 @@
 	<ui:insert name="corpo"> 
 	        <h:form>
 	        <br /><br />
-	                <h:panelGrid id="idReceberHoje" style="width:25%; margin-left: 18%; background-color:white; border-radius:5px;">
+	         <h:panelGrid columns="50" style=" margin-left: 18%; width:60%;"> 
+	                <h:panelGrid id="idReceberHoje" style="width:90%; background-color:white; border-radius:5px;">
 	                	<br />   
 			            <b style="margin-left:10%; font:bold; color:black; font-family: 'Pacifico',cursive;">A receber hoje</b>
 			            <br /><br /> 
 			            <h:panelGrid style="margin-left:25%;" rendered="#{calculosContasMB.habilitarDesabilitarComCompraTelaPrincipal(calculosContasMB.crVencendo)}">
-			            	<h:outputText value="R$ #{calculosContasMB.crVencendo}" style="font-size:28px; color:green; font-family: 'Pacifico',cursive;"/>
-			            	<br /> 
+			            	<h:outputText value="R$ #{calculosContasMB.crVencendo}" style="font-size:34px; color:green; font-family: 'Pacifico',cursive;"/>
+			            	
 			            </h:panelGrid> 
 			            <h:panelGrid style="margin-left:22%;" rendered="#{calculosContasMB.habilitarDesabilitarSemCompraTelaPrincipal(calculosContasMB.crVencendo)}">
 			            	<p:outputLabel value="Você não possui recebimentos hoje" style="margin-left:-5%; font-family: 'Pacifico',cursive; font-size:11px; color:black;"/>
@@ -192,15 +193,15 @@
 			            	<p:outputLabel style="font-family: 'Pacifico',cursive;" value="R$ #{calculosContasMB.totalRestante}"/>
 			            </h:panelGrid>  
 	        		</h:panelGrid>
-	        		<h:panelGrid id="idPagarHoje" style="width:25%;  margin-left: 47%; margin-top: -14.4%; background-color:white; border-radius:5px;">
+	        		<h:panelGrid id="idPagarHoje" style="width:80%;  margin-left: 1%;  background-color:white; border-radius:5px;">
 	        			<br />  
 			            <b style="margin-left:10%; font:bold; color:black; font-family: 'Pacifico',cursive;">A pagar hoje</b>
 			            <br/><br />
 			            <h:panelGrid style="margin-left:25%;" rendered="#{calculosContasMB.habilitarDesabilitarComCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
 			            	
-			            	<h:outputText value="R$ #{contasPagarMB.totalVencendo}" style=" font-size:28px; color:red; font-family: 'Pacifico',cursive;"/>
-			            	<br />
-			            </h:panelGrid> 
+			            	<h:outputText value="R$ #{contasPagarMB.totalVencendo}" style=" font-size:34px; color:red; font-family: 'Pacifico',cursive;"/>
+			            	
+			            </h:panelGrid>  
 			            <h:panelGrid style="margin-left:22%;" rendered="#{calculosContasMB.habilitarDesabilitarSemCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
 			            	<p:outputLabel value="Você não possui pagamentos hoje" style="margin-left:-5%; font-size:11px; color:black; font-family: 'Pacifico',cursive;"/>
 			            	<p:commandLink ajax="false" action="#{contasPagarMB.novaContaTelaPrincipal()}" style="color:black;">
@@ -216,6 +217,7 @@
 			            	<p:outputLabel style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalRestante}"/>
 			            </h:panelGrid>
 	        		</h:panelGrid>
+	        		</h:panelGrid>
 	        		<br />
 	                <h:panelGrid columns="1" columnClasses="left,right" style="width:54%; margin-left: 18%; background-color:white; position:static; border-radius:5px;">
 	    				<br /> 
@@ -223,20 +225,22 @@
 	    				<br />
 					</h:panelGrid>
 					<br />
-					<h:panelGrid  style="width:25%; text-align:right; margin-left: 18%; background-color:white; border-radius:5px;">
-	                <br/>
-			            <b style="margin-right:20%; font-family: 'Pacifico',cursive; font-size:14px; color:black;">Todos os recebimentos em atraso</b>
-			            <br /><br />
-			            <h:outputText value="R$ #{calculosContasMB.crVencidas}" style="color:green; font-family: 'Pacifico',cursive; margin-left:10%; font-size:28px;"/>
-			            <br /><br /> 
-	        		</h:panelGrid> 
-	        		<h:panelGrid  style="width:25%; text-align:right; margin-left: 47%; margin-top:-11.5%; background-color:white; border-radius:5px;">
-	        		<br/>
-			            <b style="margin-right:20%; font-size:14px; font-family: 'Pacifico',cursive; color:black;">Todos os pagamentos em atraso</b>
-			            <br /><br />
-			            <h:outputText value="R$ #{contasPagarMB.totalVencidas}" style="margin-left:10%; font-family: 'Pacifico',cursive; font-size:28px; color:red;"/>
-			            <br /><br />
-	        		</h:panelGrid> 
+					<h:panelGrid columns="50" style=" margin-left: 18%; width:60%;">
+						<h:panelGrid  style="width:85%; text-align:right; background-color:white; border-radius:5px;">
+		                	<br/>
+				            <b style="margin-right:20%; font-family: 'Pacifico',cursive; font-size:14px; color:black;">Todos os recebimentos em atraso</b>
+				            <br /><br />
+				            <h:outputText value="R$ #{calculosContasMB.crVencidas}" style="color:green; font-family: 'Pacifico',cursive; margin-left:10%; font-size:34px;"/>
+				            <br /><br /> 
+		        		</h:panelGrid> 
+		        		<h:panelGrid  style="width:85%; text-align:right; margin-left:-5%; background-color:white; border-radius:5px;">
+		        			<br/>
+				            <b style="margin-right:20%; font-size:14px; font-family: 'Pacifico',cursive; color:black;">Todos os pagamentos em atraso</b>
+				            <br /><br />
+				            <h:outputText value="R$ #{contasPagarMB.totalVencidas}" style="margin-left:10%; font-family: 'Pacifico',cursive; font-size:34px; color:red;"/>
+				            <br /><br />
+		        		</h:panelGrid>
+		        	</h:panelGrid> 
 					<br />
 					<h:panelGrid columns="1" columnClasses="left,right" style="width:54%; height: 200px; margin-left: 18%; background-color:white; border-radius:5px;">
 						<br />
