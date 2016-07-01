@@ -14,22 +14,22 @@
         <br></br>
         
         <div class="menu" style="position: fixed !important;z-index: 9999;">
-        
+        	<br/>
         	<img src="../../resources/img/iconeUser2.png" style="width: 2%; margin-left:1%;"/>
-        	<h:outputText value="Bem Vindo" style="font-size:16px; margin-left:0.5%;" />,
+        	<h:outputText value="BEM VINDO, " style="font-size:16px; margin-left:0.5%;" />
         	 <h:outputText style="font-size:16px;" value="#{usuarioLogadoMB.usuario.nome}" />
-        	<tt style="margin-left: 35%; font-size: 32px; font-family: 'Pacifico',cursive;">SysFin</tt>
-        	<p:commandLink  action="#" style="margin-left:30%; text-decoration:none;" title="Adicionar">
+        	<tt style="margin-left: 35%; font-size: 32px; font-family:Trebuchet MS;">SYSFIN</tt>
+        	<p:commandLink  action="#" style="margin-left:25%; text-decoration:none;" title="Adicionar">
                     <img src="../../resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.4%;"/> 
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
-            <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style="margin-left:5%; text-decoration:none;" title="Sair">
+            <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style="margin-left:2%; text-decoration:none;" title="Sair">
                     <img src="../../resources/img/iconeDeslogar.png" border="none" style="text-decoration:none;margin-bottom:-0.5%;"/>
             </p:commandLink>
             <br/><br />
         </div> 
         <br />
-        <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:1.9%;">
+        <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:2.4%;">
         	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;margin-left:1%;">
            		<img src="../../resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
         		<h:outputText value="Visão Geral" style="font-size:15px; margin-left:5%;"/>
@@ -95,6 +95,19 @@
 	            	</p:submenu>
             	</p:panelMenu>
             </h:panelGrid>
+            <h:panelGrid style="margin-left:-2%;"> 
+        	 	<img src="../../resources/img/iconeRelatoriosSysfin.png" style="width: 14%;"/> 
+        	</h:panelGrid>
+        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
+	            <p:panelMenu>
+		            	<p:submenu label="Relatórios" style="font-size:15px;margin-left:3%; font-family: 'Pacifico',cursive;">
+		                    <p:menuitem value="Contas a Pagar" action="#{contasPagarMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
+		                    <p:menuitem value="Contas a Receber" action="#{contasReceberMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
+		                    <p:menuitem value="Outros Lançamentos" action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
+		                    <p:menuitem value="Vendas" action="#{vendasMB.novaImpressao()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
+		            	</p:submenu> 
+	    		</p:panelMenu>
+    		</h:panelGrid>
     		<h:panelGrid style="margin-left:-2%;"> 
         	 	<img src="../../resources/img/iconeCobrancaSysfin.png" style="width: 14%;"/> 
         	</h:panelGrid>

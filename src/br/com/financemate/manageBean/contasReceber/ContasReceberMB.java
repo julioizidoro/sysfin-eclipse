@@ -25,6 +25,7 @@ import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.CobrancaParcelasFacade;
 import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.facade.OutrosLancamentosFacade;
 import br.com.financemate.manageBean.CalculosContasMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
@@ -32,6 +33,7 @@ import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Cobrancaparcelas;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.model.Vendas;
 import br.com.financemate.util.Formatacao;
 
@@ -1113,6 +1115,26 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 public void desfazerRecebimento(Contasreceber contasreceber){
+		 OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
+		 Outroslancamentos outroslancamentos = new Outroslancamentos();
+		 outroslancamentos.setBanco(contasReceber.getBanco());
+		 outroslancamentos.setCliente(contasreceber.getCliente());
+		 outroslancamentos.setValorSaida(contasreceber.getValorPago());
+		 outroslancamentos.setValorEntrada(0f);
+		 outroslancamentos.setPlanocontas(contasreceber.getPlanocontas());
+		 outroslancamentos.setDataVencimento(contasreceber.getDataVencimento());
+		 outroslancamentos.setDataCompensacao(new Date());
+		 outroslancamentos.setUsuario(contasreceber.getUsuario());
+		 outroslancamentos.setIdcontasreceber(contasreceber.getIdcontasReceber());
+		 outroslancamentos.setTipoDocumento(contasreceber.getTipodocumento());
+		 outroslancamentos.setDataRegistro(new Date());
+		 outroslancamentos.setDescricao("Desfazendo recebimento do cliente: " + contasreceber.getNomeCliente() + " da parcela:" + contasreceber.getNumeroParcela());
+		 try {
+			outroslancamentos = outrosLancamentosFacade.salvar(outroslancamentos);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 float valorPago = contasreceber.getValorPago();
 		 contasreceber.setDataPagamento(null);
 		 contasreceber.setDesagio(0f);

@@ -417,6 +417,13 @@ public class OutrosLancamentosMB implements Serializable {
     
     public void retornoDialogNovo(SelectEvent event) {
         Outroslancamentos outroslancamentos = (Outroslancamentos) event.getObject();
+        if (outroslancamentos.getIdoutroslancamentos() != null) {
+			mensagem mensagem = new mensagem();
+			mensagem.saveMessagem();
+		}else{
+			mensagem mensagem = new mensagem();
+			mensagem.cancelado();
+		}
         gerarPesquisa();
     }
     

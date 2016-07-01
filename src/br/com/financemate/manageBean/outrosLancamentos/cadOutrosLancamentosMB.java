@@ -307,7 +307,7 @@ public class cadOutrosLancamentosMB implements Serializable {
 	}
 	
 	public String cancelar(){
-        RequestContext.getCurrentInstance().closeDialog(null);
+        RequestContext.getCurrentInstance().closeDialog(outrosLancamentos);
         return null;
     }
 	

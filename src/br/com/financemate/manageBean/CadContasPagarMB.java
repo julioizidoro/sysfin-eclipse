@@ -568,7 +568,9 @@ public class CadContasPagarMB implements Serializable{
 		if (contaPagar.getFormaPagamento() == null) {
 			mensagem = mensagem + "Forma de Pagamento não selecionada \r\n";
 		}
-		
+		if (contaPagar.getNumeroDocumento() == "") {
+			mensagem = mensagem + "Número de documento não informado \r\n";
+		}
 		
 		
 		

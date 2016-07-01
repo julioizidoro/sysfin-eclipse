@@ -31,6 +31,8 @@
 				<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
             </p:commandLink> 
             <br /><br /> 
+            <h2 style="margin-left:50%;">Consulta Contas a Pagar</h2>
+             <hr style="margin-left:17%; width:80%;"/>  
                     <p:contextMenu for="idTabelaContaPagar" style="background:white;">
                         <p:menuitem value="Autorizar"  icon=" ui-icon-check" style=" font-size:16px;" action="#{contasPagarMB.autorizarPagamento(contasPagarMB.contasPagar)}" actionListener="#{contasPagarMB.imagemAutorizadas(contasPagarMB.contasPagar)}" update=" growl, idTabelaContaPagar"/>
                         <p:menuitem value="Cancelar"   icon="ui-icon-cancel" style=" font-size:16px;"  actionListener="#{contasPagarMB.cancelar(contasPagarMB.contasPagar)}" update="growl, idTabelaContaPagar"/>

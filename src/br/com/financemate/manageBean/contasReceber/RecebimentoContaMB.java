@@ -236,24 +236,31 @@ public class RecebimentoContaMB implements  Serializable{
     }
     
     public String salvar(){
-    	FacesContext fc = FacesContext.getCurrentInstance();
-    	HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-    	if (valorParcial > 0f) {
-    		session.removeAttribute("contareceber");
-			RequestContext.getCurrentInstance().closeDialog(contasReceber);
-			return "";
+    	String mensagens = validarDadosRecebimentoTotal();
+    	if (mensagens == "") {
+			FacesContext fc = FacesContext.getCurrentInstance();
+		    	HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		    	if (valorParcial > 0f) {
+		    		session.removeAttribute("contareceber");
+					RequestContext.getCurrentInstance().closeDialog(contasReceber);
+					return "";
+				}else{
+			        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+			        contasReceber.setBanco(banco);
+			        contasReceber.setCliente(cliente);
+			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+			        contasReceber.setValorPago(contasReceber.getValorParcela());
+			        contasReceber = contasReceberFacade.salvar(contasReceber);
+			        lancaOutrosLancamentos(contasReceber);
+			        session.removeAttribute("contareceber");
+			        RequestContext.getCurrentInstance().closeDialog(contasReceber);
+			        return "";
+				}
 		}else{
-	        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-	        contasReceber.setBanco(banco);
-	        contasReceber.setCliente(cliente);
-	        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-	        contasReceber.setValorPago(contasReceber.getValorParcela());
-	        contasReceber = contasReceberFacade.salvar(contasReceber);
-	        lancaOutrosLancamentos(contasReceber);
-	        session.removeAttribute("contareceber");
-	        RequestContext.getCurrentInstance().closeDialog(contasReceber);
-	        return "";
+			 FacesContext context = FacesContext.getCurrentInstance();
+			 context.addMessage(null, new FacesMessage(mensagens, ""));
 		}
+	    return "";	
     }
     
     public String cancelar(){
@@ -288,39 +295,46 @@ public class RecebimentoContaMB implements  Serializable{
     
     public String salvarRecebimentoParcial(){
         ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-        if (valorParcial <= contasReceber.getValorParcela()) {
-	        contasReceber.setBanco(banco); 
-	        contasReceber.setCliente(cliente);
-	        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-	        contasReceber.setValorPago(contasReceber.getValorPago() + valorParcial);
-	        contasReceber.setValorParcela(contasReceber.getValorParcela() - valorParcial);
-	        contasReceber = contasReceberFacade.salvar(contasReceber);
-        }else{
-        	mensagem mensagem = new mensagem();
-        	mensagem.RecebimentoParcialAcimaValor();
-        	return "";
-        }
-        lancaOutrosLancamentosParcial(contasReceber);
-        listaRecebimentoParial.add(contasReceber);
-        for (int i = 0; i < listaRecebimentoParial.size(); i++) {
-			Contasreceber conta = new Contasreceber();
-			conta.setBanco(listaRecebimentoParial.get(i).getBanco());
-			conta.setCliente(listaRecebimentoParial.get(i).getCliente());
-			conta.setUsuario(listaRecebimentoParial.get(i).getUsuario());
-			conta.setValorPago(listaRecebimentoParial.get(i).getValorPago());
-			conta.setDataPagamento(dataRecebimentoParcial);
-			conta.setNumeroDocumento(listaRecebimentoParial.get(i).getNumeroDocumento());
-			conta.setPlanocontas(listaRecebimentoParial.get(i).getPlanocontas());
-			conta.setVenda(listaRecebimentoParial.get(i).getVenda());
-			conta.setJuros(listaRecebimentoParial.get(i).getJuros());
-			conta.setDesagio(listaRecebimentoParial.get(i).getDesagio());
-			conta.setDataVencimento(listaRecebimentoParial.get(i).getDataVencimento());
-			conta.setNomeCliente(listaRecebimentoParial.get(i).getNomeCliente());
-			conta.setTipodocumento(listaRecebimentoParial.get(i).getTipodocumento());
-			conta = contasReceberFacade.salvar(conta);
+        String mensagens = validarDadosRecebimentoParcial();
+        if (mensagens == "") {
+	        if (valorParcial <= contasReceber.getValorParcela()) {
+		        contasReceber.setBanco(banco); 
+		        contasReceber.setCliente(cliente);
+		        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+		        contasReceber.setValorPago(contasReceber.getValorPago() + valorParcial);
+		        contasReceber.setValorParcela(contasReceber.getValorParcela() - valorParcial);
+		        contasReceber = contasReceberFacade.salvar(contasReceber);
+	        }else{
+	        	mensagem mensagem = new mensagem();
+	        	mensagem.RecebimentoParcialAcimaValor();
+	        	return "";
+	        }
+	        lancaOutrosLancamentosParcial(contasReceber);
+	        listaRecebimentoParial.add(contasReceber);
+	        for (int i = 0; i < listaRecebimentoParial.size(); i++) {
+				Contasreceber conta = new Contasreceber();
+				conta.setBanco(listaRecebimentoParial.get(i).getBanco());
+				conta.setCliente(listaRecebimentoParial.get(i).getCliente());
+				conta.setUsuario(listaRecebimentoParial.get(i).getUsuario());
+				conta.setValorPago(listaRecebimentoParial.get(i).getValorPago());
+				conta.setDataPagamento(dataRecebimentoParcial);
+				conta.setNumeroDocumento(listaRecebimentoParial.get(i).getNumeroDocumento());
+				conta.setPlanocontas(listaRecebimentoParial.get(i).getPlanocontas());
+				conta.setVenda(listaRecebimentoParial.get(i).getVenda());
+				conta.setJuros(listaRecebimentoParial.get(i).getJuros());
+				conta.setDesagio(listaRecebimentoParial.get(i).getDesagio());
+				conta.setDataVencimento(listaRecebimentoParial.get(i).getDataVencimento());
+				conta.setNomeCliente(listaRecebimentoParial.get(i).getNomeCliente());
+				conta.setTipodocumento(listaRecebimentoParial.get(i).getTipodocumento());
+				conta = contasReceberFacade.salvar(conta);
+			}
+	        mensagem mensagem = new mensagem();
+	        mensagem.recebidoParcial();
+	    	
+		}else{
+			 FacesContext context = FacesContext.getCurrentInstance();
+			 context.addMessage(null, new FacesMessage(mensagens, ""));
 		}
-        mensagem mensagem = new mensagem();
-        mensagem.recebidoParcial();
         return "";
     }
     
@@ -398,6 +412,24 @@ public class RecebimentoContaMB implements  Serializable{
 	           mostrarMensagem(ex, "Erro ao salvar liberação", "Erro");
 	       }
 	       
+    }
+    
+    
+    public String validarDadosRecebimentoParcial(){
+    	String msg = "";
+    	if (dataRecebimentoParcial == null) {
+			msg = msg + "Data de recebimento não informado";
+		}
+    	return msg;
+    }
+    
+    
+    public String validarDadosRecebimentoTotal(){
+    	String msg = "";
+    	if (contasReceber.getDataPagamento() == null) {
+			msg = msg + " Data de recebimento não informado";
+		}
+    	return msg;
     }
     
     

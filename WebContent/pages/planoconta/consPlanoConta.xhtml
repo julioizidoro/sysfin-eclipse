@@ -23,7 +23,8 @@
 				<p:ajax event="dialogReturn" listener="#{planoContaMB.retornoDialog}" update="growl, idTabelaPlanoConta"/>
             </p:commandLink> 
             <br /><br /> 
-           
+           	<h2 style="margin-left:50%;">Consulta Plano de conta</h2>
+             <hr style="margin-left:17%; width:80%;"/>  
                     <p:contextMenu for="idTabelaPlanoConta" style="background:white;">
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"   action="#{planoContaMB.editar(planoContaMB.planocontas)}" update="idTabelaPlanoConta"/>
                     </p:contextMenu>  

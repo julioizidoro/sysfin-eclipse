@@ -14,7 +14,9 @@
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{tipoPlanoContaMB.retornoDialogNovo}" update="growl, idTabelaTipoPlanoConta"/>
             </p:commandLink>
-            <br /><br /> 
+            <br /><br />
+            <h2 style="margin-left:50%;">Consulta Tipo de plano de contas</h2>
+             <hr style="margin-left:17%; width:80%;"/>  
                     <p:contextMenu for="idTabelaTipoPlanoConta" style="background:white;">
                         <p:menuitem value="Editar"  icon=" ui-icon-pencil"  action="#{tipoPlanoContaMB.editar(tipoPlanoContaMB.tipoplanocontas)}" update="idTabelaTipoPlanoConta" /> 
                     </p:contextMenu> 

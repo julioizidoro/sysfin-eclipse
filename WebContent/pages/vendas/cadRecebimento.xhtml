@@ -53,6 +53,7 @@
              <br />
              
               <p:contextMenu for="idHistoricoRecebimento" style="background:white;" ajax="onclick">  
+                   <p:menuitem value="Editar"   icon="ui-icon-trash" action="#{cadVendasMB.editarFormaPagamento(cadVendasMB.formapagamento)}"/>
                    <p:menuitem value="Excluir"   icon=" ui-icon-trash"  update="idHistoricoRecebimento, saldorestante" action="#{cadVendasMB.excluir()}"/>   
               </p:contextMenu> 
               <p:dataTable id="idHistoricoRecebimento" var="recebimento"  rowStyleClass="tabela" class="tabelaselecionar" value="#{cadVendasMB.listaFormaPagamento}" 

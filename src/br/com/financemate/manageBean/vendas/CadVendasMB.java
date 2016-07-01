@@ -77,8 +77,12 @@ public class CadVendasMB implements Serializable {
 		vendas = (Vendas) session.getAttribute("vendas");
 		cliente = (Cliente) session.getAttribute("cliente");
 		produto = (Produto) session.getAttribute("produto");
+		formapagamento = (Formapagamento) session.getAttribute("formapagamento");
 		listaFormaPagamento = (List<Formapagamento>) session.getAttribute("listaFormaPagamento");
 		valorPagarReceber = (Float) session.getAttribute("valorPagarReceber");
+		saldoRestante = (Float) session.getAttribute("saldoRestante");
+		session.removeAttribute("formapagamento");
+		session.removeAttribute("saldoRestante");
 		gerarListaCliente(); 
 		if (vendas == null) {
 			vendas = new Vendas();
@@ -101,12 +105,14 @@ public class CadVendasMB implements Serializable {
 		}
 		if (formapagamento == null) {
 			formapagamento = new Formapagamento();
+		}else{
+			TipoDocumento = formapagamento.getTipoDocumento();
 		}
 		gerarListaPlanoContas();
 	}
 	
 	
-	
+	 
 	
 	public List<Formapagamento> getListaSelecionadosFormaPagamentos() {
 		return listaSelecionadosFormaPagamentos;
@@ -480,6 +486,7 @@ public class CadVendasMB implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
+        session.setAttribute("saldoRestante", saldoRestante);
 		return "lancaFormaPagamento";
 	}
 	
@@ -513,10 +520,17 @@ public class CadVendasMB implements Serializable {
 			vendas.setValorJuros(0f);
 		}
 		vendas.setValorLiquido((vendas.getValorBruto() - vendas.getValorDesconto()) + vendas.getValorJuros());
-		valorPagarReceber = vendas.getValorBruto();
-	}
-	
-	
+		vendas.setLiquidoReceber(vendas.getValorLiquido());
+		if (vendas.getComissaoLiquidaTotal() == null) {
+			vendas.setComissaoLiquidaTotal(0f);
+		}
+		if (vendas.getValorPagoFornecedor() == null) {
+			vendas.setValorPagoFornecedor(0f);
+		}
+		valorPagarReceber = vendas.getValorBruto() - (vendas.getComissaoLiquidaTotal() + vendas.getValorPagoFornecedor()); 
+	} 
+	  	
+	 
 	public void calculoValoresBackOffice(){
 		if (vendas.getValorBruto() == null) {
 			vendas.setValorBruto(0f);
@@ -535,7 +549,7 @@ public class CadVendasMB implements Serializable {
 		}
 		if (vendas.getDespesasFinanceiras() == null) {
 			vendas.setDespesasFinanceiras(0f);
-		}
+		} 
 		 
 		vendas.setLiquidoVendas(vendas.getComissaoLiquidaTotal() - (vendas.getValorDesconto() + vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros()));
 		valorPagarReceber = vendas.getValorBruto() - (vendas.getComissaoLiquidaTotal() + vendas.getValorPagoFornecedor());
@@ -642,13 +656,13 @@ public class CadVendasMB implements Serializable {
 		for (int i = 0; i < listaFormaPagamento.size(); i++) {
 			valorTotalForma = valorTotalForma + listaFormaPagamento.get(i).getValor();
 		}
-		if (vendas.getValorLiquido() == null) {
-			saldoRestante = 0 - valorTotalForma; 
+		if (vendas.getLiquidoReceber() == null) {
+			saldoRestante = valorTotalForma - 0; 
 		}else{
-			saldoRestante = vendas.getValorLiquido() - valorTotalForma;
+			saldoRestante = vendas.getLiquidoReceber() - valorTotalForma;
 		}
 		return saldoRestante;
-	}
+	} 
 	
 	public void salvarVenda(){
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -785,26 +799,54 @@ public class CadVendasMB implements Serializable {
 		VendasFacade vendasFacade = new VendasFacade();
 		Vendas nVenda;
 		try {
-			if (vendas.getIdvendas() == null) {
-				nVenda = vendasFacade.consultar(1);
-			}else{
-				nVenda = vendas;
-			}
-			if (!TipoDocumento.equalsIgnoreCase("sn")) {
-				if (formapagamento.getDataVencimento() != null) {
-					formapagamento.setTipoDocumento(TipoDocumento);
-					formapagamento.setVendas(nVenda);
-					formapagamento = formaPagamentoFacade.salvar(formapagamento);
-					gerarListaFormaPagamento();
-					return "cadRecebimento";
+			if (saldoRestante >= formapagamento.getValor()) {
+				if (vendas.getIdvendas() == null) {
+					nVenda = vendasFacade.consultar(1);
+				}else{
+					nVenda = vendas;
+				}
+				if (!TipoDocumento.equalsIgnoreCase("sn")) {
+					if (TipoDocumento.equalsIgnoreCase("Boleto")) {
+						String mensagens = validaDadosDocumentoBoleto();
+						if (mensagens == "") {
+						if (formapagamento.getDataVencimento() != null) {
+								formapagamento.setTipoDocumento(TipoDocumento);
+								formapagamento.setVendas(nVenda);
+								formapagamento = formaPagamentoFacade.salvar(formapagamento);
+								gerarListaFormaPagamento();
+								return "cadRecebimento";
+							}else{
+								mensagem mensagem = new mensagem();
+								mensagem.dataNaoFormaPagamento();
+								return "";
+							}
+						}else{
+							FacesContext context = FacesContext.getCurrentInstance();
+					        context.addMessage(null, new FacesMessage(mensagens, ""));
+						}
+							
+					}else{
+						if (formapagamento.getDataVencimento() != null) {
+							formapagamento.setTipoDocumento(TipoDocumento);
+							formapagamento.setVendas(nVenda);
+							formapagamento = formaPagamentoFacade.salvar(formapagamento);
+							gerarListaFormaPagamento();
+							return "cadRecebimento";
+						}else{
+							mensagem mensagem = new mensagem();
+							mensagem.dataNaoFormaPagamento();
+							return "";
+						}
+					}
+						
 				}else{
 					mensagem mensagem = new mensagem();
-					mensagem.dataNaoFormaPagamento();
-					return "";
+					mensagem.tipoDocumentoNaoFormaPagamento();
 				}
+				
 			}else{
 				mensagem mensagem = new mensagem();
-				mensagem.tipoDocumentoNaoFormaPagamento();
+				mensagem.valorSuperiorAoRestante();
 			}
 			
 		} catch (SQLException ex) {
@@ -812,6 +854,47 @@ public class CadVendasMB implements Serializable {
 			mostrarMensagem(ex, "Erro ao salvar uma forma de pagamento:", "Erro");
 		}
 		return "";
+	}
+	
+	public String validaDadosDocumentoBoleto(){
+		String msg = "";
+		if (formapagamento.getCpf() == "") {
+			msg = msg + "Cpf não informado \r \n";
+		}
+		
+		if (formapagamento.getTipoLogradouro() == "") {
+			msg = msg + " Tipo Logradouro não informado \r \n";
+		}
+		
+		if (formapagamento.getLogradouro() == "") {
+			msg = msg + " Logradouro não informado \r \n";
+		}
+		
+		if (formapagamento.getCep() == "") {
+			msg = msg + " Cep não informado \r \n";
+		}
+		
+		if (formapagamento.getNumero() == "") {
+			msg = msg + " Número do endereço não informado \r \n";
+		}
+		
+		if (formapagamento.getBairro() == "") {
+			msg = msg + " Bairro não informado \r \n";
+		}
+		
+		if (formapagamento.getCidade() == "") {
+			msg = msg + " Cidade não informado \r \n";
+		}
+		
+		if (formapagamento.getComplemento() == "") {
+			msg = msg + " Complemento não informado";
+		}
+		
+		if (formapagamento.getEstado() == "") {
+			msg = msg + " Estado não informado";
+		}
+		
+		return msg;
 	}
 	
 	public String voltarRecebimento(){
@@ -894,6 +977,12 @@ public class CadVendasMB implements Serializable {
 		return "gerarParcelas";
 	}
 	
-	
+	public String editarFormaPagamento(Formapagamento formapagamento){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
+        session.setAttribute("formapagamento", formapagamento);
+		return "lancaFormaPagamento";
+	}
 
 }

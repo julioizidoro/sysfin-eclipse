@@ -163,7 +163,7 @@
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="67" y="3" width="109" height="15" uuid="315b305d-476b-41fd-9c5d-af8c628b570f"/>
+				<reportElement style="Column header" x="59" y="3" width="109" height="15" uuid="315b305d-476b-41fd-9c5d-af8c628b570f"/>
 				<text><![CDATA[Plano de Contas]]></text>
 			</staticText>
 			<staticText>
@@ -171,7 +171,7 @@
 				<text><![CDATA[ Entradas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="220" y="3" width="70" height="15" uuid="75035416-8f5c-4205-a2a4-beb512f1a981"/>
+				<reportElement style="Column header" x="183" y="3" width="70" height="15" uuid="75035416-8f5c-4205-a2a4-beb512f1a981"/>
 				<text><![CDATA[Descrição]]></text>
 			</staticText>
 			<staticText>
@@ -185,9 +185,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="24" uuid="ee86d585-c7cb-4176-b6d0-71932d13f089"/>
+				<reportElement x="0" y="0" width="555" height="38" uuid="ee86d585-c7cb-4176-b6d0-71932d13f089"/>
 			</rectangle>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement style="Detail" x="3" y="2" width="56" height="15" uuid="4167ced3-989a-461d-94be-9bb6e2543f83"/>
@@ -197,7 +197,7 @@
 				<textFieldExpression><![CDATA[$F{dataCompensacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="66" y="2" width="148" height="22" uuid="e0df543e-f9a3-4983-8b5f-111cc992c08b"/>
+				<reportElement style="Detail" x="59" y="2" width="121" height="22" uuid="e0df543e-f9a3-4983-8b5f-111cc992c08b"/>
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
@@ -211,7 +211,7 @@
 				<textFieldExpression><![CDATA[$F{valorEntrada}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement style="Detail" x="219" y="2" width="122" height="22" uuid="292c73a8-45fe-48d9-b46b-e85bf4b09d50"/>
+				<reportElement style="Detail" x="183" y="2" width="159" height="36" uuid="292c73a8-45fe-48d9-b46b-e85bf4b09d50"/>
 				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>

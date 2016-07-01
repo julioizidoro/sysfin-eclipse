@@ -25,7 +25,18 @@
             <title  >Novo Banco</title>
             
             <br></br>
-            <h:panelGrid columns="2" style="margin-left:11%;">
+            
+            <h:panelGrid columns="2"  style="margin-left: 1%;">
+                <p:outputLabel value="Unidade" for="cliente"  class="left3"/>
+                <p:selectOneMenu  id="cliente"  style="width: 200px;margin-left: 2%"  value="#{cadBancoMB.cliente}" converter="ClienteConverter"
+                             filter="true" filterMatchMode="contains" panelStyle="width:180px">
+                    <f:selectItem  itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems  value="#{cadBancoMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
+                    <f:attribute name="listaCliente" value="#{cadBancoMB.listaCliente}"/>
+                </p:selectOneMenu> 
+            </h:panelGrid> 
+            <br/>
+            <h:panelGrid columns="2" style="margin-left:1%;">
 	            <p:outputLabel value="Nome" for="nome" />
 	            <p:inputText id="nome" size="45" value="#{cadBancoMB.banco.nome}"/>
 	        </h:panelGrid>
@@ -34,15 +45,15 @@
                 <p:inputText id="numero"  style="text-align: right;" value="#{cadBancoMB.banco.numeroBanco}"/>
             </h:panelGrid>
 			<br />
-        	<h:panelGrid columns="2" style="margin-left:7%;">
+        	<h:panelGrid columns="2" style="margin-left:1%;">
                 <p:outputLabel value="Nº Agencia" for="nAgencia"/>
                 <p:inputText id="nAgencia" size="7" style="text-align: right;" value="#{cadBancoMB.banco.agencia}"/>
             </h:panelGrid> 
-            <h:panelGrid columns="2" style="margin-left:30%; margin-top:-5.3%;">  
+            <h:panelGrid columns="2" style="margin-left:27%; margin-top:-5.3%;">  
                 <p:outputLabel value="Nº Conta" for="nConta"/>
                 <p:inputText id="nConta" size="10" style="text-align: right;" value="#{cadBancoMB.banco.conta}"/>
             </h:panelGrid> 
-            <h:panelGrid columns="2" style="margin-left:55%; margin-top:-5.3%;">
+            <h:panelGrid columns="2" style="margin-left:53%; margin-top:-5.3%;">
                 <p:outputLabel value="Chave" for="chave"/>
                 <p:inputText id="chave"  size="10" value="#{cadBancoMB.banco.cahve}"/>
             </h:panelGrid>

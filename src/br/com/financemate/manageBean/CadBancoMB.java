@@ -2,6 +2,8 @@ package br.com.financemate.manageBean;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +36,7 @@ public class CadBancoMB implements Serializable {
     private Banco banco;
     private int idCliente;
     private Cliente cliente;
+    private List<Cliente> listaCliente;
 	
 	@PostConstruct
 	public void init(){
@@ -41,23 +44,27 @@ public class CadBancoMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         banco = (Banco) session.getAttribute("banco");
         session.removeAttribute("banco");
+        gerarListaCliente();
         if (banco == null) {
         	banco = new Banco();
-            idCliente =  (int) session.getAttribute("idcliente");
-            ClienteFacade clienteFacade = new  ClienteFacade();
-            try {
-            	cliente =  clienteFacade.consultar(idCliente);
-            	banco.setCliente(cliente);
-	            session.removeAttribute("idcliente");
-            } catch (SQLException ex) {
-				 Logger.getLogger(CadBancoMB.class.getName()).log(Level.SEVERE, null, ex);
-				 mostrarMensagem(ex, "Erro ao cadastrar banco", "Erro");
-            }
-            
+        }else{
+        	cliente = banco.getCliente();
         }
 	}
 	
 	
+
+	public List<Cliente> getListaCliente() {
+		return listaCliente;
+	}
+
+
+
+	public void setListaCliente(List<Cliente> listaCliente) {
+		this.listaCliente = listaCliente;
+	}
+
+
 
 	public Cliente getCliente() {
 		return cliente;
@@ -91,7 +98,7 @@ public class CadBancoMB implements Serializable {
 		this.usuarioLogadoMB = usuarioLogadoMB;
 	}
 
-	public Banco getBanco() {
+	public Banco getBanco() { 
 		return banco;
 	}
 
@@ -108,6 +115,7 @@ public class CadBancoMB implements Serializable {
 	 public void salvar() {
 		 BancoFacade bancoFacade = new BancoFacade();
 		 try {
+			 banco.setCliente(cliente);
 			 banco = bancoFacade.salvar(banco);
 			 RequestContext.getCurrentInstance().closeDialog(banco);
 		 } catch (SQLException ex) {
@@ -122,5 +130,18 @@ public class CadBancoMB implements Serializable {
 		 return "";
 	 }
 	
+	 
+	 public void gerarListaCliente(){
+		 ClienteFacade clienteFacade = new ClienteFacade();
+		 try {
+			listaCliente = clienteFacade.listar("");
+			if (listaCliente == null) {
+				listaCliente = new ArrayList<Cliente>();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
 
 }

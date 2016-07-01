@@ -8,7 +8,7 @@
 <ui:composition template="/pages/templates/default.xhtml">
 	<ui:define name="corpo">
 	<h:form id="frmConsultaOutrosLancamentos"> 
-	<br /><br /><br />
+	<br /><br /><br /><br />
 		<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
 			<br/>  
 			
@@ -29,7 +29,7 @@
 	          			<p:ajax event="change" listener="#{outrosLancamentosMB.nomeComboConta()}" update="idconta"/>
 	          </p:selectOneMenu>  
            </h:panelGrid>  
-           <h:panelGrid columns="2"  style="margin-left: 38.5%; margin-top:-4.5%;">   
+           <h:panelGrid columns="2"  style="margin-left: 38.5%; margin-top:-4.2%;">   
            		<p:outputLabel value="Peridodo" class="left3" style="margin-left:90%;"/>
            		<br />	
            		<p:inputMask mask="99/99/9999" id="dataIni" style="color:gray;"  size="15" maxlength="15" value="#{outrosLancamentosMB.dataInicial}"  class="tabelaRecebimento"  placeholder="Data Inicial" >
@@ -43,7 +43,7 @@
            </h:panelGrid>
            
            
-            <h:panelGrid columns="1" style="margin-left:61%; margin-top:-4.3%;">
+            <h:panelGrid columns="1" style="margin-left:61%; margin-top:-4.2%;">
              	<p:outputLabel value="Conta" for="idconta" class="left3" style="margin-left:40%;"/>
 	              <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{outrosLancamentosMB.banco}"  converter="BancoConverter"
 	                                 filter="true" filterMatchMode="contains" panelStyle="width:150px">
@@ -90,7 +90,9 @@
 	         </h:panelGrid> 
 	         
 	         </h:panelGrid>
-	            <br /><br /> 
+	            <br /> 
+	            <h2 style="margin-left:50%;">Consulta Outros Lançamentos</h2>
+             <hr style="margin-left:17%; width:80%;"/>  
 	            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
         				<p:commandButton style="margin-left:35%;" value="Sim" action="#{outrosLancamentosMB.excluir()}" type="button" styleClass="ui-confirmdialog-yes"  />
         				<p:commandButton  value="Não" type="button" styleClass="ui-confirmdialog-no"  />
@@ -130,7 +132,7 @@
                         </p:column>
                         
                     </p:dataTable> 
-                    <br /><br /><br />
+                    <br /><br />
                     <h:panelGrid id="idsaida" style="width:18%; margin-left: 35%; text-align:right; background-color:white; border-radius:5px; border:solid; border-left-color:red; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
 	                	<br />
 			            <tt style="margin-right:20%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total de Saídas</tt>

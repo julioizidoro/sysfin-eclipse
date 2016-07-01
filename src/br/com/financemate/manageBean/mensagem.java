@@ -146,6 +146,11 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Alteração de senha", ""));
     }
     
+    public void valorSuperiorAoRestante() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Valor maior que o valor restante", ""));
+    }
+    
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }

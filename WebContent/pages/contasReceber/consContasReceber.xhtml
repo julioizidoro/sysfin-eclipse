@@ -45,6 +45,8 @@
             </p:commandLink>
             </h:panelGrid>     
             <br />
+            <h2 style="margin-left:50%;">Consulta Contas a Receber</h2>
+             <hr style="margin-left:17%; width:80%;"/>  
             		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick">  
                         <p:menuitem value="Cancelar"   icon="ui-icon-cancel"   actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber"/> 
                         <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}" update="growl"/>
@@ -54,7 +56,7 @@
                         <p:menuitem value="Receber"  icon="ui-icon-tag"  action="#{contasReceberMB.recebimentoConta(contasReceberMB.contasReceber)}"/>
                     </p:contextMenu> 
                     <p:dataTable id="idTabelaContaReceber"  var="contasReceber"  value="#{contasReceberMB.listaContasReceber}" style="border:none;" class="tabelacontas" 
-                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">
+                                 scrollRows="10"  scrollable="true" scrollHeight="280" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">
                         
                         <p:column headerText="Status"  style="width:25px; background:white; color:black; border:none; font-size:12px; text-align:center;" styleClass="alinharCenter">
                             <p:commandLink>
