@@ -40,7 +40,7 @@ h1 {
     width:101%!important;
     float:left !important;
     margin-top:-18px;
-    background: #333333 !important;
+    background: #302E2E !important;
     font-size: 12px;
     color:white;
     position: fixed !important;
@@ -85,7 +85,7 @@ h1 {
 .menu2{
 	position: fixed;
 	height: 100%;
-	width: 16%;
+	width: 17%;
 	transition: all 0.4s ease 0s;
 	font-family: "Pacifico",cursive;
 	z-index: 9999;

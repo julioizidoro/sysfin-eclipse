@@ -15,21 +15,21 @@
         
         <div class="menu" style="position: fixed !important;z-index: 9999;">
         	<br/>
-        	<img src="../../resources/img/iconeUser2.png" style="width: 2%; margin-left:1%;"/>
-        	<h:outputText value="BEM VINDO, " style="font-size:16px; margin-left:0.5%;" />
-        	 <h:outputText style="font-size:16px;" value="#{usuarioLogadoMB.usuario.nome}" />
-        	<tt style="margin-left: 35%; font-size: 32px; font-family:Trebuchet MS;">SYSFIN</tt>
-        	<p:commandLink  action="#" style="margin-left:25%; text-decoration:none;" title="Adicionar">
-                    <img src="../../resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.4%;"/> 
+        	<img src="../../resources/img/iconeUsuario.png" style="width: 2%; margin-left:2%;"/>
+        	<h:outputText value="BEM VINDO, " style="font-size:18px; margin-left:0.5%;" />
+        	 <h:outputText style="font-size:18px;" value="#{usuarioLogadoMB.usuario.nome}" />
+        	<tt style="margin-left: 25%; font-size: 32px; font-family:Trebuchet MS;">SYSFIN</tt>
+        	<p:commandLink  action="#" style="margin-left:40%; text-decoration:none;" title="Adicionar">
+                    <img src="../../resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.7%;"/> 
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
             <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style="margin-left:2%; text-decoration:none;" title="Sair">
-                    <img src="../../resources/img/iconeDeslogar.png" border="none" style="text-decoration:none;margin-bottom:-0.5%;"/>
+                    <img src="../../resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-bottom:-0.8%;"/>
             </p:commandLink>
             <br/><br />
         </div> 
         <br />
-        <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:2.4%;">
+        <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:3.2%;">
         	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;margin-left:1%;">
            		<img src="../../resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
         		<h:outputText value="Visão Geral" style="font-size:15px; margin-left:5%;"/>

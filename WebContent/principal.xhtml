@@ -9,11 +9,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>...SysFIN...</title>
         <link href="resources/css/css.css" rel="stylesheet" media="screen" />
-        <link href="../../resources/css/css.css" rel="stylesheet" media="screen" />
+        <link href="resources/css/css.css" rel="stylesheet" media="screen" />
         <link rel="icon" href="resources/img/iconesysfin.png" type="image/x-icon" />
         
         <!-- Bootstrap core CSS -->
-    	 <link href="resources/css/bootstrap.min.css" rel="stylesheet"/>
+    	 <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
 	    
 		 <!-- Font Awesome -->
 		 <link href="resources/css/font-awesome.min.css" rel="stylesheet"/>
@@ -30,9 +30,10 @@
 		 <!-- Endless -->
 		 <link href="resources/css/endless.min.css" rel="stylesheet"/>
 		 <link href="resources/css/endless-skin.css" rel="stylesheet"/>
+		 
     </h:head>
 
-    <h:body style="color:#E7EBEB !important;">
+    <h:body style="color:#E7EBEB !important; background:white;" onload="startTime()">
     <!-- rolando o titulo da pagina -->
 		<script> var repeat=1 // 0 para rolar uma vez, 1 para rolar infinitamente
 			var title=document.title
@@ -66,32 +67,34 @@
         
         <div class="menu" style="position: fixed !important;z-index: 9999;"> 
         <br />
-        	<img src="resources/img/iconeUser2.png" style="width: 2%; margin-left:1%;" />
+        	<img src="resources/img/iconeUsuario.png" style="width: 2%; margin-left:2%;" />
         	<h:outputText value="BEM VINDO, " style="font-size:18px; margin-left:0.5%;" /> 
         	 <h:outputText style="font-size:18px;" value="#{usuarioLogadoMB.usuario.nome}" />
         	<tt style="margin-left: 25%; font-size: 32px;font-family: Trebuchet MS">SYSFIN</tt>
         	<p:commandLink  action="#" style="margin-left:40%; text-decoration:none;" title="Adicionar">
-                    <img src="resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.4%;"/> 
+                    <img src="resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.7%;"/> 
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
             <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style="margin-left:2%; text-decoration:none;" title="Sair">
-                    <img src="resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-bottom:-0.5%;"/>
+                    <img src="resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-bottom:-0.8%;"/>
             </p:commandLink>
             <br/><br />
         </div>
         
         <br />
-        <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:2.6%;">
-        	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;margin-left:1%;">
+        <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:3.6%;">
+        	<br/>
+        	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;margin-left:4%;">
            		<img src="resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
         		<h:outputText value="Visão Geral" style="font-size:15px; margin-left:5%; font-family: 'Pacifico',cursive;"/>
     		 </p:commandLink>
     		  
-        	 <h:panelGrid> 
-        	 <h:panelGrid style="margin-left:-4%;margin-left:0%;"> 
+        	 <h:panelGrid>
+        	 <h:outputLabel value=""/> 
+        	 <h:panelGrid style="margin-left:-4%;margin-left:4%;"> 
         	 	<img src="resources/img/iconeCadastroSysfin.png" style="width: 14%;"/>
         	</h:panelGrid>
-	        <h:panelGrid style="margin-left:12%; margin-top:-23%;">
+	        <h:panelGrid style="margin-left:18%; margin-top:-14%;">
 	        	<p:panelMenu>
 	        		<p:submenu label="Cadastro" style="font-size:15px; font-family: 'Pacifico',cursive;">
 	                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
@@ -101,10 +104,11 @@
 	            	</p:submenu>
 	            </p:panelMenu>
             </h:panelGrid>
-        	 <h:panelGrid style="margin-left:-2%;">
+            <h:outputLabel value=""/>
+        	 <h:panelGrid style="margin-left:4%;"> 
         	 	<img src="resources/img/iconeContasReceberSysfin.png" style="width: 14%;"/>
         	 </h:panelGrid>
-        	 <h:panelGrid style="margin-left:13%; margin-top:-24%;"> 
+        	 <h:panelGrid style="margin-left:18%; margin-top:-14%;"> 
 	        	 <p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu  style="background:transparent;  font-size:15px; color:white;font-family: 'Pacifico',cursive;" label="Contas a Pagar">
 	        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaContaTelaPrincipal()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/> 
@@ -113,10 +117,11 @@
 	        		</p:submenu> 
         		</p:panelMenu>
         	</h:panelGrid>
-        	<h:panelGrid style="margin-left:-2%;">
+        	<h:outputLabel value=""/>
+        	<h:panelGrid style="margin-left:4%;">
         	 	<img src="resources/img/iconeContasPagarSysfin.png" style="width: 14%;"/>
         	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
+        	<h:panelGrid style="margin-left:18%; margin-top:-14%;">
 	        	<p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu label="Contas a Receber" style="font-size:15px;margin-left:3%; font-family: 'Pacifico',cursive;">
 	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/> 
@@ -124,11 +129,12 @@
 	            		<p:menuitem value="Relatório" actionListener="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;font-family: 'Pacifico',cursive;"/>
 	        		</p:submenu>
 	        	</p:panelMenu> 
-	        </h:panelGrid> 
-	        <h:panelGrid style="margin-left:-2%;">
+	        </h:panelGrid>
+	        <h:outputLabel value=""/> 
+	        <h:panelGrid style="margin-left:4%;">
         	 	<img src="resources/img/iconeVendasSysfin.png" style="width: 14%;"/>
         	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
+        	<h:panelGrid style="margin-left:18%; margin-top:-14%;">
 		        <p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu label="Vendas" style="font-size:15px;margin-left:3%; font-family: 'Pacifico',cursive;">
 	        			<p:menuitem value="Lançamentos" action="#{menuMB.consVendas()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
@@ -136,11 +142,11 @@
 	        		</p:submenu>
 	        	</p:panelMenu>
 	        </h:panelGrid>
-	        
-            <h:panelGrid style="margin-left:-2%;"> 
+	        <h:outputLabel value=""/> 
+            <h:panelGrid style="margin-left:4%;"> 
         	 	<img src="resources/img/iconeOutrosLancamentosSysfin.png" style="width: 14%;"/> 
         	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-23%;">
+        	<h:panelGrid style="margin-left:18%; margin-top:-13%;">
             	<p:panelMenu>
 	            	<p:submenu label="Outros Lançamentos" style="font-size:15px; font-family: 'Pacifico',cursive;">
 	                    <p:menuitem value="Novo Lançamento" action="#{outrosLancamentosMB.novoLancamentoPrincipal()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/> 
@@ -149,10 +155,11 @@
 	            	</p:submenu>
             	</p:panelMenu>
             </h:panelGrid>
-            <h:panelGrid style="margin-left:-2%;"> 
+            <h:outputLabel value=""/> 
+            <h:panelGrid style="margin-left:4%;"> 
         	 	<img src="resources/img/iconeRelatoriosSysfin.png" style="width: 14%;"/> 
         	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
+        	<h:panelGrid style="margin-left:18%; margin-top:-14%;">
 	            <p:panelMenu>
 		            	<p:submenu label="Relatórios" style="font-size:15px;margin-left:3%; font-family: 'Pacifico',cursive;">
 		                    <p:menuitem value="Contas a Pagar" action="#{contasPagarMB.novaImpressaoPrincipal()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
@@ -162,10 +169,11 @@
 		            	</p:submenu> 
 	    		</p:panelMenu>
     		</h:panelGrid>
-    		<h:panelGrid style="margin-left:-2%;"> 
+    		<h:outputLabel value=""/> 
+    		<h:panelGrid style="margin-left:4%;"> 
         	 	<img src="resources/img/iconeCobrancaSysfin.png" style="width: 14%;"/> 
         	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-27%;"> 
+        	<h:panelGrid style="margin-left:18%; margin-top:-17%;"> 
 	            <p:panelMenu> 
 		            	<p:submenu label="Cobrança" style="font-size:15px;margin-left:4%; margin-top:8%; font-family: 'Pacifico',cursive;"> 
 		                    <p:menuitem value="Nova Cobrança" action="#{menuMB.cobranca()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;" update="growl"/>
@@ -173,106 +181,144 @@
 	    		</p:panelMenu>
     		</h:panelGrid>
     		</h:panelGrid>
-    		 
+    		 <h:outputLabel value=""/> 
     		 <p:commandLink id="aja"  actionListener="#" style="text-decoration:none;">
-           		<img src="resources/img/iconeAreaClienteSysfin.png" style="width: 14%;"/>
+           		<img src="resources/img/iconeAreaClienteSysfin.png" style="width: 14%; margin-left:4%;"/>
         		<h:outputText value="Área do cliente" style="font-size:16px; margin-left:5%; font-family: 'Pacifico',cursive;"/>
     		 </p:commandLink> 
+    		 <h:outputLabel value=""/> 
     		<p:link id="ajaxx"  target="_blank" style="text-decoration:none; margin-bottom:48%;" href="http://www.financemate.com.br/"  ajax="false">
-           		<img src="resources/img/iconeLogoNavegadorTeste.gif" style="width: 14%;"/> 
+           		<img src="resources/img/iconeLogoNavegadorTeste.gif" style="width: 14%; margin-left:4%;"/> 
         		<h:outputText value="Sobre a Financemate" style="font-size:15px; margin-left:5%; font-family: 'Pacifico',cursive;"/>
     		</p:link>
         </div> 
         </div>
 		</h:form>
 
-	<ui:insert name="corpo"> 
 	        <h:form>
-	        <br /><br />
-	         <h:panelGrid columns="50" style=" margin-left: 18%; width:60%;"> 
-	                <h:panelGrid id="idReceberHoje" style="width:90%; background-color:white; border-radius:5px;">
-	                	<br />   
-			            <b style="margin-left:10%; font:bold; color:black; font-family: 'Pacifico',cursive;">A receber hoje</b>
-			            <br /><br /> 
-			            <h:panelGrid style="margin-left:25%;" rendered="#{calculosContasMB.habilitarDesabilitarComCompraTelaPrincipal(calculosContasMB.crVencendo)}">
-			            	<h:outputText value="R$ #{calculosContasMB.crVencendo}" style="font-size:34px; color:green; font-family: 'Pacifico',cursive;"/>
-			            	
-			            </h:panelGrid> 
-			            <h:panelGrid style="margin-left:22%;" rendered="#{calculosContasMB.habilitarDesabilitarSemCompraTelaPrincipal(calculosContasMB.crVencendo)}">
-			            	<p:outputLabel value="Você não possui recebimentos hoje" style="margin-left:-5%; font-family: 'Pacifico',cursive; font-size:11px; color:black;"/>
-			            	<p:commandLink  action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" style="color:black;">
-        						<h:outputText value="Gerar Contas a Receber" style="font-size:18px; color:black; font-family: 'Pacifico',cursive;"/>
-        						<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovoPrincipal(calculosContasMB.crVencendo)}" update="idReceberHoje"/>
-    		 				</p:commandLink> 
-			            </h:panelGrid>
-			            <br />
-			            <h:panelGrid style="margin-left:9%; font-size:12px; color:black;">
-			             	<p:outputLabel value="Restante" style="font-family: 'Pacifico',cursive;"/> 
-			            </h:panelGrid> 
-			            <h:panelGrid style="color:black; margin-left:70%; margin-top:-9%; font-size:12px;">
-			            	<p:outputLabel style="font-family: 'Pacifico',cursive;" value="R$ #{calculosContasMB.totalRestante}"/>
-			            </h:panelGrid>  
-	        		</h:panelGrid>
-	        		<h:panelGrid id="idPagarHoje" style="width:80%;  margin-left: 1%;  background-color:white; border-radius:5px;">
-	        			<br />  
-			            <b style="margin-left:10%; font:bold; color:black; font-family: 'Pacifico',cursive;">A pagar hoje</b>
-			            <br/><br />
-			            <h:panelGrid style="margin-left:25%;" rendered="#{calculosContasMB.habilitarDesabilitarComCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
-			            	
-			            	<h:outputText value="R$ #{contasPagarMB.totalVencendo}" style=" font-size:34px; color:red; font-family: 'Pacifico',cursive;"/>
-			            	
-			            </h:panelGrid>  
-			            <h:panelGrid style="margin-left:22%;" rendered="#{calculosContasMB.habilitarDesabilitarSemCompraTelaPrincipal(calculosContasMB.cpVencendo)}">
-			            	<p:outputLabel value="Você não possui pagamentos hoje" style="margin-left:-5%; font-size:11px; color:black; font-family: 'Pacifico',cursive;"/>
-			            	<p:commandLink ajax="false" action="#{contasPagarMB.novaContaTelaPrincipal()}" style="color:black;">
-        						<h:outputText value="Gerar Conta a Pagar" style="font-size:18px; color:black; font-family: 'Pacifico',cursive;"/>
-        						<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovoPrincipal(calculosContasMB.cpVencendo)}" update="idPagarHoje"/>
-    		 				</p:commandLink>
-			            </h:panelGrid>  
-			            <br />
-			            <h:panelGrid style="margin-left:9%; font-size:12px; color:black;">
-			             	<p:outputLabel value="Restante" style="font-family: 'Pacifico',cursive;"/>
-			            </h:panelGrid>
-			            <h:panelGrid style="color:black; margin-left:70%; margin-top:-9%; font-size:12px;">
-			            	<p:outputLabel style="font-family: 'Pacifico',cursive;" value="R$ #{contasPagarMB.totalRestante}"/>
-			            </h:panelGrid>
-	        		</h:panelGrid>
-	        		</h:panelGrid>
-	        		<br />
-	                <h:panelGrid columns="1" columnClasses="left,right" style="width:54%; margin-left: 18%; background-color:white; position:static; border-radius:5px;">
-	    				<br /> 
-	    				<p:chart type="line" model="#{grafico.animatedModel1}" style="width:99%;" responsive="true"/>
-	    				<br />
+	        <br />
+	        <h:panelGrid width="100%;"  style="margin-left:17%; ">
+	        	<h3 style=" color:black;">VENDAS</h3>
+		         <p:chart type="bar" model="#{grafico.animatedModel2}" style="width:60%;" responsive="true"/>
+		   		<br/>
+			</h:panelGrid>
+					<div class="padding-md"> 
+					<div class="row">
+						<h:panelGrid style="margin-left:80%; width:80%; margin-top:-14%;">
+							<div class="col-sm-6 col-md-3"> 
+								<div class="panel-stat3 bg-success"> 
+									<h4>FATURAMENTO </h4>
+									<h3 class="m-top-none" id="userCount" style="color:black;">R$: #{grafico.valorTotalFaturamento}</h3>
+									<span class="m-left-xs" style="color:black;">em 2016</span>
+									<div class="stat-icon">
+										<i class="fa fa-usd fa-3x"></i> 
+									</div>
+								</div>
+							</div><!-- /.col -->
+						</h:panelGrid>
+						<h:panelGrid style="margin-left:80%;" width="80%;">
+							<div class="col-sm-6 col-md-3">
+								<div class="panel-stat3 bg-info">
+									<h4>CONTAS A RECEBER</h4>
+									<h3 class="m-top-none" style="color:black;">R$: #{calculosContasMB.crVencendo}</h3>
+									<span class="m-left-xs" style="color:black;">para o dia de hoje</span>
+									<div class="stat-icon">
+										<i class="fa fa-pie-chart fa-3x"></i>
+									</div>
+									
+								</div>
+							</div><!-- /.col -->
+						</h:panelGrid>
+					</div><!-- /.col --> 
+					<h:panelGrid style="margin-left:80.5%;" width="82%;">
+						<div class="col-sm-6 col-md-3">
+							<div class="panel-stat3 bg-danger">
+								<h4>CONTAS A PAGAR</h4>
+								<h3 class="m-top-none" id="visitorCount" style="color:black;">R$:  #{contasPagarMB.totalVencendo}</h3>
+								<span class="m-left-xs" style="color:black;">para o dia de hoje</span>
+								
+							</div>
+						</div><!-- /.col -->
 					</h:panelGrid>
-					<br />
-					<h:panelGrid columns="50" style=" margin-left: 18%; width:60%;">
-						<h:panelGrid  style="width:85%; text-align:right; background-color:white; border-radius:5px;">
-		                	<br/>
-				            <b style="margin-right:20%; font-family: 'Pacifico',cursive; font-size:14px; color:black;">Todos os recebimentos em atraso</b>
-				            <br /><br />
-				            <h:outputText value="R$ #{calculosContasMB.crVencidas}" style="color:green; font-family: 'Pacifico',cursive; margin-left:10%; font-size:34px;"/>
-				            <br /><br /> 
-		        		</h:panelGrid> 
-		        		<h:panelGrid  style="width:85%; text-align:right; margin-left:-5%; background-color:white; border-radius:5px;">
-		        			<br/>
-				            <b style="margin-right:20%; font-size:14px; font-family: 'Pacifico',cursive; color:black;">Todos os pagamentos em atraso</b>
-				            <br /><br />
-				            <h:outputText value="R$ #{contasPagarMB.totalVencidas}" style="margin-left:10%; font-family: 'Pacifico',cursive; font-size:34px; color:red;"/>
-				            <br /><br />
-		        		</h:panelGrid>
-		        	</h:panelGrid> 
-					<br />
-					<h:panelGrid columns="1" columnClasses="left,right" style="width:54%; height: 200px; margin-left: 18%; background-color:white; border-radius:5px;">
-						<br />
-						<p:chart type="bar" model="#{grafico.animatedModel2}" style="width:99%;" responsive="true"/>
-						<br />
-	                </h:panelGrid>
-	            </h:form>
-	            <hr style="color:#DEE2E2;"/>
-	            <br/><br/>
+			</div>
+				<br />
+			<h:panelGrid style="margin-left:17%; margin-top:-27%;" width="100%;">
+				
+				<h4 style="color:black;">ÚLTIMAS VENDAS</h4>
+				<h:dataTable styleClass="table table-striped" value="#{principalMB.lista10Vendas}"
+					var="venda" style="color:black; width:30%;" rows="4" >
+					<f:facet name="header"> TOTAL: R$ #{principalMB.valorTotalMesVendas}</f:facet>
+					<h:column>
+						<f:facet name="header">ID</f:facet> 
+						<h:outputText value="#{venda.idvendas}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header"  style="text-aling:right;">Cliente</f:facet>
+						<h:outputText value="#{venda.nomeCliente}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">PRODUTO</f:facet> 
+						<h:outputText value="#{venda.produto.descricao}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">DATA</f:facet>
+						<h:outputText value="#{venda.dataVenda}">
+							<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+						</h:outputText>
+					</h:column>
+					<h:column style="text-align:left">
+						<f:facet name="header">VALOR</f:facet>
+						<h:outputText value="#{venda.valorLiquido}" style="text-align:right;">
+							<f:convertNumber currencySymbol="" type="currency"/>
+						</h:outputText>
+					</h:column>
+					
+				</h:dataTable>
+			</h:panelGrid>
+			<h:panelGrid style="margin-left:48%; width:30%;margin-top:-26%;">
+				<h4 style="color:black;margin-left:6%;" >FLUXO DE CAIXA</h4>
+				<p:chart type="line" model="#{grafico.animatedModel1}" style="width:99%;" responsive="true"/>
+			</h:panelGrid>
+		<!-- /panel -->
+	</h:form>  
+	            
+	<h:outputScript src="resources/js/jquery-1.10.2.min.js"/> 
+
+	<!-- Bootstrap -->
+    <h:outputScript src="resources/bootstrap/js/bootstrap.js"/>
+   
+	<!-- Flot -->
+	<script src="resources/js/jquery.flot.min.js"></script>
+   
+	<!-- Morris -->
+	<script src="resources/js/rapheal.min.js"></script>	
+	<script src="resources/js/morris.min.js"></script>	
+	
+	<!-- Colorbox -->
+	<script src="resources/js/jquery.colorbox.min.js"></script>	
+
+	<!-- Sparkline -->
+	<script src="resources/js/jquery.sparkline.min.js"></script>
+	
+	<!-- Pace -->
+	<script src="resources/js/uncompressed/pace.js"></script>
+	
+	<!-- Popup Overlay -->
+	<h:outputScript src="resources/js/jquery.popupoverlay.min.js"/>
+	
+	<!-- Slimscroll -->
+	<h:outputScript src="resources/js/jquery.slimscroll.min.js"/>
+	
+	<!-- Modernizr -->
+	<h:outputScript src="resources/js/modernizr.min.js"/>
+	
+	<!-- Cookie -->
+	<h:outputScript src="resources/js/jquery.cookie.min.js"/>
+	
+	<!-- Endless -->
+	<h:outputScript src="resouces/js/endless/endless_dashboard.js"/>
+	<h:outputScript src="resources/js/endless/endless.js"/>
 	           
-    </ui:insert>
-    
    </h:body>
 </html>
 

@@ -85,6 +85,18 @@ public class Formatacao {
         return Float.parseFloat(novoValor);
     }
     
+    public static Integer formatarStringInteger(String valor){
+        String novoValor = "";
+        for(int i=0;i<valor.length();i++){
+            if (valor.charAt(i)==','){
+                novoValor = novoValor + ".";
+            }else if (!(valor.charAt(i)=='.')){
+                novoValor = novoValor + valor.charAt(i);
+            }
+        }
+        return Integer.parseInt(novoValor);
+    }
+    
         public static Double formatarStringDouble(String valor) {
         String novoValor = "";
         for (int i = 0; i < valor.length(); i++) {

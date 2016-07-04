@@ -57,15 +57,46 @@ import br.com.financemate.model.Vendas;
 	    private Integer numeroDia;
 	    private Float valorMaximo = 0f;
 	    private Float valorMinimo = 0f;
-	 
+	    private Float valorFaturamento = 0f;
+	    private String valorTotalFaturamento = "";
+	    
 	    @PostConstruct
 	    public void init() {
 	        createAnimatedModels();
+			valorTotalFaturamento = Formatacao.foramtarFloatString(valorFaturamento);
 	    }
 	    
 	    
 	    
 	    
+		public String getValorTotalFaturamento() {
+			return valorTotalFaturamento;
+		}
+
+
+
+
+		public void setValorTotalFaturamento(String valorTotalFaturamento) {
+			this.valorTotalFaturamento = valorTotalFaturamento;
+		}
+
+
+
+
+		public Float getValorFaturamento() {
+			return valorFaturamento;
+		}
+
+
+
+
+		public void setValorFaturamento(Float valorFaturamento) {
+			this.valorFaturamento = valorFaturamento;
+		}
+
+
+
+
 		public BarChartModel getAnimatedModel3() {
 			return animatedModel3;
 		}
@@ -340,10 +371,7 @@ import br.com.financemate.model.Vendas;
 	    private void createAnimatedModels() {
 	    	gerarDiasFluxoCaixa();
 	        animatedModel1 = initLinearModel();
-	        animatedModel1.setTitle("Fluxo de Caixa diário");
 	        animatedModel1.setAnimate(true);
-	        animatedModel1.setLegendPosition("ne");
-	        animatedModel1.setShowPointLabels(true);
 	        animatedModel1.getAxes().put(AxisType.X, new CategoryAxis("Dia"));
 	        animatedModel1.setLegendPlacement(LegendPlacement . OUTSIDEGRID);
 	        animatedModel1.setSeriesColors("66cc66, FE2E2E, A4A4A4");
@@ -356,10 +384,7 @@ import br.com.financemate.model.Vendas;
 	         
 	        animatedModel2 = initBarModel();
 	        
-	        animatedModel2.setTitle("Grafico de vendas");
 	        animatedModel2.setAnimate(true);
-	        animatedModel2.setShowPointLabels(true);
-	        animatedModel2.setLegendPosition("ne");
 	        yAxis = animatedModel2.getAxis(AxisType.Y);
 	        yAxis.setMin(0);
 	        yAxis.setMax(200);
@@ -497,6 +522,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-01-31'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -510,6 +538,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-02-28'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -523,6 +554,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-03-31'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -536,6 +570,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-04-30'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -549,6 +586,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-05-31'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -562,6 +602,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-06-30'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -576,6 +619,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-07-31'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -590,6 +636,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-08-31'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -603,6 +652,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-09-30'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -616,6 +668,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-10-31'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -629,6 +684,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-11-30'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -642,6 +700,9 @@ import br.com.financemate.model.Vendas;
 	    				 " and v.dataVenda<='"+ new Year()+"-12-31'";
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
+				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
+					valorFaturamento = valorFaturamento + listaQuantidadeVendas.get(i).getValorLiquido();
+				}
 				return listaQuantidadeVendas.size(); 
 			} catch (SQLException e) {
 				e.printStackTrace();
