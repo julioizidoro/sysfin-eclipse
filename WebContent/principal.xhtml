@@ -245,6 +245,7 @@
 			<h:panelGrid style="margin-left:17%; margin-top:-27%;" width="100%;">
 				
 				<h4 style="color:black;">ÚLTIMAS VENDAS</h4>
+				<h5 style="color:#302E2E;">#{principalMB.pegarMesAno()}</h5>
 				<h:dataTable styleClass="table table-striped" value="#{principalMB.lista10Vendas}"
 					var="venda" style="color:black; width:30%;" rows="4" >
 					<f:facet name="header"> TOTAL: R$ #{principalMB.valorTotalMesVendas}</f:facet>
@@ -275,8 +276,9 @@
 					
 				</h:dataTable>
 			</h:panelGrid>
-			<h:panelGrid style="margin-left:48%; width:30%;margin-top:-26%;">
+			<h:panelGrid style="margin-left:48%; width:30%;margin-top:-28.5%;">
 				<h4 style="color:black;margin-left:6%;" >FLUXO DE CAIXA</h4>
+				<h5 style="color:black;margin-left:6%;" > Diario - #{principalMB.pegarMesAno()}</h5>
 				<p:chart type="line" model="#{grafico.animatedModel1}" style="width:99%;" responsive="true"/>
 			</h:panelGrid>
 		<!-- /panel -->

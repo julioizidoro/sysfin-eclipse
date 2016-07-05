@@ -150,5 +150,40 @@ public class PrincipalMB implements Serializable{
 			e.printStackTrace();
 		}
     }
+	
+	
+	public String pegarMesAno(){
+		String mes = "";
+		String ano = "";
+		ano = "" + new Year();
+		Calendar cal = new GregorianCalendar();
+		mes = "" + (cal.get(Calendar.MONDAY) + 1);
+		if (mes.equalsIgnoreCase("1")) {
+			mes = "JANEIRO";
+		}else if(mes.equalsIgnoreCase("2")){
+			mes = "FEVEREIRO";
+		}else if(mes.equalsIgnoreCase("3")){
+			mes = "MARÇO";
+		}else if(mes.equalsIgnoreCase("4")){
+			mes = "ABRIL";
+		}else if(mes.equalsIgnoreCase("5")){
+			mes = "MAIO";
+		}else if(mes.equalsIgnoreCase("6")){
+			mes = "JUNHO";
+		}else if(mes.equalsIgnoreCase("7")){
+			mes = "JULHO"; 
+		}else if(mes.equalsIgnoreCase("8")){
+			mes = "AGOSTO";
+		}else if(mes.equalsIgnoreCase("9")){
+			mes = "SETEMBRO";
+		}else if(mes.equalsIgnoreCase("10")){
+			mes = "OUTUBRO";
+		}else if(mes.equalsIgnoreCase("1")){
+			mes = "NOVEMBRO";
+		}else if(mes.equalsIgnoreCase("12")){
+			mes = "DEZEMBRO";
+		}
+		return mes + " | " + ano;
+	}
 	 
 }
