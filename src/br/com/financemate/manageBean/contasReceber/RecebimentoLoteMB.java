@@ -23,6 +23,7 @@ import br.com.financemate.facade.OutrosLancamentosFacade;
 import br.com.financemate.manageBean.CalculosContasMB;
 import br.com.financemate.manageBean.LiberarContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
+import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
@@ -164,19 +165,33 @@ public class RecebimentoLoteMB implements Serializable {
 
 	
 	public String salvarContasReceberLote() {
-		for (int i = 0; i < listaContasSelecionadas.size(); i++) {
-			contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-			listaContasSelecionadas.get(i).setUsuario(usuarioLogadoMB.getUsuario());
-			listaContasSelecionadas.get(i).setDataPagamento(dataPagamento);
-			listaContasSelecionadas.get(i).setValorPago(listaContasSelecionadas.get(i).getValorParcela());
-			ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
-			contasReceber = contasReceberFacade.salvar(listaContasSelecionadas.get(i));
-			lancaOutrosLancamentos(listaContasSelecionadas.get(i));
+		String mensagens = validarDadosRecebimentoLote();
+		if (mensagens == "") {
+			for (int i = 0; i < listaContasSelecionadas.size(); i++) {
+				contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
+				listaContasSelecionadas.get(i).setUsuario(usuarioLogadoMB.getUsuario());
+				listaContasSelecionadas.get(i).setDataPagamento(dataPagamento);
+				listaContasSelecionadas.get(i).setValorPago(listaContasSelecionadas.get(i).getValorParcela());
+				ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+				contasReceber = contasReceberFacade.salvar(listaContasSelecionadas.get(i));
+				lancaOutrosLancamentos(listaContasSelecionadas.get(i));
+				RequestContext.getCurrentInstance().closeDialog(contasReceber);
+			}
+		}else{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(mensagens, ""));
 		}
-		RequestContext.getCurrentInstance().closeDialog(contasReceber);
 		return "";
 	} 
 
+	
+	public String validarDadosRecebimentoLote(){
+    	String msg = "";
+    	if (dataPagamento == null) {
+			msg = msg + " Data de recebimento não informado";
+		}
+    	return msg;
+    }
 
 	 public String cancelar() {
 		 RequestContext.getCurrentInstance().closeDialog(null);

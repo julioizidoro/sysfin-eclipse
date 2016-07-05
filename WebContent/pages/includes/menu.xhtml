@@ -44,9 +44,10 @@
 	        	<p:panelMenu>
 	        		<p:submenu label="Cadastro" style="font-size:15px;">
 	                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}" style="margin-left:-13%;"/>
-	                    <p:menuitem value="Banco" action="#{menuMB.consBanco()}" style="margin-left:-13%;"/>
-	                    <p:menuitem value="Tipo plano de conta" action="#{menuMB.consTipoPlanoConta()}" style="margin-left:-13%;"/> 
+	                    <p:menuitem value="Banco" action="#{menuMB.consBanco()}" style="margin-left:-13%;"/> 
 	                    <p:menuitem value="Plano de conta" action="#{menuMB.consPlanoConta()}" style="margin-left:-13%;"/>
+	                    <p:menuitem value="Produto" action="#{menuMB.consProduto()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
+	                    <p:menuitem value="Tipo plano de conta" action="#{menuMB.consTipoPlanoConta()}" style="margin-left:-13%;"/>
 	            	</p:submenu>
 	            </p:panelMenu>
             </h:panelGrid>
@@ -58,6 +59,7 @@
 	        		<p:submenu  style="background:transparent;  font-size:15px; color:white; font:normal;" label="Contas a Pagar">
 	        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaConta()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" action="#{contasPagarMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
 	            	</p:submenu> 
         		</p:panelMenu>
         	</h:panelGrid>
@@ -69,6 +71,7 @@
 	        		<p:submenu label="Contas a Receber" style="font-size:15px;">
 	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaConta()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" action="#{contasReceberMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
 	            	</p:submenu>
 	        	</p:panelMenu>
 	        </h:panelGrid> 
@@ -80,6 +83,7 @@
 	        		<p:submenu label="Vendas" style="font-size:15px;">
 	        			<p:menuitem value="Novo Lançamento" action="#{vendasMB.novaVenda()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consVendas()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" action="#{vendasMB.novaImpressao()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
 	            	</p:submenu>
 	        	</p:panelMenu>
 	        </h:panelGrid>
@@ -92,6 +96,7 @@
 	            	<p:submenu label="Outros Lançamentos" style="font-size:15px; "> 
 	                    <p:menuitem value="Novo Lançamento" action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-13%;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consOutrosLancamentos()}" style="margin-left:-13%;"/>
+	            		<p:menuitem value="Relatório" action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
 	            	</p:submenu>
             	</p:panelMenu>
             </h:panelGrid>

@@ -151,6 +151,11 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Valor maior que o valor restante", ""));
     }
     
+    public void naoContemVenda() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Não contém uma venda", ""));
+    }
+    
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }

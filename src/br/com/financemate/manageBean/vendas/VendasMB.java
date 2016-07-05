@@ -644,14 +644,7 @@ public class VendasMB implements Serializable {
         RequestContext.getCurrentInstance().openDialog("imprimirVendas", options, null); 
         return "";
     }
-    
-    public String novaImpressaoPrincipal() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("closable", false);
-        RequestContext.getCurrentInstance().openDialog("imprimirVendasPrincipal", options, null); 
-        return "";
-    }
-    
+ 
     
     public String editar(Vendas vendas){
     	if (vendas!=null){

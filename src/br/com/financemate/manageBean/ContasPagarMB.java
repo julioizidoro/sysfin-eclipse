@@ -676,12 +676,6 @@ public class ContasPagarMB implements Serializable{
         return "";
     }
 	
-	public String novaImpressaoPrincipal() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("closable", false);
-        RequestContext.getCurrentInstance().openDialog("imprimirRelatorioContasPagar", options, null); 
-        return "";
-    }
 	
 	 public String novaLiberacao() {
 		 totalLiberadas = "0.00";

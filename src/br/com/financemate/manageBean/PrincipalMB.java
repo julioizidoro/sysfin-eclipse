@@ -114,7 +114,11 @@ public class PrincipalMB implements Serializable{
 		List<Vendas> listaVendas;
 		lista10Vendas = new ArrayList<Vendas>();
 		try {
-			listaVendas = vendasFacade.listar("Select v from Vendas v order by v.idvendas DESC");
+			if (usuarioLogadoMB.getCliente() == null) {
+				listaVendas = vendasFacade.listar("Select v from Vendas v order by v.idvendas DESC");
+			}else{
+				listaVendas = vendasFacade.listar("Select v from Vendas v where v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente() + " order by v.idvendas DESC");
+			}
 			for (int i = 0; i < 10; i++) {
 				lista10Vendas.add(listaVendas.get(i));
 			}
@@ -137,6 +141,9 @@ public class PrincipalMB implements Serializable{
 		}
     	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-"+  messql  +"-01'"+
     				 " and v.dataVenda<='"+ new Year()+"-"+ messql + "-" + dia +"'";
+    	if (usuarioLogadoMB.getCliente() != null) {
+			sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		}
     	try {
     		
 			List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);

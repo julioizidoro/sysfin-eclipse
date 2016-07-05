@@ -33,6 +33,17 @@ public class ProdutoDao {
         return lista;
     }
     
+    
+    public List<Produto> listarTodosCLiente(String sql) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery("Select p from Produto p");
+        List<Produto> lista = q.getResultList();
+        manager.getTransaction().commit();
+        manager.close();
+        return lista;
+    }
+    
     public Produto consultar(int idProduto) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
@@ -45,7 +56,7 @@ public class ProdutoDao {
     public Produto salvar(Produto produto) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        manager.merge(produto);
+        produto = manager.merge(produto);
         manager.getTransaction().commit();
         manager.close();
         return produto;

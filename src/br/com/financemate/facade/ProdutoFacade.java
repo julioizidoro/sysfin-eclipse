@@ -26,6 +26,11 @@ public class ProdutoFacade {
         return produtoDao.listar(idCliente);
     }
     
+    public List<Produto> listarTodosCliente(String sql) throws SQLException{
+        produtoDao = new ProdutoDao();
+        return produtoDao.listarTodosCLiente("");
+    }
+    
     public Produto consultar(int idProduto) throws SQLException{
         produtoDao = new ProdutoDao();
         return produtoDao.consultar(idProduto);

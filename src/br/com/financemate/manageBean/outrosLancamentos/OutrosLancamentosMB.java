@@ -395,13 +395,7 @@ public class OutrosLancamentosMB implements Serializable {
         RequestContext.getCurrentInstance().openDialog("consSaldoIncial", options, null);
         return "";
     }
-    
-    public String novoLancamentoPrincipal() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("closable", false);
-        RequestContext.getCurrentInstance().openDialog("cadOutrosLancamentosPrincipal", options, null);
-        return "";
-    }
+
     
     public String editar(Outroslancamentos outroslancamentos){
     	if (outroslancamentos!=null){
@@ -477,13 +471,7 @@ public class OutrosLancamentosMB implements Serializable {
         RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentos", options, null);
         return "";
     }
-    
-    public String impressaoOutrosLancamentosPrincipal() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("closable", false);
-        RequestContext.getCurrentInstance().openDialog("imprimirOutrosLancamentosPrincipal", options, null);
-        return "";
-    }
+ 
     
     public float geralSqlSaldoInicial(){
     	float entrada = 0.0f;

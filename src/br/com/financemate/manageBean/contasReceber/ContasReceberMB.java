@@ -26,6 +26,7 @@ import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.CobrancaParcelasFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.OutrosLancamentosFacade;
+import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.manageBean.CalculosContasMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
@@ -669,13 +670,7 @@ public class ContasReceberMB implements Serializable {
         RequestContext.getCurrentInstance().openDialog("cadContasReceber", options, null);
         return "";
     }
-	
-	public String novaContaReceberTelaPrincipal() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("closable", false);
-        RequestContext.getCurrentInstance().openDialog("cadContasReceberPrincipal", options, null);
-        return "";
-    }
+
 	
 	public void retornoDialogNovoPrincipal(String valor) {
         calculosContasMB.calcularTotaisContasReceber();
@@ -694,13 +689,7 @@ public class ContasReceberMB implements Serializable {
         RequestContext.getCurrentInstance().openDialog("imprimirContasReceber", options, null); 
         return "";
     }
-	
-	public String novaImpressaoContasReceberTelaPrincipal() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("closable", false);
-        RequestContext.getCurrentInstance().openDialog("imprimirContasReceberTelaPrincipal", options, null); 
-        return "";
-    }
+ 
 	
 	 public void criarConsultaContaReceber(){
 		 String data = Formatacao.ConvercaoDataPadrao(new Date());
@@ -1301,5 +1290,28 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 
-	 
+	 public String informacoesVendas(Contasreceber contasreceber){
+		 FacesContext fc = FacesContext.getCurrentInstance();
+		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		 Map<String, Object> options = new HashMap<String, Object>();
+		 options.put("closable", false);
+		 Vendas vendas = new Vendas();
+		 VendasFacade vendasFacade = new VendasFacade();
+		 try {
+			vendas = vendasFacade.consultar(contasreceber.getVenda());
+			if (vendas.getIdvendas() != null) {
+				session.setAttribute("vendas", vendas);
+				RequestContext.getCurrentInstance().openDialog("cadVendas", options, null); 
+				return "";
+			}else{
+				mensagem mensagem = new mensagem();
+				mensagem.naoContemVenda();
+				return "";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return "";
+	 }
 }

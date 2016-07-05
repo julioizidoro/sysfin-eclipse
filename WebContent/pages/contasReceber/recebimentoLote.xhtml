@@ -15,7 +15,7 @@
  <h:body > 
         <h:form id="idFrmCadContasPagar" class="body2" style="font-size: 12px; background-color: white;">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-
+			<p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
                 <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
         		<br/> 
@@ -61,7 +61,7 @@
             <br />
             <hr />
             <br />
-            <p:commandLink title="Salvar" style="margin-left: 40%;text-decoration: none" update="@all"  action="#{recebimentoLoteMB.salvarContasReceberLote()}" >
+            <p:commandLink title="Salvar" style="margin-left: 40%;text-decoration: none" update="growl"  action="#{recebimentoLoteMB.salvarContasReceberLote()}" >
                  <img src="../../resources/img/confirmarS.png" width="50" height="50"/> 
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 3%;text-decoration: none" action="#{recebimentoLoteMB.cancelar()}" >

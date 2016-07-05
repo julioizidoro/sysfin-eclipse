@@ -110,7 +110,7 @@ public class CadBancoMB implements Serializable {
 	        FacesContext context = FacesContext.getCurrentInstance();
 	        erro = erro + " - " + ex;
 	        context.addMessage(null, new FacesMessage(titulo, erro));
-	    }
+	 }
 
 	 public void salvar() {
 		 BancoFacade bancoFacade = new BancoFacade();

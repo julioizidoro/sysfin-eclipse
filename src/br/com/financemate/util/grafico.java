@@ -10,9 +10,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import org.hibernate.annotations.DiscriminatorFormula;
-import org.jfree.data.time.Day;
 import org.jfree.data.time.Year;
 import org.primefaces.model.chart.Axis;
 	import org.primefaces.model.chart.AxisType;
@@ -23,15 +24,14 @@ import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.LineChartSeries;
 
-import com.mchange.v2.c3p0.impl.NewProxyDatabaseMetaData;
-
-import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.VendasFacade;
+import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Vendas;
 	 
-	@ManagedBean
+	@Named
+	@ViewScoped
 	public class grafico implements Serializable {
 	 
 	    /**
@@ -59,6 +59,8 @@ import br.com.financemate.model.Vendas;
 	    private Float valorMinimo = 0f;
 	    private Float valorFaturamento = 0f;
 	    private String valorTotalFaturamento = "";
+	    @Inject
+	    private UsuarioLogadoMB usuarioLogadoMB;
 	    
 	    @PostConstruct
 	    public void init() {
@@ -66,9 +68,23 @@ import br.com.financemate.model.Vendas;
 			valorTotalFaturamento = Formatacao.foramtarFloatString(valorFaturamento);
 	    }
 	    
+	     
 	    
 	    
-	    
+		public UsuarioLogadoMB getUsuarioLogadoMB() {
+			return usuarioLogadoMB;
+		}
+
+
+
+
+		public void setUsuarioLogadoMB(UsuarioLogadoMB usuarioLogadoMB) {
+			this.usuarioLogadoMB = usuarioLogadoMB;
+		}
+
+
+
+
 		public String getValorTotalFaturamento() {
 			return valorTotalFaturamento;
 		}
@@ -520,6 +536,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-01-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-01-31'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -536,6 +555,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-02-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-02-28'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -552,6 +574,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-03-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-03-31'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -568,6 +593,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-04-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-04-30'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -584,6 +612,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-05-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-05-31'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -600,6 +631,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-06-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-06-30'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -617,6 +651,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-07-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-07-31'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -634,6 +671,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-08-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-08-31'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -650,6 +690,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-09-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-09-30'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -666,6 +709,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-10-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-10-31'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -682,6 +728,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-11-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-11-30'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -698,6 +747,9 @@ import br.com.financemate.model.Vendas;
 	    	VendasFacade vendasFacade = new VendasFacade();
 	    	String sql = "Select v From Vendas v where v.dataVenda>='" + new Year()+"-12-01'"+
 	    				 " and v.dataVenda<='"+ new Year()+"-12-31'";
+	    	if (usuarioLogadoMB.getCliente() != null) {
+				sql = sql + " and v.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+			}
 	    	try {
 				List<Vendas> listaQuantidadeVendas = vendasFacade.listar(sql);
 				for (int i = 0; i < listaQuantidadeVendas.size(); i++) {
@@ -747,8 +799,14 @@ import br.com.financemate.model.Vendas;
 	    	Float recebimento = null;
 	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 	    	try {
-	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
-			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+		    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
+		    	 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+				 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+				 if (recebimento == null) {
+					recebimento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -770,8 +828,14 @@ import br.com.financemate.model.Vendas;
 	    	Float recebimento = null;
 	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 	    	try {
-	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
-			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+		    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
+				 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+				 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+				 if (recebimento == null) {
+						recebimento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -793,8 +857,14 @@ import br.com.financemate.model.Vendas;
 	    	Float recebimento = null;
 	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 	    	try {
-	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
-			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+		    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
+		    	 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+				 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+				 if (recebimento == null) {
+						recebimento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -816,7 +886,13 @@ import br.com.financemate.model.Vendas;
 	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 	    	try {
 	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuartoDia) + "'";
-			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+		    	 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+				 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+				 if (recebimento == null) {
+						recebimento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -837,8 +913,14 @@ import br.com.financemate.model.Vendas;
 	    	Float recebimento = null;
 	    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 	    	try {
-	    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
-			 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+		    	 String sql = "Select sum(c.valorParcela) from Contasreceber c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
+		    	 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+				 recebimento = contasReceberFacade.recebimentoPorDia(sql);
+				 if (recebimento == null) {
+						recebimento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -861,8 +943,14 @@ import br.com.financemate.model.Vendas;
 	    	Float pagamento = null;
 	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 	    	try {
-	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
-	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(new Date()) + "'";
+		    	 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+		    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 if (pagamento == null) {
+		    		 pagamento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -884,8 +972,14 @@ import br.com.financemate.model.Vendas;
 	    	Float pagamento = null;
 	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 	    	try {
-	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
-	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataInicial) + "'";
+		    	 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+		    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 if (pagamento == null) {
+		    		 pagamento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -907,8 +1001,14 @@ import br.com.financemate.model.Vendas;
 	    	Float pagamento = null;
 	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 	    	try {
-	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
-	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataTerceiroDia) + "'";
+		    	 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+		    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 if (pagamento == null) {
+		    		 pagamento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -931,7 +1031,13 @@ import br.com.financemate.model.Vendas;
 	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 	    	try {
 	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuartoDia) + "'";
-	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+		    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 if (pagamento == null) {
+		    		 pagamento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -953,8 +1059,14 @@ import br.com.financemate.model.Vendas;
 	    	Float pagamento = null;
 	    	ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
 	    	try {
-	    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
-	    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 String sql = "Select sum(c.valor) from Contaspagar c where c.dataVencimento='" + Formatacao.ConvercaoDataNfe(dataQuintoDia) + "'";
+		    	 if (usuarioLogadoMB.getCliente() != null) {
+						sql = sql + " and c.cliente.idcliente=" + usuarioLogadoMB.getCliente().getIdcliente();
+		    	 }
+		    	 pagamento = contasPagarFacade.pagamentoPorDia(sql);
+		    	 if (pagamento == null) {
+		    		 pagamento = 0f;
+				 }
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

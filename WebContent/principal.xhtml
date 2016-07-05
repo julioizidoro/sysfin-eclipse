@@ -71,7 +71,7 @@
         	<h:outputText value="BEM VINDO, " style="font-size:18px; margin-left:0.5%;" /> 
         	 <h:outputText style="font-size:18px;" value="#{usuarioLogadoMB.usuario.nome}" />
         	<tt style="margin-left: 25%; font-size: 32px;font-family: Trebuchet MS">SYSFIN</tt>
-        	<p:commandLink  action="#" style="margin-left:40%; text-decoration:none;" title="Adicionar">
+        	<p:commandLink  action="#" style="margin-left:30%; text-decoration:none;" title="Adicionar">
                     <img src="resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.7%;"/> 
                     <p:ajax event="dialogReturn" update="@all"/>
             </p:commandLink>
@@ -99,8 +99,9 @@
 	        		<p:submenu label="Cadastro" style="font-size:15px; font-family: 'Pacifico',cursive;">
 	                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
 	                    <p:menuitem value="Banco" action="#{menuMB.consBanco()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
-	                    <p:menuitem value="Tipo plano de conta" action="#{menuMB.consTipoPlanoConta()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/> 
 	                    <p:menuitem value="Plano de conta" action="#{menuMB.consPlanoConta()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
+	                    <p:menuitem value="Produto" action="#{menuMB.consProduto()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
+	            		<p:menuitem value="Tipo plano de conta" action="#{menuMB.consTipoPlanoConta()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
 	            	</p:submenu>
 	            </p:panelMenu>
             </h:panelGrid>
@@ -111,11 +112,11 @@
         	 <h:panelGrid style="margin-left:18%; margin-top:-14%;"> 
 	        	 <p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu  style="background:transparent;  font-size:15px; color:white;font-family: 'Pacifico',cursive;" label="Contas a Pagar">
-	        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaContaTelaPrincipal()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/> 
+	        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaConta()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressaoPrincipal()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/> 
+	            		<p:menuitem value="Relatório" actionListener="#{contasPagarMB.novaImpressao()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/> 
 	        		</p:submenu> 
-        		</p:panelMenu>
+        		</p:panelMenu> 
         	</h:panelGrid>
         	<h:outputLabel value=""/>
         	<h:panelGrid style="margin-left:4%;">
@@ -124,21 +125,22 @@
         	<h:panelGrid style="margin-left:18%; margin-top:-14%;">
 	        	<p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu label="Contas a Receber" style="font-size:15px;margin-left:3%; font-family: 'Pacifico',cursive;">
-	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaContaReceberTelaPrincipal()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/> 
+	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaConta()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;font-family: 'Pacifico',cursive;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{contasReceberMB.novaImpressao()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;font-family: 'Pacifico',cursive;"/>
 	        		</p:submenu>
 	        	</p:panelMenu> 
 	        </h:panelGrid>
-	        <h:outputLabel value=""/> 
+	        <h:outputLabel value=""/>  
 	        <h:panelGrid style="margin-left:4%;">
         	 	<img src="resources/img/iconeVendasSysfin.png" style="width: 14%;"/>
         	</h:panelGrid>
         	<h:panelGrid style="margin-left:18%; margin-top:-14%;">
 		        <p:panelMenu styleClass="ui-panelmenu">
 	        		<p:submenu label="Vendas" style="font-size:15px;margin-left:3%; font-family: 'Pacifico',cursive;">
+	        			<p:menuitem value="Novo Lançamento" action="#{vendasMB.novaVenda()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
 	        			<p:menuitem value="Lançamentos" action="#{menuMB.consVendas()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{vendasMB.novaImpressaoPrincipal()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{vendasMB.novaImpressao()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
 	        		</p:submenu>
 	        	</p:panelMenu>
 	        </h:panelGrid>
@@ -149,9 +151,9 @@
         	<h:panelGrid style="margin-left:18%; margin-top:-13%;">
             	<p:panelMenu>
 	            	<p:submenu label="Outros Lançamentos" style="font-size:15px; font-family: 'Pacifico',cursive;">
-	                    <p:menuitem value="Novo Lançamento" action="#{outrosLancamentosMB.novoLancamentoPrincipal()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/> 
+	                    <p:menuitem value="Novo Lançamento" action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/> 
 	            		<p:menuitem value="Lançamentos" action="#{menuMB.consOutrosLancamentos()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
-	            		<p:menuitem value="Relatório" actionListener="#{outrosLancamentosMB.impressaoOutrosLancamentosPrincipal()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
+	            		<p:menuitem value="Relatório" actionListener="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;"/>
 	            	</p:submenu>
             	</p:panelMenu>
             </h:panelGrid>
@@ -162,10 +164,10 @@
         	<h:panelGrid style="margin-left:18%; margin-top:-14%;">
 	            <p:panelMenu>
 		            	<p:submenu label="Relatórios" style="font-size:15px;margin-left:3%; font-family: 'Pacifico',cursive;">
-		                    <p:menuitem value="Contas a Pagar" action="#{contasPagarMB.novaImpressaoPrincipal()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
-		                    <p:menuitem value="Contas a Receber" action="#{contasReceberMB.novaImpressaoContasReceberTelaPrincipal()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
-		                    <p:menuitem value="Outros Lançamentos" action="#{outrosLancamentosMB.impressaoOutrosLancamentosPrincipal()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
-		                    <p:menuitem value="Vendas" action="#{vendasMB.novaImpressaoPrincipal()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
+		                    <p:menuitem value="Contas a Pagar" action="#{contasPagarMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
+		                    <p:menuitem value="Contas a Receber" action="#{contasReceberMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
+		                    <p:menuitem value="Outros Lançamentos" action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
+		                    <p:menuitem value="Vendas" action="#{vendasMB.novaImpressao()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
 		            	</p:submenu> 
 	    		</p:panelMenu>
     		</h:panelGrid>
@@ -230,7 +232,7 @@
 							</div><!-- /.col -->
 						</h:panelGrid>
 					</div><!-- /.col --> 
-					<h:panelGrid style="margin-left:80.5%;" width="82%;">
+					<h:panelGrid id="idContasPagar" style="margin-left:80.5%;" width="82%;">
 						<div class="col-sm-6 col-md-3">
 							<div class="panel-stat3 bg-danger">
 								<h4>CONTAS A PAGAR</h4>

@@ -144,6 +144,98 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
+			<from-outcome>cadVendas</from-outcome>
+			<to-view-id>/pages/vendas/cadVendas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>imprimirVendas</from-outcome>
+			<to-view-id>/pages/vendas/imprimirVendas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadContasPagar</from-outcome>
+			<to-view-id>/pages/contasPagar/cadContasPagar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>imprimir</from-outcome>
+			<to-view-id>/pages/contasPagar/imprimir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadContasReceber</from-outcome>
+			<to-view-id>/pages/contasReceber/cadContasReceber.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>imprimirContasReceber</from-outcome>
+			<to-view-id>/pages/contasReceber/imprimirContasReceber.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadOutrosLancamentos</from-outcome>
+			<to-view-id>/pages/outroslancamentos/cadOutrosLancamentos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>imprimirOutrosLancamentos</from-outcome>
+			<to-view-id>/pages/outroslancamentos/imprimirOutrosLancamentos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadProduto</from-outcome>
+			<to-view-id>/pages/produtos/cadProduto.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consProduto</from-outcome>
+			<to-view-id>/pages/produtos/consProduto.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
 			<from-outcome>FinanceMate</from-outcome>
 			<to-view-id>http://www.financemate.com.br/</to-view-id>
 			<redirect />

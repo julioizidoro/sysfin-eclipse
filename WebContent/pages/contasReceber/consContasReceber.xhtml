@@ -12,7 +12,7 @@
 		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
              <img src="../../resources/img/ajax-carregando.gif" />
         </p:dialog>
-		<br /><br /><br /><br />
+		<br /><br /><br /><br /><br />
 			<h:panelGrid columns="1"  style="margin-left:17%;  margin-top: -4%;">
                 <p:outputLabel value="Unidade" for="cliente"  class="left3" style="margin-left: 30%"/> 
               <p:selectOneMenu id="cliente" class="left3" style="width:200px;"  value="#{contasReceberMB.cliente}"   converter="ClienteConverter"
@@ -93,7 +93,7 @@
                             </h:outputText>                                      
                         </p:column>
                         <p:column headerText="N° Venda" style="width:7%; background:white; text-align:center; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
-                             <h:outputText  value="#{contasReceber.venda}" style="font-size:12px;"/>                                     
+                             <p:commandLink value="#{contasReceber.venda}" action="#{contasReceberMB.informacoesVendas(contasReceber)}" style="font-size:12px;"/>                                     
                         </p:column>
                         <p:column headerText="Cob" style="width:3%; background:white; color:black; font-size:12px; border:none; text-align:center;" styleClass="alinharCenter">
                             <h:outputText value="#{contasReceberMB.numeroCob(contasReceber.idcontasReceber)}" style="font-size:12px;"/>                                     
