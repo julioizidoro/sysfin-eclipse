@@ -61,8 +61,7 @@ public class GerarRelatorio {
         InputStream reportStream = facesContext.getExternalContext().getResourceAsStream(caminhoRelatorio);  
         EntityManager mg = ConectionFactory.getConnection();
         mg.getTransaction().begin();
-        EntityManagerImpl factory = (EntityManagerImpl) mg;
-        Connection conn = ((EntityManagerImpl) (mg.getDelegate())).getServerSession().getAccessor().getConnection();
+        Connection conn = ConectionFactory.getConexao();
         
 
         if (subDir!=null){

@@ -7,6 +7,10 @@
 package br.com.financemate.connection;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,8 +34,19 @@ public class ConectionFactory {
         emf = Persistence.createEntityManagerFactory("sysfinPU");
         manager = emf.createEntityManager();
         if (!manager.isOpen()) {
-        	JOptionPane.showMessageDialog(null, "Conex√£o fechada");
+        	JOptionPane.showMessageDialog(null, "Conex„o fechada");
         }
         return manager;
+    }
+    
+    public static Connection getConexao(){
+    	Connection conexao = null;
+		try {
+			conexao = DriverManager.getConnection("jdbc:mysql://191.191.20.138:8082/sysfin", "root", "jfhmaster123");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return conexao;
     }
 }
