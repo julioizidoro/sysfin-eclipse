@@ -9,7 +9,7 @@
 	<ui:define name="corpo">
 		<h:form id="frmConsultaCliente">
 		<p:growl id="growl" showDetail="true" sticky="false" life="3000"/> 
-		<br/> 
+		<br/> <br/> <br/>  
 			<p:commandLink   action="#{clienteMB.novo()}" style="margin-left:94.5%;text-decoration:none;" title="Novo Lançamento">
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{clienteMB.retornoDialogNovo}" update="growl, idTabelaCliente"/>

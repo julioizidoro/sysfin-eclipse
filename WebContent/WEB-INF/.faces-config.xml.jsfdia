@@ -192,28 +192,27 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:*:18" PATH="*" SHAPE="32,2145,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:*:18" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="filtrarConsContaPagar::#pages#contasPagar#filtrarConsContaPagar.xhtml"
+    NAME="output" PATH="/pages/contasPagar/filtrarConsContaPagar.xhtml"
+    TARGET="rules:#pages#contasPagar#filtrarConsContaPagar.xhtml"
+    TITLE="filtrarConsContaPagar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:19" PATH="*" SHAPE="32,2257,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:19" NAME="item" PATH="*" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="imprimir::#pages#contasPagar#imprimir.xhtml"
     NAME="output" PATH="/pages/contasPagar/imprimir.xhtml"
     TARGET="rules:#pages#contasPagar#imprimir.xhtml" TITLE="imprimir" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:*:19" PATH="*" SHAPE="32,2257,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:*:19" NAME="item" PATH="*" model-entity="JSFProcessItem">
+ <PROCESS-ITEM NAME="rules:*:20" PATH="*" SHAPE="32,2369,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:20" NAME="item" PATH="*" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
     ID="cadContasReceber::#pages#contasReceber#cadContasReceber.xhtml"
     NAME="output" PATH="/pages/contasReceber/cadContasReceber.xhtml"
     TARGET="rules:#pages#contasReceber#cadContasReceber.xhtml"
     TITLE="cadContasReceber" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
- </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:*:20" PATH="*" SHAPE="32,2369,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:*:20" NAME="item" PATH="*" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT
-    ID="imprimirContasReceber::#pages#contasReceber#imprimirContasReceber.xhtml"
-    NAME="output"
-    PATH="/pages/contasReceber/imprimirContasReceber.xhtml"
-    TARGET="rules:#pages#contasReceber#imprimirContasReceber.xhtml"
-    TITLE="imprimirContasReceber" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM
@@ -223,11 +222,11 @@
  <PROCESS-ITEM NAME="rules:*:21" PATH="*" SHAPE="32,2481,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:*:21" NAME="item" PATH="*" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="cadOutrosLancamentos::#pages#outroslancamentos#cadOutrosLancamentos.xhtml"
+    ID="imprimirContasReceber::#pages#contasReceber#imprimirContasReceber.xhtml"
     NAME="output"
-    PATH="/pages/outroslancamentos/cadOutrosLancamentos.xhtml"
-    TARGET="rules:#pages#outroslancamentos#cadOutrosLancamentos.xhtml"
-    TITLE="cadOutrosLancamentos" model-entity="JSFProcessItemOutput"/>
+    PATH="/pages/contasReceber/imprimirContasReceber.xhtml"
+    TARGET="rules:#pages#contasReceber#imprimirContasReceber.xhtml"
+    TITLE="imprimirContasReceber" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#vendas#imprimirVendas.xhtml"
@@ -235,11 +234,11 @@
  <PROCESS-ITEM NAME="rules:*:22" PATH="*" SHAPE="32,2593,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:*:22" NAME="item" PATH="*" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="imprimirOutrosLancamentos::#pages#outroslancamentos#imprimirOutrosLancamentos.xhtml"
+    ID="cadOutrosLancamentos::#pages#outroslancamentos#cadOutrosLancamentos.xhtml"
     NAME="output"
-    PATH="/pages/outroslancamentos/imprimirOutrosLancamentos.xhtml"
-    TARGET="rules:#pages#outroslancamentos#imprimirOutrosLancamentos.xhtml"
-    TITLE="imprimirOutrosLancamentos" model-entity="JSFProcessItemOutput"/>
+    PATH="/pages/outroslancamentos/cadOutrosLancamentos.xhtml"
+    TARGET="rules:#pages#outroslancamentos#cadOutrosLancamentos.xhtml"
+    TITLE="cadOutrosLancamentos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM
@@ -249,9 +248,11 @@
  <PROCESS-ITEM NAME="rules:*:23" PATH="*" SHAPE="32,2705,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:*:23" NAME="item" PATH="*" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="cadProduto::#pages#produtos#cadProduto.xhtml" NAME="output"
-    PATH="/pages/produtos/cadProduto.xhtml"
-    TARGET="rules:#pages#produtos#cadProduto.xhtml" TITLE="cadProduto" model-entity="JSFProcessItemOutput"/>
+    ID="imprimirOutrosLancamentos::#pages#outroslancamentos#imprimirOutrosLancamentos.xhtml"
+    NAME="output"
+    PATH="/pages/outroslancamentos/imprimirOutrosLancamentos.xhtml"
+    TARGET="rules:#pages#outroslancamentos#imprimirOutrosLancamentos.xhtml"
+    TITLE="imprimirOutrosLancamentos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM
@@ -264,20 +265,32 @@
  <PROCESS-ITEM NAME="rules:*:24" PATH="*" SHAPE="32,2817,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:*:24" NAME="item" PATH="*" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
-    ID="consProduto::#pages#produtos#consProduto.xhtml" NAME="output"
-    PATH="/pages/produtos/consProduto.xhtml"
-    TARGET="rules:#pages#produtos#consProduto.xhtml" TITLE="consProduto" model-entity="JSFProcessItemOutput"/>
+    ID="cadProduto::#pages#produtos#cadProduto.xhtml" NAME="output"
+    PATH="/pages/produtos/cadProduto.xhtml"
+    TARGET="rules:#pages#produtos#cadProduto.xhtml" TITLE="cadProduto" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:*:25" PATH="*" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:*:25" NAME="item" PATH="*" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="FinanceMate::http:##www.financemate.com.br#"
-    NAME="output" PATH="http://www.financemate.com.br/"
-    TARGET="rules:http:##www.financemate.com.br#" TITLE="FinanceMate" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="consProduto::#pages#produtos#consProduto.xhtml" NAME="output"
+    PATH="/pages/produtos/consProduto.xhtml"
+    TARGET="rules:#pages#produtos#consProduto.xhtml" TITLE="consProduto" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#produtos#consProduto.xhtml"
   PATH="/pages/produtos/consProduto.xhtml" SHAPE="240,2833,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#produtos#cadProduto.xhtml"
   PATH="/pages/produtos/cadProduto.xhtml" SHAPE="240,2721,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:26" PATH="*" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:26" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="FinanceMate::http:##www.financemate.com.br#"
+    NAME="output" PATH="http://www.financemate.com.br/"
+    TARGET="rules:http:##www.financemate.com.br#" TITLE="FinanceMate" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#pages#contasPagar#filtrarConsContaPagar.xhtml"
+  PATH="/pages/contasPagar/filtrarConsContaPagar.xhtml"
+  SHAPE="240,2161,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

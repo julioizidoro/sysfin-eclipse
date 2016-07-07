@@ -172,6 +172,16 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
+			<from-outcome>filtrarConsContaPagar</from-outcome>
+			<to-view-id>/pages/contasPagar/filtrarConsContaPagar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
 			<from-outcome>imprimir</from-outcome>
 			<to-view-id>/pages/contasPagar/imprimir.xhtml</to-view-id>
 			<redirect />
