@@ -198,17 +198,18 @@
 		</h:form>
 
 	        <h:form>
-	        <br />
+	        <br /><br />
+	        
 	        <h:panelGrid width="100%;"  style="margin-left:17%; ">
 	        	<h3 style=" color:black;">VENDAS</h3>
-		         <p:chart type="bar" model="#{grafico.animatedModel2}" style="width:60%;" responsive="true"/>
+		         <p:chart type="bar" model="#{grafico.animatedModel2}" style="width:62%;" responsive="true"/>
 		   		<br/>
 			</h:panelGrid>
 					<div class="padding-md"> 
 					<div class="row">
 						<h:panelGrid style="margin-left:80%; width:80%; margin-top:-14%;">
 							<div class="col-sm-6 col-md-3"> 
-								<div class="panel-stat3 bg-success"> 
+								<div class="panel-stat3 bg-success">  
 									<h4>FATURAMENTO </h4>
 									<h3 class="m-top-none" id="userCount" style="color:black;">R$: #{grafico.valorTotalFaturamento}</h3>
 									<span class="m-left-xs" style="color:black;">em 2016</span>
@@ -243,7 +244,7 @@
 						</div><!-- /.col -->
 					</h:panelGrid>
 			</div>
-				<br />
+				<br />	
 			<h:panelGrid style="margin-left:17%; margin-top:-27%;" width="100%;">
 				
 				<h4 style="color:black;">ÚLTIMAS VENDAS</h4>

@@ -18,6 +18,7 @@ public class FluxoCaixaBean {
 
 	private List<Fluxocaixa> listaFluxo;
     private Cliente cliente;
+    private float saldo = 0.0f;
     
 
     public FluxoCaixaBean(Date dataInicial, Date dataFinal, Cliente cliente, String tipo) {
@@ -114,7 +115,8 @@ public class FluxoCaixaBean {
             FluxoCaixaFacade fluxoCaixaFacade = new FluxoCaixaFacade();
             for(int i=0;i<listaFluxo.size();i++){
                 Fluxocaixa fluxo = listaFluxo.get(i);
-                fluxo.setSaldo(fluxo.getValorContasReceber() - fluxo.getValorContasPagar());
+                saldo = saldo + (fluxo.getValorContasReceber() - fluxo.getValorContasPagar());
+                fluxo.setSaldo(saldo);
                 try {
 					fluxoCaixaFacade.salvar(fluxo);
 				} catch (SQLException e) {
@@ -122,6 +124,6 @@ public class FluxoCaixaBean {
 					e.printStackTrace();
 				}
             }
-        }
+        } 
     }
 }
