@@ -69,7 +69,8 @@ public class CadVendasMB implements Serializable {
 	private List<Formapagamento> listaFormaPagamento;
 	private Float valorPagarReceber;
 	private List<Formapagamento> listaSelecionadosFormaPagamentos;
-	
+	private String corPagarReceber = "color:black;";
+	 
 	@PostConstruct
 	public void init(){
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -81,14 +82,18 @@ public class CadVendasMB implements Serializable {
 		listaFormaPagamento = (List<Formapagamento>) session.getAttribute("listaFormaPagamento");
 		valorPagarReceber = (Float) session.getAttribute("valorPagarReceber");
 		saldoRestante = (Float) session.getAttribute("saldoRestante");
+		corPagarReceber = (String) session.getAttribute("corPagarReceber");
 		session.removeAttribute("formapagamento");
 		session.removeAttribute("saldoRestante");
+		session.removeAttribute("corPagarReceber");
 		gerarListaCliente(); 
 		if (vendas == null) {
 			vendas = new Vendas();
 		}else{
 			if (cliente == null) {
 				cliente = vendas.getCliente();
+			}else{
+				setandoValoresEmissaoNota();
 			}
 			gerarListaProduto();
 			if (produto == null) {
@@ -364,6 +369,20 @@ public class CadVendasMB implements Serializable {
 		this.cliente = cliente;
 	}
 
+	
+
+	public String getCorPagarReceber() {
+		return corPagarReceber;
+	}
+
+
+
+
+	public void setCorPagarReceber(String corPagarReceber) {
+		this.corPagarReceber = corPagarReceber;
+	}
+
+
 
 
 	public void gerarListaCliente() {
@@ -421,6 +440,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("produto", produto);
         session.setAttribute("cliente", cliente);
         session.setAttribute("valorPagarReceber", valorPagarReceber);
+        session.setAttribute("corPagarReceber", corPagarReceber);
 		return "cadBackOffice";
 	}
 	
@@ -432,6 +452,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("produto", produto);
         session.setAttribute("cliente", cliente);
         session.setAttribute("valorPagarReceber", valorPagarReceber);
+        session.setAttribute("corPagarReceber", corPagarReceber);
         return "cadVendas";
 	}
 	
@@ -440,6 +461,7 @@ public class CadVendasMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
         session.setAttribute("valorPagarReceber", valorPagarReceber);
+        session.setAttribute("corPagarReceber", corPagarReceber);
 		return "adicionarConta";
 	}
 	
@@ -451,6 +473,7 @@ public class CadVendasMB implements Serializable {
         	listaFormaPagamento = new ArrayList<Formapagamento>(); 
         }
         session.setAttribute("listaFormaPagamento", listaFormaPagamento);
+        session.setAttribute("corPagarReceber", corPagarReceber);
 		return "cadRecebimento";
 	}
 	
@@ -469,9 +492,9 @@ public class CadVendasMB implements Serializable {
     }
 	
 	public String nomeConta(){
-		if (valorPagarReceber > 0) {
+		if (corPagarReceber.equalsIgnoreCase("color:red;")) {
 			return "Lançar Conta a Pagar";
-		}else if (valorPagarReceber < 0){
+		}else if (corPagarReceber.equalsIgnoreCase("color:blue;")){
 			return "Lançar Conta a Receber";
 		}else{
 			return "Valor Zerado";
@@ -479,6 +502,9 @@ public class CadVendasMB implements Serializable {
 	}
 	
 	public String voltarCadastro(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("corPagarReceber", corPagarReceber);
 		return "cadBackOffice";
 	}
 	
@@ -487,6 +513,7 @@ public class CadVendasMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
         session.setAttribute("saldoRestante", saldoRestante);
+        session.setAttribute("corPagarReceber", corPagarReceber);
 		return "lancaFormaPagamento";
 	}
 	
@@ -497,6 +524,7 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("planocontas", planocontas);
         session.setAttribute("produto", produto);
         session.setAttribute("cliente", cliente);
+        session.setAttribute("corPagarReceber", corPagarReceber);
 		return "notaFiscal";
 	}
 	
@@ -554,11 +582,27 @@ public class CadVendasMB implements Serializable {
 		vendas.setLiquidoVendas(vendas.getComissaoLiquidaTotal() - (vendas.getValorDesconto() + vendas.getDespesasFinanceiras() + vendas.getComissaoFuncionarios() + vendas.getComissaoTerceiros()));
 		valorPagarReceber = vendas.getValorBruto() - (vendas.getComissaoLiquidaTotal() + vendas.getValorPagoFornecedor());
 		vendas.setLiquidoReceber(vendas.getValorLiquido() - vendas.getValorPagoFornecedor());
+		escolherCorPagarReceber();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		session.setAttribute("valorPagarReceber", valorPagarReceber);
 		session.setAttribute("vendas", vendas);
 	} 
+	
+	 
+	public void escolherCorPagarReceber(){
+		if (valorPagarReceber == null) {
+			valorPagarReceber = 0f; 
+		}
+		if (valorPagarReceber > 0) {
+			corPagarReceber = "color:blue;";
+		}else if(valorPagarReceber < 0){
+			valorPagarReceber = valorPagarReceber * (-1);
+			corPagarReceber = "color:red;";
+		}else{
+			corPagarReceber = "color:black;";
+		}
+	}
 	 
 	
 	public String salvarConta(){
@@ -572,7 +616,7 @@ public class CadVendasMB implements Serializable {
 			contaspagar.setPlanocontas(planocontas);
 			contaspagar.setTipoDocumento(TipoDocumento);
 			contaspagar.setCompetencia(competencia);
-			contaspagar.setDescricao("Conta gerada pela venda");
+			contaspagar.setDescricao(vendas.getNomeCliente());
 			contaspagar.setContaPaga("N");
 			contaspagar.setDataVencimento(vendas.getDataVenda());
 			contaspagar.setFornecedor(vendas.getNomeFornecedor());
@@ -983,6 +1027,20 @@ public class CadVendasMB implements Serializable {
         session.setAttribute("vendas", vendas);
         session.setAttribute("formapagamento", formapagamento);
 		return "lancaFormaPagamento";
+	}
+	
+	
+	public void setandoValoresEmissaoNota(){
+		if (emissaonota == null) {
+			emissaonota = new Emissaonota();
+		} 
+		emissaonota.setBairro(cliente.getBairro());
+		emissaonota.setCep(cliente.getCep());
+		emissaonota.setCidade(cliente.getCidade());
+		emissaonota.setComplemento(cliente.getComplemento());
+		emissaonota.setCpnj(cliente.getCnpj());
+		emissaonota.setEndereco(cliente.getTipoLogradouro() + " " + cliente.getLogradouro());
+		emissaonota.setEstado(cliente.getEstado());
 	}
 
 }

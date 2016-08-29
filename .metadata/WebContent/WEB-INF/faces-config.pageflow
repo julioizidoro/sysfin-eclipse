@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14724822537120" configfile="/sysfin-eclipse/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="4018" id="pf14724823418561" referenceLink="//@navigationRule.18/@fromViewId|" outlinks="pf14724823418562 pf14724823418563 pf14724823418564 pf14724823418565 pf14724823418566 pf14724823418567 pf14724823418568 pf14724823418569 pf147248234185610 pf147248234185611 pf147248234185612 pf147248234185613 pf147248234185614 pf147248234185615 pf147248234185616 pf147248234185617 pf147248234185618 pf147248234185619 pf147248234185621 pf147248234185622 pf147248234185623 pf147248234185624 pf147248234185625 pf147248234185626 pf147248234185627 pf147248234185628 pf14724977506530" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="178" id="pf147248234185629" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14724823418562" path="index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/contasPagar/consContaPagar.xhtml" x="338" y="562" id="pf147248234185630" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14724823418563" path="/pages/contasPagar/consContaPagar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/contasPagar/cadContasPagar.xhtml" x="338" y="946" id="pf147248234185631" referenceLink="//@navigationRule.17/@navigationCase.0/@toViewId|" inlinks="pf14724823418564 pf147248234185619" path="/pages/contasPagar/cadContasPagar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/cliente/consCliente.xhtml" x="338" y="1330" id="pf147248234185732" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf14724823418565" path="/pages/cliente/consCliente.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/banco/consBanco.xhtml" x="338" y="1714" id="pf147248234185733" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf14724823418566" path="/pages/banco/consBanco.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="principal.xhtml" x="338" y="2098" id="pf147248234185734" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf14724823418567" path="principal.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/contasPagar/imprimir.xhtml" x="338" y="2482" id="pf147248234185735" referenceLink="//@navigationRule.19/@navigationCase.0/@toViewId|" inlinks="pf14724823418568 pf147248234185610 pf147248234185621" path="/pages/contasPagar/imprimir.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="200.175.61.147:82/ftproot/sysfin/contasPagar/" x="338" y="2866" id="pf147248234185736" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" inlinks="pf14724823418569" path="200.175.61.147:82/ftproot/sysfin/contasPagar/"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/contasReceber/consContasReceber.xhtml" x="338" y="3250" id="pf147248234185737" referenceLink="//@navigationRule.9/@navigationCase.0/@toViewId|" inlinks="pf147248234185611" path="/pages/contasReceber/consContasReceber.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/tipoPlanoConta/consTipoPlanoConta.xhtml" x="338" y="3634" id="pf147248234185738" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" inlinks="pf147248234185612" path="/pages/tipoPlanoConta/consTipoPlanoConta.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/outroslancamentos/consOutrosLancamentos.xhtml" x="338" y="4018" id="pf147248234185739" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" inlinks="pf147248234185613" path="/pages/outroslancamentos/consOutrosLancamentos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/outroslancamentos/conciliacaoBancaria.xhtml" x="338" y="4402" id="pf147248234185740" referenceLink="//@navigationRule.12/@navigationCase.0/@toViewId|" inlinks="pf147248234185614" path="/pages/outroslancamentos/conciliacaoBancaria.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/planoconta/consPlanoConta.xhtml" x="338" y="4786" id="pf147248234185841" referenceLink="//@navigationRule.13/@navigationCase.0/@toViewId|" inlinks="pf147248234185615" path="/pages/planoconta/consPlanoConta.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/vendas/consVendas.xhtml" x="338" y="5170" id="pf147248234185842" referenceLink="//@navigationRule.14/@navigationCase.0/@toViewId|" inlinks="pf147248234185616" path="/pages/vendas/consVendas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/vendas/cadVendas.xhtml" x="338" y="5554" id="pf147248234185843" referenceLink="//@navigationRule.15/@navigationCase.0/@toViewId|" inlinks="pf147248234185617" path="/pages/vendas/cadVendas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/vendas/imprimirVendas.xhtml" x="338" y="5938" id="pf147248234185844" referenceLink="//@navigationRule.16/@navigationCase.0/@toViewId|" inlinks="pf147248234185618" path="/pages/vendas/imprimirVendas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/contasReceber/cadContasReceber.xhtml" x="338" y="6706" id="pf147248234185846" referenceLink="//@navigationRule.20/@navigationCase.0/@toViewId|" inlinks="pf147248234185622" path="/pages/contasReceber/cadContasReceber.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/contasReceber/imprimirContasReceber.xhtml" x="338" y="7090" id="pf147248234185847" referenceLink="//@navigationRule.21/@navigationCase.0/@toViewId|" inlinks="pf147248234185623" path="/pages/contasReceber/imprimirContasReceber.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/outroslancamentos/cadOutrosLancamentos.xhtml" x="338" y="7474" id="pf147248234185848" referenceLink="//@navigationRule.22/@navigationCase.0/@toViewId|" inlinks="pf147248234185624" path="/pages/outroslancamentos/cadOutrosLancamentos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/outroslancamentos/imprimirOutrosLancamentos.xhtml" x="338" y="7858" id="pf147248234185849" referenceLink="//@navigationRule.23/@navigationCase.0/@toViewId|" inlinks="pf147248234185625" path="/pages/outroslancamentos/imprimirOutrosLancamentos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/produtos/cadProduto.xhtml" x="338" y="8242" id="pf147248234185850" referenceLink="//@navigationRule.24/@navigationCase.0/@toViewId|" inlinks="pf147248234185626" path="/pages/produtos/cadProduto.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/produtos/consProduto.xhtml" x="338" y="8626" id="pf147248234185851" referenceLink="//@navigationRule.25/@navigationCase.0/@toViewId|" inlinks="pf147248234185627" path="/pages/produtos/consProduto.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="http://www.financemate.com.br/" x="338" y="9010" id="pf147248234185952" referenceLink="//@navigationRule.26/@navigationCase.0/@toViewId|" inlinks="pf147248234185628" path="http://www.financemate.com.br/"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/contasPagar/filtrarConsContaPagar.xhtml" id="pf14724977506541" referenceLink="//@navigationRule.18/@navigationCase.0/@toViewId|" inlinks="pf14724977506530" path="/pages/contasPagar/filtrarConsContaPagar.xhtml"/>
+  <links id="pf14724823418562" target="pf147248234185629" source="pf14724823418561" outcome="index" redirect="true"/>
+  <links id="pf14724823418563" target="pf147248234185630" source="pf14724823418561" outcome="consContaPagar" redirect="true"/>
+  <links id="pf14724823418564" target="pf147248234185631" source="pf14724823418561" outcome="ContaPagar" redirect="true"/>
+  <links id="pf14724823418565" target="pf147248234185732" source="pf14724823418561" outcome="consCliente" redirect="true"/>
+  <links id="pf14724823418566" target="pf147248234185733" source="pf14724823418561" outcome="consBanco" redirect="true"/>
+  <links id="pf14724823418567" target="pf147248234185734" source="pf14724823418561" outcome="principal" redirect="true"/>
+  <links id="pf14724823418568" target="pf147248234185735" source="pf14724823418561" outcome="Imprimir" redirect="true"/>
+  <links id="pf14724823418569" target="pf147248234185736" source="pf14724823418561" outcome="Download" redirect="true"/>
+  <links id="pf147248234185610" target="pf147248234185735" source="pf14724823418561" outcome="relatorioContasPagar" redirect="true"/>
+  <links id="pf147248234185611" target="pf147248234185737" source="pf14724823418561" outcome="consContasReceber" redirect="true"/>
+  <links id="pf147248234185612" target="pf147248234185738" source="pf14724823418561" outcome="consTipoPlanoConta" redirect="true"/>
+  <links id="pf147248234185613" target="pf147248234185739" source="pf14724823418561" outcome="consOutrosLancamentos" redirect="true"/>
+  <links id="pf147248234185614" target="pf147248234185740" source="pf14724823418561" outcome="conciliacaoBancaria" redirect="true"/>
+  <links id="pf147248234185615" target="pf147248234185841" source="pf14724823418561" outcome="consPlanoConta" redirect="true"/>
+  <links id="pf147248234185616" target="pf147248234185842" source="pf14724823418561" outcome="consVendas" redirect="true"/>
+  <links id="pf147248234185617" target="pf147248234185843" source="pf14724823418561" outcome="cadVendas" redirect="true"/>
+  <links id="pf147248234185618" target="pf147248234185844" source="pf14724823418561" outcome="imprimirVendas" redirect="true"/>
+  <links id="pf147248234185619" target="pf147248234185631" source="pf14724823418561" outcome="cadContasPagar" redirect="true"/>
+  <links id="pf147248234185621" target="pf147248234185735" source="pf14724823418561" outcome="imprimir" redirect="true"/>
+  <links id="pf147248234185622" target="pf147248234185846" source="pf14724823418561" outcome="cadContasReceber" redirect="true"/>
+  <links id="pf147248234185623" target="pf147248234185847" source="pf14724823418561" outcome="imprimirContasReceber" redirect="true"/>
+  <links id="pf147248234185624" target="pf147248234185848" source="pf14724823418561" outcome="cadOutrosLancamentos" redirect="true"/>
+  <links id="pf147248234185625" target="pf147248234185849" source="pf14724823418561" outcome="imprimirOutrosLancamentos" redirect="true"/>
+  <links id="pf147248234185626" target="pf147248234185850" source="pf14724823418561" outcome="cadProduto" redirect="true"/>
+  <links id="pf147248234185627" target="pf147248234185851" source="pf14724823418561" outcome="consProduto" redirect="true"/>
+  <links id="pf147248234185628" target="pf147248234185952" source="pf14724823418561" outcome="FinanceMate" redirect="true"/>
+  <links id="pf14724977506530" target="pf14724977506541" source="pf14724823418561" outcome="filtrarConsContaPagar" redirect="true"/>
+</pageflow:Pageflow>

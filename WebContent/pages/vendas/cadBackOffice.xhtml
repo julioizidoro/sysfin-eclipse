@@ -74,18 +74,18 @@
            			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText> 
            </h:panelGrid>
-            <h:panelGrid columns="1" style="margin-left:28%; margin-top:-9.3%;">
+            <h:panelGrid columns="1" style="margin-left:28.5%; margin-top:-9.3%;">
            		<p:outputLabel value="Observação" />
            		<p:inputText value="#{cadVendasMB.vendas.observacao}" size="66"/>
            </h:panelGrid>
            <br />
            <h:panelGrid columns="1" style="margin-left:1%;">
            		<p:outputLabel value="Fornecedor" />
-           		<p:inputText value="#{cadVendasMB.vendas.nomeFornecedor}" size="67"/>
+           		<p:inputText value="#{cadVendasMB.vendas.nomeFornecedor}" size="60"/>
            </h:panelGrid>
-           <h:panelGrid columns="1" style="margin-left:81%; margin-top:-9.3%;">
-           		<p:outputLabel value="Pago Fornecedor"/>
-           		<p:inputText value="#{cadVendasMB.vendas.valorPagoFornecedor}" size="12" style="text-align: right;">
+           <h:panelGrid columns="1" style="margin-left:68%; margin-top:-9.3%;">
+           		<p:outputLabel value="Pgto Cliente direto fornecedor"/>
+           		<p:inputText value="#{cadVendasMB.vendas.valorPagoFornecedor}" title="Inserir o valor pago pelo cliente direto para o fornecedor. Este valor será abatido do contas a receber e do valor a ser pago ao fornecedor" size="18" style="text-align: right;margin-left:10%;">
            			<p:ajax event="change" listener="#{cadVendasMB.calculoValoresBackOffice()}" update="idTotalPagRec"/>
            			<f:convertNumber pattern="##,###,###,###.##"/>
            		</p:inputText>
@@ -93,7 +93,7 @@
            <br />
            <h:panelGrid columns="1" style="margin-left:1%;">
            		<p:outputLabel value="Pagar/Receber" style="margin-left:9%;" /> 
-           		<p:inputText id="idTotalPagRec" value="#{cadVendasMB.valorPagarReceber}" disabled="true" size="12" style="text-align: right;">
+           		<p:inputText id="idTotalPagRec" value="#{cadVendasMB.valorPagarReceber}" readonly="true" size="12" style="text-align: right;#{cadVendasMB.corPagarReceber}">
            			<f:convertNumber currencySymbol="" type="currency"/>
            		</p:inputText>
            </h:panelGrid>
@@ -108,7 +108,7 @@
             	<p:commandLink title="Adicionar uma conta" style="text-decoration: none"   action="#{cadVendasMB.adicionarConta()}" >
                 	<img src="../../resources/img/iconeplus.png" width="40" height="40"/>
             	</p:commandLink>
-            </h:panelGrid>
+            </h:panelGrid> 
              <br /> 
            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
         		<p:commandButton style="margin-left:35%;" value="Sim" action="#{cadVendasMB.salvarVenda()}" type="button" styleClass="ui-confirmdialog-yes"  />

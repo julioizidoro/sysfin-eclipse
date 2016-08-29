@@ -655,7 +655,7 @@ public class ContasPagarMB implements Serializable{
         options.put("closable", false);
         RequestContext.getCurrentInstance().openDialog("filtrarConsContaPagar", options, null);
     }
-	
+	 
 	public String editar(Contaspagar contaspagar){
         if (contaspagar!=null){
             FacesContext fc = FacesContext.getCurrentInstance();

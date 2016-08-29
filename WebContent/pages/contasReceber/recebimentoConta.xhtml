@@ -107,7 +107,7 @@
             	<p:outputLabel value="Valor recebido"/>
             </h:panelGrid>
             <h:panelGrid style="margin-left:76.5%; margin-top:-5%;">
-            	<p:inputText id="idValorPagoRecebido" style="text-align: right;" value="#{recebimentoContaMB.contasReceber.valorParcela}" size="15" readonly="true" disabled="true">
+            	<p:inputText id="idValorPagoRecebido" style="text-align: right;" value="#{recebimentoContaMB.valorTotal}" size="15" readonly="true" disabled="true">
             		<f:convertNumber pattern="##,###,###,###.##"/>
             	</p:inputText> 
             </h:panelGrid>

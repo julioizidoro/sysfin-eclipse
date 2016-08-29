@@ -28,7 +28,7 @@
 				<img src="../../resources/img/iconeplus.png" style="margin-left:15%;border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update="growl, idTabelaContaReceber, contasVenc, contasVencer, contasReceber"/>
             </p:commandLink>  
-            <p:commandLink id="idImagemFiltro"  action="#{contasReceberMB.coresFiltrar()}" update="@all" style="margin-left:-16%; text-decoration:none;" title="Filtros">
+            <p:commandLink id="idImagemFiltro"  action="#{contasReceberMB.coresFiltrar()}" update="idImagemFiltro, idTabelaContaReceber" style="margin-left:-16%; text-decoration:none;" title="Filtros">
 				<img  src="#{contasReceberMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/> 
            		<p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogFiltrar}" update="idTabelaContaReceber, contasVenc, contasVencer, contasReceber"/>
             </p:commandLink>
@@ -93,7 +93,7 @@
                             </h:outputText>                                      
                         </p:column>
                         <p:column headerText="N° Venda" style="width:7%; background:white; text-align:center; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
-                             <p:commandLink value="#{contasReceber.venda}" action="#{contasReceberMB.informacoesVendas(contasReceber)}" style="font-size:12px;"/>                                     
+                             <p:commandLink value="#{contasReceber.venda}" action="#{contasReceberMB.informacoesVendas(contasReceber)}" style="font-size:12px;text-decoration:none;color:black;"/>                                     
                         </p:column>
                         <p:column headerText="Cob" style="width:3%; background:white; color:black; font-size:12px; border:none; text-align:center;" styleClass="alinharCenter">
                             <h:outputText value="#{contasReceberMB.numeroCob(contasReceber.idcontasReceber)}" style="font-size:12px;"/>                                     

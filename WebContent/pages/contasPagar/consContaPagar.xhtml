@@ -15,7 +15,7 @@
 				<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 				<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="growl, idTabelaContaPagar, contasVenc, contasVencendo, contasPagar"/>
             </p:commandLink>  
-            <p:commandLink id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="@all" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
+            <p:commandLink id="idImagemFiltro"  action="#{contasPagarMB.coresFiltrar()}" update="idImagemFiltro, idTabelaContaPagar" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Filtros">
 				<img  src="#{contasPagarMB.imagemFiltro}" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
            		<p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogFiltrar}" update="idTabelaContaPagar"/>
             </p:commandLink>

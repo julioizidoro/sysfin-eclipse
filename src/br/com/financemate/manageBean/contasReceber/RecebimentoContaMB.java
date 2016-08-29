@@ -51,6 +51,7 @@ public class RecebimentoContaMB implements  Serializable{
     private Date dataRecebimentoParcial;
     private List<Contasreceber> listaRecebimentoParial;
     private Float valorPagoParcial;
+    private Float valorTotal;
     
     
     @PostConstruct
@@ -65,7 +66,9 @@ public class RecebimentoContaMB implements  Serializable{
         cliente = contasReceber.getCliente();
         banco = contasReceber.getBanco();
 		listaRecebimentoParial = new ArrayList<Contasreceber>();
-		
+		if (valorTotal == null || valorTotal == 0f) {
+			valorTotal = contasReceber.getValorParcela();
+		}
     }
     
     
@@ -204,9 +207,23 @@ public class RecebimentoContaMB implements  Serializable{
         this.contasReceber = contasReceber;
     }
 
-   
+    
       
-    public void gerarListaBanco(){
+    public Float getValorTotal() {
+		return valorTotal;
+	}
+
+
+
+
+	public void setValorTotal(Float valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+
+
+
+	public void gerarListaBanco(){
         if (cliente!=null){
             BancoFacade bancoFacade = new BancoFacade();
             String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
@@ -249,7 +266,7 @@ public class RecebimentoContaMB implements  Serializable{
 			        contasReceber.setBanco(banco);
 			        contasReceber.setCliente(cliente);
 			        contasReceber.setUsuario(usuarioLogadoMB.getUsuario());
-			        contasReceber.setValorPago(contasReceber.getValorParcela());
+			        contasReceber.setValorPago(valorTotal);
 			        contasReceber = contasReceberFacade.salvar(contasReceber);
 			        lancaOutrosLancamentos(contasReceber);
 			        session.removeAttribute("contareceber");
@@ -378,7 +395,7 @@ public class RecebimentoContaMB implements  Serializable{
 			contasReceber.setJuros(0f);
 		}
     	
-    	contasReceber.setValorParcela(contasReceber.getValorParcela() + contasReceber.getJuros());
+    	valorTotal = valorTotal + contasReceber.getJuros();
     }
     
     public void DebitarDesagio(){
@@ -386,7 +403,7 @@ public class RecebimentoContaMB implements  Serializable{
 			contasReceber.setDesagio(0f);
 		}
     	 
-    	contasReceber.setValorParcela(contasReceber.getValorParcela() - contasReceber.getDesagio());
+    	valorTotal = valorTotal - contasReceber.getDesagio();
     }
     
     

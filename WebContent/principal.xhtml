@@ -269,8 +269,8 @@
 						<h:outputText value="#{venda.dataVenda}">
 							<f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 						</h:outputText>
-					</h:column>
-					<h:column style="text-align:left">
+					</h:column> 
+					<h:column style="text-align:left;float:right;">
 						<f:facet name="header">VALOR</f:facet>
 						<h:outputText value="#{venda.valorLiquido}" style="text-align:right;">
 							<f:convertNumber currencySymbol="" type="currency"/>
