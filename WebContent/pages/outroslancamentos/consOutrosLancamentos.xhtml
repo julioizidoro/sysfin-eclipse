@@ -29,7 +29,7 @@
 	          			<p:ajax event="change" listener="#{outrosLancamentosMB.nomeComboConta()}" update="idconta"/>
 	          </p:selectOneMenu>  
            </h:panelGrid>  
-           <h:panelGrid columns="2"  style="margin-left: 38.5%; margin-top:-4.2%;">   
+           <h:panelGrid columns="2"  style="margin-left: 34.5%; margin-top:-4.2%;">   
            		<p:outputLabel value="Peridodo" class="left3" style="margin-left:90%;"/>
            		<br />	
            		<p:inputMask mask="99/99/9999" id="dataIni" style="color:gray;"  size="15" maxlength="15" value="#{outrosLancamentosMB.dataInicial}"  class="tabelaRecebimento"  placeholder="Data Inicial" >
@@ -43,7 +43,7 @@
            </h:panelGrid>
            
            
-            <h:panelGrid columns="1" style="margin-left:61%; margin-top:-4.2%;">
+            <h:panelGrid columns="1" style="margin-left:52%; margin-top:-4.2%;">
              	<p:outputLabel value="Conta" for="idconta" class="left3" style="margin-left:40%;"/>
 	              <p:selectOneMenu id="idconta" class="left3" style="width:150px;"  value="#{outrosLancamentosMB.banco}"  converter="BancoConverter"
 	                                 filter="true" filterMatchMode="contains" panelStyle="width:150px">
@@ -53,37 +53,43 @@
 	             </p:selectOneMenu>  
              </h:panelGrid>
              
-              <h:panelGrid style="margin-left:77%; margin-top:-2.7%;" > 
+              <h:panelGrid style="margin-left:66%; margin-top:-2.7%;" > 
 	                <p:commandLink title="Pesquisar" style="text-decoration: none"   action="#{outrosLancamentosMB.gerarPesquisa()}" update="idTabelaOutrosLancamentos, idsaida, identrada, idtotal">
 	                    <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
 	                </p:commandLink>
 	          </h:panelGrid> 
-	          <h:panelGrid columns="5" style="margin-left:84%; margin-top:-3.3%;">
-             <h:panelGrid>   
+	          <h:panelGrid columns="6" style="margin-left:80%; margin-top:-3.3%;">
+             <h:panelGrid >   
 			   
 				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-2%;text-decoration:none;" title="Atualizar Saldo Inicial">
 					<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 					<p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update="growl, idTabelaOutrosLancamentos, idsaida, identrada, idtotal"/>
             	</p:commandLink>
 			 </h:panelGrid>
-			 <h:panelGrid  style="margin-left:-30%; "> 
+			 <h:panelGrid style="margin-left:-24%;">   
+			   
+				<p:commandLink   action="#" style="margin-left:-2%;text-decoration:none;" title="Nova Transferência">
+					<img src="../../resources/img/icone-transferencia1.png" width="32" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+            	</p:commandLink>
+			 </h:panelGrid>
+			 <h:panelGrid  style="margin-left:-50%; "> 
 	            <p:commandLink   action="#{outrosLancamentosMB.consultaSaldoInicial()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Consulta Saldo Inicial" ajax="false">
 					<img src="../../resources/img/receber.png" style="border:solid; border-width: 1px; border-color: #3D9446;width: 32px"/>
 					
 	            </p:commandLink> 
 	         </h:panelGrid> 
-			 <h:panelGrid  style="margin-left:-54.5%; ">  
+			 <h:panelGrid  style="margin-left:-75%; ">  
 	            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
 					<img src="../../resources/img/iconeexportS.png" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
 					<p:dataExporter type="xls" target="idTabelaOutrosLancamentos" fileName="outrosLancamentos" />
 	            </p:commandLink>
 	         </h:panelGrid>
-	         <h:panelGrid  style="margin-left:-80%; ">   
+	         <h:panelGrid  style="margin-left:-100%; ">   
 	            <p:commandLink   action="#{outrosLancamentosMB.conciliacaoBancaria()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Conciliação Bancaria" ajax="false">
 					<img src="../../resources/img/iconeExtrato.png" style="border:solid; border-width: 1px; border-color: #3D9446;" width="32px;"/>
 				</p:commandLink>
 	         </h:panelGrid>   
-	         <h:panelGrid style="margin-left:-104.5%; ">
+	         <h:panelGrid style="margin-left:-125%; ">
 	            <p:commandLink   action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Imprimir">
 					<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
 	            </p:commandLink>   

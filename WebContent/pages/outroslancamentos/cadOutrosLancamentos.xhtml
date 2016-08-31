@@ -37,6 +37,7 @@
                     <f:selectItems  value="#{cadOutrosLancamentosMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                     <f:attribute name="listaCliente" value="#{cadOutrosLancamentosMB.listaCliente}"/>
                     <p:ajax event="change" listener="#{cadOutrosLancamentosMB.gerarListaBanco()}" update="idconta"/>
+                    <p:ajax event="change" listener="#{cadOutrosLancamentosMB.gerarListaPlanoContas()}" update="idPlanoConta"/>
                 </p:selectOneMenu> 
                 </h:panelGrid> 
              <h:panelGrid columns="1" style="margin-left:78.5%; margin-top:-9.5%;"> 

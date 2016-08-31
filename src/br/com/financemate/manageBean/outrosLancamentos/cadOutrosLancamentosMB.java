@@ -21,6 +21,7 @@ import org.primefaces.context.RequestContext;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.OutrosLancamentosFacade;
+import br.com.financemate.facade.PlanoContaTipoFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.manageBean.CadContasPagarMB;
 import br.com.financemate.manageBean.LiberarContasPagarMB;
@@ -30,6 +31,7 @@ import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Outroslancamentos;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Planocontatipo;
 
 @Named
 @ViewScoped
@@ -51,6 +53,8 @@ public class cadOutrosLancamentosMB implements Serializable {
 	private Planocontas planoContas;
 	private List<Planocontas> listaPlanoContas;
 	private String tipoDocumento;
+	private Planocontatipo planocontatipo;
+	private List<Planocontatipo> listaPlanoContaTipo;
 	
 	
 	@PostConstruct
@@ -67,9 +71,10 @@ public class cadOutrosLancamentosMB implements Serializable {
             banco = outrosLancamentos.getBanco();
             tipoDocumento = outrosLancamentos.getTipoDocumento();
             gerarListaBanco();
+            gerarListaPlanoContas();
 		} 
 		gerarListaCliente();
-		gerarListaPlanoContas();
+		//gerarListaPlanoContas();
 		desabilitarUnidade();
 		outrosLancamentos.setDataRegistro(new Date());
 	}
@@ -173,6 +178,31 @@ public class cadOutrosLancamentosMB implements Serializable {
 	}
 
 	
+	
+	public Planocontatipo getPlanocontatipo() {
+		return planocontatipo;
+	}
+
+
+
+	public void setPlanocontatipo(Planocontatipo planocontatipo) {
+		this.planocontatipo = planocontatipo;
+	}
+
+
+
+	public List<Planocontatipo> getListaPlanoContaTipo() {
+		return listaPlanoContaTipo;
+	}
+
+
+
+	public void setListaPlanoContaTipo(List<Planocontatipo> listaPlanoContaTipo) {
+		this.listaPlanoContaTipo = listaPlanoContaTipo;
+	}
+
+
+
 	public void gerarListaBanco(){
 		if (cliente!=null) {
 	        BancoFacade bancoFacade = new BancoFacade();
@@ -292,23 +322,22 @@ public class cadOutrosLancamentosMB implements Serializable {
 		return mensagem;
 	}
 	
-	public void gerarListaPlanoContas() {
-		PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-		try {
-			listaPlanoContas = planoContasFacade.listar();
-			if (listaPlanoContas == null) {
-				listaPlanoContas = new ArrayList<Planocontas>();
-			}
-		} catch (Exception ex) {
-			Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-			mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
-		}
+	//public void gerarListaPlanoContas() {
+	//	PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+	//	try {
+	//		listaPlanoContas = planoContasFacade.listar();
+	//		if (listaPlanoContas == null) {
+		//		listaPlanoContas = new ArrayList<Planocontas>();
+	//		}
+		//} catch (Exception ex) {
+	//		Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+	//		mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
+	//	}
         
-	}
+	//}
 	
-	public String cancelar(){
-        RequestContext.getCurrentInstance().closeDialog(outrosLancamentos);
-        return null;
+	public void cancelar(){
+        RequestContext.getCurrentInstance().closeDialog(null);
     }
 	
 	
@@ -337,6 +366,24 @@ public class cadOutrosLancamentosMB implements Serializable {
 		outrosLancamentos.setValorEntrada(outros.getValorEntrada());
 		outrosLancamentos.setValorSaida(outros.getValorSaida());
 		return outrosLancamentos;
+	}
+	
+	
+	public void gerarListaPlanoContas(){
+		PlanoContaTipoFacade planoContaTipoFacade = new PlanoContaTipoFacade();
+		try {
+			listaPlanoContaTipo = planoContaTipoFacade.listar(cliente.getTipoplanocontas().getIdtipoplanocontas());
+			if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
+				listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+			}
+			listaPlanoContas = new ArrayList<Planocontas>();
+			for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
+				listaPlanoContas.add(listaPlanoContaTipo.get(i).getPlanocontas());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

@@ -156,6 +156,16 @@ public class mensagem {
         context.addMessage(null, new FacesMessage("Não contém uma venda", ""));
     }
     
+    public void existeLogin() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(" Ja existe um cadastro de usuário com este login", ""));
+    }
+    
+    public void notificacao(String msg) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(msg, ""));
+    }
+    
     public void warn() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "Campos em vermelho não preenchido."));
     }

@@ -78,6 +78,10 @@ public class MenuMB implements Serializable{
 		return "consProduto";
 	}
 	
+	public String consUsuario(){
+		return "consUsuario";
+	}
+	
 	
 	public String cobranca() {
 		FacesContext fc = FacesContext.getCurrentInstance();

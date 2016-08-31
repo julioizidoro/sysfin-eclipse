@@ -117,6 +117,7 @@ public class PlanoContaMB implements Serializable {
             session.setAttribute("planoconta", planocontas);
             Map<String, Object> options = new HashMap<String, Object>();
             options.put("closable", false);
+            options.put("contentWidth", 500);
             RequestContext.getCurrentInstance().openDialog("cadPlanoConta", options, null);
         } else {
 
@@ -133,6 +134,7 @@ public class PlanoContaMB implements Serializable {
             session.setAttribute("planoconta", planocontas);
             Map<String, Object> options = new HashMap<String, Object>();
             options.put("closable", false);
+            options.put("contentWidth", 500);
             RequestContext.getCurrentInstance().openDialog("cadPlanoConta", options, null);
             
         }

@@ -31,9 +31,19 @@ public class UsuarioFacade {
         return usuarioDao.consultar(login, senha);
     }
     
+    public Usuario verificarLogin(String login) throws SQLException{
+        usuarioDao = new UsuarioDao();
+        return usuarioDao.verificarLogin(login);
+    }
+    
     public List<Usuario> listar(String nome) throws SQLException{
         usuarioDao = new UsuarioDao();
         return usuarioDao.listar(nome);
+    }
+    
+    public List<Usuario> list(String sql) throws SQLException{
+        usuarioDao = new UsuarioDao();
+        return usuarioDao.list(sql);
     }
     
     public Usuario consultar(int idUsuario) throws SQLException{

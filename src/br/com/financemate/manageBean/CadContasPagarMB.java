@@ -30,6 +30,7 @@ import br.com.financemate.facade.CpTransferenciaFacade;
 import br.com.financemate.facade.FtpDadosFacade;
 import br.com.financemate.facade.NomeArquivoFacade;
 import br.com.financemate.facade.OperacaoUsuarioFacade;
+import br.com.financemate.facade.PlanoContaTipoFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -39,6 +40,7 @@ import br.com.financemate.model.Ftpdados;
 import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Operacaousuairo;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Planocontatipo;
 import br.com.financemate.util.Ftp;
 
 @Named
@@ -70,6 +72,8 @@ public class CadContasPagarMB implements Serializable{
 	private Operacaousuairo operacaousuairo;
 	private List<Cptransferencia> listaCptransferencia;
 	private Nomearquivo nomearquivo;
+	private List<Planocontatipo> listaPlanoContaTipo;
+	private Planocontatipo planocontatipo;
 	
 
 	@PostConstruct
@@ -87,7 +91,7 @@ public class CadContasPagarMB implements Serializable{
         session.removeAttribute("banco");
         session.removeAttribute("planocontas");
         gerarListaCliente();
-        gerarListaPlanoContas();
+        //gerarListaPlanoContas();
         if (contaPagar == null) { 
 			contaPagar = new Contaspagar();
 			if (usuarioLogadoMB.getCliente() != null) {
@@ -109,6 +113,7 @@ public class CadContasPagarMB implements Serializable{
             if (banco == null) {
             	banco = contaPagar.getBanco();				
 			}
+            gerarListaPlanoContas();
             gerarListaBanco(); 
             transferenciaBancaria(); 
             if (contaPagar.getFormaPagamento().equalsIgnoreCase("transferencia")) {
@@ -321,16 +326,7 @@ public class CadContasPagarMB implements Serializable{
 		this.file = file;
 	}
 
-	public String cancelar(){
-		FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        session.removeAttribute("file");
-        RequestContext.getCurrentInstance().closeDialog(null);
-        return null;
-    }
-	
-	
-	
+
 	
 	public Nomearquivo getNomearquivo() {
 		return nomearquivo;
@@ -343,8 +339,42 @@ public class CadContasPagarMB implements Serializable{
 		this.nomearquivo = nomearquivo;
 	}
 
+	
 
 
+	public List<Planocontatipo> getListaPlanoContaTipo() {
+		return listaPlanoContaTipo;
+	}
+
+
+
+
+	public void setListaPlanoContaTipo(List<Planocontatipo> listaPlanoContaTipo) {
+		this.listaPlanoContaTipo = listaPlanoContaTipo;
+	}
+
+
+
+
+	public Planocontatipo getPlanocontatipo() {
+		return planocontatipo;
+	}
+
+
+
+
+	public void setPlanocontatipo(Planocontatipo planocontatipo) {
+		this.planocontatipo = planocontatipo;
+	}
+
+	public String cancelar(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.removeAttribute("file");
+        RequestContext.getCurrentInstance().closeDialog(null);
+        return null;
+    }
+	
 
 	public void mostrarMensagem(Exception ex, String erro, String titulo){
         FacesContext context = FacesContext.getCurrentInstance();
@@ -379,19 +409,19 @@ public class CadContasPagarMB implements Serializable{
         }
     }
 	
-	public void gerarListaPlanoContas() {
-        PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-        try {
-            listaPlanoContas = planoContasFacade.listar();
-            if (listaPlanoContas == null) {
-                listaPlanoContas = new ArrayList<Planocontas>();
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
-        }
+	//public void gerarListaPlanoContas() {
+    //    PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+    //    try {
+    //        listaPlanoContas = planoContasFacade.listar();
+    //        if (listaPlanoContas == null) {
+    //            listaPlanoContas = new ArrayList<Planocontas>();
+     //       }
+    //    } catch (Exception ex) {
+     //       Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+     //       mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
+     //   }
         
-    }
+    //}
 	
 	public void salvar(){
 		Operacaousuairo operacaousuairo = new Operacaousuairo();
@@ -847,7 +877,22 @@ public class CadContasPagarMB implements Serializable{
 		return "";
 	}
 	
-	
+	public void gerarListaPlanoContas(){
+		PlanoContaTipoFacade planoContaTipoFacade = new PlanoContaTipoFacade();
+		try {
+			listaPlanoContaTipo = planoContaTipoFacade.listar(cliente.getTipoplanocontas().getIdtipoplanocontas());
+			if (listaPlanoContaTipo == null || listaPlanoContaTipo.isEmpty()) {
+				listaPlanoContaTipo = new ArrayList<Planocontatipo>();
+			}
+			listaPlanoContas = new ArrayList<Planocontas>();
+			for (int i = 0; i < listaPlanoContaTipo.size(); i++) {
+				listaPlanoContas.add(listaPlanoContaTipo.get(i).getPlanocontas());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 }
