@@ -24,12 +24,17 @@ import org.primefaces.event.SelectEvent;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.OutrosLancamentosFacade;
+import br.com.financemate.facade.PlanoContaTipoFacade;
+import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.facade.SaldoFacade;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Outroslancamentos;
+import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Planocontatipo;
+import br.com.financemate.model.Tipoplanocontas;
 import br.com.financemate.util.Formatacao;
 
 @Named
@@ -389,11 +394,53 @@ public class OutrosLancamentosMB implements Serializable {
         return "";
     }
     
+    public String novaTransferencia() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("closable", false);
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("cadTransferencia", options, null);
+        return "";
+    }
+    
+    public void retornoDialogTransferencia(SelectEvent event){
+    	String msg = (String) event.getObject();
+    	if (msg.length() > 2) {
+			mensagem mensagem = new mensagem();
+			mensagem.notificacao(msg);
+			if (listaOutrosLancamentos.isEmpty() || listaOutrosLancamentos != null) {
+				gerarPesquisa();
+			}
+		}
+    }
+    
     public String consultaSaldoInicial() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("closable", false);
         RequestContext.getCurrentInstance().openDialog("consSaldoIncial", options, null);
         return "";
+    }
+    
+    public void salvarTransferencia(){
+    	Planocontas planocontas = new Planocontas();
+    	PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+    	Planocontatipo planocontatipo;
+    	PlanoContaTipoFacade planoContaTipoFacade = new PlanoContaTipoFacade();
+    	Tipoplanocontas tipoplanocontas = new Tipoplanocontas();
+    	ClienteFacade clienteFacade = new ClienteFacade();
+    	try {
+        	planocontas = planoContasFacade.consultar(23);
+			List<Cliente> listaCliente = clienteFacade.listar("");
+			for (int i = 0; i < listaCliente.size(); i++) {
+				tipoplanocontas = listaCliente.get(i).getTipoplanocontas();
+				planocontatipo = new Planocontatipo();
+				planocontatipo.setTipoplanocontas(tipoplanocontas);
+				planocontatipo.setPlanocontas(planocontas);
+				planoContaTipoFacade.salvar(planocontatipo);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     

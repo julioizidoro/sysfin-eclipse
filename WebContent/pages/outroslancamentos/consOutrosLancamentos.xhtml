@@ -61,22 +61,23 @@
 	          <h:panelGrid columns="6" style="margin-left:80%; margin-top:-3.3%;">
              <h:panelGrid >   
 			   
-				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-2%;text-decoration:none;" title="Atualizar Saldo Inicial">
+				<p:commandLink   action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-2%;text-decoration:none;" title="Novo Lançamento">
 					<img src="../../resources/img/iconeplus.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-left-radius:5px; border-bottom-left-radius:5px;"/>
 					<p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogNovo}" update="growl, idTabelaOutrosLancamentos, idsaida, identrada, idtotal"/>
             	</p:commandLink>
 			 </h:panelGrid>
 			 <h:panelGrid style="margin-left:-24%;">   
 			   
-				<p:commandLink   action="#" style="margin-left:-2%;text-decoration:none;" title="Nova Transferência">
+				<p:commandLink   action="#{outrosLancamentosMB.novaTransferencia()}" style="margin-left:-2%;text-decoration:none;" title="Nova Transferência">
 					<img src="../../resources/img/icone-transferencia1.png" width="32" style="border:solid; border-width: 1px; border-color: #3D9446;"/>
+            		<p:ajax event="dialogReturn" listener="#{outrosLancamentosMB.retornoDialogTransferencia}" update="growl, idTabelaOutrosLancamentos, idsaida, identrada, idtotal"/>
             	</p:commandLink>
 			 </h:panelGrid>
 			 <h:panelGrid  style="margin-left:-50%; "> 
 	            <p:commandLink   action="#{outrosLancamentosMB.consultaSaldoInicial()}" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Consulta Saldo Inicial" ajax="false">
 					<img src="../../resources/img/receber.png" style="border:solid; border-width: 1px; border-color: #3D9446;width: 32px"/>
 					
-	            </p:commandLink> 
+	            </p:commandLink>  
 	         </h:panelGrid> 
 			 <h:panelGrid  style="margin-left:-75%; ">  
 	            <p:commandLink   action="#" style="margin-left:-0.4%;margin-top:-10%; text-decoration:none;" title="Importa para excel" ajax="false">
