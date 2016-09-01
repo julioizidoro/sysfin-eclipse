@@ -179,7 +179,7 @@ public class Formatacao {
 		return sd.format(c.getTime());
 	}
 
-	public static String SubtarirDatas(Date data, int dias, String formato) throws Exception {
+	public static String SubtarirDatas(Date data, int dias, String formato){
 		SimpleDateFormat sd = new SimpleDateFormat(formato);
 		Calendar c = new GregorianCalendar();
 		c.add(Calendar.DAY_OF_MONTH, (dias - (2 * dias)));
@@ -799,5 +799,20 @@ public class Formatacao {
 		copetencia = smes + "/" + String.valueOf(ano);
 		return copetencia;
 
+	}
+	
+	
+	public static String formatarFloatString(Float valor){
+        NumberFormat format = new DecimalFormat("#,##0.00");
+        format.setMinimumFractionDigits(2);
+        String valorFormatado = format.format(valor);
+        return valorFormatado;
+    }
+	
+	public static int diaSemana(Date data) {
+		Calendar calendario = new GregorianCalendar();
+		calendario.setTime(data);
+		int diaSemana = calendario.get(Calendar.DAY_OF_WEEK);
+		return diaSemana;
 	}
 }

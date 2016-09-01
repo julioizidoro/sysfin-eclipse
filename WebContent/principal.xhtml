@@ -67,19 +67,21 @@
         
         <div class="menu" style="position: fixed !important;z-index: 9999;"> 
         <br />
-        	<img src="resources/img/iconeUsuario.png" style="width: 2%; margin-left:2%;" />
-        	<h:outputText value="BEM VINDO, " style="font-size:18px; margin-left:0.5%;" /> 
-        	 <h:outputText style="font-size:18px;" value="#{usuarioLogadoMB.usuario.nome}" />
-        	<tt style="margin-left: 25%; font-size: 32px;font-family: Trebuchet MS">SYSFIN</tt>
-        	<p:commandLink  action="#" style="margin-left:30%; text-decoration:none;" title="Adicionar">
-                    <img src="resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.7%;"/> 
-                    <p:ajax event="dialogReturn" update="@all"/>
-            </p:commandLink>
-            <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style="margin-left:2%; text-decoration:none;" title="Sair">
-                    <img src="resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-bottom:-0.8%;"/>
-            </p:commandLink>
-            <br/><br />
-        </div>
+        	<h:panelGrid columns="6" width="100%" style="margin-left:2%;">
+	        	<img src="resources/img/iconeUsuario.png" style="width: 40%;border:none;" />
+	        	<h:outputText value="BEM VINDO, " style="font-size:18px;" /> 
+	        	 <h:outputText style="font-size:18px;" value="#{usuarioLogadoMB.usuario.nome}" />
+	        	<tt style=" font-size: 32px;font-family: Trebuchet MS">SYSFIN</tt>
+	        	<p:commandLink  action="#" style="margin-left:30%; text-decoration:none;" title="Adicionar">
+	                    <img src="resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.7%;"/> 
+	                    <p:ajax event="dialogReturn" update="@all"/>
+	            </p:commandLink>
+	            <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style="margin-left:2%; text-decoration:none;" title="Sair">
+	                    <img src="resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-bottom:-0.8%;"/>
+	            </p:commandLink>
+	       </h:panelGrid>
+            <br/>
+        </div> 
         
         <br />
         <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:3.6%;">
@@ -173,16 +175,6 @@
 	    		</p:panelMenu>
     		</h:panelGrid>
     		<h:outputLabel value=""/> 
-    		<h:panelGrid style="margin-left:4%;"> 
-        	 	<img src="resources/img/iconeCobrancaSysfin.png" style="width: 14%;"/> 
-        	</h:panelGrid>
-        	<h:panelGrid style="margin-left:18%; margin-top:-17%;"> 
-	            <p:panelMenu> 
-		            	<p:submenu label="Cobrança" style="font-size:15px;margin-left:4%; margin-top:8%; font-family: 'Pacifico',cursive;"> 
-		                    <p:menuitem value="Nova Cobrança" action="#{menuMB.cobranca()}" style="margin-left:-13%; font-family: 'Pacifico',cursive;" update="growl"/>
-	            		</p:submenu> 
-	    		</p:panelMenu>
-    		</h:panelGrid>
     		</h:panelGrid>
     		 <h:outputLabel value=""/> 
     		 <p:commandLink id="aja"  actionListener="#" style="text-decoration:none;">
@@ -252,7 +244,7 @@
 				<h5 style="color:#302E2E;">#{principalMB.pegarMesAno()}</h5>
 				<h:dataTable styleClass="table table-striped" value="#{principalMB.lista10Vendas}"
 					var="venda" style="color:black; width:27%;" rows="5" >
-					<f:facet name="header"> TOTAL: R$ #{principalMB.valorTotalMesVendas}</f:facet>
+					<f:facet name="header"> TOTAL DO MÊS DE #{principalMB.pegarMes()}: R$ #{principalMB.valorTotalMesVendas}</f:facet>
 					<h:column>
 						<f:facet name="header">ID</f:facet> 
 						<h:outputText value="#{venda.idvendas}" />

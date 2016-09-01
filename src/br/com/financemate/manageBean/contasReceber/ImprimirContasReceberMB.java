@@ -21,13 +21,20 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
 import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.CobrancaParcelasFacade;
+import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.manageBean.ImprimirRelatorioMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Cobranca;
+import br.com.financemate.model.Cobrancaparcelas;
+import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Historicocobranca;
 import br.com.financemate.util.Formatacao;
 import br.com.financemate.util.GerarRelatorio;
 import net.sf.jasperreports.engine.JRException;
@@ -52,8 +59,11 @@ public class ImprimirContasReceberMB implements Serializable{
 	private Boolean contasRecebidas;
 	private Boolean todas;
 	private Boolean selecionado = false;
+	private Boolean selecionadoTipoDocumento = false;
 	private Boolean habilitarUnidade = false;
 	private String nomeDosRelatorio;
+	private String tipoDocumento;
+	private List<RelatorioCobrancaBean> listaRelatorio;
 
 	
 	@PostConstruct
@@ -221,6 +231,52 @@ public class ImprimirContasReceberMB implements Serializable{
 		this.relatorio = relatorio;
 	}
 	
+	
+	
+	public String getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+
+
+
+
+
+	public void setTipoDocumento(String tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+
+
+
+
+
+
+	public List<RelatorioCobrancaBean> getListaRelatorio() {
+		return listaRelatorio;
+	}
+
+
+
+
+
+
+	public void setListaRelatorio(List<RelatorioCobrancaBean> listaRelatorio) {
+		this.listaRelatorio = listaRelatorio;
+	}
+
+
+	public Boolean getSelecionadoTipoDocumento() {
+		return selecionadoTipoDocumento;
+	}
+
+
+
+	public void setSelecionadoTipoDocumento(Boolean selecionadoTipoDocumento) {
+		this.selecionadoTipoDocumento = selecionadoTipoDocumento;
+	}
+
+
+
 	public void gerarListaCliente() {
         ClienteFacade clienteFacade = new ClienteFacade();
         try {
@@ -250,6 +306,10 @@ public class ImprimirContasReceberMB implements Serializable{
 		if (relatorio.equalsIgnoreCase("Contas a Receber")) {
 			caminhoRelatorio = "reports/Relatorios/contasReceber/reportContasReceber.jasper";
 			nomeRelatorio = "Contas a Receber";
+		}else if(relatorio.equalsIgnoreCase("cobrancas")){
+			gerarRelatorioCobranca();
+			RequestContext.getCurrentInstance().closeDialog(null);
+			return "relatoriocobranca";  
 		}
         parameters.put("sql",gerarSql());
 		File f = new File(servletContext.getRealPath("/resources/img/logo.jpg"));
@@ -327,8 +387,11 @@ public class ImprimirContasReceberMB implements Serializable{
 	
 	public Boolean habilitarTipoRelatorio(){
 		selecionado = false;
+		selecionadoTipoDocumento = false;
 		if (relatorio.equalsIgnoreCase("Contas a Receber")) {
 			selecionado = true;
+		}else if(relatorio.equalsIgnoreCase("cobrancas")){
+			selecionadoTipoDocumento = true;
 		}
 		return selecionado;
 	}
@@ -341,6 +404,94 @@ public class ImprimirContasReceberMB implements Serializable{
 		 }
 		 
 	 }
+	 
+	public String gerarRelatorioCobranca() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		carregarListaContasReceber();
+		session.setAttribute("listaRelatorio", listaRelatorio);
+		return "relatoriocobranca";
+	}
+	
+	public void carregarListaContasReceber(){
+		listaRelatorio = new ArrayList<RelatorioCobrancaBean>();
+		int diaSemana = Formatacao.diaSemana(new Date());
+		String data = "";
+		if (diaSemana == 1) {
+			data = Formatacao.SubtarirDatas(new Date(), 5, "yyyy-MM-dd");
+		} else if (diaSemana == 7) {
+			data = Formatacao.SubtarirDatas(new Date(), 4, "yyyy-MM-dd");
+		}else {
+			data = Formatacao.SubtarirDatas(new Date(), 3, "yyyy-MM-dd");
+		}
+		
+    	String sql = "Select c from Contasreceber c where c.dataPagamento is NULL and c.valorPago=0 and c.dataVencimento<'"
+    			+ data + "' and c.status<>'CANCELADA' ";
+    	
+    	if (!tipoDocumento.equalsIgnoreCase("Todos")){
+    		sql = sql + " and c.tipodocumento='" + tipoDocumento + "' ";
+    	}
+    	if (cliente != null) {
+			sql = sql + " and c.cliente.idcliente="+ cliente.getIdcliente();
+		}
+    	sql = sql + " order by c.idcontasReceber, c.dataVencimento";
+    	ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+    	List<Contasreceber> listaContas = null;
+		try {
+			listaContas = contasReceberFacade.listar(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); 
+		}
+    	if (listaContas!=null){
+    		carregarCobranca(listaContas);
+    	}
+    }
+	
+	public void carregarCobranca(List<Contasreceber> listaContas) {
+		CobrancaParcelasFacade cobrancaParcelasFacade = new CobrancaParcelasFacade();
+		List<Contasreceber> listaContasCobranca = new ArrayList<Contasreceber>();
+		Cobranca cobranca = null;
+		float valorTotal = 0.0f;
+		Contasreceber contasreceber = null;
+		List<Cobrancaparcelas> listaCobrancaParcela;
+		try {
+			listaCobrancaParcela = cobrancaParcelasFacade.listar("Select c from Cobrancaparcelas c");
+			for (int i = 0; i < listaContas.size(); i++) {
+				for (int j = 0; j < listaCobrancaParcela.size(); j++) {
+					if (listaCobrancaParcela.get(j).getContasreceber().getIdcontasReceber() == listaContas.get(i)
+							.getIdcontasReceber()) {
+						listaContasCobranca.add(listaContas.get(i));
+						valorTotal = valorTotal + listaContas.get(i).getValorParcela();
+						cobranca = listaCobrancaParcela.get(j).getCobranca();
+						contasreceber = listaContas.get(i);
+					}
+				}
+				
+				if (cobranca != null) {
+					if ((i + 1) < listaContas.size()) {
+						incluirListaRelatorio(cobranca, listaContasCobranca, valorTotal, contasreceber);
+						cobranca = null;
+						listaContasCobranca = new ArrayList<Contasreceber>();
+						valorTotal = 0.0f;
+					}	
+				}
+			} 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void incluirListaRelatorio(Cobranca cobranca, List<Contasreceber> listaContas, float valorTotal, Contasreceber contasreceber) {
+		RelatorioCobrancaBean relatorio = new RelatorioCobrancaBean();
+		relatorio.setCobranca(cobranca);
+		relatorio.setListaContas(listaContas);
+		relatorio.setValorTotal(valorTotal);
+		relatorio.setContasreceber(contasreceber);
+		listaRelatorio.add(relatorio);
+	}
 	
 }
 

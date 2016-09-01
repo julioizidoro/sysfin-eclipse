@@ -1273,21 +1273,26 @@ public class ContasReceberMB implements Serializable {
 	 }
 	 
 	 
-	 public String cobrancas() {
-		 FacesContext fc = FacesContext.getCurrentInstance();
-		 HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-		 List<Contasreceber> listaContasSelecionadas = (List<Contasreceber>) session.getAttribute("listaContasSelecionadas");
-		 if (listaContasSelecionadas != null) {
-			 Map<String, Object> options = new HashMap<String, Object>();
-			 options.put("closable", false);
-			 RequestContext.getCurrentInstance().openDialog("cobrancas", options, null); 
-			 return "";
-		 }else{
-			 mensagem mensagem = new mensagem();
-			 mensagem.cobrancasNaoSelecionadas();
-			 return "";
-		 }
-	 }
+	public String cobrancas(Contasreceber contasreceber) {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+		session.setAttribute("contasreceber", contasreceber);
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put("closable", false);
+		RequestContext.getCurrentInstance().openDialog("cobrancas", options, null);
+		return "";
+	} 
+	
+	public void retornoDialogCobranca(SelectEvent event){
+		String msg = (String) event.getObject();
+		if (msg.length() > 2) {
+			if(!listaContasReceber.isEmpty() || listaContasReceber != null){
+				criarConsultaContaReceber();
+				mensagem mensagem = new mensagem();
+				mensagem.notificacao(msg);
+			}
+		}
+	}
 	 
 	 
 	 public String informacoesVendas(Contasreceber contasreceber){

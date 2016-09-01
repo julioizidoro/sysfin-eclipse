@@ -33,6 +33,7 @@
 	            					filter="true" filterMatchMode="contains" panelStyle="width:100px" >
 	                <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
 	                <f:selectItem itemLabel="Contas a receber" itemValue="contas a receber" />
+	                <f:selectItem itemLabel="Cobranças" itemValue="cobrancas"/>
 	                <p:ajax event="change" listener="#{imprimirContasReceberMB.habilitarTipoRelatorio()}" update="@all"/>
 	            </p:selectOneMenu>  
              </h:panelGrid> 
@@ -48,15 +49,26 @@
                 </p:selectOneMenu> 
              </h:panelGrid>
              <br />  
-             <h:panelGrid columns="3" style="margin-left:1%;" >
+             <h:panelGrid columns="3" style="margin-left:1%;" rendered="#{imprimirContasReceberMB.selecionado}">
              	<p:outputLabel value="Periodo" class="left3"/>
-             	<p:inputMask id="dataIni" mask="99/99/9999"  size="15" maxlength="15" value="#{imprimirContasReceberMB.dataInicial}" class="tabelaRecebimento" placeholder="Data Inicial" style="margin-left:1%;">
+             	<p:inputMask id="dataIni" mask="99/99/9999"  size="10" maxlength="15" value="#{imprimirContasReceberMB.dataInicial}" class="tabelaRecebimento" placeholder="Data Inicial" style="margin-left:1%;">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask> 
-                <p:inputMask id="dataFinal"  mask="99/99/9999" size="15" maxlength="15" class="left6" placeholder="Data Final" style="margin-left:1%;" value="#{imprimirContasReceberMB.dataFinal}">
+                <p:inputMask id="dataFinal"  mask="99/99/9999" size="10" maxlength="15" class="left6" placeholder="Data Final" style="margin-left:1%;" value="#{imprimirContasReceberMB.dataFinal}">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask> 
              </h:panelGrid>
+             <h:panelGrid style="margin-left: 1%;" columns="2" rendered="#{imprimirContasReceberMB.selecionadoTipoDocumento}">
+            	 <p:outputLabel value="Tipo Documento" for="tipoDocumento"  />
+            	<p:selectOneMenu id="tipoDocumento" style="width:194px;"  value="#{imprimirContasReceberMB.tipoDocumento}">
+                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
+                    <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
+                    <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" /> 
+                    <f:selectItem itemLabel="Cartão" itemValue="cartao" /> 
+                    <f:selectItem itemLabel="Cheque" itemValue="Cheque" />
+                    <f:selectItem itemLabel="Depósito" itemValue="Deposito" />
+                </p:selectOneMenu>
+            </h:panelGrid>
              <br />
              <h:panelGrid id="idTipoRelatorio" rendered="#{imprimirContasReceberMB.selecionado}">
              	<h:panelGrid columns="3">

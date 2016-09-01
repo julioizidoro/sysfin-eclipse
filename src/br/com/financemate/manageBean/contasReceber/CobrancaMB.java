@@ -58,10 +58,11 @@ public class CobrancaMB implements Serializable {
     public void init(){
     	FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        contasReceber = (Contasreceber) session.getAttribute("contasReceber");
-        listaContasSelecionadas = (List<Contasreceber>) session.getAttribute("listaContasSelecionadas");
+        contasReceber = (Contasreceber) session.getAttribute("contasreceber");
+        //listaContasSelecionadas = (List<Contasreceber>) session.getAttribute("listaContasSelecionadas");
         if (listaContasSelecionadas == null) {
 			listaContasSelecionadas = new ArrayList<Contasreceber>();
+			listaContasSelecionadas.add(contasReceber);
 		}
     	gerarListaCliente();  
         cliente = contasReceber.getCliente();
@@ -71,7 +72,7 @@ public class CobrancaMB implements Serializable {
 			cobranca = cobrancaFacade.consultar("Select c From Cobranca c Join Cobrancaparcelas cp on"
 					+ " c.idcobranca=cp.cobranca.idcobranca Join Contasreceber co on cp.contasreceber.idcontasReceber=co.idcontasReceber"
 					+ " Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber() );
-		}
+		} 
         if (cobranca == null) {
         	cobranca = new Cobranca();
         	listaHistorico = new ArrayList<Historicocobranca>();
@@ -81,7 +82,7 @@ public class CobrancaMB implements Serializable {
 				listaHistorico = new ArrayList<Historicocobranca>();
 			}
         }
-    }
+    } 
     
     
     
@@ -372,9 +373,7 @@ public class CobrancaMB implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		cobranca = (Cobranca) session.getAttribute("cobranca");
-		contasReceber = (Contasreceber) session.getAttribute("contasReceber");
-		session.removeAttribute("contasReceber");
-		session.removeAttribute("cobranca");
+		contasReceber = (Contasreceber) session.getAttribute("contasreceber");
 		try {
 			String sql = "Select cp From Cobrancaparcelas cp Join Contasreceber c on  cp.contasreceber.idcontasReceber=c.idcontasReceber";
 			sql = sql + " Join Cobranca co on cp.cobranca.idcobranca=co.idcobranca Where cp.contasreceber.idcontasReceber=" + contasReceber.getIdcontasReceber();

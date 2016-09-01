@@ -43,13 +43,11 @@
             <p:commandLink   action="#{contasReceberMB.novaImpressao()}" style="margin-left:-60%; text-decoration:none;" title="Imprimir">
 				<img src="../../resources/img/iconeImprimirS.png" style="border:solid; border-width: 1px; border-color: #3D9446; border-top-right-radius:5px; border-bottom-right-radius:5px;"/>
             </p:commandLink>
-            </h:panelGrid>     
-            <br />
+            </h:panelGrid>
             <h2 style="margin-left:50%;">Consulta Contas a Receber</h2>
              <hr style="margin-left:17%; width:80%;"/>  
             		<p:contextMenu for="idTabelaContaReceber" style="background:white;" ajax="onclick">  
                         <p:menuitem value="Cancelar"   icon="ui-icon-cancel"   actionListener="#{contasReceberMB.cancelar(contasReceberMB.contasReceber)}" update="growl, idTabelaContaReceber"/> 
-                        <p:menuitem value="Cobrança"  icon=" ui-icon-alert"  action="#{contasReceberMB.novaCobranca(contasReceberMB.contasReceber)}" update="growl"/>
                         <p:menuitem value="Desfazer recebimento"  icon=" ui-icon-cancel"  action="#{contasReceberMB.gerarListaContas()}" actionListener="#{contasReceberMB.desfazerRecebimento(contasReceberMB.contasReceber)}" update="idTabelaContaReceber"/>
                         <p:menuitem value="Editar"  icon="ui-icon-pencil"  action="#{contasReceberMB.editar(contasReceberMB.contasReceber)}"/>
                         <p:menuitem value="Excluir"   icon=" ui-icon-trash"  action="#{contasReceberMB.excluir()}" update="growl, idTabelaContaReceber"/>
@@ -62,7 +60,7 @@
                             <p:commandLink>
                                 <img src="#{contasReceberMB.verStatus(contasReceber)}" />
                             </p:commandLink>
-                        </p:column>  
+                        </p:column>   
                         <p:column headerText=" Data Vencimento" sortBy="#{contasReceber.dataVencimento}" style="width:70px; font-size:12px;text-align:center; background:white; color:black; border:none;">
                             <h:outputText  value="#{contasReceber.dataVencimento}" style="font-size:12px;" > 
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
@@ -90,35 +88,38 @@
                         <p:column headerText="Valor Recebido" style="width:5%; background:white; color:black; border:none; font-size:12px; text-align:right;" styleClass="alinharCenter">
                             <h:outputText value="#{contasReceber.valorPago}" style="font-size:12px;">
                                 <f:convertNumber currencySymbol="" type="currency"/>
-                            </h:outputText>                                      
+                            </h:outputText>                                       
                         </p:column>
                         <p:column headerText="N° Venda" style="width:7%; background:white; text-align:center; color:black; font-size:12px; border:none;" styleClass="alinharCenter">
-                             <p:commandLink value="#{contasReceber.venda}" action="#{contasReceberMB.informacoesVendas(contasReceber)}" style="font-size:12px;text-decoration:none;color:black;"/>                                     
+                             <p:commandLink value="#{contasReceber.venda}" action="#{contasReceberMB.informacoesVendas(contasReceber)}" style="font-size:12px;color:black;"/>                                     
                         </p:column>
                         <p:column headerText="Cob" style="width:3%; background:white; color:black; font-size:12px; border:none; text-align:center;" styleClass="alinharCenter">
-                            <h:outputText value="#{contasReceberMB.numeroCob(contasReceber.idcontasReceber)}" style="font-size:12px;"/>                                     
-                        </p:column> 
+                            <p:commandLink value="#{contasReceberMB.numeroCob(contasReceber.idcontasReceber)}" action="#{contasReceberMB.cobrancas(contasReceber)}" style="color:black;"/>
+                             <p:dialog event="dialogReturn" listener="#{contasReceberMB.retornoDialogCobranca}" update="idTabelaContaReceber, contasVenc, contasVencer, contasReceber"/>                                     
+                        </p:column>  
                        <p:column style="width:28px; background:white; color:black; border:none;">
                             <p:selectBooleanCheckbox value="#{contasReceber.selecionado}" style="background:white"/>
-                        </p:column>
+                        </p:column> 
                     </p:dataTable>
                     <br />
-                    <h:panelGrid columns="1"  style="width:18%; text-align:right; margin-left: 35%; background-color:white; border-radius:5px; border:solid; border-left-color:red; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
-	                	<br />
-			            <tt style="margin-right:20%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
-			            <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.totalVencidas}"  readonly="true"/>
-	        		</h:panelGrid>
-	        		<h:panelGrid columns="1"  style="width:20%;  margin-left:55%; text-align:right; margin-top: -6.7%; background-color:white; border-radius:5px; border:solid; border-left-color:green; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
-	        			<br /> 
-			            <tt style="margin-right:25%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Vencer</tt>
-			            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.totalVencer}" readonly="true"/>
-	        		</h:panelGrid>
-	        		<h:panelGrid  style="width:20%; text-align:right;  margin-left:77%; margin-top: -6.7%; background-color:white; border-radius:5px; border:solid; border-left-color:blue; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
-	        			<br /> 
-			            <tt style="margin-right: 25%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Receber</tt>
-			            <h:outputText id="contasReceber" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.total}"  readonly="true"/>
-			             
-	        		</h:panelGrid>
+                    <h:panelGrid columns="3" width="100%" style=" margin-left: 28%;">
+	                    <h:panelGrid columns="1"  style="width:60%; text-align:right; background-color:white; border-radius:5px; border:solid; border-left-color:red; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
+		                	<br />
+				            <tt style="margin-right:20%; font:bold; font-size:14px; color:black; font-family: 'Pacifico',cursive;">Total Contas Vencidas</tt>
+				            <h:outputText id="contasVenc" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.totalVencidas}"  readonly="true"/>
+		        		</h:panelGrid>
+		        		<h:panelGrid columns="1"  style="width:60%;  margin-left:-30%; text-align:right; background-color:white; border-radius:5px; border:solid; border-left-color:green; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
+		        			<br /> 
+				            <tt style="margin-right:25%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Vencer</tt>
+				            <h:outputText id="contasVencer" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.totalVencer}" readonly="true"/>
+		        		</h:panelGrid>
+		        		<h:panelGrid  style="width:60%; text-align:right;  margin-left:-50%; background-color:white; border-radius:5px; border:solid; border-left-color:blue; border-bottom-color:#E7EBEB; border-top-color:#E7EBEB; border-right-color:#E7EBEB;">
+		        			<br /> 
+				            <tt style="margin-right: 25%; font-size: 14px; color: black; font-family: 'Pacifico',cursive;">Total Contas a Receber</tt>
+				            <h:outputText id="contasReceber" size="20" maxlength="100" class="totallancamentos" value="R$ #{contasReceberMB.total}"  readonly="true"/>
+				             
+		        		</h:panelGrid>
+		        	</h:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>
