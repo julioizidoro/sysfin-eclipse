@@ -7,125 +7,212 @@
     	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
             <p:outputLabel value="Aguarde.." style="font-family: 'Pacifico',cursive;"/>
         	<br/> 
-            <img src="resources/img/ajax-carregando.gif" />
+            <img src="../../resources/img/ajax-carregando.gif" />
         </p:dialog>
-         <div id="tudo" style="color:#E7EBEB !important;">
-        <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
-        <br></br>
+        <div class="updateGrowl">
+         	<p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+         </div> 
+        <div id="top-nav" class="fixed skin-6" style="position:fixed;background:#302E2E;margin-top:-8px;">
+			<a href="#" class="brand" style="background:#302E2E;text-decoration:none;">
+				<span style="margin-left:4%;">
+					<img src="../../resources/img/iconeUsuario.png" style="width: 15%; margin-left:2%;"/>
+				</span>
+				<span class="text-toggle" > Bem vindo,
+					<h:outputText style="font-size:18px;" value="#{usuarioLogadoMB.usuario.nome}" />
+				</span>			
+			</a><!-- /brand -->
+			<ul class="nav-notification" style="float:right;background:#302E2E;">
+		        <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style=" text-decoration:none;" title="Sair">
+		            <img src="../../resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-top:25%;"/>
+		        </p:commandLink>
+			</ul>
+			<ul style="float:right;background:#302E2E;">
+				<h:outputText style="font-size: 30px;color:white; margin-left:-600px; font-family:Trebuchet MS; " value="SYSFIN" />
+			</ul>
+			<br/>
+		</div><!-- /top-nav-->
         
-        <div class="menu" style="position: fixed !important;z-index: 9999;">
-        	<br/>
-        	<img src="../../resources/img/iconeUsuario.png" style="width: 2%; margin-left:2%;"/>
-        	<h:outputText value="BEM VINDO, " style="font-size:18px; margin-left:0.5%;" />
-        	 <h:outputText style="font-size:18px;" value="#{usuarioLogadoMB.usuario.nome}" />
-        	<tt style="margin-left: 25%; font-size: 32px; font-family:Trebuchet MS;">SYSFIN</tt>
-        	<p:commandLink  action="#" style="margin-left:40%; text-decoration:none;" title="Adicionar">
-                    <img src="../../resources/img/adicionarmenu.png" width="28" height="28" border="none" style="text-decoration:none;margin-bottom:-0.7%;"/> 
-                    <p:ajax event="dialogReturn" update="@all"/>
-            </p:commandLink>
-            <p:commandLink  action="#{usuarioLogadoMB.deslogar()}" style="margin-left:2%; text-decoration:none;" title="Sair">
-                    <img src="../../resources/img/iconeSair.png" border="none" style="text-decoration:none;margin-bottom:-0.8%;"/>
-            </p:commandLink>
-            <br/><br />
-        </div> 
-        <br />
-        <div  class="menu2" style="background:#1A1A1A;font-family:'Pacifico',cursive; margin-left:0.4%;margin-top:3.2%;">
-        	<p:commandLink id="ajax" action="#{menuMB.principal()}" style="text-decoration:none;margin-left:1%;">
-           		<img src="../../resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
-        		<h:outputText value="Visão Geral" style="font-size:15px; margin-left:5%;"/>
-    		 </p:commandLink>
-    		   
-    		
-        	 <h:panelGrid>
-        	 <h:panelGrid style="margin-left:-2%;"> 
-        	 	<img src="../../resources/img/iconeCadastroSysfin.png" style="width: 14%;"/>
-        	</h:panelGrid>
-	        <h:panelGrid style="margin-left:10%; margin-top:-23%;">
-	        	<p:panelMenu>
-	        		<p:submenu label="Cadastro" style="font-size:15px;">
-	                    <p:menuitem value="Cliente" action="#{menuMB.consCliente()}" style="margin-left:-13%;"/>
-	                    <p:menuitem value="Banco" action="#{menuMB.consBanco()}" style="margin-left:-13%;"/> 
-	                    <p:menuitem value="Plano de conta" action="#{menuMB.consPlanoConta()}" style="margin-left:-13%;"/>
-	                    <p:menuitem value="Produto" action="#{menuMB.consProduto()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
-	                    <p:menuitem value="Tipo plano de conta" action="#{menuMB.consTipoPlanoConta()}" style="margin-left:-13%;"/>
-	                    <p:menuitem value="Usuário" action="#{menuMB.consUsuario()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
-	            	</p:submenu>
-	            </p:panelMenu>
-            </h:panelGrid>
-        	 <h:panelGrid style="margin-left:-2%;">
-        	 	<img src="../../resources/img/iconeContasReceberSysfin.png" style="width: 14%;"/>
-        	 </h:panelGrid>
-        	 <h:panelGrid style="margin-left:10%; margin-top:-24%;"> 
-	        	 <p:panelMenu styleClass="ui-panelmenu">
-	        		<p:submenu  style="background:transparent;  font-size:15px; color:white; font:normal;" label="Contas a Pagar">
-	        			<p:menuitem value="Novo Lançamento" action="#{contasPagarMB.novaConta()}" style="margin-left:-13%;"/> 
-	            		<p:menuitem value="Lançamentos" action="#{menuMB.contasPagar()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" action="#{contasPagarMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
-	            	</p:submenu> 
-        		</p:panelMenu>
-        	</h:panelGrid>
-        	<h:panelGrid style="margin-left:-2%;">
-        	 	<img src="../../resources/img/iconeContasPagarSysfin.png" style="width: 14%;"/>
-        	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
-	        	<p:panelMenu styleClass="ui-panelmenu">
-	        		<p:submenu label="Contas a Receber" style="font-size:15px;">
-	        			<p:menuitem value="Novo Lançamento" action="#{contasReceberMB.novaConta()}" style="margin-left:-13%;"/> 
-	            		<p:menuitem value="Lançamentos" action="#{menuMB.consContasReceber()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" action="#{contasReceberMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
-	            	</p:submenu>
-	        	</p:panelMenu>
-	        </h:panelGrid> 
-	        <h:panelGrid style="margin-left:-2%;">
-        	 	<img src="../../resources/img/iconeVendasSysfin.png" style="width: 14%;"/>
-        	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
-		        <p:panelMenu styleClass="ui-panelmenu">
-	        		<p:submenu label="Vendas" style="font-size:15px;">
-	        			<p:menuitem value="Novo Lançamento" action="#{vendasMB.novaVenda()}" style="margin-left:-13%;"/> 
-	            		<p:menuitem value="Lançamentos" action="#{menuMB.consVendas()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" action="#{vendasMB.novaImpressao()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
-	            	</p:submenu>
-	        	</p:panelMenu>
-	        </h:panelGrid>
-	        
-            <h:panelGrid style="margin-left:-2%;"> 
-        	 	<img src="../../resources/img/iconeOutrosLancamentosSysfin.png" style="width: 14%;"/> 
-        	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-23%;">
-            	<p:panelMenu>
-	            	<p:submenu label="Outros Lançamentos" style="font-size:15px; "> 
-	                    <p:menuitem value="Novo Lançamento" action="#{outrosLancamentosMB.novoLancamento()}" style="margin-left:-13%;"/> 
-	            		<p:menuitem value="Lançamentos" action="#{menuMB.consOutrosLancamentos()}" style="margin-left:-13%;"/>
-	            		<p:menuitem value="Relatório" action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
-	            	</p:submenu>
-            	</p:panelMenu>
-            </h:panelGrid>
-            <h:panelGrid style="margin-left:-2%;"> 
-        	 	<img src="../../resources/img/iconeRelatoriosSysfin.png" style="width: 14%;"/> 
-        	</h:panelGrid>
-        	<h:panelGrid style="margin-left:10%; margin-top:-24%;">
-	            <p:panelMenu>
-		            	<p:submenu label="Relatórios" style="font-size:15px;margin-left:3%; font-family: 'Pacifico',cursive;">
-		                    <p:menuitem value="Contas a Pagar" action="#{contasPagarMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
-		                    <p:menuitem value="Contas a Receber" action="#{contasReceberMB.novaImpressao()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
-		                    <p:menuitem value="Outros Lançamentos" action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}" style="margin-left:-14%; font-family: 'Pacifico',cursive;"/>
-		                    <p:menuitem value="Vendas" action="#{vendasMB.novaImpressao()}" style="margin-left:-13%;font-family: 'Pacifico',cursive;"/>
-		            	</p:submenu> 
-	    		</p:panelMenu>
-    		</h:panelGrid>
-    		
-    		</h:panelGrid>
-    		
-    		 <p:commandLink id="aja"  actionListener="#" style="text-decoration:none;">
-           		<img src="../../resources/img/iconeAreaClienteSysfin.png" style="width: 14%;"/>
-        		<h:outputText value="Área do cliente" style="font-size:15px; margin-left:5%;"/>
-    		 </p:commandLink> 
-    		<p:link id="ajaxx" target="_blank" style="text-decoration:none; margin-bottom:48%;margin-top:6%;" href="http://www.financemate.com.br/"  ajax="false">
-           		<img src="../../resources/img/iconeLogoNavegadorTeste.gif" style="width: 14%;"/>
-        		<h:outputText value="Sobre a Financemate" style="font-size:15px; margin-left:5%;"/>
-    		</p:link>
-    		<br /> 
-        </div>
-        </div> 
+        <aside class="fixed skin-6" style="background:#302E2E;display:block;width:15%;">
+        <br/><br/><br/>
+			<div class="sidebar-inner scrollable-sidebar" style="background:#302E2E;">
+			
+				<br/><br/>
+				<div class="main-menu">
+					<ul>
+						<li  style="background:#302E2E;">
+							<a href="../../principal.jsf" style="text-decoration:none;">
+								<span class="menu-icon">
+									<i>
+										<img src="../../resources/img/iconeVisaoGeralSysfin.png" style="width: 14%;"/> 
+									</i> 
+								</span>
+								<span class="text">
+									Visão Geral
+								</span>
+								<span class="menu-hover"></span>
+							</a>
+						</li>
+						<li class="openable open" style="background:#302E2E;">
+							<a href="#" style="text-decoration:none;">
+								<span class="menu-icon">
+									<img src="../../resources/img/iconeCadastroSysfin.png" style="width: 14%;"/>
+								</span>
+								<span class="text">
+									Cadastro
+									<i class="fa fa-caret-down"/>
+								</span>
+								<span class="menu-hover"></span>
+							</a>
+							<ul class="submenu" style="background:#302E2E;">
+								<li><a href="../../pages/banco/consBanco.jsf"><span class="submenu-label">Banco</span></a></li>
+								<li><a href="../../pages/cliente/consCliente.jsf"><span class="submenu-label">Cliente</span></a></li>
+								<li><a href="../../pages/planoconta/consPlanoConta.jsf"><span class="submenu-label">Plano de Conta</span></a></li>
+								<li><a href="../../pages/produto/consProduto.jsf"><span class="submenu-label">Produto</span></a></li>
+								<li><a href="../../pages/tipoPlanoConta/consTipoPlanoConta.jsf"><span class="submenu-label">Tipo Plano Conta</span></a></li>
+								<li><a href="../../pages/usuario/consUsuario.jsf"><span class="submenu-label">Usuário</span></a></li>
+							</ul>
+						</li> 
+						<li class="openable" style="background:#302E2E;">
+							<a href="#" style="text-decoration:none;">
+								<span class="menu-icon">
+									<img src="../../resources/img/iconeContasReceberSysfin.png" style="width: 14%;"/>
+								</span>
+								<span class="text">
+									Contas a Pagar
+									<i class="fa fa-caret-down"/>
+								</span>
+								<span class="menu-hover"></span>
+							</a>
+							<ul class="submenu">
+								<li><p:commandLink action="#{contasPagarMB.novaConta()}"><span class="submenu-label">Novo Lançamentos</span></p:commandLink></li>
+								<li><a href="../../pages/contasPagar/consContaPagar.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+								<li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+							</ul>
+						</li>
+						
+						<li class="openable" style="background:#302E2E;">
+							<a href="#" style="text-decoration:none;">
+								<span class="menu-icon">
+									<img src="../../resources/img/iconeContasPagarSysfin.png" style="width: 14%;"/>
+								</span>
+								<span class="text">
+									Contas a Receber
+									<i class="fa fa-caret-down"/>
+								</span>
+								<span class="menu-hover"></span>
+							</a>
+							<ul class="submenu">
+								<li><p:commandLink  action="#{contasReceberMB.novaConta()}"><span  class="submenu-label">Novo Lançamento</span></p:commandLink></li>
+								<li><a href="../../pages/contasReceber/consContasReceber.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+								<li><p:commandLink action="#{contasReceberMB.novaImpressao()}"><span class="submenu-label">Reltarótio</span></p:commandLink></li>
+							</ul>
+						</li>
+						
+						<li class="openable" style="background:#302E2E;">
+							<a href="#" style="text-decoration:none;">
+								<span class="menu-icon">
+									<img src="../../resources/img/iconeVendasSysfin.png" style="width: 14%;"/>
+								</span>
+								<span class="text">
+									Vendas
+									<i class="fa fa-caret-down"/>
+								</span>
+								<span class="menu-hover"></span>
+							</a>
+							<ul class="submenu">
+								<li><p:commandLink action="#{vendasMB.novaVenda()}"><span class="submenu-label">Novo Lançamentos</span></p:commandLink></li>
+								<li><a href="../../pages/vendas/consVendas.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+								<li><p:commandLink action="#{vendasMB.novaImpressao()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+							</ul>
+						</li>
+						<li class="openable" style="background:#302E2E;">
+							<a href="#" style="text-decoration:none;">
+								<span class="menu-icon">
+									<img src="../../resources/img/iconeOutrosLancamentosSysfin.png" style="width: 14%;"/> 
+								</span>
+								<span class="text">
+									Outros Lançamentos
+									<i class="fa fa-caret-down"/>
+								</span>
+								<span class="menu-hover"></span>
+							</a>
+							<ul class="submenu">
+								<li><p:commandLink action="#{outrosLancamentosMB.novoLancamento()}"><span class="submenu-label">Novo Lançamentos</span></p:commandLink></li>
+								<li><a href="../../pages/outroslancamentos/consOutrosLancamentos.jsf"><span class="submenu-label">Lançamentos</span></a></li>
+								<li><p:commandLink action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}"><span class="submenu-label">Relatório</span></p:commandLink></li>
+							</ul>
+						</li>
+						<li class="openable" style="background:#302E2E;">
+							<a href="#" style="text-decoration:none;">
+								<span class="menu-icon">
+									<img src="../../resources/img/iconeRelatoriosSysfin.png" style="width: 14%;"/> 
+								</span>
+								<span class="text">
+									Relatórios
+									<i class="fa fa-caret-down"/>
+								</span>
+								<span class="menu-hover"></span>
+							</a>
+							<ul class="submenu">
+								<li><p:commandLink action="#{contasPagarMB.novaImpressao()}"><span class="submenu-label">Contas a Pagar</span></p:commandLink></li>
+								<li><p:commandLink action="#{contasReceberMB.novaImpressao()}"><span class="submenu-label">Contas a Receber</span></p:commandLink></li>
+								<li><p:commandLink action="#{outrosLancamentosMB.impressaoOutrosLancamentos()}"><span class="submenu-label">Outros Lançamentos</span></p:commandLink></li>
+								<li><p:commandLink action="#{vendasMB.novaImpressao()}"><span class="submenu-label">Vendas</span></p:commandLink></li>
+							</ul>
+						</li>
+						<li  style="background:#302E2E;">
+							<p:commandLink action="#{principalMB.mensagemEmBreve()}" style="text-decoration:none;">
+								<span class="menu-icon">
+									<i>
+										<img src="../../resources/img/iconeAreaClienteSysfin.png" style="width: 14%;"/>
+									</i> 
+								</span>
+								<span class="text">
+									Área do Cliente
+								</span> 
+								<span class="menu-hover"></span>
+							</p:commandLink>
+						</li>
+						<li  style="background:#302E2E;">
+							<a href="http://www.financemate.com.br/" target="_blank" style="text-decoration:none;">
+								<span class="menu-icon">
+									<i>
+										<img src="../../resources/img/iconeLogoNavegadorTeste.gif" style="width: 14%;"/>
+									</i> 
+								</span>
+								<span class="text">
+									Sobre Financemate 
+								</span>
+								<span class="menu-hover"></span>
+							</a>
+						</li>
+					</ul>
+					
+				</div><!-- /main-menu -->
+			</div><!-- /sidebar-inner -->
+        </aside> 
+        	<script src='../../resources/js/jquery.sparkline.min.js'></script>
+
+		<!-- Pace -->
+		<script src='../../resources/js/uncompressed/pace.js'></script>
+
+		<!-- Popup Overlay -->
+		<script src='../../resources/js/jquery.popupoverlay.min.js'></script>
+
+		<!-- Slimscroll -->
+		<script src='../../resources/js/jquery.slimscroll.min.js'></script>
+
+		<!-- Modernizr -->
+		<script src='../../resources/js/modernizr.min.js'></script>
+
+		<!-- Cookie -->
+		<script src='../../resources/js/jquery.cookie.min.js'></script>
+		
+		
+		  
+		<!-- Endless -->
+		<script src="../../resources/js/endless/endless.js"></script> 
+
 </h:form>
+
+	

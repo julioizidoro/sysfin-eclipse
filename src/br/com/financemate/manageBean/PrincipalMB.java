@@ -225,5 +225,10 @@ public class PrincipalMB implements Serializable{
 		}
 		return mes;
 	}
+	
+	public void mensagemEmBreve(){
+		mensagem mensagem = new mensagem();
+		mensagem.notificacao("Disponivel em breve!!");
+	}
 	 
 }

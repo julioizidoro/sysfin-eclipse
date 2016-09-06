@@ -367,12 +367,11 @@ public class CadContasPagarMB implements Serializable{
 		this.planocontatipo = planocontatipo;
 	}
 
-	public String cancelar(){
+	public void cancelar(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.removeAttribute("file");
         RequestContext.getCurrentInstance().closeDialog(null);
-        return null;
     }
 	
 
