@@ -441,95 +441,90 @@ import br.com.financemate.model.Vendas;
             Date data = cal.getTime();
             int mes = data.getMonth() + 1;
             int ndia = data.getDay() + 8;
-	        if (mes == 1) {
-				if (ndia > 31) {
-					dia = 1;
-				}  
-			}else if(mes == 2){
-				if (ndia > 28) {
-					dia = 1;
-				}
-			}else if(mes == 3){
-				if (ndia > 31) {
-					dia = 1;
-				}
-			}else if(mes == 4){
-				if (ndia > 30) {
-					dia = 1;
-				}
-			}else if(mes == 5){
-				if (ndia > 31) {
-					dia = 1;
-				}
-			}else if(mes == 6){
-				if (ndia > 30) {
-					dia = 1;
-				}
-			}else if(mes == 7){
-				if (ndia > 31) {
-					dia = 1;
-				}
-			}else if(mes == 8){
-				if (ndia > 31) {
-					dia = 1;
-				}
-			}else if(mes == 9){
-				if (ndia > 30) {
-					dia = 1;
-				}
-			}else if(mes == 10){
-				if (ndia > 31) {
-					dia = 1;
-				}
-			}else if(mes == 11){
-				if (ndia > 30) {
-					dia = 1;
-				}
-			}else if(mes == 12){
-				if (ndia > 31) {
-					dia = 1;
-				}
-			}
 	        LineChartSeries recebimentos = new LineChartSeries();
 	        recebimentos.setLabel("Recebimentos");
 	        recebimentos.set(dia, recebimentosDia1());
-	        recebimentos.set(dia +1, recebimentosDia2());
-	        recebimentos.set(dia + 2, recebimentosDia3());
-	        recebimentos.set(dia + 3, recebimentosDia4());
-	        recebimentos.set(dia + 4, recebimentosDia5()); 
+	        recebimentos.set(gerarNumeroDia(dia + 1, mes), recebimentosDia2());
+	        recebimentos.set(gerarNumeroDia(dia + 2, mes), recebimentosDia3());
+	        recebimentos.set(gerarNumeroDia(dia + 3, mes), recebimentosDia4());
+	        recebimentos.set(gerarNumeroDia(dia +4, mes), recebimentosDia5()); 
 	         
 	        LineChartSeries pagamentos = new LineChartSeries();
 	        pagamentos.setLabel("Pagamentos");
 	        pagamentos.set(dia, pagamentodia1());
-	        pagamentos.set(dia +1, pagamentodia2());
-	        pagamentos.set(dia +2, pagamentodia3());
-	        pagamentos.set(dia +3, pagamentodia4());
-	        pagamentos.set(dia +4, pagamentodia5());
+	        pagamentos.set(gerarNumeroDia(dia + 1, mes), pagamentodia2());
+	        pagamentos.set(gerarNumeroDia(dia + 2, mes), pagamentodia3());
+	        pagamentos.set(gerarNumeroDia(dia + 3, mes), pagamentodia4());
+	        pagamentos.set(gerarNumeroDia(dia + 4, mes), pagamentodia5());
 
 	        
 	        LineChartSeries saldo = new LineChartSeries();
 	        saldo.setLabel("Saldo");
 	 
 	        saldo.set(dia, saldoPrimeiroDia);
-	        saldo.set(dia +1, saldoSegundoDia);
-	        saldo.set(dia +2, saldoTerceiroDia);
-	        saldo.set(dia +3, saldoQuartoDia);
-	        saldo.set(dia +4, saldoQuintaDia);
+	        saldo.set(gerarNumeroDia(dia + 1, mes), saldoSegundoDia);
+	        saldo.set(gerarNumeroDia(dia + 2, mes), saldoTerceiroDia);
+	        saldo.set(gerarNumeroDia(dia + 3, mes), saldoQuartoDia);
+	        saldo.set(gerarNumeroDia(dia + 4, mes), saldoQuintaDia);
 	        
 	        model.addSeries(recebimentos);
 	        model.addSeries(pagamentos);
 	        model.addSeries(saldo);
-	        gerarValorMinimoMaximo(); 
 	        return model;
 	    }
 	    
-	    
-	    public void gerarValorMinimoMaximo() {
-			// TODO Auto-generated method stub
-			
-		}
-
-
+	    public Integer gerarNumeroDia(Integer dia, Integer mes){
+	    	if (mes == 1) {
+				if (dia > 31) {
+					dia = 1;
+				}  
+			}else if(mes == 2){
+				if (dia > 28) {
+					dia = 1;
+				}
+			}else if(mes == 3){
+				if (dia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 4){
+				if (dia > 30) {
+					dia = 1;
+				}
+			}else if(mes == 5){
+				if (dia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 6){
+				if (dia > 30) {
+					dia = 1;
+				}
+			}else if(mes == 7){
+				if (dia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 8){
+				if (dia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 9){
+				if (dia > 30) {
+					return null;
+				}
+			}else if(mes == 10){
+				if (dia > 31) {
+					dia = 1;
+				}
+			}else if(mes == 11){
+				if (dia > 30) {
+					dia = 1;
+				}
+			}else if(mes == 12){
+				if (dia > 31) {
+					dia = 1;
+				}
+			}
+	    	return dia;
+	    }
 
 
 		public Integer gerarVendasMensaisJaneiro(){
