@@ -47,4 +47,9 @@ public class BancoFacade {
         return bancoDao.consultar(idCliente, nome);
     }
     
+    public Banco consultarBanco(String agencia, String conta) throws SQLException{
+        bancoDao = new BancoDao();
+        return bancoDao.consultarBanco(agencia, conta);
+    }
+    
 }

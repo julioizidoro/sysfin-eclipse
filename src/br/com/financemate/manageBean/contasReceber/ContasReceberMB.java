@@ -1059,9 +1059,12 @@ public class ContasReceberMB implements Serializable {
 			 novoFiltro();
 			 imagemFiltro = "../../resources/img/iconefiltrosVermelho.ico";
 		 }else if(imagemFiltro.equalsIgnoreCase("../../resources/img/iconefiltrosVermelho.ico")){
-			 listaContasReceber = null;
-			 criarConsultaContaReceber();
-			 imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
+			listaContasReceber = null;
+			if (cliente == null) {
+			}else{
+				 criarConsultaContaReceber();
+			} 
+			imagemFiltro = "../../resources/img/iconefiltrosVerde.ico";
 		 }
 		 return "";
 	 } 

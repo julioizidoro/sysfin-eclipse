@@ -50,13 +50,28 @@ public class BancoDao {
     }
     
     public Banco consultar(int idCliente, String nome) throws SQLException{
+    	Banco banco = null;
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery("Select b from Banco b where b.cliente.idcliente=" + idCliente +
                 " and b.nome='" + nome + "'");
-        Banco banco = null;
         if (q.getResultList().size()>0){
             banco= (Banco) q.getResultList().get(0);
+        }
+        manager.getTransaction().commit();
+        manager.close();
+        return banco;
+    }
+    
+    
+    public Banco consultarBanco(String agencia, String conta) throws SQLException{
+    	Banco banco = null;
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery("Select b from Banco b where b.agencia='" + agencia +
+                "' and b.conta='" + conta + "'");
+        if (q.getResultList().size()>0){
+           banco = (Banco) q.getResultList().get(0);
         }
         manager.getTransaction().commit();
         manager.close();

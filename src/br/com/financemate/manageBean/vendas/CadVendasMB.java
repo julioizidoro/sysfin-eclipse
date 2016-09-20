@@ -461,6 +461,9 @@ public class CadVendasMB implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("vendas", vendas);
         session.setAttribute("valorPagarReceber", valorPagarReceber);
+        if (corPagarReceber == null) {
+			corPagarReceber = "color:red;";
+		}
         session.setAttribute("corPagarReceber", corPagarReceber);
 		return "adicionarConta";
 	}
@@ -595,10 +598,10 @@ public class CadVendasMB implements Serializable {
 			valorPagarReceber = 0f; 
 		}
 		if (valorPagarReceber > 0) {
-			corPagarReceber = "color:blue;";
+			corPagarReceber = "color:red;";
 		}else if(valorPagarReceber < 0){
 			valorPagarReceber = valorPagarReceber * (-1);
-			corPagarReceber = "color:red;";
+			corPagarReceber = "color:blue;";
 		}else{
 			corPagarReceber = "color:black;";
 		}

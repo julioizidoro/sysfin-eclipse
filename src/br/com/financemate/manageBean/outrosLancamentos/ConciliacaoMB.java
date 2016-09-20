@@ -6,11 +6,16 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
@@ -129,7 +134,7 @@ public class ConciliacaoMB implements Serializable{
 		listaConciliacaoBancaria = null;
 		arquivo = e.getFile();
 		File arq = new File(arquivo.getFileName());
-		FileInputStream file = null;
+		FileInputStream file = null; 
 		try {
 			file = (FileInputStream) arquivo.getInputstream();
 		} catch (Exception ex) {
@@ -140,35 +145,37 @@ public class ConciliacaoMB implements Serializable{
    	 	ler.iniciarLeitura(file);
    	 	listaTransacao = ler.getListaTransacao();
    	 	if ((ler.getAgencia()!=null) && (ler.getConta()!=null)){
-   	 		consultarBanco(ler.getAgencia(), ler.getConta());
+   	 		banco = consultarBanco(ler.getAgencia(), ler.getConta());
    	 	}
    	 	if (banco!=null){
-   	 		dataInicial = listaTransacao.get(0).getData();
+   	 		dataInicial = listaTransacao.get(0).getData(); 
    	 		dataFinal = listaTransacao.get(listaTransacao.size()-1).getData();
    	 		carregarOutrosLancamentos();
    	 		if (listaLacamentos!=null){
-   	 			conciliar();
+  	 			conciliar();
    	 		}
    	 	}
    	 	
+   	 	
+   	 	
 	}
 	
-	public void consultarBanco(String agencia , String conta){
+	public Banco consultarBanco(String agencia , String conta){
 		BancoFacade bancoFacade = new BancoFacade();
-   	 	String sql = "SELECT b FROM Banco b where b.agencia=" + agencia +
-   	 			" and b.conta=" + conta;
-   	 	List<Banco> listaBanco = bancoFacade.listar(sql);
-   	 	if (listaBanco!=null){
-   	 		if (listaBanco.size()>0){
-   	 			banco = listaBanco.get(0);
-   	 		}
-   	 	}
-	}
+   	 	try {
+			Banco banco = bancoFacade.consultarBanco(agencia, conta);
+			return banco;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   	 	return null;
+	} 
 	
 	public void carregarOutrosLancamentos(){
 		OutrosLancamentosFacade outrosLancamentosFacade = new OutrosLancamentosFacade();
 		String sql = "SELECT o FROM Outroslancamentos o where o.dataCompensacao>='" +
-		dataInicial + "' and o.dataCompensacao<='" + dataFinal + "' and o.banco.idbanco=" + banco.getIdbanco();
+		Formatacao.ConvercaoDataSql(dataInicial) + "' and o.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and o.banco.idbanco=" + banco.getIdbanco() + " order by o.dataCompensacao";
 		try {
 			listaLacamentos = outrosLancamentosFacade.listaOutrosLancamentos(sql);
 		} catch (SQLException e) {
@@ -178,7 +185,7 @@ public class ConciliacaoMB implements Serializable{
 	}
 	
 	
-	public void conciliar(){
+	public void conciliar(){ 
 		for (int i = 0; i < listaTransacao.size(); i++) {
 			verficarLancamentos(listaTransacao.get(i));
 		}
@@ -194,7 +201,7 @@ public class ConciliacaoMB implements Serializable{
 			}
 		}
 	}
-	
+	 
 	public void verficarLancamentos(TransacaoBean transacao){
 		ConciliarBean cb = new ConciliarBean();
 		if (listaConciliacaoBancaria == null) {
@@ -227,37 +234,119 @@ public class ConciliacaoMB implements Serializable{
 					listaConciliacaoBancaria.add(cb);
 				}
 			}
+			
 		}
+		
+		
+	} 
+	
+	
+	public String estiloDaTabelaTransacao(TransacaoBean transacao){
+		String color;
+		if (transacao.getConciliada() == true) {
+			color = "color:black;";
+		}else{
+			color = "color:red;font-weight:bold;";
+		}
+		return color;
+	}
+	
+	public String estiloDaTabelaOutrosLancamentos(Outroslancamentos outros){
+		String color;
+		if (outros.getConciliada() == true) {
+			color = "color:gren";
+		}else{
+			color = "color:red;font-weight:bold;";
+		}
+		return color;
 	}
 	
 	
 	public void gerarListaTransacaoNaoConciliada(TransacaoBean transacao){
-		ConciliarBean conciliarBean = new ConciliarBean();
+		ConciliarBean conciliacaoBean = new ConciliarBean();
 		if (listaTransacaoNaoConciliado == null) {
 			listaTransacaoNaoConciliado = new ArrayList<TransacaoBean>();
 		}
 			if (transacao.getConciliada() == false) {
 				listaTransacaoNaoConciliado.add(transacao);
-				conciliarBean.setTransacao(transacao);
-				listaConciliacaoBancaria.add(conciliarBean);
+				conciliacaoBean.setTransacao(transacao);
+				listaConciliacaoBancaria.add(conciliacaoBean);
 			}
 		
 	}
 	
 	public void gerarListaOutrosLancamentosNaoConciliado(){
-		ConciliarBean conciliarBean = new ConciliarBean();
+		ConciliarBean conciliacaoBean = new ConciliarBean();
 		if (listaOutrosNaoConciliado == null) {
 			listaOutrosNaoConciliado = new ArrayList<Outroslancamentos>();
 		} 
 		for (int i = 0; i < listaLacamentos.size(); i++) {
 			if (listaLacamentos.get(i).getConciliada() == false) {
 				listaOutrosNaoConciliado.add(listaLacamentos.get(i));
-				conciliarBean.setOutroslancamentos(listaLacamentos.get(i));
-				listaConciliacaoBancaria.get(sizeConciliada +i).setOutroslancamentos(conciliarBean.getOutroslancamentos());
+				conciliacaoBean.setOutroslancamentos(listaLacamentos.get(i));
+				listaConciliacaoBancaria.get(sizeConciliada +i).setOutroslancamentos(conciliacaoBean.getOutroslancamentos());
 				
 			}
 		}
 	}
+	
+	
+	public String novaConciliacao(ConciliarBean conciliacao) {
+		TransacaoBean transacao = null;
+		Outroslancamentos outros = null;
+		for (int i = 0; i < listaConciliacaoBancaria.size(); i++) {
+			if (listaConciliacaoBancaria.get(i).getTransacao().isSelecionado()) {
+				transacao = listaConciliacaoBancaria.get(i).getTransacao();
+				i = listaConciliacaoBancaria.size();
+			}
+		}
+		for (int i = 0; i < listaConciliacaoBancaria.size(); i++) {
+			if (listaConciliacaoBancaria.get(i).getOutroslancamentos() != null) {
+				if (listaConciliacaoBancaria.get(i).getOutroslancamentos().isSelecionado()) {
+					outros = listaConciliacaoBancaria.get(i).getOutroslancamentos();
+					i = listaConciliacaoBancaria.size();
+				}				
+			} 
+		}
+		if(transacao != null && outros != null) {
+			OutrosLancamentosFacade outrosFacade = new OutrosLancamentosFacade();
+			if (transacao.getValorEntrada() > 0f) {
+				outros.setValorEntrada(transacao.getValorEntrada());
+				outros.setDataCompensacao(transacao.getData());
+				try {
+					outrosFacade.salvar(outros);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else{
+				outros.setValorSaida(transacao.getValorSaida());
+				outros.setDataCompensacao(transacao.getData());
+				try {
+					outrosFacade.salvar(outros);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			listaConciliacaoBancaria = null;
+	        carregarOutrosLancamentos();
+	        conciliar();
+			return "";
+		}else{
+			transacaoBean = conciliacao.getTransacao();
+			outroslancamentos = conciliacao.getOutroslancamentos();
+			FacesContext fc = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+			session.setAttribute("banco", banco);
+			session.setAttribute("transacaoBean", transacaoBean);
+			session.setAttribute("outroslancamentos", outroslancamentos);
+			Map<String, Object> options = new HashMap<String, Object>();
+			options.put("contentWidth", 500);
+			RequestContext.getCurrentInstance().openDialog("cadConciliacao"); 
+			return "";			
+		}
+    } 
 	
 	
 	public void retornoDialogConciliado(SelectEvent e) {
