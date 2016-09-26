@@ -1,0 +1,66 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from WebserviceService WSDL service -->
+
+  <service name="Webservice" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://model.financemate.com.br"/>
+      <parameter name="wsdlServiceElement" value="WebserviceService"/>
+      <parameter name="schemaQualified" value="http://model.financemate.com.br"/>
+      <parameter name="wsdlServicePort" value="Webservice"/>
+      <parameter name="className" value="br.com.financemate.model.WebserviceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Webservice"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getHost" qname="operNS:getHost" xmlns:operNS="http://model.financemate.com.br" returnQName="retNS:getHostReturn" xmlns:retNS="http://model.financemate.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="setHost" qname="operNS:setHost" xmlns:operNS="http://model.financemate.com.br" soapAction="" >
+        <parameter qname="pns:host" xmlns:pns="http://model.financemate.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getPassworddb" qname="operNS:getPassworddb" xmlns:operNS="http://model.financemate.com.br" returnQName="retNS:getPassworddbReturn" xmlns:retNS="http://model.financemate.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="setPassworddb" qname="operNS:setPassworddb" xmlns:operNS="http://model.financemate.com.br" soapAction="" >
+        <parameter qname="pns:passworddb" xmlns:pns="http://model.financemate.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getUserdb" qname="operNS:getUserdb" xmlns:operNS="http://model.financemate.com.br" returnQName="retNS:getUserdbReturn" xmlns:retNS="http://model.financemate.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="setIdwebservice" qname="operNS:setIdwebservice" xmlns:operNS="http://model.financemate.com.br" soapAction="" >
+        <parameter qname="pns:idwebservice" xmlns:pns="http://model.financemate.com.br" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getIdwebservice" qname="operNS:getIdwebservice" xmlns:operNS="http://model.financemate.com.br" returnQName="retNS:getIdwebserviceReturn" xmlns:retNS="http://model.financemate.com.br" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="setUserdb" qname="operNS:setUserdb" xmlns:operNS="http://model.financemate.com.br" soapAction="" >
+        <parameter qname="pns:userdb" xmlns:pns="http://model.financemate.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="setHostdb" qname="operNS:setHostdb" xmlns:operNS="http://model.financemate.com.br" soapAction="" >
+        <parameter qname="pns:hostdb" xmlns:pns="http://model.financemate.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getNomedb" qname="operNS:getNomedb" xmlns:operNS="http://model.financemate.com.br" returnQName="retNS:getNomedbReturn" xmlns:retNS="http://model.financemate.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="setNomedb" qname="operNS:setNomedb" xmlns:operNS="http://model.financemate.com.br" soapAction="" >
+        <parameter qname="pns:nomedb" xmlns:pns="http://model.financemate.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getHostdb" qname="operNS:getHostdb" xmlns:operNS="http://model.financemate.com.br" returnQName="retNS:getHostdbReturn" xmlns:retNS="http://model.financemate.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="getPortadb" qname="operNS:getPortadb" xmlns:operNS="http://model.financemate.com.br" returnQName="retNS:getPortadbReturn" xmlns:retNS="http://model.financemate.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="setPortadb" qname="operNS:setPortadb" xmlns:operNS="http://model.financemate.com.br" soapAction="" >
+        <parameter qname="pns:portadb" xmlns:pns="http://model.financemate.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getPorta" qname="operNS:getPorta" xmlns:operNS="http://model.financemate.com.br" returnQName="retNS:getPortaReturn" xmlns:retNS="http://model.financemate.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="setPorta" qname="operNS:setPorta" xmlns:operNS="http://model.financemate.com.br" soapAction="" >
+        <parameter qname="pns:porta" xmlns:pns="http://model.financemate.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="setHost setPortadb getPortadb getPassworddb setNomedb getIdwebservice setPassworddb setPorta setIdwebservice getNomedb getPorta setUserdb getUserdb getHostdb getHost setHostdb"/>
+
+  </service>
+</deployment>

@@ -15,9 +15,15 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.JAXBException;
 
+import org.apache.poi.hssf.record.aggregates.FormulaRecordAggregate;
 import org.primefaces.context.RequestContext;
 
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
+
+import br.com.financemate.dao.WebServiceDao;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
@@ -26,6 +32,7 @@ import br.com.financemate.facade.FormaPagamentoFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.facade.ProdutoFacade;
 import br.com.financemate.facade.VendasFacade;
+import br.com.financemate.facade.WebServiceFacade;
 import br.com.financemate.manageBean.CadContasPagarMB;
 import br.com.financemate.manageBean.UsuarioLogadoMB;
 import br.com.financemate.manageBean.mensagem;
@@ -38,6 +45,7 @@ import br.com.financemate.model.Formapagamento;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Produto;
 import br.com.financemate.model.Vendas;
+import br.com.financemate.util.Formatacao;
 
 @Named
 @ViewScoped
@@ -70,6 +78,12 @@ public class CadVendasMB implements Serializable {
 	private Float valorPagarReceber;
 	private List<Formapagamento> listaSelecionadosFormaPagamentos;
 	private String corPagarReceber = "color:black;";
+	private List<VendasSystmBean> listaVendasSystm;
+	private VendasSystmBean vendasSystmBean;
+	private List<ListaVendasSystmBean> listaImportada;
+	private Date dataInicial;
+	private Date dataFinal;
+	private Boolean importadoSystm = false;
 	 
 	@PostConstruct
 	public void init(){
@@ -83,9 +97,14 @@ public class CadVendasMB implements Serializable {
 		valorPagarReceber = (Float) session.getAttribute("valorPagarReceber");
 		saldoRestante = (Float) session.getAttribute("saldoRestante");
 		corPagarReceber = (String) session.getAttribute("corPagarReceber");
+		listaVendasSystm = (List<VendasSystmBean>) session.getAttribute("listaVendasSystm");
+		listaImportada = (List<ListaVendasSystmBean>) session.getAttribute("listaImportada");
+		importadoSystm = (Boolean) session.getAttribute("importadoSystm");
 		session.removeAttribute("formapagamento");
 		session.removeAttribute("saldoRestante");
 		session.removeAttribute("corPagarReceber");
+		session.removeAttribute("listaVendasSystm");
+		session.removeAttribute("listaImportada");
 		gerarListaCliente(); 
 		if (vendas == null) {
 			vendas = new Vendas();
@@ -380,6 +399,88 @@ public class CadVendasMB implements Serializable {
 
 	public void setCorPagarReceber(String corPagarReceber) {
 		this.corPagarReceber = corPagarReceber;
+	}
+	
+	
+
+
+
+
+	public VendasSystmBean getVendasSystmBean() {
+		return vendasSystmBean;
+	}
+
+
+
+
+	public void setVendasSystmBean(VendasSystmBean vendasSystmBean) {
+		this.vendasSystmBean = vendasSystmBean;
+	}
+
+
+
+
+	public void setListaVendasSystm(List<VendasSystmBean> listaVendasSystm) {
+		this.listaVendasSystm = listaVendasSystm;
+	}
+	
+	
+	
+
+
+
+
+	public List<ListaVendasSystmBean> getListaImportada() {
+		return listaImportada;
+	}
+
+
+
+
+	public void setListaImportada(List<ListaVendasSystmBean> listaImportada) {
+		this.listaImportada = listaImportada;
+	}
+
+	
+
+
+	public Date getDataInicial() {
+		return dataInicial;
+	}
+
+
+
+
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+
+
+
+	public Date getDataFinal() {
+		return dataFinal;
+	}
+
+
+
+
+	public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
+	
+
+
+	public Boolean getImportadoSystm() {
+		return importadoSystm;
+	}
+
+
+
+
+	public void setImportadoSystm(Boolean importadoSystm) {
+		this.importadoSystm = importadoSystm;
 	}
 
 
@@ -711,7 +812,7 @@ public class CadVendasMB implements Serializable {
 		return saldoRestante;
 	} 
 	
-	public void salvarVenda(){
+	public String salvarVenda(){
 		FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 		planocontas = (Planocontas) session.getAttribute("planocontas");
@@ -742,17 +843,18 @@ public class CadVendasMB implements Serializable {
 		}else{
 			vendas.setSituacao("amarelo");
 		}
-		if (usuarioLogadoMB.getCliente() != null) {
-			vendas.setCliente(usuarioLogadoMB.getCliente());
-		}else{
-			try {
-				cliente = clienteFacade.consultar(8);
-				vendas.setCliente(cliente);
-			} catch (SQLException ex) {
-				Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
-				mostrarMensagem(ex, "Erro ao consultar um cliente:", "Erro");
-			}
-		}
+//		if (usuarioLogadoMB.getCliente() != null) {
+//			vendas.setCliente(usuarioLogadoMB.getCliente());
+//		}else{
+//			try {
+//				cliente = clienteFacade.consultar(8);
+//				vendas.setCliente(cliente);
+//			} catch (SQLException ex) {
+//				Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
+//				mostrarMensagem(ex, "Erro ao consultar um cliente:", "Erro");
+//			}
+//		}
+		vendas.setCliente(cliente);
 		try {
 			String mensagem = validarDados();
 			if (mensagem == "") {
@@ -778,6 +880,19 @@ public class CadVendasMB implements Serializable {
 		        session.removeAttribute("produto");
 		        session.removeAttribute("cliente");
 		        session.removeAttribute("listaFormaPagamento");
+		        if (importadoSystm) {
+		        	importaVendasBean importaVendasBean = new importaVendasBean();
+		        	try {
+						importaVendasBean.salvarVendaImportada(vendas.getIdVendaSystm());
+			        	getListaVendasSystm();
+					} catch (JAXBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace(); 
+					}
+		        	session.removeAttribute("importadoSystm");
+					return "importarVenda";
+				}
+		        session.removeAttribute("importadoSystm");
 				RequestContext.getCurrentInstance().closeDialog(vendas);
 			}else{
 				FacesContext context = FacesContext.getCurrentInstance();
@@ -788,6 +903,7 @@ public class CadVendasMB implements Serializable {
 			Logger.getLogger(CadVendasMB.class.getName()).log(Level.SEVERE, null, ex);
 			mostrarMensagem(ex, "Erro ao salvar venda:", "Erro");
 		} 
+		return "";
 	}
 	
 	public String validarDados(){
@@ -816,6 +932,7 @@ public class CadVendasMB implements Serializable {
         session.removeAttribute("produto");
         session.removeAttribute("cliente");
         session.removeAttribute("valorPagarReceber");
+        session.removeAttribute("importadoSystm");
         RequestContext.getCurrentInstance().closeDialog(null);
         return null;
     }
@@ -1044,6 +1161,166 @@ public class CadVendasMB implements Serializable {
 		emissaonota.setCpnj(cliente.getCnpj());
 		emissaonota.setEndereco(cliente.getTipoLogradouro() + " " + cliente.getLogradouro());
 		emissaonota.setEstado(cliente.getEstado());
+	}
+
+	/* -----PARA PEGAR SÓ 1 VENDA------
+	
+	public void importaVenda(){
+		importaVendasBean importaVendasBean = new importaVendasBean();
+		VendasSystmBean vendasSystmBean = new VendasSystmBean();
+		ClienteFacade clienteFacade = new ClienteFacade();
+		ProdutoFacade produtoFacade = new ProdutoFacade();
+		try {
+			vendasSystmBean = importaVendasBean.pegarInformacao();
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			cliente = clienteFacade.consultarUnidade(vendasSystmBean.getIdUnidade());
+			if (cliente != null) {
+				gerarListaProduto();
+				produto = produtoFacade.consultarProduto(vendasSystmBean.getIdProduto(), cliente.getIdcliente());
+			}
+			vendas.setNomeFornecedor(vendasSystmBean.getFornecedor());
+			vendas.setConsultor(vendasSystmBean.getConsultor());
+			vendas.setNomeCliente(vendasSystmBean.getNomeCliente());
+			vendas.setValorBruto(vendasSystmBean.getValorBruto());
+			calculoTotalVenda();
+			vendas.setDataVenda(vendasSystmBean.getDataVenda());
+			vendas.setComissaoLiquidaTotal(vendasSystmBean.getLiquidoFranquia());
+			calculoValoresBackOffice();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	*/
+	
+	public void getListaVendasSystm(){
+		importaVendasBean importaVendasBean = new importaVendasBean();
+		ListaVendasSystmBean vendaImportada;
+		listaImportada = new ArrayList<ListaVendasSystmBean>();
+		try {   
+			listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
+			if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
+				listaVendasSystm = new ArrayList<VendasSystmBean>();
+			}
+			for (int i = 0; i < listaVendasSystm.size(); i++) {
+				vendaImportada = new ListaVendasSystmBean();
+				vendaImportada.setConsultor(listaVendasSystm.get(i).getConsultor());
+				vendaImportada.setDataVenda("" + Formatacao.ConvercaoDataPadrao(listaVendasSystm.get(i).getDataVenda()));
+				vendaImportada.setFornecedor(listaVendasSystm.get(i).getFornecedor());
+				vendaImportada.setIdCliente("" + listaVendasSystm.get(i).getIdCliente());
+				vendaImportada.setValorBruto("" + listaVendasSystm.get(i).getValorBruto());
+				vendaImportada.setNomeCliente(listaVendasSystm.get(i).getNomeCliente());
+				vendaImportada.setIdVenda("" + listaVendasSystm.get(i).getIdVenda());
+				vendaImportada.setIdProduto("" + listaVendasSystm.get(i).getIdProduto());
+				vendaImportada.setIdUnidade("" + listaVendasSystm.get(i).getIdUnidade());
+				vendaImportada.setIdUsuario("" + listaVendasSystm.get(i).getIdUsuario());
+				vendaImportada.setLiquidoFranquia("" + listaVendasSystm.get(i).getLiquidoFranquia());
+				if (vendaImportada.getValorBruto() == null || vendaImportada.getValorBruto().equalsIgnoreCase("null")) {
+					vendaImportada.setValorBruto("0.0");
+				}
+				vendaImportada.setVendasSystmBean(listaVendasSystm.get(i));
+				listaImportada.add(vendaImportada); 
+			}
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("listaImportada", listaImportada);
+	}
+	
+	public String importaVenda(ListaVendasSystmBean vendaImportada){
+		if (vendas == null) {
+			vendas = new Vendas();
+		}
+		ClienteFacade clienteFacade = new ClienteFacade();
+		ProdutoFacade produtoFacade = new ProdutoFacade();
+		try {
+			cliente = clienteFacade.consultarUnidade(vendaImportada.getVendasSystmBean().getIdUnidade());
+			if (cliente != null) {
+				gerarListaProduto();
+				produto = produtoFacade.consultarProduto(vendaImportada.getVendasSystmBean().getIdProduto(), cliente.getIdcliente());
+			}
+			vendas.setNomeFornecedor(vendaImportada.getVendasSystmBean().getFornecedor());
+			vendas.setConsultor(vendaImportada.getVendasSystmBean().getConsultor());
+			vendas.setNomeCliente(vendaImportada.getVendasSystmBean().getNomeCliente());
+			vendas.setValorBruto(vendaImportada.getVendasSystmBean().getValorBruto());
+			calculoTotalVenda();
+			vendas.setDataVenda(vendaImportada.getVendasSystmBean().getDataVenda());
+			vendas.setComissaoLiquidaTotal(vendaImportada.getVendasSystmBean().getLiquidoFranquia());
+			vendas.setIdVendaSystm(Formatacao.formatarStringInteger(vendaImportada.getIdVenda()));
+			calculoValoresBackOffice();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("vendas", vendas);
+        session.setAttribute("cliente", cliente);
+        session.setAttribute("produto", produto);
+		return "cadVendas";
+	}
+	 
+	public void voltarImportacao(){
+		RequestContext.getCurrentInstance().closeDialog(new Vendas());
+	}
+	
+	
+	public void filtroListaVendasSystm(){
+		importaVendasBean importaVendasBean = new importaVendasBean();
+		ListaVendasSystmBean vendaImportada;
+		listaImportada = new ArrayList<ListaVendasSystmBean>();
+		try {   
+			listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
+			if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
+				listaVendasSystm = new ArrayList<VendasSystmBean>();
+			}
+			for (int i = 0; i < listaVendasSystm.size(); i++) {
+				if (dataInicial == null && dataFinal == null) {
+					vendaImportada = setandoVenda(listaVendasSystm.get(i));
+					listaImportada.add(vendaImportada);
+				}else{
+					String dataSystmImportada = Formatacao.ConvercaoDataSql(listaVendasSystm.get(i).getDataVenda());
+					String dataInicialFiltro = Formatacao.ConvercaoDataSql(dataInicial);
+					String dataFinalFiltro = Formatacao.ConvercaoDataSql(dataFinal);
+					if ((dataSystmImportada.compareTo(dataInicialFiltro) >= 0) && (dataSystmImportada.compareTo(dataFinalFiltro) <= 0)) {
+						vendaImportada = setandoVenda(listaVendasSystm.get(i));
+						listaImportada.add(vendaImportada);
+					}
+				}	
+			}
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public ListaVendasSystmBean setandoVenda(VendasSystmBean vendasSystmBean){
+		List<ListaVendasSystmBean> listaSystm = new ArrayList<>();
+		ListaVendasSystmBean vendaImportada = new ListaVendasSystmBean();
+		vendaImportada.setConsultor(vendasSystmBean.getConsultor());
+		vendaImportada.setDataVenda("" + Formatacao.ConvercaoDataPadrao(vendasSystmBean.getDataVenda()));
+		vendaImportada.setFornecedor(vendasSystmBean.getFornecedor());
+		vendaImportada.setIdCliente("" + vendasSystmBean.getIdCliente());
+		vendaImportada.setValorBruto("" + vendasSystmBean.getValorBruto());
+		vendaImportada.setNomeCliente(vendasSystmBean.getNomeCliente());
+		vendaImportada.setIdVenda("" + vendasSystmBean.getIdVenda());
+		vendaImportada.setIdProduto("" + vendasSystmBean.getIdProduto());
+		vendaImportada.setIdUnidade("" + vendasSystmBean.getIdUnidade());
+		vendaImportada.setIdUsuario("" + vendasSystmBean.getIdUsuario());
+		vendaImportada.setLiquidoFranquia("" + vendasSystmBean.getLiquidoFranquia()); 
+		if (vendaImportada.getValorBruto() == null || vendaImportada.getValorBruto().equalsIgnoreCase("null")) {
+			vendaImportada.setValorBruto("0.0");
+		}
+		vendaImportada.setVendasSystmBean(vendasSystmBean);
+		return vendaImportada;
 	}
 
 }

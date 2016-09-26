@@ -36,6 +36,12 @@ public class ProdutoFacade {
         return produtoDao.consultar(idProduto);
     }
     
+    
+    public Produto consultarProduto(int idProduto, int idCliente) throws SQLException{
+        produtoDao = new ProdutoDao();
+        return produtoDao.consultarProduto(idProduto, idCliente);
+    }
+    
     public Produto salvar(Produto produto) throws SQLException{
         produtoDao = new ProdutoDao();
         return produtoDao.salvar(produto);

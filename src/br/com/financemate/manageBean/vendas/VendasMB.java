@@ -17,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.JAXBException;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -476,6 +477,19 @@ public class VendasMB implements Serializable {
     	return "";
     }
     
+    public String importarVenda() {
+    	List<ListaVendasSystmBean> listaImportada = getListaVendasSystm();
+    	Boolean importadoSystm = true;
+    	Map<String, Object> options = new HashMap<String, Object>();
+    	options.put("closable", false);
+		FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("listaImportada", listaImportada);
+        session.setAttribute("importadoSystm", importadoSystm);
+    	RequestContext.getCurrentInstance().openDialog("importarVenda", options, null);
+    	return "";
+    }
+    
    
     
     public String filtro() {
@@ -675,5 +689,41 @@ public class VendasMB implements Serializable {
 			e.printStackTrace(); 
 		}
     }
+    
+    public List<ListaVendasSystmBean> getListaVendasSystm(){
+		importaVendasBean importaVendasBean = new importaVendasBean();
+		ListaVendasSystmBean vendaImportada;
+		List<ListaVendasSystmBean> listaImportada = new ArrayList<ListaVendasSystmBean>();
+		List<VendasSystmBean> listaVendasSystm;
+		try {   
+			listaVendasSystm = importaVendasBean.pegarListaVendasSystm();
+			if (listaVendasSystm == null || listaVendasSystm.isEmpty()) {
+				listaVendasSystm = new ArrayList<VendasSystmBean>();
+			}
+			for (int i = 0; i < listaVendasSystm.size(); i++) {
+				vendaImportada = new ListaVendasSystmBean();
+				vendaImportada.setConsultor(listaVendasSystm.get(i).getConsultor());
+				vendaImportada.setDataVenda("" + Formatacao.ConvercaoDataPadrao(listaVendasSystm.get(i).getDataVenda()));
+				vendaImportada.setFornecedor(listaVendasSystm.get(i).getFornecedor());
+				vendaImportada.setIdCliente("" + listaVendasSystm.get(i).getIdCliente());
+				vendaImportada.setValorBruto("" + listaVendasSystm.get(i).getValorBruto());
+				vendaImportada.setNomeCliente(listaVendasSystm.get(i).getNomeCliente());
+				vendaImportada.setIdVenda("" + listaVendasSystm.get(i).getIdVenda());
+				vendaImportada.setIdProduto("" + listaVendasSystm.get(i).getIdProduto());
+				vendaImportada.setIdUnidade("" + listaVendasSystm.get(i).getIdUnidade());
+				vendaImportada.setIdUsuario("" + listaVendasSystm.get(i).getIdUsuario());
+				vendaImportada.setLiquidoFranquia("" + listaVendasSystm.get(i).getLiquidoFranquia());
+				if (vendaImportada.getValorBruto() == null || vendaImportada.getValorBruto().equalsIgnoreCase("null")) {
+					vendaImportada.setValorBruto("0.0");
+				}
+				vendaImportada.setVendasSystmBean(listaVendasSystm.get(i));
+				listaImportada.add(vendaImportada); 
+			}
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaImportada;
+	}
 
 }

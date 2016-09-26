@@ -31,6 +31,11 @@ public class ClienteFacade {
         return clienteDao.consultar(idCliente);
     }
     
+    public Cliente consultarUnidade(int idUnidade) throws SQLException{
+        clienteDao = new ClienteDao();
+        return clienteDao.consultarUnidade(idUnidade);
+    }
+    
 	public List<Cliente> listar(String nome) throws SQLException {
 		clienteDao = new ClienteDao();
 		return clienteDao.listar(nome);

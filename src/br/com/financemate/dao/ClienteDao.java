@@ -45,6 +45,19 @@ public class ClienteDao {
         return cliente;
     }
     
+    public Cliente consultarUnidade(int idUnidade) throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery("select c from Cliente c where c.codigosystm=" + idUnidade);
+        Cliente cliente = null;
+        if (q.getResultList().size()>0){
+            cliente = (Cliente) q.getResultList().get(0);
+        }
+        manager.getTransaction().commit();
+        manager.close();
+        return cliente;
+    }
+    
     public List<Cliente> listar(String nome) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
